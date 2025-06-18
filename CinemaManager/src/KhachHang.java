@@ -3,7 +3,7 @@ public class KhachHang{
     String maKH;
     String tenKH;
     int tuoi;
-    String std;
+    String sdt;
     String email;
     List<Ve> lichSuDatVe;
 }
