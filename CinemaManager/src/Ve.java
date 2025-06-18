@@ -3,6 +3,6 @@ public class Ve{
     KhachHang khachHang;
     SuatChieu suatChieu;
     Ghe ghe;
-    float giaVe;
+    double giaVe;
     boolean daThanhToan;
 }

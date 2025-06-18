@@ -1,8 +1,10 @@
+import java.time.LocalDate;
+
 public class SuatChieu{
     String maSuatChieu;
     Phim phim;
     PhongChieu phongChieu;
-    int soHangGhe;
-    int soCotGhe;
-    list<Ghe> danhSachGhe;
+    LocalDateTime thoiGianBatDau;
+    LocalDateTime thoiGianKetThuc;
+    list<Ghe> danhSachGheTrong;
 }
