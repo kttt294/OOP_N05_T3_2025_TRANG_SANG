@@ -4,6 +4,6 @@ public class HoaDon {
     Ve veDaDat;
     DoAn doAn;
     int tongTien;
-    String thoiGianThanhToan;
+    LocalDateTime thoiGianThanhToan;
     String phuongThucThanhToan; // Tiền mặt hoặc chuyển khoản
 }

@@ -2,8 +2,8 @@ public class Voucher{
     String maVoucher;
     String moTa;
     float phanTramGiamGia;
-    String ngayBatDau;
-    String ngayKetThuc;
+    LocalDateTime ngayBatDau;
+    LocalDateTime ngayKetThuc;
     String soLuongConLai;
     String trangThai;
 }
