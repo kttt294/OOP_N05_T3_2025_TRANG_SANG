@@ -1,3 +1,5 @@
+package model;
+
 public class PhongChieu{
     String maPhong;
     String tenPhong;

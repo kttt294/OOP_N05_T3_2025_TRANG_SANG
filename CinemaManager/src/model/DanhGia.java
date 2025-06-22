@@ -1,3 +1,5 @@
+package model;
+
 public class DanhGia{
     String maDanhGia;
     KhachHang nguoiDanhGia;

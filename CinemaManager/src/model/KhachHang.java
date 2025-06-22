@@ -1,5 +1,6 @@
-public class KhachHang{
-    // Bien Thanh Vien
+package model;
+
+public class KhachHang extends TaiKhoan{
     String maKH;
     String tenKH;
     int tuoi;

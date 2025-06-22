@@ -1,3 +1,5 @@
+package model;
+
 public class Ve{
     String maVe;
     KhachHang khachHang;

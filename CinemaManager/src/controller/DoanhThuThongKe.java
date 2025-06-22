@@ -1,3 +1,5 @@
+package controller;
+
 public class DoanhThuThongKe{
     LocalDateTime ngayThongKe;
     int soLuongVeBanRa;

@@ -1,3 +1,5 @@
+package controller;
+
 public class DatVe{
     String maDatVe;
     KhachHang khachHang;

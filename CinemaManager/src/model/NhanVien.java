@@ -1,6 +1,8 @@
+package model;
+
 public class NhanVien{
     String maNV;
-    String hoTen;
+    String tenNV;
     String username;
     String password;
     String chucVu;

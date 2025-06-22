@@ -1,3 +1,5 @@
+package model;
+
 public class HoaDon {
     String maHoaDon;
     KhachHang khachHang;
