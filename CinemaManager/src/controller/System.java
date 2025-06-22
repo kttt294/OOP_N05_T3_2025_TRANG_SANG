@@ -2,10 +2,6 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.Phim;
-import model.PhongChieu;
-import model.SuatChieu;
-import model.KhachHang;
 
 
 public class System {
