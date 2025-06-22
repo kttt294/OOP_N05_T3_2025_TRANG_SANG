@@ -1,9 +1,11 @@
 package model;
 
-public class NhanVien{
+public class NhanVien extends TaiKhoan{
     String maNV;
     String tenNV;
-    String username;
-    String password;
+    int tuoi;
+    String sdt;
+    String email;
+    GioiTinh gioiTinh;
     String chucVu;
 }

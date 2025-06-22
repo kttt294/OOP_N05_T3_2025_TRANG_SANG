@@ -12,4 +12,10 @@ public class TaiKhoan{
         this.vaiTro = vaiTro;
         this.trangThai = true;
     }
+
+    enum VaiTro{
+        ADMIN,
+        NHANVIEN,
+        KHACHHANG
+    }
 }

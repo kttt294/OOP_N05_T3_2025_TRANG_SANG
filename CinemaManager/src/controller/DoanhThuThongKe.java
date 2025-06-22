@@ -1,5 +1,7 @@
 package controller;
 
+import model.Phim;
+
 public class DoanhThuThongKe{
     LocalDateTime ngayThongKe;
     int soLuongVeBanRa;
