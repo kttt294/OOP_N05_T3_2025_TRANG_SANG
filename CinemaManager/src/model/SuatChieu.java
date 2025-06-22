@@ -1,6 +1,7 @@
 package model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class SuatChieu{
     String maSuatChieu;
@@ -8,5 +9,5 @@ public class SuatChieu{
     PhongChieu phongChieu;
     LocalDateTime thoiGianBatDau;
     LocalDateTime thoiGianKetThuc;
-    list<Ghe> danhSachGheTrong;
+    List<Ghe> danhSachGheTrong;
 }

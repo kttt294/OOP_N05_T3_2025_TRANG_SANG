@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class DanhGia{
     String maDanhGia;
     KhachHang nguoiDanhGia;
