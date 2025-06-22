@@ -6,4 +6,5 @@ public class Phim{
     String ngonNgu;
     int gioiHanTuoi;
     String moTa;
+    DanhGia danhGia;
 }

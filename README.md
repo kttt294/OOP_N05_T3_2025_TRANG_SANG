@@ -6,7 +6,7 @@
 
 Đối tượng:
 - KhachHang (maKH, tenKH, tuoi, sdt, email, lichSuDatVe)
-- Phim (maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa)
+- Phim (maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa, danhGia)
 - SuatChieu (maSuatChieu, phim, phong, thoiGianBatDau, thoiGianKetThuc, danhSachGheTrong)
 - PhongChieu (maPhong, tenPhong, soHangGhe, soCotGhe, danhSachGhe)
 - Ghe (maGhe, hang, cot, daDat)
