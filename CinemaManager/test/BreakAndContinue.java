@@ -8,22 +8,28 @@ public class BreakAndContinue {
     }
 
     public static void testWhile(){
-        int i = 0;
-        while(i<100){
-            if(i == 74) break;
-            if(i%9 != 0) continue;
-            System.out.println(i);
-            i++;
+        int j = 0;
+        while(j<100){
+            if(j == 74) break;
+            if(j%9 != 0) {
+                j++;
+                continue;
+            }
+            System.out.println(j);
+            j++;
         }
     }
 
     public static void testDoWhile(){
-        int i=0;
+        int k=0;
         do{
-            if(i == 74) break;
-            if(i%9 != 0) continue;
-            System.out.println(i);
-            i++;
-        } while(i<100);
+            if(k == 74) break;
+            if(k%9 != 0) {
+                k++;
+                continue;
+            }
+            System.out.println(k);
+            k++;
+        } while(k<100);
     }
 }
