@@ -25,6 +25,8 @@ Thành viên:
 2. Trần Minh Sang, MSV : 24100012 (sangzesy)
 3. Nguyễn Lệ Thu (nglthu1979)
 
+
+              PRACTICE 02 (Week 2)
 Câu 1: Tiêu đề của bài tập lớn cuối kỳ: Ứng dụng uản lý rạp chiếu phim (CinemaManager)
 
 Câu 2: 03 đối tượng cơ sở cần thiết là:
@@ -51,3 +53,32 @@ Câu 2: 03 đối tượng cơ sở cần thiết là:
   + email (String): email của khách hàng
   + gioiTinh (GioiTinh): giới tính của khách hàng, có kiểu là class GioiTinh
   + lichSuDatVe (List<Ve>): lịch sử đặt vé của khách hàng này
+
+Câu 3: Cấu trúc folder của project:
+CinemaManager/
+│
+├── src/
+│   ├── controller/
+│   │   └── model/
+│   │       ├── Phim.java
+│   │       ├── SuatChieu.java
+│   │       ├── KhachHang.java
+│   │       └── ... (các model khác)
+│   └── App.java
+│
+├── test/
+│   ├── testPhim.java
+│   ├── testSuatChieu.java
+│   └── testKhachHang.java
+│
+└── README.md
+
+Câu 4: Các class được viết cho 3 đối tượng chính đã nêu trong Câu 2 là:
+Phim.java: chứa thông tin phim và kiểm tra độ tuổi hợp lệ.
+SuatChieu.java: quản lý thời gian chiếu, ghế trống, liên kết phim.
+KhachHang.java: quản lý thông tin khách và danh sách vé đã đặt.
+
+Câyu 5: 3 class kiểm định tương ứng với 3 class ở Câu 4, đặt trong thư mục test:
+testPhim.java: nhập thông tin phim từ bàn phím, kiểm tra độ tuổi.
+testSuatChieu.java: tạo suất chiếu, hiển thị ghế, cập nhật ghế sau khi đặt.
+testKhachHang.java: nhập thông tin khách hàng và in ra kết quả.
