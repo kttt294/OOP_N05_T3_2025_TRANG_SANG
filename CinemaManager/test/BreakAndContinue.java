@@ -16,6 +16,7 @@ public class BreakAndContinue {
                 continue;
             }
             System.out.println(j);
+            j++;
         }
     }
 
@@ -28,6 +29,7 @@ public class BreakAndContinue {
                 continue;
             }
             System.out.println(k);
+            k++;
         } while(k<100);
     }
 }
