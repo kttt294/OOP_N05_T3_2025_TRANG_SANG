@@ -70,7 +70,7 @@ Phim.java: chứa thông tin phim và kiểm tra độ tuổi hợp lệ.
 SuatChieu.java: quản lý thời gian chiếu, ghế trống, liên kết phim.
 KhachHang.java: quản lý thông tin khách và danh sách vé đã đặt.
 
-Câyu 5: 3 class kiểm định tương ứng với 3 class ở Câu 4, đặt trong thư mục test:
+Câu 5: 3 class kiểm định tương ứng với 3 class ở Câu 4, đặt trong thư mục test:
 testPhim.java: nhập thông tin phim từ bàn phím, kiểm tra độ tuổi.
 testSuatChieu.java: tạo suất chiếu, hiển thị ghế, cập nhật ghế sau khi đặt.
 testKhachHang.java: nhập thông tin khách hàng và in ra kết quả.
