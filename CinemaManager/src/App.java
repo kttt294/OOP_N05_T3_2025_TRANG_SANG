@@ -1,7 +1,9 @@
+import test.*;
+
 public class App {
     public static void main(String[] args) throws Exception {
-                testKhachHang test = new testKhachHang();
-                test.nhapThongTin();
-                test.inThongTin();
+                testKhachHang.test();
+                testPhim.test();
+                testSuatChieu.test();
     }
 }

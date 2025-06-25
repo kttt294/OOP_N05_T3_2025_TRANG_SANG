@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class testSuatChieu {
-    public static void main(String[] args) {
+    public static void test() {
         Phim phim = new Phim("P001", "Inception", "Khoa học viễn tưởng", 148, "Tiếng Anh", 16, "Giấc mơ trong giấc mơ");
 
         PhongChieu phong = new PhongChieu("PC01", "Phòng 1");
