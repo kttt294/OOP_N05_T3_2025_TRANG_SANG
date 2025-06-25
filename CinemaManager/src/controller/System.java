@@ -21,7 +21,7 @@ public class System {
         dsKhachHang = new ArrayList<>();
     }
 
-    public static System getInstance(){
+    public static System getInstance(System instance){
         if (instance == null){
             instance = new System();
         }
