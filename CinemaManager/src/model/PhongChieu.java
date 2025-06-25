@@ -1,11 +1,15 @@
 package model;
 
-import java.util.List;
-
-public class PhongChieu{
+public class PhongChieu {
     String maPhong;
     String tenPhong;
-    int soHangGhe;
-    int soCotGhe;
-    List<Ghe> danhSachGhe;
+
+    public PhongChieu(String maPhong, String tenPhong) {
+        this.maPhong = maPhong;
+        this.tenPhong = tenPhong;
+    }
+
+    public String getTenPhong() {
+        return tenPhong;
+    }
 }
