@@ -37,7 +37,5 @@ public class testKhachHang {
         System.out.println("SĐT: " + kh.getSdt());
         System.out.println("Email: " + kh.getEmail());
         System.out.println("Giới tính: " + kh.getGioiTinh());
-
-        scanner.close();
     }
 }
