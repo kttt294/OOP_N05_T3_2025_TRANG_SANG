@@ -36,7 +36,6 @@ Câu 2: 03 đối tượng cơ sở cần thiết là:
   + ngonNgu (String): ngôn ngữ của phim
   + gioiHanTuoi (int - đơn vị: tuổi): giới hạn độ tuổi xem phim
   + moTa (String): mô tả phim
-  + danhGia (DanhGia): đánh giá phim, có kiểu là class DanhGia
 2. SuatChieu (đối tượng quản lý lịch chiếu): lưu thông tin một suất chiếu cụ thể của phim. Gồm:
   + maSuatChieu (String): mã suất chiếu
   + phim (Phim): bộ phim được chiếu, có kiểu là class Phim
