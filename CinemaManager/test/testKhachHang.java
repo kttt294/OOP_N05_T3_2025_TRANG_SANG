@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class testKhachHang {
-    public static void test() {
-        Scanner scanner = new Scanner(System.in);
-
+    public static void test(Scanner scanner) {
         System.out.print("Nhập mã khách hàng: ");
         String maKH = scanner.nextLine();
 

@@ -4,9 +4,7 @@ import model.Phim;
 import java.util.Scanner;
 
 public class testPhim {
-    public static void test() {
-        Scanner scanner = new Scanner(System.in);
-
+    public static void test(Scanner scanner) {
         System.out.print("Nhập mã phim: ");
         String maPhim = scanner.nextLine();
 
