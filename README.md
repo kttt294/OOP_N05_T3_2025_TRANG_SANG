@@ -55,23 +55,15 @@ Câu 2: 03 đối tượng cơ sở cần thiết là:
   + lichSuDatVe (List<Ve>): lịch sử đặt vé của khách hàng này
 
 Câu 3: Cấu trúc folder của project:
-CinemaManager/
-│
-├── src/
-│   ├── controller/
-│   │   └── model/
-│   │       ├── Phim.java
-│   │       ├── SuatChieu.java
-│   │       ├── KhachHang.java
-│   │       └── ... (các model khác)
-│   └── App.java
-│
-├── test/
-│   ├── testPhim.java
-│   ├── testSuatChieu.java
-│   └── testKhachHang.java
-│
-└── README.md
+CinemaManager/src/controller/model/Phim.java  
+CinemaManager/src/controller/model/SuatChieu.java  
+CinemaManager/src/controller/model/KhachHang.java  
+CinemaManager/src/controller/model/... (các model khác)  
+CinemaManager/src/App.java  
+CinemaManager/test/testPhim.java  
+CinemaManager/test/testSuatChieu.java  
+CinemaManager/test/testKhachHang.java  
+CinemaManager/README.md  
 
 Câu 4: Các class được viết cho 3 đối tượng chính đã nêu trong Câu 2 là:
 Phim.java: chứa thông tin phim và kiểm tra độ tuổi hợp lệ.
