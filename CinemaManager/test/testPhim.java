@@ -39,5 +39,6 @@ public class testPhim {
         } else {
             System.out.println("Khán giả " + tuoi + " tuổi KHÔNG được phép xem phim.");
         }
+        System.out.println();
     }
 }

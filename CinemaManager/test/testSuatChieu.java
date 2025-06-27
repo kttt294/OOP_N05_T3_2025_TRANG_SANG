@@ -41,5 +41,6 @@ public class testSuatChieu {
 
         System.out.println("\n== Thông tin suất chiếu sau khi đặt ghế " + maGheDat + " ==");
         suat.hienThiThongTin();
+        System.out.println();
     }
 }
