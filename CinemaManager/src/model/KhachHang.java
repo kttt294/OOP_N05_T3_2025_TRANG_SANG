@@ -12,8 +12,7 @@ public class KhachHang {
     GioiTinh gioiTinh;
     List<Ve> lichSuDatVe;
 
-    public KhachHang(String maKH, String tenKH, int tuoi, String sdt,
-                     String email, GioiTinh gioiTinh, List<Ve> lichSuDatVe) {
+    public KhachHang(String maKH, String tenKH, int tuoi, String sdt, String email, GioiTinh gioiTinh, List<Ve> lichSuDatVe) {
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.tuoi = tuoi;
