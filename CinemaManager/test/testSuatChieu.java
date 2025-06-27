@@ -12,7 +12,7 @@ public class testSuatChieu {
         System.out.print("Nhập mã suất chiếu: ");
         String maSuat = scanner.nextLine();
 
-        System.out.print("Nhập thời gian bắt đầu (yyyy-MM-dd HH:mm): ");
+        System.out.print("Nhập thời gian bắt đầu dưới định dạng (yyyy-MM-dd HH:mm): ");
         String timeInput = scanner.nextLine();
         LocalDateTime thoiGianBatDau = LocalDateTime.parse(timeInput, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
