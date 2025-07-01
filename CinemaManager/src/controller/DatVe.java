@@ -11,4 +11,14 @@ public class DatVe{
     List<Ve> danhSachVe;
     double tongTien;
     LocalDateTime thoiGianDat;
+
+    DatVe(){};
+
+    public DatVe(String maDatVe, KhachHang khachHang, List<Ve> danhSachVe, double tongTien, LocalDateTime thoiGianDat){
+        this.maDatVe = maDatVe;
+        this.khachHang = khachHang;
+        this.tongTien = tongTien;
+        this.thoiGianDat = thoiGianDat;
+        this.danhSachVe = (danhSachVe != null) ? danhSachVe : new ArrayList<>();
+    }
 }
