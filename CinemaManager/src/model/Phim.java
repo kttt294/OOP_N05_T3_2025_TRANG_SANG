@@ -9,7 +9,7 @@ public class Phim {
     int gioiHanTuoi;
     String moTa;
 
-    Phim(){};
+    public Phim(){};
     public Phim(String maPhim, String tenPhim, String theLoai, int thoiLuong,
                 String ngonNgu, int gioiHanTuoi, String moTa) {
         this.maPhim = maPhim;

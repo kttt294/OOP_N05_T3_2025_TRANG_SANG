@@ -8,4 +8,6 @@ public class NhanVien extends TaiKhoan{
     String email;
     GioiTinh gioiTinh;
     String chucVu;
+
+    public NhanVien(){};
 }

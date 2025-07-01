@@ -10,4 +10,6 @@ public class HoaDon {
     int tongTien;
     LocalDateTime thoiGianThanhToan;
     String phuongThucThanhToan; // Tiền mặt hoặc chuyển khoản
+
+    public HoaDon(){};
 }

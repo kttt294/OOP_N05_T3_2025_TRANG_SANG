@@ -11,7 +11,8 @@ public class SuatChieu {
     LocalDateTime thoiGianKetThuc;
     List<Ghe> danhSachGheTrong;
 
-    // Constructor
+    public SuatChieu(){};
+    
     public SuatChieu(String maSuatChieu, Phim phim, PhongChieu phongChieu,
                      LocalDateTime thoiGianBatDau, List<Ghe> danhSachGheTrong) {
         this.maSuatChieu = maSuatChieu;

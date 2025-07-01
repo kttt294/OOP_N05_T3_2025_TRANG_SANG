@@ -6,7 +6,7 @@ public class DoAn{
     int gia; // tinh bang Viet Nam Dong
     int soLuong;
 
-    DoAn(){};
+    public DoAn(){};
 
     public DoAn(String maDoAn, String tenDoAn, int gia, int soLuong){
         this.maDoAn = maDoAn;

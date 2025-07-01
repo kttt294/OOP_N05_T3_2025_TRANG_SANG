@@ -4,9 +4,19 @@ import java.util.Objects;
 
 public class Ghe {
     String maGhe;
+    int hang;
+    int cot;
+    boolean daDat;
 
-    public Ghe(String maGhe) {
+    public Ghe(){};
+
+    public Ghe(String maGhe){
         this.maGhe = maGhe;
+    }
+    public Ghe(String maGhe, int hang, int cot) {
+        this.maGhe = maGhe;
+        this.hang = hang;
+        this.cot = cot;
     }
 
     public String getMaGhe() {

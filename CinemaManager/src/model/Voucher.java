@@ -10,4 +10,6 @@ public class Voucher{
     LocalDateTime ngayKetThuc;
     String soLuongConLai;
     String trangThai;
+
+    public Voucher(){};
 }
