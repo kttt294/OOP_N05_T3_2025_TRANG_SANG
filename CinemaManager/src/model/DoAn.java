@@ -1,10 +1,10 @@
 package model;
 
 public class DoAn{
-    String maDoAn;
-    String tenDoAn;
-    int gia; // tinh bang Viet Nam Dong
-    int soLuong;
+    private String maDoAn;
+    private String tenDoAn;
+    private int gia; // tinh bang Viet Nam Dong
+    private int soLuong;
 
     public DoAn(){};
 

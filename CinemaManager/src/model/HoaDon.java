@@ -3,13 +3,13 @@ package model;
 import java.time.LocalDateTime;
 
 public class HoaDon {
-    String maHoaDon;
-    KhachHang khachHang;
-    Ve veDaDat;
-    DoAn doAn;
-    int tongTien;
-    LocalDateTime thoiGianThanhToan;
-    String phuongThucThanhToan; // Tiền mặt hoặc chuyển khoản
+    private String maHoaDon;
+    private KhachHang khachHang;
+    private Ve veDaDat;
+    private DoAn doAn;
+    private int tongTien;
+    private LocalDateTime thoiGianThanhToan;
+    private String phuongThucThanhToan; // Tiền mặt hoặc chuyển khoản
 
     public HoaDon(){};
 }

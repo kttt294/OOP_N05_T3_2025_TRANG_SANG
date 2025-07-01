@@ -9,10 +9,10 @@ import model.KhachHang;
 
 
 public class System {
-    List<Phim> dsPhim = new ArrayList<>();
-    List<PhongChieu> dsPhongChieu = new ArrayList<>();
-    List<SuatChieu> dsSuatChieu = new ArrayList<>();
-    List<KhachHang> dsKhachHang = new ArrayList<>();
+    private List<Phim> dsPhim = new ArrayList<>();
+    private List<PhongChieu> dsPhongChieu = new ArrayList<>();
+    private List<SuatChieu> dsSuatChieu = new ArrayList<>();
+    private List<KhachHang> dsKhachHang = new ArrayList<>();
 
     System(){
         dsPhim = new ArrayList<>();

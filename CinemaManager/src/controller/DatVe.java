@@ -7,11 +7,11 @@ import java.util.List;
 import java.time.LocalDateTime;
 
 public class DatVe{
-    String maDatVe;
-    KhachHang khachHang;
-    List<Ve> danhSachVe;
-    double tongTien;
-    LocalDateTime thoiGianDat;
+    private String maDatVe;
+    private KhachHang khachHang;
+    private List<Ve> danhSachVe;
+    private double tongTien;
+    private LocalDateTime thoiGianDat;
 
     DatVe(){};
 

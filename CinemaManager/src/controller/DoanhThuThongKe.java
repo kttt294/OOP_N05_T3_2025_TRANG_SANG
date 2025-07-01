@@ -4,11 +4,11 @@ import model.Phim;
 import java.time.LocalDateTime;
 
 public class DoanhThuThongKe{
-    LocalDateTime ngayThongKe;
-    int soLuongVeBanRa;
-    int tongDoanhThu; // tính bằng Việt Nam Đồng
-    Phim phimBanChayNhat;
-    float tiLeChoNgoiDay;// tỉ lệ chỗ ngồi đầy trong rạp
+    private LocalDateTime ngayThongKe;
+    private int soLuongVeBanRa;
+    private int tongDoanhThu; // tính bằng Việt Nam Đồng
+    private Phim phimBanChayNhat;
+    private float tiLeChoNgoiDay;// tỉ lệ chỗ ngồi đầy trong rạp
 
     DoanhThuThongKe(){};
 

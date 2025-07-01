@@ -3,10 +3,10 @@ package model;
 import java.util.Objects;
 
 public class Ghe {
-    String maGhe;
-    int hang;
-    int cot;
-    boolean daDat;
+    private String maGhe;
+    private int hang;
+    private int cot;
+    private boolean daDat;
 
     public Ghe(){};
 

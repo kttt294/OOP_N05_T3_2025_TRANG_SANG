@@ -24,7 +24,7 @@ public class testKhachHang {
         String email = scanner.nextLine();
 
         System.out.print("Nhập giới tính (NAM/NU/KHAC): ");
-        GioiTinh gioiTinh = GioiTinh.valueOf(scanner.nextLine().toUpperCase());
+        String gioiTinh = String.valueOf(scanner.nextLine().toUpperCase());
 
         List<Ve> lichSu = new ArrayList<>();
 

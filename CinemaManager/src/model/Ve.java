@@ -1,12 +1,12 @@
 package model;
 
 public class Ve {
-    String maVe;
-    KhachHang khachHang;
-    SuatChieu suatChieu;
-    Ghe ghe;
-    double giaVe;
-    boolean daThanhToan;
+    private String maVe;
+    private KhachHang khachHang;
+    private SuatChieu suatChieu;
+    private Ghe ghe;
+    private double giaVe;
+    private boolean daThanhToan;
 
     public Ve(){};
     
