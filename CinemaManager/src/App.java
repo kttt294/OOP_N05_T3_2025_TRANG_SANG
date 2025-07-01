@@ -7,6 +7,7 @@ public class App {
         //testKhachHang.test(scanner);
         //testPhim.test(scanner);
         //testSuatChieu.test(scanner);
-        Book.test();
+        //Book.test();
+        testLeaf.test();
     }
 }
