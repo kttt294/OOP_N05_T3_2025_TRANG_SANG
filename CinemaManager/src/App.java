@@ -1,6 +1,4 @@
 import java.util.Scanner;
-
-import review.Book;
 import test.*;
 
 public class App {
