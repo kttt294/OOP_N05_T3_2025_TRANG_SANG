@@ -11,7 +11,9 @@ public class KhachHang {
     String email;
     GioiTinh gioiTinh;
     List<Ve> lichSuDatVe;
-
+    
+    KhachHang(){};
+    
     public KhachHang(String maKH, String tenKH, int tuoi, String sdt, String email, GioiTinh gioiTinh, List<Ve> lichSuDatVe) {
         this.maKH = maKH;
         this.tenKH = tenKH;
