@@ -9,6 +9,6 @@ public class App {
         //testSuatChieu.test(scanner);
         //Book.test();
         //testLeaf.test();
-        //testPerson.test();
+        testPerson.test();
     }
 }
