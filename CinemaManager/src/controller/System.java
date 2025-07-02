@@ -20,13 +20,6 @@ public class System {
         dsKhachHang = new ArrayList<>();
     }
 
-    public static System getInstance() {
-        if (instance == null) {
-            instance = new System();
-        }
-        return instance;
-    }
-
     public void themPhim(Phim phim) {
         dsPhim.add(phim);
     }

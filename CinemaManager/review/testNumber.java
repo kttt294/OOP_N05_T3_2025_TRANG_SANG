@@ -1,3 +1,4 @@
+
 public class testNumber{
     public static void test(){
         Number n1 = new Number();
