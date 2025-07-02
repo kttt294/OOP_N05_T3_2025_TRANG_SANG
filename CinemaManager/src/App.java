@@ -12,5 +12,6 @@ public class App {
         //testPerson.test();
         testUser.test();
         testRecursion.test();
+        testTime.test();
     }
 }
