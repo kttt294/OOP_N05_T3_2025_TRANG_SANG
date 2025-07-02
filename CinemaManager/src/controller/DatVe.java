@@ -12,6 +12,9 @@ public class DatVe {
 =======
 public class DatVe{
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
+=======
 >>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
 =======
 >>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
