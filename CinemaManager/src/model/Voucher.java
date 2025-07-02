@@ -105,5 +105,9 @@ public class Voucher{
     public String getMaVoucher(){
         return this.maVoucher;
     }
+<<<<<<< HEAD
+}
+>>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
+=======
 }
 >>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a

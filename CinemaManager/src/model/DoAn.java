@@ -16,6 +16,9 @@ public class DoAn{
     private int soLuong;
 
     public DoAn(){};
+<<<<<<< HEAD
+>>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
+=======
 >>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
 
     public DoAn(String maDoAn, String tenDoAn, int gia, int soLuong) {
