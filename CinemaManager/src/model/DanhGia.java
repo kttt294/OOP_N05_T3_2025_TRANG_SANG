@@ -29,6 +29,9 @@ public class DanhGia{
     public DanhGia(String maDanhGia, KhachHang nguoiDanhGia, Phim phim, int soSao, String binhLuan, LocalDateTime thoiGian){
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
+=======
 >>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
 =======
 >>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
@@ -41,6 +44,7 @@ public class DanhGia{
         this.binhLuan = binhLuan;
         this.thoiGian = thoiGian;
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -93,6 +97,9 @@ public class DanhGia{
         this.thoiGian = thoiGian;
     }
 }
+=======
+}
+>>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
 =======
 }
 >>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a

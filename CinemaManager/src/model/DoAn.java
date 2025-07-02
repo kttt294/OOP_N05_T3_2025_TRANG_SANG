@@ -1,6 +1,5 @@
 package model;
 
-<<<<<<< HEAD
 public class DoAn {
     private String maDoAn;
     private String tenDoAn;
@@ -8,21 +7,6 @@ public class DoAn {
     private int soLuong;
 
     public DoAn() {}
-=======
-public class DoAn{
-    private String maDoAn;
-    private String tenDoAn;
-    private int gia; // tinh bang Viet Nam Dong
-    private int soLuong;
-
-    public DoAn(){};
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
 
     public DoAn(String maDoAn, String tenDoAn, int gia, int soLuong) {
         this.maDoAn = maDoAn;

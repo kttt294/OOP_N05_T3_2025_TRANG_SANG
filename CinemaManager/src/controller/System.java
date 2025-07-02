@@ -8,19 +8,11 @@ import model.SuatChieu;
 import model.KhachHang;
 
 public class System {
-<<<<<<< HEAD
     private static System instance;
-=======
     private List<Phim> dsPhim = new ArrayList<>();
     private List<PhongChieu> dsPhongChieu = new ArrayList<>();
     private List<SuatChieu> dsSuatChieu = new ArrayList<>();
     private List<KhachHang> dsKhachHang = new ArrayList<>();
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-
-    private List<Phim> dsPhim;
-    private List<PhongChieu> dsPhongChieu;
-    private List<SuatChieu> dsSuatChieu;
-    private List<KhachHang> dsKhachHang;
 
     public System() {
         dsPhim = new ArrayList<>();
