@@ -4,17 +4,18 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class KhachHang {
-    String maKH;
-    String tenKH;
-    int tuoi;
-    String sdt;
-    String email;
-    GioiTinh gioiTinh;
-    List<Ve> lichSuDatVe;
+    private String maKH;
+    private String tenKH;
+    private int tuoi;
+    private String sdt;
+    private String email;
+    private String gioiTinh;   // Nam, Nu, Khong xac dinh
+    private TaiKhoan taiKhoan;
+    private List<Ve> lichSuDatVe;
     
-    KhachHang(){};
+    public KhachHang(){};
     
-    public KhachHang(String maKH, String tenKH, int tuoi, String sdt, String email, GioiTinh gioiTinh, List<Ve> lichSuDatVe) {
+    public KhachHang(String maKH, String tenKH, int tuoi, String sdt, String email, String gioiTinh, List<Ve> lichSuDatVe) {
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.tuoi = tuoi;
@@ -64,11 +65,11 @@ public class KhachHang {
         this.email = email;
     }
 
-    public GioiTinh getGioiTinh() {
+    public String getGioiTinh() {
         return gioiTinh;
     }
 
-    public void setGioiTinh(GioiTinh gioiTinh) {
+    public void setGioiTinh(String gioiTinh) {
         this.gioiTinh = gioiTinh;
     }
 

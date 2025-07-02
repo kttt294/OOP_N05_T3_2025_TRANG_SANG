@@ -1,11 +1,16 @@
 package model;
 
+<<<<<<< HEAD
 public class NhanVien extends TaiKhoan {
+=======
+public class NhanVien{
+>>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
     private String maNV;
     private String tenNV;
     private int tuoi;
     private String sdt;
     private String email;
+<<<<<<< HEAD
     private GioiTinh gioiTinh;
     private String chucVu;
 
@@ -77,3 +82,11 @@ public class NhanVien extends TaiKhoan {
         this.chucVu = chucVu;
     }
 }
+=======
+    private String gioiTinh;
+    private String chucVu;
+    private TaiKhoan taiKhoan;
+
+    public NhanVien(){};
+}
+>>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a

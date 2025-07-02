@@ -1,12 +1,17 @@
 package controller;
 
+import java.util.ArrayList;
 import model.KhachHang;
 import model.Ve;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
+<<<<<<< HEAD
 public class DatVe {
+=======
+public class DatVe{
+>>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
     private String maDatVe;
     private KhachHang khachHang;
     private List<Ve> danhSachVe;

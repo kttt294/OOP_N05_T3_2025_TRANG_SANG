@@ -3,12 +3,21 @@ package controller;
 import model.Phim;
 import java.time.LocalDateTime;
 
+<<<<<<< HEAD
 public class DoanhThuThongKe {
     private LocalDateTime ngayThongKe;
     private int soLuongVeBanRa;
     private int tongDoanhThu;
     private Phim phimBanChayNhat;
     private float tiLeChoNgoiDay;
+=======
+public class DoanhThuThongKe{
+    private LocalDateTime ngayThongKe;
+    private int soLuongVeBanRa;
+    private int tongDoanhThu; // tính bằng Việt Nam Đồng
+    private Phim phimBanChayNhat;
+    private float tiLeChoNgoiDay;// tỉ lệ chỗ ngồi đầy trong rạp
+>>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
 
     public DoanhThuThongKe() {}
 

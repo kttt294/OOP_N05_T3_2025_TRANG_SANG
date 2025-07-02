@@ -4,14 +4,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class SuatChieu {
-    String maSuatChieu;
-    Phim phim;
-    PhongChieu phongChieu;
-    LocalDateTime thoiGianBatDau;
-    LocalDateTime thoiGianKetThuc;
-    List<Ghe> danhSachGheTrong;
+    private String maSuatChieu;
+    private Phim phim;
+    private PhongChieu phongChieu;
+    private LocalDateTime thoiGianBatDau;
+    private LocalDateTime thoiGianKetThuc;
+    private List<Ghe> danhSachGheTrong;
 
-    // Constructor
+    public SuatChieu(){};
+
     public SuatChieu(String maSuatChieu, Phim phim, PhongChieu phongChieu,
                      LocalDateTime thoiGianBatDau, List<Ghe> danhSachGheTrong) {
         this.maSuatChieu = maSuatChieu;

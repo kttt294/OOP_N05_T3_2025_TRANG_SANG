@@ -1,14 +1,15 @@
 package model;
 
 public class Ve {
-    String maVe;
-    KhachHang khachHang;
-    SuatChieu suatChieu;
-    Ghe ghe;
-    double giaVe;
-    boolean daThanhToan;
+    private String maVe;
+    private KhachHang khachHang;
+    private SuatChieu suatChieu;
+    private Ghe ghe;
+    private double giaVe;
+    private boolean daThanhToan;
 
-    // Constructor đầy đủ
+    public Ve(){};
+    
     public Ve(String maVe, KhachHang khachHang, SuatChieu suatChieu, Ghe ghe, double giaVe, boolean daThanhToan) {
         this.maVe = maVe;
         this.khachHang = khachHang;
@@ -16,11 +17,6 @@ public class Ve {
         this.ghe = ghe;
         this.giaVe = giaVe;
         this.daThanhToan = daThanhToan;
-    }
-
-    // Constructor đơn giản chưa thanh toán
-    public Ve(String maVe, KhachHang khachHang, SuatChieu suatChieu, Ghe ghe, double giaVe) {
-        this(maVe, khachHang, suatChieu, ghe, giaVe, false);
     }
 
     // Getter & Setter
