@@ -79,7 +79,7 @@ public class Time {
 
     public String toString() {
         return (day < 10 ? "0" :"") + day + "/" +
-        (month < 10 ? "0" : "") + "/" + year + " " +
+        (month < 10 ? "0" : "") + month + "/" + year + " " +
         ((hour == 0 || hour == 12) ? 12 : hour % 12) +
                 ":" + (minute < 10 ? "0" : "") + minute +
                 ":" + (second < 10 ? "0" : "") + second +
