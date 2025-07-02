@@ -1,5 +1,5 @@
 public class testUser {
-    public static void main(String[] args) {
+    public static void test() {
         User user = new User();
 
         user.setTen("Nguyen Van A");
