@@ -9,7 +9,7 @@ public class KhachHang {
     private int tuoi;
     private String sdt;
     private String email;
-    private String gioiTinh;   // Nam, Nu, Khong xac dinh
+    private String gioiTinh;   // Nam, Nu, Khac
     private TaiKhoan taiKhoan;
     private List<Ve> lichSuDatVe;
     
