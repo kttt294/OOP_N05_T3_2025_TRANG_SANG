@@ -11,5 +11,6 @@ public class App {
         //testLeaf.test();
         //testPerson.test();
         testUser.test();
+        testRecursion.test();
     }
 }
