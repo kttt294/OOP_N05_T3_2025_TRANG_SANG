@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 
 public class DatVe{
-
     private String maDatVe;
     private KhachHang khachHang;
     private List<Ve> danhSachVe;

@@ -2,7 +2,6 @@ package model;
 
 import java.time.LocalDateTime;
 
-<<<<<<< HEAD
 public class Voucher {
     private String maVoucher;
     private String moTa;
@@ -82,7 +81,6 @@ public class Voucher {
         this.trangThai = trangThai;
     }
 }
-=======
 public class Voucher{
     private String maVoucher;
     private String moTa;
@@ -105,17 +103,4 @@ public class Voucher{
     public String getMaVoucher(){
         return this.maVoucher;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a

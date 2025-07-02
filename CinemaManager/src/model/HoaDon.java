@@ -11,10 +11,6 @@ public class HoaDon {
     private LocalDateTime thoiGianThanhToan;
     private String phuongThucThanhToan; // Tiền mặt hoặc chuyển khoản
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     HoaDon(){};
 
     public HoaDon(String maHoaDon, KhachHang khachHang, Ve veDaDat, DoAn doAn,
@@ -84,19 +80,3 @@ public class HoaDon {
         this.phuongThucThanhToan = phuongThucThanhToan;
     }
 }
-=======
-    public HoaDon(){};
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
-    public HoaDon(){};
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
-    public HoaDon(){};
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
-    public HoaDon(){};
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a

@@ -2,7 +2,6 @@ package model;
 
 import java.time.LocalDateTime;
 
-<<<<<<< HEAD
 public class DanhGia {
     private String maDanhGia;
     private KhachHang nguoiDanhGia;
@@ -13,30 +12,7 @@ public class DanhGia {
 
     public DanhGia() {}
 
-    public DanhGia(String maDanhGia, KhachHang nguoiDanhGia, Phim phim,
-                   int soSao, String binhLuan, LocalDateTime thoiGian) {
-=======
-public class DanhGia{
-    private String maDanhGia;
-    private KhachHang nguoiDanhGia;
-    private Phim phim;
-    private int soSao;   // từ 0 đến 5
-    private String binhLuan;
-    private LocalDateTime thoiGian;
-
-    public DanhGia(){};
-
-    public DanhGia(String maDanhGia, KhachHang nguoiDanhGia, Phim phim, int soSao, String binhLuan, LocalDateTime thoiGian){
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
+    public DanhGia(String maDanhGia, KhachHang nguoiDanhGia, Phim phim, int soSao, String binhLuan, LocalDateTime thoiGian) {
         this.maDanhGia = maDanhGia;
         this.nguoiDanhGia = nguoiDanhGia;
         this.phim = phim;
@@ -44,10 +20,6 @@ public class DanhGia{
         this.binhLuan = binhLuan;
         this.thoiGian = thoiGian;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     public String getMaDanhGia() {
         return maDanhGia;
@@ -97,15 +69,3 @@ public class DanhGia{
         this.thoiGian = thoiGian;
     }
 }
-=======
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a
-=======
-}
->>>>>>> 8cd6e89d87aa971c828bf8a964449e4996e0481a

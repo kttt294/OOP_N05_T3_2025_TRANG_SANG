@@ -1,12 +1,12 @@
 package model;
 
-public class DoAn {
+public class DoAn{
     private String maDoAn;
     private String tenDoAn;
-    private int gia; // tính bằng Việt Nam Đồng
+    private int gia; // tinh bang Viet Nam Dong
     private int soLuong;
 
-    public DoAn() {}
+    public DoAn(){};
 
     public DoAn(String maDoAn, String tenDoAn, int gia, int soLuong) {
         this.maDoAn = maDoAn;
