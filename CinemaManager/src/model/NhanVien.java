@@ -1,5 +1,7 @@
 package model;
 
+import test.TaiKhoan;
+
 public class NhanVien{
     private String maNV;
     private String tenNV;

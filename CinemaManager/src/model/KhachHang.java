@@ -1,6 +1,9 @@
 package model;
 
 import java.util.List;
+
+import test.TaiKhoan;
+
 import java.util.ArrayList;
 
 public class KhachHang {

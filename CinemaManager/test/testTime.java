@@ -1,5 +1,4 @@
 package test;
-
 import model.Time;
 
 public class testTime {
