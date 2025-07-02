@@ -5,27 +5,36 @@ public class Time {
     int hour;
     int minute;
     int second;
+    int day;
+    int month;
+    int year;
 
-    public Time(){
-        setTime(0, 0, 0);
+    public Time(int d, int mth, int y, int h, int m, int s) {
+        setTime(d, mth, y, h, m, s);
     }
 
-    public Time(int h) {
-        setTime(h, 0, 0);
-    }
-
-    public Time(int h, int m) {
-        setTime(h, m, 0);
-    }
-
-    public Time(int h, int m, int s) {
-        setTime(h, m, s);
-    }
-
-    public Time setTime(int h, int m, int s) {
+    public Time setTime(int d, int mth, int y, int h, int m, int s) {
+        setDay(d);
+        setMonth(mth);
+        setYear(y);
         setHour(h);
         setMinute(m);
         setSecond(s);
+        return this;
+    }
+
+    public Time setDay(int d){
+        day = ((d >= 1 && d <= 31) ? d : 0);
+        return this;
+    }
+
+    public Time setMonth(int mth){
+        month = ((mth >= 1 && mth <= 12) ? mth : 0);
+        return this;
+    }
+
+    public Time setYear(int y){
+        year = ((y >= 0) ? y : 2000);
         return this;
     }
 
@@ -44,6 +53,18 @@ public class Time {
         return this;
     }
 
+    public int getDay(){
+        return day;
+    }
+
+    public int getMonth(){
+        return month;
+    }
+
+    public int getYear(){
+        return year;
+    }
+
     public int getHour() {
         return hour;
     }
@@ -57,7 +78,9 @@ public class Time {
     }
 
     public String toString() {
-        return ((hour == 0 || hour == 12) ? 12 : hour % 12) +
+        return (day < 10 ? "0" :"") + day + "/" +
+        (month < 10 ? "0" : "") + year +
+        ((hour == 0 || hour == 12) ? 12 : hour % 12) +
                 ":" + (minute < 10 ? "0" : "") + minute +
                 ":" + (second < 10 ? "0" : "") + second +
                 (hour < 12 ? " AM" : " PM");
