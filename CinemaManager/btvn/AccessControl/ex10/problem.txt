@@ -1,0 +1,2 @@
+Ex10: Create a class with a private constructor.
+Create a second class that contains a static method that returns a reference to an object of the class with the private constructor.

@@ -1,16 +1,11 @@
-import btvn.AccessControl.ex1.*;
-import btvn.AccessControl.ex3.*;
-import btvn.AccessControl.ex5.*;
-import btvn.AccessControl.ex6.*;
-import btvn.AccessControl.ex8.*;
-
 public class App {
     public static void main(String[] args){
-        testEx1.test();
-        testEx3_debug.test();
-        testEx3_debugoff.test();
-        testEx5.test();
-        testEx6.test();
-        testEx8.test();
+        btvn.AccessControl.ex1.testEx1.test();
+        btvn.AccessControl.ex3.testEx3_debug.test();
+        btvn.AccessControl.ex3.testEx3_debugoff.test();
+        btvn.AccessControl.ex5.testEx5.test();
+        btvn.AccessControl.ex6.testEx6.test();
+        btvn.AccessControl.ex8.testEx8.test();
+        btvn.AccessControl.ex9.testEx9.test();
     }
 }
