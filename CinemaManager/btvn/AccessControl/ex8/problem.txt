@@ -1,0 +1,2 @@
+Ex8: In a class, create a protected method.
+Then inherit from that class and attempt to call the protected method from inside a method of your derived class.
