@@ -1,17 +1,11 @@
-import java.util.Scanner;
-import test.*;
+import btvn.ex1.testEx1;
+import btvn.ex3.*;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        //testKhachHang.test(scanner);
-        //testPhim.test(scanner);
-        //testSuatChieu.test(scanner);
-        //Book.test();
-        //testLeaf.test();
-        //testPerson.test();
-        testUser.test();
-        testRecursion.test();
-        testTime.test();
+    public static void main(String[] args){
+        testEx1.test();
+        
+        testEx3_debug.test();
+        testEx3_debugoff.test();
     }
 }
