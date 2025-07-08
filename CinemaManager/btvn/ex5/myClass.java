@@ -4,7 +4,7 @@ public class myClass {
     public int pubField = 1;
     protected int proField = 2;
     int defaultField = 3;        // package-access (default)
-    private int privField = 4;
+    // private int privField = 4;
 
     public void pubMethod() {
         System.out.println("Public method");
@@ -18,7 +18,8 @@ public class myClass {
         System.out.println("Default/package-access method");
     }
 
-    private void privMethod() {
+/*   private void privMethod() {
         System.out.println("Private method");
     }
+*/
 }
