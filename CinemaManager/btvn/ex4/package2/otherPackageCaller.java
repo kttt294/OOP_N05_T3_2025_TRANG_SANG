@@ -5,6 +5,6 @@ import btvn.ex4.package1.Parent;
 public class otherPackageCaller {
     public static void main(String[] args) {
         Parent p = new Parent();
-        p.showMessage();  // ERROR: showMessage() has protected access
+    //  p.showMessage();  // ERROR: showMessage() has protected access
     }   
 }

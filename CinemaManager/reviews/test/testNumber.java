@@ -1,3 +1,6 @@
+package reviews.test;
+
+import reviews.model.Number;
 
 public class testNumber{
     public static void test(){

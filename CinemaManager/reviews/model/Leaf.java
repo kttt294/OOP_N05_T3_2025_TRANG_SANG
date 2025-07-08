@@ -1,11 +1,12 @@
+package reviews.model;
 public class Leaf {
     int i=0;
-    Leaf increment(){
+    public Leaf increment(){
         i++;
         return this;
     }
     
-    void print(){
+    public void print(){
         System.out.println("i = " + i);
     }
 }

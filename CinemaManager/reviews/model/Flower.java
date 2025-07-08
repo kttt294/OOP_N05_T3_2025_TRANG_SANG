@@ -1,22 +1,23 @@
-public class Flower1 {
+package reviews.model;
+public class Flower {
     int petalCount=0;
     String s = "";
 
-    Flower1(int petals){
+    Flower(int petals){
         petalCount = petals;
     }
 
-    Flower1(String ss){
+    Flower(String ss){
         s = ss;
     }
 
-    Flower1(String s, int petals){
+    Flower(String s, int petals){
         this(petals);
         // this(s);
         this.s = s;
     }
 
-    Flower1(){
+    Flower(){
         this("hi", 47);
     }
 }

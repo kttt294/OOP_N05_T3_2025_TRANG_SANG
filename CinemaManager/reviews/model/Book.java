@@ -1,3 +1,4 @@
+package reviews.model;
 public class Book{
     String title;
     String author;
