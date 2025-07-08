@@ -1,7 +1,8 @@
-import btvn.AccessControl.ex1.testEx1;
+import btvn.AccessControl.ex1.*;
 import btvn.AccessControl.ex3.*;
 import btvn.AccessControl.ex5.*;
-import btvn.AccessControl.ex6.testEx6;
+import btvn.AccessControl.ex6.*;
+import btvn.AccessControl.ex8.*;
 
 public class App {
     public static void main(String[] args){
@@ -10,5 +11,6 @@ public class App {
         testEx3_debugoff.test();
         testEx5.test();
         testEx6.test();
+        testEx8.test();
     }
 }
