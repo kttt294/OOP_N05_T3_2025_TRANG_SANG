@@ -5,12 +5,11 @@ public class PrivateConstructor {
         System.out.println("Secret constructor called!");
     }
 
-    public void reveal() {
-        System.out.println("This is a secret object.");
-    }
-
-    // Cho phép class khác cùng package khởi tạo (nếu cần)
-    static PrivateConstructor create() {
+    public static PrivateConstructor createInstance() {
         return new PrivateConstructor();
+    }
+    
+    public void sayHello() {
+        System.out.println("Hello from secret instance!");
     }
 }

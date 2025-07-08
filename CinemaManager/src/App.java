@@ -7,5 +7,6 @@ public class App {
         btvn.AccessControl.ex6.testEx6.test();
         btvn.AccessControl.ex8.testEx8.test();
         btvn.AccessControl.ex9.testEx9.test();
+        btvn.AccessControl.ex10.testEx10.test();
     }
 }
