@@ -1,0 +1,9 @@
+Exercise 3: (2) Prove the previous sentence.
+You can see that the construction happens from the base “outward,” so the base class is 
+initialized before the derived-class constructors can access it. Even if you don’t create a 
+constructor for Cartoon( ), the compiler will synthesize a default constructor for you that 
+calls the base class constructor. 
+
+Chứng minh vấn đề: 
+khi xóa đi dòng constructor cho class Cartoon(), chương trình vẫn biên dịch và chạy, constructor của class Drawing() và Ảt() vẫn được gọi 
+=> Trình biên dịch Java đã tự động tạo ra constructor mặc định cho Cartoon() và constructor này được gọi là các constructor của lớp cha theo thứ tự kế thừa 
