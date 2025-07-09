@@ -26,9 +26,11 @@ Thành viên:
 3. Nguyễn Lệ Thu (nglthu1979)
 
 **Sơ đồ chức năng**
+
 <img src = "image/oopClass.jpg">
 
 **Sơ đồ thuật toán**
+
 <img src = "image/oopAction.jpg">
 
               PRACTICE 02 (Week 2)
