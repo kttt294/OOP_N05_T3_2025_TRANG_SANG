@@ -26,7 +26,7 @@ Thành viên:
 3. Nguyễn Lệ Thu (nglthu1979)
 
 **Sơ đồ chức năng**
-<img src = "oopClass.jpg">
+<img src = "image/oopClass.jpg">
 
               PRACTICE 02 (Week 2)
 Câu 1: Tiêu đề của bài tập lớn cuối kỳ: Ứng dụng uản lý rạp chiếu phim (CinemaManager)
