@@ -28,6 +28,9 @@ Thành viên:
 **Sơ đồ chức năng**
 <img src = "image/oopClass.jpg">
 
+**Sơ đồ thuật toán**
+<img src = "image/oopAction.jpg">
+
               PRACTICE 02 (Week 2)
 Câu 1: Tiêu đề của bài tập lớn cuối kỳ: Ứng dụng uản lý rạp chiếu phim (CinemaManager)
 
