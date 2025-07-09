@@ -1,0 +1,8 @@
+Exercise 4: (2) Prove that the base-class constructors are (a) always called and (b) called 
+before derived-class constructors. 
+
+a,
+Theo như bài 3, kể cả khi không tạo constructor cho lớp cha Cartoon() thì các lớp cơ sở như Drawing() và Art() vẫn được gọi tới 
+b,
+Viết lại constructor cho class Cartoon() và chạy chương trình, nhìn vào thứ tự thì ta sẽ thấy constructor của lớp Drawing() và Art() được gọi trước lớp Cartoon()
+=> contructor của lớp base class luôn được gọi trước derived class
