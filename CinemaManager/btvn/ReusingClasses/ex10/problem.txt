@@ -1,2 +1,0 @@
-Exercise 10: (1) Modify the previous exercise so that each class only has non-default 
-constructors. 

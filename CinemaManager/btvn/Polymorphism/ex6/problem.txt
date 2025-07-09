@@ -1,0 +1,3 @@
+Exercise 6: (1) Change Music3.java so that what( ) becomes the root Object method 
+toString( ). Try printing the Instrument objects using System.out.println( ) (without 
+any casting). 
