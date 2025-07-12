@@ -62,19 +62,19 @@ Delete
 
 Create
 
-<img src = "image/createKhachHang.jpg">
+<img src = "image/createKhachHang.png">
 
 Edit
 
-<img src = "image/editKhachHang.jpg">
+<img src = "image/editKhachHang.png">
 
 Read
 
-<img src = "image/readKhachHang.jpg">
+<img src = "image/readKhachHang.png">
 
 Delete
 
-<img src = "image/deleteKhachHang.jpg">
+<img src = "image/deleteKhachHang.png">
 
               PRACTICE 02 (Week 2)
 Câu 1: Tiêu đề của bài tập lớn cuối kỳ: Ứng dụng uản lý rạp chiếu phim (CinemaManager)
