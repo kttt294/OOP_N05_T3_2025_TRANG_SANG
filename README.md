@@ -25,7 +25,10 @@ Thành viên:
 2. Trần Minh Sang, MSV : 24100012 (sangzesy)
 3. Nguyễn Lệ Thu (nglthu1979)
 
-**Sơ đồ chức năng Phim**
+
+**PHIM**
+
+**Sơ đồ chức năng**
 
 <img src = "image/classPhim.jpg">
 
@@ -46,6 +49,32 @@ Read
 Delete
 
 <img src = "image/deletePhim.jpg">
+
+
+
+**KHÁCH HÀNG**
+
+**Sơ đồ chức năng**
+
+<img src = "image/oopClass.jpg">
+
+**Sơ đồ thuật toán**
+
+Create
+
+<img src = "image/createKhachHang.jpg">
+
+Edit
+
+<img src = "image/editKhachHang.jpg">
+
+Read
+
+<img src = "image/readKhachHang.jpg">
+
+Delete
+
+<img src = "image/deleteKhachHang.jpg">
 
               PRACTICE 02 (Week 2)
 Câu 1: Tiêu đề của bài tập lớn cuối kỳ: Ứng dụng uản lý rạp chiếu phim (CinemaManager)
