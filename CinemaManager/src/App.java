@@ -1,5 +1,6 @@
 public class App {
     public static void main(String[] args){
+        // gọi test
         btvn.AccessControl.ex1.testEx1.test();
         btvn.AccessControl.ex3.testEx3_debug.test();
         btvn.AccessControl.ex3.testEx3_debugoff.test();
