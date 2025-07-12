@@ -50,7 +50,7 @@ public class PhimCRUD {
         }
     }
 
-    public void updatePhim() {
+    public void editPhim() {
         System.out.print("\nNhập mã phim cần sửa: ");
         String ma = sc.nextLine();
         for (Phim p : danhSachPhim) {
