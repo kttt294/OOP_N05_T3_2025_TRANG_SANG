@@ -9,7 +9,7 @@ public class Phim {
     private int gioiHanTuoi;
     private String moTa;
 
-    public Phim(){};
+    public Phim() {};
 
     public Phim(String maPhim, String tenPhim, String theLoai, int thoiLuong,
                 String ngonNgu, int gioiHanTuoi, String moTa) {
@@ -38,6 +38,14 @@ public class Phim {
         this.tenPhim = tenPhim;
     }
 
+    public String getTheLoai() {
+        return theLoai;
+    }
+
+    public void setTheLoai(String theLoai) {
+        this.theLoai = theLoai;
+    }
+
     public int getThoiLuong() {
         return thoiLuong;
     }
@@ -46,12 +54,28 @@ public class Phim {
         this.thoiLuong = thoiLuong;
     }
 
+    public String getNgonNgu() {
+        return ngonNgu;
+    }
+
+    public void setNgonNgu(String ngonNgu) {
+        this.ngonNgu = ngonNgu;
+    }
+
     public int getGioiHanTuoi() {
         return gioiHanTuoi;
     }
 
     public void setGioiHanTuoi(int gioiHanTuoi) {
         this.gioiHanTuoi = gioiHanTuoi;
+    }
+
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
     }
 
     public void hienThiThongTin() {
