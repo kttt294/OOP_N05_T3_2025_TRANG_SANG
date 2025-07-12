@@ -10,8 +10,8 @@ public class KhachHang {
     private String sdt;
     private String email;
     private String gioiTinh;   // Nam, Nu, Khac
-    private TaiKhoan taiKhoan;
     private List<Ve> lichSuDatVe;
+    // thêm TaiKhoan taikhoan
     
     public KhachHang(){};
     
