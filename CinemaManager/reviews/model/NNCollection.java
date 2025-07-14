@@ -1,7 +1,5 @@
 package reviews.model;
 
-import java.lang.String;
-
 public class NNCollection {
     private NameNumber[] nnArray = new NameNumber[100];
     private int free;
