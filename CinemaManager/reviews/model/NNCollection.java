@@ -1,7 +1,5 @@
 package reviews.model;
 
-import java.util.*;
-import reviews.model.NameNumber;
 import java.lang.String;
 
 public class NNCollection {
@@ -17,8 +15,9 @@ public class NNCollection {
             nnArray[i] = nnArray[i-1];
             index = i;
         }
+        nnArray[index] = n;
     }
-    nnArray[index] = n;
+
     public String findNumber(String lName){
         for(int i = 0; i < free; i++){
             if(nnArray[i].getName().equals(lName)){
