@@ -2,7 +2,7 @@ public class DoAn{
     private String maDoAn;
     private String tenDoAn;
     private int gia; // tinh bang Viet Nam Dong
-    private int soLuong;
+    private int soLuongCon;
 
     public DoAn(){};
 
@@ -10,7 +10,7 @@ public class DoAn{
         this.maDoAn = maDoAn;
         this.tenDoAn = tenDoAn;
         this.gia = gia;
-        this.soLuong = soLuong;
+        this.soLuongCon = soLuong;
     }
 
     public String getMaDoAn() {
@@ -38,10 +38,10 @@ public class DoAn{
     }
 
     public int getSoLuong() {
-        return soLuong;
+        return soLuongCon;
     }
 
     public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+        this.soLuongCon = soLuong;
     }
 }
