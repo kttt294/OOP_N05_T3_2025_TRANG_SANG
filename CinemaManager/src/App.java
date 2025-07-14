@@ -17,6 +17,8 @@ public class App {
         btvn.InitialisationAndCleanup.ex5.testEx5.test();
         */
 
-        testCollection.test();
+       // testCollection.test();
+        testTelList.test();
+
     }
 }

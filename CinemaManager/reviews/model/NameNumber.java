@@ -1,6 +1,6 @@
 public class NameNumber {
-    private String lastName;
-    private String telNumber;
+    public String lastName;
+    public String telNumber;
     
     public NameNumber(){}
     public NameNumber(String name, String number){
