@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "CinemaManager/test",
+        "CinemaManager/src",
+        "CinemaManager/reviews/test",
+        "CinemaManager/reviews/model"
+    ],
+    "java.project.referencedLibraries": []
+}

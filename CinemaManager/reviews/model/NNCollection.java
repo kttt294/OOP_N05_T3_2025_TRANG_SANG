@@ -1,4 +1,3 @@
-package reviews.model;
 
 public class NNCollection {
     private NameNumber[] nnArray = new NameNumber[100];
@@ -9,7 +8,7 @@ public class NNCollection {
     //Phuong thuc
     public void insert(NameNumber n){
         int index = 0;
-        for(int i = free++; i!=0 && nnArray[i-1].getName().compareTo(n.getName()) < 0; i--){
+        for(int i = free++; i!=0 && nnArray[i-1].getName().compareTo(n.getName()) > 0; i--){
             nnArray[i] = nnArray[i-1];
             index = i;
         }

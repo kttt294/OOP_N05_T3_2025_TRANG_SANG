@@ -1,5 +1,3 @@
-package reviews.model;
-
 public class NameNumber {
     private String lastName;
     private String telNumber;
