@@ -1,5 +1,3 @@
-package model;
-
 public class Phim {
     private String maPhim;
     private String tenPhim;

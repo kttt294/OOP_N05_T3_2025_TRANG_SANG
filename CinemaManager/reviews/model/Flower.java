@@ -1,4 +1,3 @@
-package reviews.model;
 public class Flower {
     int petalCount=0;
     String s = "";

@@ -1,7 +1,3 @@
-package controller;
-
-import model.Phim;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 

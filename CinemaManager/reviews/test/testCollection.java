@@ -6,7 +6,9 @@ public class testCollection {
         nn.insert(obj1);
         nn.insert(obj2);
 
-        nn.findNumber("abc");
+        nn.print();
+
+        //nn.findNumber("fffll");
         
 
     }

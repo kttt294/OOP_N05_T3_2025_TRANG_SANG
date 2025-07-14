@@ -1,6 +1,3 @@
-package test;
-
-import model.Phim;
 import java.util.Scanner;
 
 public class testPhim {

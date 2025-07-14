@@ -1,7 +1,3 @@
-package reviews.test;
-
-import reviews.model.Person;
-
 public class testPerson {
     public static void test(){
         Person nv1 = new Person();

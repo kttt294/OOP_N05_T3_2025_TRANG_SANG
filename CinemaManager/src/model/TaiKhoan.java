@@ -1,5 +1,3 @@
-package model;
-
 public class TaiKhoan {
     private String tenDangNhap;
     private String matKhau;

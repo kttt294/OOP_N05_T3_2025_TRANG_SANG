@@ -12,6 +12,7 @@ public class NNCollection {
             nnArray[i] = nnArray[i-1];
             index = i;
         }
+        System.out.println("index:" + index);
         nnArray[index] = n;
     }
 
@@ -22,5 +23,16 @@ public class NNCollection {
             }
         }
         return new String("Name not found");
+    }
+
+    public void print(){
+        System.out.println("Size:" + nnArray.length);
+
+        for(int i= 0; i< nnArray.length; i++)
+        {
+            System.out.print("Name: "+nnArray[i].getName());
+            System.out.print("Number:"+ nnArray[i].getNumber());
+
+        }
     }
 }

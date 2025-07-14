@@ -1,6 +1,3 @@
-package test;
-import model.Time;
-
 public class testTime {
     public static void test(){
         Time t1 = new Time(2, 7, 2025, 15, 40, 00);

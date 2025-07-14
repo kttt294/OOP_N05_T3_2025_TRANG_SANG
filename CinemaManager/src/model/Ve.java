@@ -1,5 +1,3 @@
-package model;
-
 public class Ve {
     private String maVe;
     private KhachHang khachHang;

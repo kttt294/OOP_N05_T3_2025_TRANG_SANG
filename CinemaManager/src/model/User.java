@@ -1,4 +1,3 @@
-package model;
 public class User {
     private String ten;
     private int tuoi;

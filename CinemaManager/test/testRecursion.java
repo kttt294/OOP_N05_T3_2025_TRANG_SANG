@@ -1,7 +1,3 @@
-package test;
-
-import model.Recursion;
-
 public class testRecursion {
     public static void test(){
         Recursion a = new Recursion();
