@@ -21,13 +21,13 @@ public class KhachHangCRUD {
 
             switch (luaChon) {
                 case 1 : 
-                themKhachHang(sc);
+                createKhachHang(sc);
                 case 2 : 
-                hienThiDanhSach();
+                readDanhSach();
                 case 3 : 
-                suaKhachHang(sc);
+                updateKhachHang(sc);
                 case 4 : 
-                xoaKhachHang(sc);
+                deleteKhachHang(sc);
                 case 0 : 
                 System.out.println("Thoát chương trình.");
                 default :
@@ -36,12 +36,12 @@ public class KhachHangCRUD {
         } while (luaChon != 0);
     }
 
-    public static void themKhachHang(Scanner sc) {
+    public static void createKhachHang(Scanner sc) {
         System.out.print("Nhập mã khách hàng: ");
         String maKH = sc.nextLine();
 
         // Kiểm tra xem mã khách hàng đã tồn tại chưa
-        if (timKhachHang(maKH) != null) {
+        if (filterKhachHang(maKH) != null) {
             System.out.println("Lỗi: Mã khách hàng '" + maKH + "' đã tồn tại trong danh sách!");
             System.out.println("Vui lòng chọn mã khách hàng khác.");
             return;
@@ -70,7 +70,7 @@ public class KhachHangCRUD {
         System.out.println("Thêm khách hàng thành công.");
     }
 
-    public static void hienThiDanhSach() {
+    public static void readDanhSach() {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nCHỌN CHẾ ĐỘ HIỂN THỊ");
         System.out.println("1. Hiển thị tất cả khách hàng");
@@ -80,42 +80,42 @@ public class KhachHangCRUD {
 
         switch (luaChon) {
             case 1:
-                hienThiTatCaKhachHang();
+                readTatCaKhachHang();
                 break;
             case 2:
-                timKiemKhachHang(sc);
+                filterKiemKhachHang(sc);
                 break;
             default:
                 System.out.println("Lựa chọn không hợp lệ.");
         }
     }
 
-    private static void hienThiTatCaKhachHang() {
+    private static void readTatCaKhachHang() {
         if (danhSachKH.isEmpty()) {
             System.out.println("Danh sách khách hàng rỗng.");
         } else {
             System.out.println("\nDANH SÁCH KHÁCH HÀNG");
             for (KhachHang kh : danhSachKH) {
-                hienThiThongTinKhachHang(kh);
+                readThongTinKhachHang(kh);
                 System.out.println("-----------------------------");
             }
         }
     }
 
-    private static void timKiemKhachHang(Scanner sc) {
+    private static void filterKiemKhachHang(Scanner sc) {
         System.out.print("Nhập mã khách hàng cần tìm: ");
         String maKH = sc.nextLine();
 
-        KhachHang kh = timKhachHang(maKH);
+        KhachHang kh = filterKhachHang(maKH);
         if (kh == null) {
             System.out.println("Không tìm thấy khách hàng với mã: " + maKH);
         } else {
             System.out.println("\nTHÔNG TIN KHÁCH HÀNG");
-            hienThiThongTinKhachHang(kh);
+            readThongTinKhachHang(kh);
         }
     }
 
-    private static void hienThiThongTinKhachHang(KhachHang kh) {
+    private static void readThongTinKhachHang(KhachHang kh) {
         System.out.println("Mã KH: " + kh.getMaKH());
         System.out.println("Tên KH: " + kh.getTenKH());
         System.out.println("Tuổi: " + kh.getTuoi());
@@ -124,17 +124,17 @@ public class KhachHangCRUD {
         System.out.println("Giới tính: " + kh.getGioiTinh());
     }
 
-    public static void suaKhachHang(Scanner sc) {
+    public static void updateKhachHang(Scanner sc) {
         System.out.print("Nhập mã khách hàng cần sửa: ");
         String maKH = sc.nextLine();
 
-        KhachHang kh = timKhachHang(maKH);
+        KhachHang kh = filterKhachHang(maKH);
         if (kh == null) {
             System.out.println("Không tìm thấy khách hàng với mã: " + maKH);
             return;
         }
 
-        int luaChonSua;
+        int luaChonUpdate;
         do {
             System.out.println("\nMENU SỬA THÔNG TIN KHÁCH HÀNG");
             System.out.println("1. Sửa tên khách hàng");
@@ -144,9 +144,9 @@ public class KhachHangCRUD {
             System.out.println("5. Sửa giới tính");
             System.out.println("0. Thoát");
             System.out.print("Chọn thông tin cần sửa: ");
-            luaChonSua = Integer.parseInt(sc.nextLine());
+            luaChonUpdate = Integer.parseInt(sc.nextLine());
 
-            switch (luaChonSua) {
+            switch (luaChonUpdate) {
                 case 1:
                     System.out.print("Nhập tên mới: ");
                     kh.setTenKH(sc.nextLine());
@@ -178,21 +178,21 @@ public class KhachHangCRUD {
                 default:
                     System.out.println("Lựa chọn không hợp lệ.");
             }
-        } while (luaChonSua != 0);
+        } while (luaChonUpdate != 0);
     }
 
-    public static void xoaKhachHang(Scanner sc) {
+    public static void deleteKhachHang(Scanner sc) {
         System.out.print("Nhập mã khách hàng cần xóa: ");
         String maKH = sc.nextLine();
 
-        KhachHang kh = timKhachHang(maKH);
+        KhachHang kh = filterKhachHang(maKH);
         if (kh == null) {
             System.out.println("Không tìm thấy khách hàng với mã: " + maKH);
             return;
         }
 
         System.out.println("Thông tin khách hàng sẽ bị xóa:");
-        hienThiThongTinKhachHang(kh);
+        readThongTinKhachHang(kh);
         System.out.print("Bạn có chắc chắn muốn xóa? (y/n): ");
         String xacNhan = sc.nextLine().toLowerCase();
         
@@ -204,7 +204,7 @@ public class KhachHangCRUD {
         }
     }
 
-    private static KhachHang timKhachHang(String maKH) {
+    private static KhachHang filterKhachHang(String maKH) {
         for (KhachHang kh : danhSachKH) {
             if (kh.getMaKH().equalsIgnoreCase(maKH)) {
                 return kh;
