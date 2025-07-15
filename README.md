@@ -38,9 +38,9 @@ Create
 
 <img src = "image/createPhim.jpg">
 
-Edit
+Update
 
-<img src = "image/updateupdatePhim.jpg">
+<img src = "image/updatePhim.jpg">
 
 Read
 
