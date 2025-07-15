@@ -40,7 +40,7 @@ Create
 
 Edit
 
-<img src = "image/editPhim.jpg">
+<img src = "image/updateupdatePhim.jpg">
 
 Read
 
@@ -66,7 +66,7 @@ Create
 
 Edit
 
-<img src = "image/editKhachHang.png">
+<img src = "image/updateKhachHang.png">
 
 Read
 
