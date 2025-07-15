@@ -1,16 +1,22 @@
 public class Book{
-    String title;
-    String author;
-    int numPages;
-    Book(){}; //default contructors
-    public Book(String t, String a, int p){
-        title = t;
-        author = a;
-        numPages = p;
+    private String bookID;
+    private String bookName;
+    
+    public Book(String bookID, String bookName) {
+        this.bookID = bookID;
+        this.bookName = bookName;
     }
 
-    public static void test(){
-        Book myObj = new Book("a", "b", 2); //New book
-        System.out.println(myObj.title);
+    public String getBookID() {
+        return bookID;
+    }
+    public void setBookID(String bookID) {
+        this.bookID = bookID;
+    }
+    public String getBookName() {
+        return bookName;
+    }
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
 }
