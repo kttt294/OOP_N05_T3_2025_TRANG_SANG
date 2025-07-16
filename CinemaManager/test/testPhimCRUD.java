@@ -25,10 +25,14 @@ public class testPhimCRUD {
                     PhimCRUD.readPhim(sc);
                     break;
                 case 3:
-                    PhimCRUD.updatePhim(sc);
+                    System.out.println("Nhập mã phim cần sửa: ");
+                    String maSua = sc.next();
+                    PhimCRUD.updatePhim(sc, maSua);
                     break;
                 case 4:
-                    PhimCRUD.deletePhim(sc);
+                    System.out.println("Nhập mã phim cần xóa: ");
+                    String maXoa = sc.next();
+                    PhimCRUD.deletePhim(sc, maXoa);
                     break;
                 case 0:
                     System.out.println("Thoát chương trình.");

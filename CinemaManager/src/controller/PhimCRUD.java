@@ -59,9 +59,8 @@ public class PhimCRUD {
         }
     }
 
-    public static void updatePhim(Scanner sc) {
-        System.out.print("Nhập mã phim cần sửa: ");
-        String maPhim = sc.nextLine().trim();
+    public static void updatePhim(Scanner sc, String ma) {
+        String maPhim = ma;
 
         for (Phim p : danhSachPhim) {
             if (p.getMaPhim().equalsIgnoreCase(maPhim)) {
@@ -91,9 +90,8 @@ public class PhimCRUD {
         System.out.println("Không tìm thấy phim với mã đã nhập.");
     }
 
-    public static void deletePhim(Scanner sc) {
-        System.out.print("Nhập mã phim cần xoá: ");
-        String maPhim = sc.nextLine().trim();
+    public static void deletePhim(Scanner sc, String ma) {
+        String maPhim = ma.trim();
 
         for (Phim p : danhSachPhim) {
             if (p.getMaPhim().equalsIgnoreCase(maPhim)) {
