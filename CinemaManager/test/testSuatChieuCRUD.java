@@ -1,56 +1,41 @@
 import java.util.Scanner;
 
 public class testSuatChieuCRUD {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        SuatChieuCRUD crud = new SuatChieuCRUD();
-        while (true) {
-            System.out.println("=== MENU ===");
+    public static void test() {
+        Scanner sc = new Scanner(System.in);
+        int luaChon;
+        do {
+            System.out.println("\nMENU SUẤT CHIẾU");
             System.out.println("1. Thêm suất chiếu");
-            System.out.println("2. Hiển thị tất cả suất chiếu");
-            System.out.println("3. Tìm kiếm suất chiếu theo mã");
-            System.out.println("4. Xóa suất chiếu theo mã");
-            System.out.println("5. Cập nhật thời gian bắt đầu");
+            System.out.println("2. Xem danh sách suất chiếu");
+            System.out.println("3. Sửa thông tin suất chiếu");
+            System.out.println("4. Xóa suất chiếu");
             System.out.println("0. Thoát");
-            System.out.print("Chọn: ");
-            int chon;
+            System.out.print("Chọn chức năng: ");
             try {
-                chon = Integer.parseInt(scanner.nextLine());
+                luaChon = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
-                chon = -1;
+                luaChon = -1;
             }
-            switch (chon) {
+            switch (luaChon) {
                 case 1:
-                    System.out.println("Tính năng thêm suất chiếu cần dữ liệu Phim, Phòng chiếu, Ghế sẵn.");
+                    SuatChieuCRUD.createSuatChieu(sc);
                     break;
                 case 2:
-                    crud.hienThiTatCaSuatChieu();
+                    SuatChieuCRUD.readDanhSach(sc);
                     break;
                 case 3:
-                    System.out.print("Nhập mã suất chiếu cần tìm: ");
-                    String ma = scanner.nextLine();
-                    SuatChieu sc = crud.timSuatChieuTheoMa(ma);
-                    if (sc != null) {
-                        sc.hienThiThongTin();
-                    } else {
-                        System.out.println("Không tìm thấy.");
-                    }
+                    SuatChieuCRUD.updateSuatChieu(sc);
                     break;
                 case 4:
-                    System.out.print("Nhập mã suất chiếu cần xóa: ");
-                    String maXoa = scanner.nextLine();
-                    crud.xoaSuatChieu(maXoa);
-                    break;
-                case 5:
-                    System.out.print("Nhập mã suất chiếu cần cập nhật: ");
-                    String maCapNhat = scanner.nextLine();
-                    crud.capNhatThoiGianBatDau(maCapNhat);
+                    SuatChieuCRUD.deleteSuatChieu(sc);
                     break;
                 case 0:
-                    return;
+                    System.out.println("Thoát chương trình.");
+                    break;
                 default:
-                    System.out.println("Chọn lại.");
+                    System.out.println("Lựa chọn không hợp lệ.");
             }
-        }
+        } while (luaChon != 0);
     }
 }

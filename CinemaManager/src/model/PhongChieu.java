@@ -24,4 +24,16 @@ public class PhongChieu {
     public String getTenPhong() {
         return tenPhong;
     }
+
+    public String getMaPhong() {
+        return maPhong;
+    }
+
+    public int getSoHangGhe() {
+        return soHangGhe;
+    }
+
+    public int getSoCotGhe() {
+        return soCotGhe;
+    }
 }
