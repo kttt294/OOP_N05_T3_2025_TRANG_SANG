@@ -6,36 +6,6 @@ import java.util.Scanner;
 public class KhachHangCRUD {
     private static List<KhachHang> danhSachKH = new ArrayList<>();
 
-    public static void CRUD() {
-        Scanner sc = new Scanner(System.in);
-        int luaChon;
-        do {
-            System.out.println("\nMENU KHÁCH HÀNG");
-            System.out.println("1. Thêm khách hàng");
-            System.out.println("2. Xem danh sách khách hàng");
-            System.out.println("3. Sửa thông tin khách hàng");
-            System.out.println("4. Xóa khách hàng");
-            System.out.println("0. Thoát");
-            System.out.print("Chọn chức năng: ");
-            luaChon = Integer.parseInt(sc.nextLine());
-
-            switch (luaChon) {
-                case 1 : 
-                createKhachHang(sc);
-                case 2 : 
-                readDanhSach();
-                case 3 : 
-                updateKhachHang(sc);
-                case 4 : 
-                deleteKhachHang(sc);
-                case 0 : 
-                System.out.println("Thoát chương trình.");
-                default :
-                 System.out.println("Lựa chọn không hợp lệ.");
-            }
-        } while (luaChon != 0);
-    }
-
     public static void createKhachHang(Scanner sc) {
         System.out.print("Nhập mã khách hàng: ");
         String maKH = sc.nextLine();
