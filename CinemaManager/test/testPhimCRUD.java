@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class testPhimCRUD {
     public static void test() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         int luaChon;
         do {
             System.out.println("\nMENU PHIM");
@@ -13,22 +13,22 @@ public class testPhimCRUD {
             System.out.println("0. Thoát");
             System.out.print("Chọn chức năng: ");
             try {
-                luaChon = Integer.parseInt(scanner.nextLine());
+                luaChon = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
                 luaChon = -1;
             }
             switch (luaChon) {
                 case 1:
-                    PhimCRUD.createPhim();
+                    PhimCRUD.createPhim(sc);
                     break;
                 case 2:
-                    PhimCRUD.readPhim();
+                    PhimCRUD.readPhim(sc);
                     break;
                 case 3:
-                    PhimCRUD.updatePhim();
+                    PhimCRUD.updatePhim(sc);
                     break;
                 case 4:
-                    PhimCRUD.deletePhim();
+                    PhimCRUD.deletePhim(sc);
                     break;
                 case 0:
                     System.out.println("Thoát chương trình.");
@@ -37,5 +37,6 @@ public class testPhimCRUD {
                     System.out.println("Lựa chọn không hợp lệ.");
             }
         } while (luaChon != 0);
+        sc.close();
     }
 }
