@@ -105,4 +105,12 @@ public class PhimCRUD {
 
         System.out.println("Không tìm thấy phim với mã đã nhập.");
     }
+
+    public static Phim getPhimById(String maPhim) {
+    return danhSachPhim.stream()
+        .filter(p -> p.getMaPhim().equalsIgnoreCase(maPhim))
+        .findFirst()
+        .orElse(null);
+}
+
 }

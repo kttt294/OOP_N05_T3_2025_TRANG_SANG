@@ -16,19 +16,12 @@ public class SuatChieuCRUD {
         // Nhập thông tin phim
         System.out.print("Nhập mã phim: ");
         String maPhim = sc.nextLine();
-        System.out.print("Nhập tên phim: ");
-        String tenPhim = sc.nextLine();
-        System.out.print("Nhập thể loại: ");
-        String theLoai = sc.nextLine();
-        System.out.print("Nhập thời lượng (phút): ");
-        int thoiLuong = Integer.parseInt(sc.nextLine());
-        System.out.print("Nhập ngôn ngữ: ");
-        String ngonNgu = sc.nextLine();
-        System.out.print("Nhập giới hạn tuổi: ");
-        int gioiHanTuoi = Integer.parseInt(sc.nextLine());
-        System.out.print("Nhập mô tả: ");
-        String moTa = sc.nextLine();
-        Phim phim = new Phim(maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
+        Phim phim = PhimCRUD.getPhimById(maPhim);
+        if (phim == null) {
+            System.out.println("Không tìm thấy phim với mã này.");
+            return;
+        }
+
         // Nhập thông tin phòng chiếu
         System.out.print("Nhập mã phòng: ");
         String maPhong = sc.nextLine();
@@ -96,7 +89,8 @@ public class SuatChieuCRUD {
         System.out.println("Phòng chiếu: " + (sc.getPhongChieu() != null ? sc.getPhongChieu().getTenPhong() : ""));
         System.out.println("Bắt đầu: " + sc.getThoiGianBatDau());
         System.out.println("Kết thúc: " + sc.getThoiGianKetThuc());
-        System.out.println("Số ghế còn trống: " + (sc.getDanhSachGheTrong() != null ? sc.getDanhSachGheTrong().size() : 0));
+        System.out.println(
+                "Số ghế còn trống: " + (sc.getDanhSachGheTrong() != null ? sc.getDanhSachGheTrong().size() : 0));
     }
 
     public static void updateSuatChieu(Scanner sc) {
@@ -127,11 +121,10 @@ public class SuatChieuCRUD {
                     String tenPhongMoi = sc.nextLine();
                     PhongChieu phongCu = scObj.getPhongChieu();
                     PhongChieu phongMoi = new PhongChieu(
-                        phongCu != null ? phongCu.getMaPhong() : "",
-                        tenPhongMoi,
-                        phongCu != null ? phongCu.getSoHangGhe() : 0,
-                        phongCu != null ? phongCu.getSoCotGhe() : 0
-                    );
+                            phongCu != null ? phongCu.getMaPhong() : "",
+                            tenPhongMoi,
+                            phongCu != null ? phongCu.getSoHangGhe() : 0,
+                            phongCu != null ? phongCu.getSoCotGhe() : 0);
                     scObj.setPhongChieu(phongMoi);
                     System.out.println("Đã cập nhật tên phòng chiếu.");
                     break;
@@ -178,4 +171,3 @@ public class SuatChieuCRUD {
         return null;
     }
 }
-
