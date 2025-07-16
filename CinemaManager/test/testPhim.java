@@ -26,16 +26,16 @@ public class testPhim {
         Phim phim = new Phim(maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
 
         System.out.println("\n== Thông tin phim ==");
-        phim.hienThiThongTin();
+        //phim.hienThiThongTin();
 
         System.out.print("\nNhập tuổi khán giả muốn mua vé để kiểm tra: ");
         int tuoi = scanner.nextInt();
 
-        if (phim.kiemTraDoTuoi(tuoi)) {
-            System.out.println("Khán giả " + tuoi + " tuổi được phép xem phim.");
-        } else {
-            System.out.println("Khán giả " + tuoi + " tuổi KHÔNG được phép xem phim.");
-        }
-        System.out.println();
+      //  if (phim.kiemTraDoTuoi(tuoi)) {
+      //      System.out.println("Khán giả " + tuoi + " tuổi được phép xem phim.");
+      //  } else {
+      //      System.out.println("Khán giả " + tuoi + " tuổi KHÔNG được phép xem phim.");
+      //  }
+       /// System.out.println();
     }
 }

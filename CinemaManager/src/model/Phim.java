@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Phim {
     private String maPhim;
     private String tenPhim;
@@ -76,17 +78,57 @@ public class Phim {
         this.moTa = moTa;
     }
 
-    public void hienThiThongTin() {
-        System.out.println("Mã phim: " + maPhim);
-        System.out.println("Tên phim: " + tenPhim);
-        System.out.println("Thể loại: " + theLoai);
-        System.out.println("Thời lượng: " + thoiLuong + " phút");
-        System.out.println("Ngôn ngữ: " + ngonNgu);
-        System.out.println("Giới hạn tuổi: " + gioiHanTuoi + "+");
-        System.out.println("Mô tả: " + moTa);
+    // Biến static để dùng chung cho tất cả các phương thức static
+    private static ArrayList<Phim> danhSachPhim = new ArrayList<>();
+
+    public static void createPhim(Phim phim) {
+        danhSachPhim.add(phim);
+        System.out.println("Đã thêm phim thành công.");
     }
 
-    public boolean kiemTraDoTuoi(int tuoiNguoiXem) {
-        return tuoiNguoiXem >= gioiHanTuoi;
+    public static void readPhim() {
+        if (danhSachPhim.isEmpty()) {
+            System.out.println("Danh sách phim trống.");
+        }
+        System.out.println("\n=== Danh sách phim ===");
+        for (Phim p : danhSachPhim) {
+            System.out.println("Mã phim: " + p.getMaPhim());
+            System.out.println("Tên phim: " + p.getTenPhim());
+            System.out.println("Thể loại: " + p.getTheLoai());
+            System.out.println("Thời lượng: " + p.getThoiLuong() + " phút");
+            System.out.println("Ngôn ngữ: " + p.getNgonNgu());
+            System.out.println("Giới hạn tuổi: " + p.getGioiHanTuoi() + "+");
+            System.out.println("Mô tả: " + p.getMoTa());
+            System.out.println("-------------------------");
+        }
+    }
+
+    public static void updatePhim(String maPhim, Phim phim) {
+        for (int i = 0; i < danhSachPhim.size(); i++) {
+            if (danhSachPhim.get(i).getMaPhim() == maPhim) {
+                phim.setMaPhim(maPhim);
+                danhSachPhim.set(i, phim);
+                System.out.println("Cập nhật thông tin phim thành công.");
+            }
+        }
+        System.out.println("Không tìm thấy phim với mã đã nhập.");
+    }
+
+    public static void deletePhim(String maPhim) {
+        for (Phim p : danhSachPhim) {
+            if (p.getMaPhim().equalsIgnoreCase(maPhim)) {
+                danhSachPhim.remove(p);
+                System.out.println("Xoá phim thành công.");
+            }
+        }
+
+        System.out.println("Không tìm thấy phim với mã đã nhập.");
+    }
+
+    public static Phim getPhimById(String maPhim) {
+        return danhSachPhim.stream()
+                .filter(p -> p.getMaPhim().equalsIgnoreCase(maPhim))
+                .findFirst()
+                .orElse(null);
     }
 }

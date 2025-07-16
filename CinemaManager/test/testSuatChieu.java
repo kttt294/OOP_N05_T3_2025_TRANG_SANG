@@ -29,7 +29,7 @@ public class testSuatChieu {
         SuatChieu suat = new SuatChieu(maSuat, phim, phong, thoiGianBatDau, dsGhe);
 
         System.out.println("\n== Thông tin suất chiếu trước khi đặt ghế ==");
-        suat.hienThiThongTin();
+      //  suat.hienThiThongTin();
 
         System.out.print("\nNhập mã ghế muốn đặt (ví dụ A2): ");
         String maGheDat = scanner.nextLine();
@@ -37,7 +37,7 @@ public class testSuatChieu {
         suat.capNhatGheTrong(new Ghe(maGheDat));
 
         System.out.println("\n== Thông tin suất chiếu sau khi đặt ghế " + maGheDat + " ==");
-        suat.hienThiThongTin();
+       // suat.hienThiThongTin();
         System.out.println();
     }
 }

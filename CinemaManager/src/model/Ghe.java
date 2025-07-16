@@ -20,6 +20,27 @@ public class Ghe {
     public String getMaGhe() {
         return maGhe;
     }
+    public void setMaGhe(String maGhe) {
+        this.maGhe = maGhe;
+    }
+    public int getHang() {
+        return hang;
+    }
+    public void setHang(int hang) {
+        this.hang = hang;
+    }
+    public int getCot() {
+        return cot;
+    }
+    public void setCot(int cot) {
+        this.cot = cot;
+    }
+    public boolean isDaDat() {
+        return daDat;
+    }
+    public void setDaDat(boolean daDat) {
+        this.daDat = daDat;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,6 +1,103 @@
 import java.util.Scanner;
 
 public class testPhimCRUD {
+    public static void inputCreatePhim(Scanner sc) {
+        System.out.println("\n=== Thêm phim mới ===");
+
+        System.out.print("Mã phim: ");
+        String maPhim = sc.nextLine().trim();
+        if (maPhim.isEmpty()) {
+            System.out.println("Mã phim không được để trống.");
+            return;
+        }
+
+        if (Phim.getPhimById(maPhim) != null) {
+            System.out.println("Mã phim đã tồn tại.");
+            return;
+        }
+
+        System.out.print("Tên phim: ");
+        String tenPhim = sc.nextLine().trim();
+        if (tenPhim.isEmpty()) {
+            System.out.println("Tên phim không được để trống.");
+            return;
+        }
+
+        System.out.print("Thể loại: ");
+        String theLoai = sc.nextLine().trim();
+
+        System.out.print("Thời lượng (phút): ");
+        int thoiLuong = Integer.parseInt(sc.nextLine().trim());
+
+        System.out.print("Ngôn ngữ: ");
+        String ngonNgu = sc.nextLine().trim();
+
+        System.out.print("Giới hạn tuổi: ");
+        int gioiHanTuoi = Integer.parseInt(sc.nextLine().trim());
+
+        System.out.print("Mô tả: ");
+        String moTa = sc.nextLine().trim();
+
+        Phim p = new Phim(maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
+        Phim.createPhim(p);
+    }
+
+    public static void inputUpdatePhim(Scanner sc) {
+        System.out.print("Nhập mã phim cần sửa: ");
+        String maPhim = sc.nextLine().trim();
+
+        Phim p = Phim.getPhimById(maPhim);
+        if (p == null) {
+            System.out.println("Không tìm thấy phim.");
+        }
+
+        System.out.println("\n=== Cập nhật thông tin phim ===");
+
+        System.out.print("Tên phim mới: ");
+        String tenPhim = sc.nextLine().trim();
+        if (!tenPhim.isEmpty()) {
+            p.setTenPhim(tenPhim);
+        }
+
+        System.out.print("Thể loại mới: ");
+        String theLoai = sc.nextLine().trim();
+        if (!theLoai.isEmpty()) {
+            p.setTheLoai(theLoai);
+        }
+
+        System.out.print("Thời lượng mới (phút): ");
+        String thoiLuongStr = sc.nextLine().trim();
+        if (!thoiLuongStr.isEmpty()) {
+            p.setThoiLuong(Integer.parseInt(thoiLuongStr));
+        }
+
+        System.out.print("Ngôn ngữ mới: ");
+        String ngonNgu = sc.nextLine().trim();
+        if (!ngonNgu.isEmpty()) {
+            p.setNgonNgu(ngonNgu);
+        }
+
+        System.out.print("Giới hạn tuổi mới: ");
+        String gioiHanTuoiStr = sc.nextLine().trim();
+        if (!gioiHanTuoiStr.isEmpty()) {
+            p.setGioiHanTuoi(Integer.parseInt(gioiHanTuoiStr));
+        }
+
+        System.out.print("Mô tả mới: ");
+        String moTa = sc.nextLine().trim();
+        if (!moTa.isEmpty()) {
+            p.setMoTa(moTa);
+        }
+
+        Phim.updatePhim(maPhim, p);
+    }
+
+    public static void inputDeletePhim(Scanner sc) {
+        System.out.print("Nhập mã phim cần xoá: ");
+        String maPhim = sc.nextLine().trim();
+        Phim.deletePhim(maPhim);
+    }
+
     public static void test() {
         Scanner sc = new Scanner(System.in);
         int luaChon;
@@ -17,18 +114,19 @@ public class testPhimCRUD {
             } catch (NumberFormatException e) {
                 luaChon = -1;
             }
+
             switch (luaChon) {
                 case 1:
-                    PhimCRUD.createPhim(sc);
+                    inputCreatePhim(sc);
                     break;
                 case 2:
-                    PhimCRUD.readPhim(sc);
+                    Phim.readPhim();
                     break;
                 case 3:
-                    PhimCRUD.updatePhim(sc);
+                    inputUpdatePhim(sc);
                     break;
                 case 4:
-                    PhimCRUD.deletePhim(sc);
+                    inputDeletePhim(sc);
                     break;
                 case 0:
                     System.out.println("Thoát chương trình.");
