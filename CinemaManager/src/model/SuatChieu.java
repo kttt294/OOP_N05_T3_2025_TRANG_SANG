@@ -4,23 +4,25 @@ import java.util.List;
 
 public class SuatChieu {
     private String maSuatChieu;
-    private Phim phim;
-    private PhongChieu phongChieu;
+    private String maPhim; // chỉ lưu mã phim
+    private String maPhong; // chỉ lưu mã phòng chiếu
     private LocalDateTime thoiGianBatDau;
     private LocalDateTime thoiGianKetThuc;
     private List<Ghe> danhSachGheTrong;
 
+    private static List<SuatChieu> danhSachSuatChieu = new ArrayList<>();
+
     public SuatChieu() {
     };
 
-    public SuatChieu(String maSuatChieu, Phim phim, PhongChieu phongChieu,
+    public SuatChieu(String maSuatChieu, String maPhim, String maPhong,
             LocalDateTime thoiGianBatDau, List<Ghe> danhSachGheTrong) {
         this.maSuatChieu = maSuatChieu;
-        this.phim = phim;
-        this.phongChieu = phongChieu;
+        this.maPhim = maPhim;
+        this.maPhong = maPhong;
         this.thoiGianBatDau = thoiGianBatDau;
         this.danhSachGheTrong = danhSachGheTrong;
-        this.thoiGianKetThuc = tinhThoiGianKetThuc();
+        this.thoiGianKetThuc = null; // hoặc tính toán nếu cần
     }
 
     // Getter & Setter
@@ -32,20 +34,20 @@ public class SuatChieu {
         this.maSuatChieu = maSuatChieu;
     }
 
-    public Phim getPhim() {
-        return phim;
+    public String getMaPhim() {
+        return maPhim;
     }
 
-    public void setPhim(Phim phim) {
-        this.phim = phim;
+    public void setMaPhim(String maPhim) {
+        this.maPhim = maPhim;
     }
 
-    public PhongChieu getPhongChieu() {
-        return phongChieu;
+    public String getMaPhong() {
+        return maPhong;
     }
 
-    public void setPhongChieu(PhongChieu phongChieu) {
-        this.phongChieu = phongChieu;
+    public void setMaPhong(String maPhong) {
+        this.maPhong = maPhong;
     }
 
     public LocalDateTime getThoiGianBatDau() {
@@ -54,11 +56,14 @@ public class SuatChieu {
 
     public void setThoiGianBatDau(LocalDateTime thoiGianBatDau) {
         this.thoiGianBatDau = thoiGianBatDau;
-        this.thoiGianKetThuc = tinhThoiGianKetThuc();
     }
 
     public LocalDateTime getThoiGianKetThuc() {
         return thoiGianKetThuc;
+    }
+
+    public void setThoiGianKetThuc(LocalDateTime thoiGianKetThuc) {
+        this.thoiGianKetThuc = thoiGianKetThuc;
     }
 
     public List<Ghe> getDanhSachGheTrong() {
@@ -69,8 +74,19 @@ public class SuatChieu {
         this.danhSachGheTrong = danhSachGheTrong;
     }
 
+    // Hiển thị thông tin suất chiếu
+    public void hienThiThongTin() {
+        System.out.println("Mã suất chiếu: " + maSuatChieu);
+        System.out.println("Mã phim: " + maPhim);
+        System.out.println("Mã phòng chiếu: " + maPhong);
+        System.out.println("Thời gian bắt đầu: " + thoiGianBatDau);
+        System.out.println("Thời gian kết thúc: " + thoiGianKetThuc);
+        System.out.println("Danh sách ghế trống: " + danhSachGheTrong);
+    }
+
     // Tính thời gian kết thúc dựa trên thời lượng phim
     public LocalDateTime tinhThoiGianKetThuc() {
+        Phim phim = Phim.getPhimById(maPhim);
         if (phim != null && thoiGianBatDau != null) {
             return thoiGianBatDau.plusMinutes(phim.getThoiLuong());
         }
@@ -82,55 +98,56 @@ public class SuatChieu {
         danhSachGheTrong.remove(gheDaDat);
     }
 
-    private static List<SuatChieu> danhSachSuatChieu = new ArrayList<>();
-
     // CRUD
 
-    public static void createSuatChieu(SuatChieu scObj) {
+    public static void Create(SuatChieu scObj) {
+        if (scObj.getMaSuatChieu() == null || scObj.getMaSuatChieu().trim().isEmpty() ||
+            scObj.getMaPhim() == null || scObj.getMaPhong() == null ||
+            scObj.getThoiGianBatDau() == null) {
+            System.out.println("Lỗi: Thông tin suất chiếu không được để trống.");
+            return;
+        }
         danhSachSuatChieu.add(scObj);
         System.out.println("Thêm suất chiếu thành công.");
     }
 
-    public static void readSuatChieu(String maSuatChieu) {
+    public static void Read(String maSuatChieu) {
         if (danhSachSuatChieu.isEmpty()) {
             System.out.println("Danh sách suất chiếu trống.");
         } else {
-            boolean check = true;
-            for (SuatChieu p : danhSachSuatChieu) {
-                if (p.getMaSuatChieu().equalsIgnoreCase(maSuatChieu)) {
-                    System.out.println("Mã suất chiếu: " + maSuatChieu);
-                    System.out.println("Phim: " + p.getPhim());
-                    System.out.println("Phòng chiếu: " + p.getPhongChieu());
-                    System.out.println("Thời gian bắt đầu: " + p.getThoiGianBatDau());
-                    System.out.println("Thời gian kết thúc: " + p.getThoiGianKetThuc());
-                    System.out.println("Danh sách ghế trống: " + p.getDanhSachGheTrong());
-                    check = false;
-                    break;
-                }
-            }
-            if (check)
+            SuatChieu p = getSuatChieuById(maSuatChieu);
+            if (p != null) {
+                p.hienThiThongTin();
+            } else {
                 System.out.println("Không tìm thấy mã suất chiếu cần tìm!");
+            }
         }
     }
 
-    public static void updateSuatChieu(String maSuatChieu, SuatChieu scObj) {
-        for (int i = 0; i < danhSachSuatChieu.size(); i++) {
-            if (danhSachSuatChieu.get(i).getMaSuatChieu().equalsIgnoreCase(maSuatChieu)) {
-                danhSachSuatChieu.set(i, scObj);
-                System.out.println("Cập nhật thông tin suất chiếu thành công.");
-                return;
-            }
+    public static void Update(String maSuatChieu, SuatChieu scObj) {
+        if (scObj.getMaSuatChieu() == null || scObj.getMaSuatChieu().trim().isEmpty() ||
+            scObj.getMaPhim() == null || scObj.getMaPhong() == null ||
+            scObj.getThoiGianBatDau() == null) {
+            System.out.println("Lỗi: Thông tin suất chiếu không được để trống.");
+            return;
         }
-        System.out.println("Không tìm thấy suất chiếu với mã đã nhập.");
-
+        int index = getSuatChieuIndexById(maSuatChieu);
+        if (index != -1) {
+            scObj.setMaSuatChieu(maSuatChieu);
+            danhSachSuatChieu.set(index, scObj);
+            System.out.println("Cập nhật thông tin suất chiếu thành công.");
+        } else {
+            System.out.println("Không tìm thấy suất chiếu với mã đã nhập.");
+        }
     }
 
-    public static void deleteSuatChieu(String maSuatChieu) {
-        for (SuatChieu sc : danhSachSuatChieu) {
-            if (sc.getMaSuatChieu().equalsIgnoreCase(maSuatChieu)) {
-                danhSachSuatChieu.remove(sc);
-                System.out.println("Đã xoá suất chiếu thành công.");
-            }
+    public static void Delete(String maSuatChieu) {
+        int index = getSuatChieuIndexById(maSuatChieu);
+        if (index != -1) {
+            danhSachSuatChieu.remove(index);
+            System.out.println("Đã xoá suất chiếu thành công.");
+        } else {
+            System.out.println("Không tìm thấy suất chiếu với mã đã nhập.");
         }
     }
 
@@ -139,5 +156,14 @@ public class SuatChieu {
                 .filter(sc -> sc.getMaSuatChieu().equalsIgnoreCase(maSuatChieu))
                 .findFirst()
                 .orElse(null);
+    }
+
+    private static int getSuatChieuIndexById(String maSuatChieu) {
+        for (int i = 0; i < danhSachSuatChieu.size(); i++) {
+            if (danhSachSuatChieu.get(i).getMaSuatChieu().equalsIgnoreCase(maSuatChieu)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

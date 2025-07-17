@@ -2,6 +2,11 @@ import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import model.DateTimeUtils;
+import model.Phim;
+import model.SuatChieu;
+import model.PhongChieu;
+import model.Ghe;
 
 public class testSuatChieu {
 public static void inputCreateSuatChieu(Scanner sc) {
@@ -29,9 +34,7 @@ public static void inputCreateSuatChieu(Scanner sc) {
         System.out.print("Nhập số cột ghế: ");
         int soCotGhe = Integer.parseInt(sc.nextLine());
         PhongChieu phong = new PhongChieu(maPhong, tenPhong, soHangGhe, soCotGhe);
-        System.out.print("Nhập thời gian bắt đầu (yyyy-MM-ddTHH:mm): ");
-        String thoiGianStr = sc.nextLine();
-        LocalDateTime thoiGianBatDau = LocalDateTime.parse(thoiGianStr);
+        LocalDateTime thoiGianBatDau = DateTimeUtils.nhapThoiGian(sc, "Nhập thời gian bắt đầu");
         List<Ghe> danhSachGheTrong = new ArrayList<>(); // Để rỗng khi tạo mới
         SuatChieu scObj = new SuatChieu(maSuatChieu, phim, phong, thoiGianBatDau, danhSachGheTrong);
         SuatChieu.createSuatChieu(scObj);
