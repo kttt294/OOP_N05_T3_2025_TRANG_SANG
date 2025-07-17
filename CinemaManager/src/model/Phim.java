@@ -10,7 +10,7 @@ public class Phim {
     private String moTa = "";
 
     public Phim() {
-    };
+    }
 
     public Phim(String maPhim, String tenPhim, String theLoai, int thoiLuong,
             String ngonNgu, int gioiHanTuoi, String moTa) {

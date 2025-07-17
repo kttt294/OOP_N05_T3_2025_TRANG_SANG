@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class testSuatChieuCRUD {
+public class testSuatChieu {
 public static void inputCreateSuatChieu(Scanner sc) {
         System.out.print("Nhập mã suất chiếu: ");
         String maSuatChieu = sc.nextLine();
