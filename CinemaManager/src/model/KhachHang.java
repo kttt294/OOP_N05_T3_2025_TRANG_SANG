@@ -7,13 +7,15 @@ public class KhachHang {
     private int tuoi;
     private String sdt;
     private String email;
-    private String gioiTinh;   // Nam, Nu, Khac
+    private String gioiTinh; // Nam, Nu, Khac
     private List<Ve> lichSuDatVe;
     // thêm TaiKhoan taikhoan
-    
-    public KhachHang(){};
-    
-    public KhachHang(String maKH, String tenKH, int tuoi, String sdt, String email, String gioiTinh, List<Ve> lichSuDatVe) {
+
+    public KhachHang() {
+    };
+
+    public KhachHang(String maKH, String tenKH, int tuoi, String sdt, String email, String gioiTinh,
+            List<Ve> lichSuDatVe) {
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.tuoi = tuoi;
@@ -88,55 +90,62 @@ public class KhachHang {
 
     private static List<KhachHang> danhSachKH = new ArrayList<>();
 
-
     // CRUD
-    
+
     public static void createKhachHang(KhachHang kh) {
         danhSachKH.add(kh);
         System.out.println("Đã thêm khách hàng thành công.");
     }
 
-    public static void readDanhSach() {
-
+    public static void readKhachHang(String maKH) {
         if (danhSachKH.isEmpty()) {
             System.out.println("Danh sách khách hàng trống.");
-            return;
-        }
-        System.out.println("\n=== Danh sách khách hàng ===");
-        for (KhachHang kh : danhSachKH) {
-            System.out.println("Mã KH: " + kh.getMaKH());
-            System.out.println("Tên KH: " + kh.getTenKH());
-            System.out.println("Tuổi: " + kh.getTuoi());
-            System.out.println("SĐT: " + kh.getSdt());
-            System.out.println("Email: " + kh.getEmail());
-            System.out.println("Giới tính: " + kh.getGioiTinh());
-            System.out.println("-------------------------");
+        } else {
+            boolean check = true;
+            for (KhachHang p : danhSachKH) {
+                if (p.getMaKH().equalsIgnoreCase(maKH)) {
+                    System.out.println("Mã khách hàng: " + maKH);
+                    System.out.println("Tên khách hàng: " + p.getTenKH());
+                    System.out.println("Tuổi: " + p.getTuoi());
+                    System.out.println("Số điện thoại: " + p.getSdt());
+                    System.out.println("Email: " + p.getEmail());
+                    System.out.println("Lịch sử đặt vé: " + p.getLichSuDatVe());
+                    check = false;
+                    break;
+                }
+            }
+            if (check)
+                System.out.println("Không tìm thấy mã khách hàng cần tìm!");
         }
     }
 
-    public static void updateKhachHang(String maKh, KhachHang kh){
+    public static void updateKhachHang(String maKh, KhachHang kh) {
+        boolean check = true;
         for (int i = 0; i < danhSachKH.size(); i++) {
             if (danhSachKH.get(i).getMaKH().equalsIgnoreCase(maKh)) {
                 danhSachKH.set(i, kh);
                 System.out.println("Đã cập nhật thông tin khách hàng thành công.");
+                check = false;
+                break;
             }
         }
-        System.out.println("Không tìm thấy khách hàng với mã: " + maKh);
+        if(check) System.out.println("Không tìm thấy khách hàng với mã: " + maKh);
     }
 
     public static void deleteKhachHang(String maKh) {
+        boolean check = true;
         for (KhachHang kh : danhSachKH) {
             if (kh.getMaKH().equalsIgnoreCase(maKh)) {
                 danhSachKH.remove(kh);
                 System.out.println("Đã xoá khách hàng thành công.");
-                return;
+                check = false;
             }
         }
-        System.out.println("Không tìm thấy khách hàng với mã: " + maKh);
+        if(check) System.out.println("Không tìm thấy khách hàng với mã: " + maKh);
 
     }
 
-public static KhachHang getKhachHangById(String maKH) {
+    public static KhachHang getKhachHangById(String maKH) {
         return danhSachKH.stream()
                 .filter(kh -> kh.getMaKH().equalsIgnoreCase(maKH))
                 .findFirst()
