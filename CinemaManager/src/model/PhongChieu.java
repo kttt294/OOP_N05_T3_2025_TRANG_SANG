@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class PhongChieu {
     private String maPhong;
     private String tenPhong;
