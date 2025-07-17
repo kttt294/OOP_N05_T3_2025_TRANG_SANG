@@ -73,7 +73,8 @@ public static void inputCreateSuatChieu(Scanner sc) {
         System.out.print("Nhập số cột ghế: ");
         int soCotGhe = Integer.parseInt(sc.nextLine());
         PhongChieu phong = new PhongChieu(maPhong, tenPhong, soHangGhe, soCotGhe);
-        LocalDateTime thoiGianBatDau = DateTimeUtils.nhapThoiGian(sc, "Nhập thời gian bắt đầu");
+        // Thay thế nhập thời gian bằng giá trị mặc định
+        LocalDateTime thoiGianBatDau = LocalDateTime.now();
         List<Ghe> danhSachGheTrong = new ArrayList<>(); // Để rỗng khi tạo mới
         SuatChieu suatChieu = new SuatChieu(maSuatChieu, maPhim, maPhong, thoiGianBatDau, danhSachGheTrong);
         SuatChieu.Create(suatChieu);
