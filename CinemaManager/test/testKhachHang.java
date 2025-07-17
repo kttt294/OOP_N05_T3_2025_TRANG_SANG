@@ -1,5 +1,5 @@
-import java.util.List;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class testKhachHang {
     public static void inputCreateKhachHang(Scanner sc) {
@@ -35,7 +35,7 @@ public class testKhachHang {
         System.out.print("Giới tính: ");
         String gioiTinh = sc.nextLine().trim();
 
-        List<Ve> lichSuDatVe = null; // Khởi tạo danh sách vé rỗng
+        ArrayList<Ve> lichSuDatVe = null; // Khởi tạo danh sách vé rỗng
 
         KhachHang kh = new KhachHang(CCCD, tenKH, tuoi, sdt, email, gioiTinh, null, null);
         KhachHang.Create(kh);
@@ -136,12 +136,6 @@ public class testKhachHang {
                     System.out.println("Lựa chọn không hợp lệ.");
             }
         } while (luaChon != 0);
-    }
-
-    // Tìm khách hàng theo CCCD (vì không có static CRUD trong KhachHang)
-    public static KhachHang getKhachHangByCCCD(String CCCD) {
-        // TODO: Viết lại nếu có danh sách khách hàng toàn cục
-        return null;
     }
 }
 
