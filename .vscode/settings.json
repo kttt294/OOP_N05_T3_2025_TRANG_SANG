@@ -4,8 +4,8 @@
         "CinemaManager/reviews/test",
         "CinemaManager/src",
         "CinemaManager/src/controller",
-        "CinemaManager/src/model",
         "CinemaManager/test",
+        "CinemaManager/src/model"
     ],
     "java.project.referencedLibraries": []
 }

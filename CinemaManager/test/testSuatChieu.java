@@ -3,48 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// Mock class Ghe cho mục đích test
-class Ghe {}
-// Mock class Phim cho mục đích test
-class Phim {
-    private String maPhim, tenPhim;
-    public Phim(String maPhim, String tenPhim) { this.maPhim = maPhim; this.tenPhim = tenPhim; }
-    public void setTenPhim(String tenPhim) { this.tenPhim = tenPhim; }
-    public String getTenPhim() { return tenPhim; }
-    public static Phim getPhimById(String maPhim) { return new Phim(maPhim, "Mock phim"); }
-}
-// Mock class PhongChieu cho mục đích test
-class PhongChieu {
-    private String maPhong, tenPhong; int soHangGhe, soCotGhe;
-    public PhongChieu(String maPhong, String tenPhong, int soHangGhe, int soCotGhe) {
-        this.maPhong = maPhong; this.tenPhong = tenPhong; this.soHangGhe = soHangGhe; this.soCotGhe = soCotGhe;
-    }
-    public String getMaPhong() { return maPhong; }
-    public String getTenPhong() { return tenPhong; }
-    public int getSoHangGhe() { return soHangGhe; }
-    public int getSoCotGhe() { return soCotGhe; }
-}
-// Mock class DateTimeUtils cho mục đích test
-class DateTimeUtils {
-    public static java.time.LocalDateTime nhapThoiGian(java.util.Scanner sc, String msg) { return java.time.LocalDateTime.now(); }
-}
-// Mock class SuatChieu cho mục đích test
-class SuatChieu {
-    private String maSuatChieu, maPhim, maPhong;
-    private java.time.LocalDateTime thoiGianBatDau;
-    private java.util.List<Ghe> danhSachGheTrong;
-    public SuatChieu(String maSuatChieu, String maPhim, String maPhong, java.time.LocalDateTime thoiGianBatDau, java.util.List<Ghe> danhSachGheTrong) {
-        this.maSuatChieu = maSuatChieu; this.maPhim = maPhim; this.maPhong = maPhong; this.thoiGianBatDau = thoiGianBatDau; this.danhSachGheTrong = danhSachGheTrong;
-    }
-    public static void Create(SuatChieu sc) {}
-    public static void Read(String maSuatChieu) {}
-    public static void Update(String maSuatChieu, SuatChieu sc) {}
-    public static void Delete(String maSuatChieu) {}
-    public static SuatChieu getSuatChieuById(String maSuatChieu) { return null; }
-    public void setThoiGianBatDau(java.time.LocalDateTime t) { this.thoiGianBatDau = t; }
-    public String getMaPhim() { return maPhim; }
-    public String getMaPhong() { return maPhong; }
-}
 
 public class testSuatChieu {
 public static void inputCreateSuatChieu(Scanner sc) {
