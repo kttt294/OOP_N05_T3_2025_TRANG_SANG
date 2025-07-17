@@ -1,4 +1,6 @@
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ArrayList;
 
 public class DanhGia {
     private String maDanhGia;
@@ -67,6 +69,15 @@ public class DanhGia {
 
     public void setThoiGian(LocalDateTime thoiGian) {
         this.thoiGian = thoiGian;
+    }
+
+    private static List<DanhGia> danhSachDanhGia = new ArrayList<>();
+
+    // CRUD
+
+    public static void createDanhGia(DanhGia danhGia){
+        danhSachDanhGia.add(danhGia);
+        System.out.println("Đã thêm đánh giá thành công.");
     }
 
 }
