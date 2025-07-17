@@ -4,5 +4,6 @@ public class App {
         //testKhachHangCRUD.test();
         testPhim.test();
         testSuatChieuCRUD.test();
+        
     }
 }
