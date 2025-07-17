@@ -81,6 +81,9 @@ public class Phim {
     // Biến static để dùng chung cho tất cả các phương thức static
     private static ArrayList<Phim> danhSachPhim = new ArrayList<>();
 
+
+    // CRUD
+    
     public static void createPhim(Phim phim) {
         danhSachPhim.add(phim);
         System.out.println("Đã thêm phim thành công.");

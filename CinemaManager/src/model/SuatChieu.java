@@ -75,12 +75,16 @@ public class SuatChieu {
         }
         return null;
     }
+
     // Cập nhật danh sách ghế sau khi đặt
     public void capNhatGheTrong(Ghe gheDaDat) {
         danhSachGheTrong.remove(gheDaDat);
     }
 
-        private static List<SuatChieu> danhSachSuatChieu = new ArrayList<>();
+    private static List<SuatChieu> danhSachSuatChieu = new ArrayList<>();
+
+
+    // CRUD
 
     public static void createSuatChieu(SuatChieu scObj) {
         danhSachSuatChieu.add(scObj);
@@ -123,7 +127,6 @@ public class SuatChieu {
             }
         }
     }
-
 
     public static SuatChieu getSuatChieuById(String maSuatChieu) {
         return danhSachSuatChieu.stream()

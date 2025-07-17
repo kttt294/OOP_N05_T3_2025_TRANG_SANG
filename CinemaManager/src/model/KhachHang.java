@@ -88,6 +88,9 @@ public class KhachHang {
 
     private static List<KhachHang> danhSachKH = new ArrayList<>();
 
+
+    // CRUD
+    
     public static void createKhachHang(KhachHang kh) {
         danhSachKH.add(kh);
         System.out.println("Đã thêm khách hàng thành công.");
