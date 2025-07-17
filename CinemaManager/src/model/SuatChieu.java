@@ -10,10 +10,11 @@ public class SuatChieu {
     private LocalDateTime thoiGianKetThuc;
     private List<Ghe> danhSachGheTrong;
 
-    public SuatChieu(){};
+    public SuatChieu() {
+    };
 
     public SuatChieu(String maSuatChieu, Phim phim, PhongChieu phongChieu,
-                     LocalDateTime thoiGianBatDau, List<Ghe> danhSachGheTrong) {
+            LocalDateTime thoiGianBatDau, List<Ghe> danhSachGheTrong) {
         this.maSuatChieu = maSuatChieu;
         this.phim = phim;
         this.phongChieu = phongChieu;
@@ -83,7 +84,6 @@ public class SuatChieu {
 
     private static List<SuatChieu> danhSachSuatChieu = new ArrayList<>();
 
-
     // CRUD
 
     public static void createSuatChieu(SuatChieu scObj) {
@@ -91,19 +91,25 @@ public class SuatChieu {
         System.out.println("Thêm suất chiếu thành công.");
     }
 
-    public static void readSuatChieu() {
+    public static void readSuatChieu(String maSuatChieu) {
         if (danhSachSuatChieu.isEmpty()) {
             System.out.println("Danh sách suất chiếu trống.");
-            return;
-        }
-        System.out.println("\n=== Danh sách suất chiếu ===");
-        for (SuatChieu sc : danhSachSuatChieu) {
-            System.out.println("Mã suất chiếu: " + sc.getMaSuatChieu());
-            System.out.println("Phim: " + sc.getPhim().getTenPhim());
-            System.out.println("Phòng chiếu: " + sc.getPhongChieu().getTenPhong());
-            System.out.println("Thời gian bắt đầu: " + sc.getThoiGianBatDau());
-            System.out.println("Thời gian kết thúc: " + sc.getThoiGianKetThuc());
-            System.out.println("-----------------------------");
+        } else {
+            boolean check = true;
+            for (SuatChieu p : danhSachSuatChieu) {
+                if (p.getMaSuatChieu().equalsIgnoreCase(maSuatChieu)) {
+                    System.out.println("Mã suất chiếu: " + maSuatChieu);
+                    System.out.println("Phim: " + p.getPhim());
+                    System.out.println("Phòng chiếu: " + p.getPhongChieu());
+                    System.out.println("Thời gian bắt đầu: " + p.getThoiGianBatDau());
+                    System.out.println("Thời gian kết thúc: " + p.getThoiGianKetThuc());
+                    System.out.println("Danh sách ghế trống: " + p.getDanhSachGheTrong());
+                    check = false;
+                    break;
+                }
+            }
+            if (check)
+                System.out.println("Không tìm thấy mã suất chiếu cần tìm!");
         }
     }
 
@@ -120,7 +126,7 @@ public class SuatChieu {
     }
 
     public static void deleteSuatChieu(String maSuatChieu) {
-        for( SuatChieu sc : danhSachSuatChieu) {
+        for (SuatChieu sc : danhSachSuatChieu) {
             if (sc.getMaSuatChieu().equalsIgnoreCase(maSuatChieu)) {
                 danhSachSuatChieu.remove(sc);
                 System.out.println("Đã xoá suất chiếu thành công.");

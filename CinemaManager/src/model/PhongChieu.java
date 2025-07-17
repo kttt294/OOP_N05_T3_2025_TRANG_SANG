@@ -5,7 +5,6 @@ public class PhongChieu {
     private String tenPhong;
     private int soHangGhe;
     private int soCotGhe;
-    private List<Ghe> danhSachGheTrong;
 
     public PhongChieu(){};
 
@@ -50,13 +49,5 @@ public class PhongChieu {
 
     public int getSoCotGhe() {
         return soCotGhe;
-    }
-
-    public void setDanhSachGheTrong(List<Ghe> ds){
-        this.danhSachGheTrong = ds;
-    }
-
-    public List<Ghe> getDanhSachGheTrong(){
-        return danhSachGheTrong;
     }
 }

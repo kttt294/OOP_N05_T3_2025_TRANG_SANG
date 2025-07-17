@@ -37,6 +37,12 @@ public static void inputCreateSuatChieu(Scanner sc) {
         SuatChieu.createSuatChieu(scObj);
     }
 
+    public static void inputReadSuatChieu(Scanner sc){
+        System.out.println("Nhập mã suất chiếu cần kiểm tra: ");
+        String maSuatChieu = sc.nextLine().trim();
+        SuatChieu.readSuatChieu(maSuatChieu);
+    }
+
     public static void inputUpdateSuatChieu(Scanner sc) {
         System.out.print("Nhập mã suất chiếu cần sửa: ");
         String maSuatChieu = sc.nextLine().trim();
@@ -114,7 +120,7 @@ public static void inputCreateSuatChieu(Scanner sc) {
                     inputCreateSuatChieu(sc);
                     break;
                 case 2:
-                    SuatChieu.readSuatChieu();
+                    inputReadSuatChieu(sc);
                     break;
                 case 3:
                     inputUpdateSuatChieu(sc);
