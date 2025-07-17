@@ -56,31 +56,59 @@ public class TaiKhoan {
         this.maNguoiDung = maNguoiDung.trim();
     }
 
-    // CRUD methods
-    public static boolean Create(TaiKhoan tk) {
-        if (tk == null) return false;
-        if (getTaiKhoanByTenDangNhap(tk.getTenDangNhap()) != null) return false; // Đã tồn tại
+    // CRUD static
+    public static void Create(TaiKhoan tk) {
+        if (tk == null || tk.getTenDangNhap() == null || tk.getTenDangNhap().trim().isEmpty()) {
+            System.out.println("Lỗi: Thông tin tài khoản không được để trống.");
+            return;
+        }
+        if (getTaiKhoanByTenDangNhap(tk.getTenDangNhap()) != null) {
+            System.out.println("Lỗi: Tài khoản đã tồn tại.");
+            return;
+        }
         danhSachTaiKhoan.add(tk);
-        return true;
+        System.out.println("Đã thêm tài khoản thành công.");
     }
 
-    public static ArrayList<TaiKhoan> Read() {
-        return new ArrayList<>(danhSachTaiKhoan);
+    public static void Read(String tenDangNhap) {
+        if (danhSachTaiKhoan.isEmpty()) {
+            System.out.println("Danh sách tài khoản trống.");
+        } else {
+            TaiKhoan tk = getTaiKhoanByTenDangNhap(tenDangNhap);
+            if (tk != null) {
+                System.out.println("Tên đăng nhập: " + tk.getTenDangNhap());
+                System.out.println("Vai trò: " + tk.getVaiTro());
+                System.out.println("Trạng thái: " + (tk.isTrangThai() ? "Hoạt động" : "Bị khóa"));
+                System.out.println("Mã người dùng: " + tk.getMaNguoiDung());
+            } else {
+                System.out.println("Không tìm thấy tài khoản với tên đăng nhập đã nhập!");
+            }
+        }
     }
 
-    public static boolean Update(TaiKhoan tk) {
-        if (tk == null) return false;
-        int idx = getTaiKhoanIndexByTenDangNhap(tk.getTenDangNhap());
-        if (idx == -1) return false;
-        danhSachTaiKhoan.set(idx, tk);
-        return true;
+    public static void Update(String tenDangNhap, TaiKhoan tk) {
+        if (tk == null || tk.getTenDangNhap() == null || tk.getTenDangNhap().trim().isEmpty()) {
+            System.out.println("Lỗi: Thông tin tài khoản không được để trống.");
+            return;
+        }
+        int index = getTaiKhoanIndexByTenDangNhap(tenDangNhap);
+        if (index != -1) {
+            tk.setTenDangNhap(tenDangNhap);
+            danhSachTaiKhoan.set(index, tk);
+            System.out.println("Cập nhật thông tin tài khoản thành công.");
+        } else {
+            System.out.println("Không tìm thấy tài khoản với tên đăng nhập đã nhập.");
+        }
     }
 
-    public static boolean Delete(String tenDangNhap) {
-        int idx = getTaiKhoanIndexByTenDangNhap(tenDangNhap);
-        if (idx == -1) return false;
-        danhSachTaiKhoan.remove(idx);
-        return true;
+    public static void Delete(String tenDangNhap) {
+        int index = getTaiKhoanIndexByTenDangNhap(tenDangNhap);
+        if (index != -1) {
+            danhSachTaiKhoan.remove(index);
+            System.out.println("Đã xóa tài khoản thành công.");
+        } else {
+            System.out.println("Không tìm thấy tài khoản với tên đăng nhập đã nhập.");
+        }
     }
 
     // Đăng nhập
@@ -112,7 +140,7 @@ public class TaiKhoan {
         return null;
     }
 
-    public static int getTaiKhoanIndexByTenDangNhap(String tenDangNhap) {
+    private static int getTaiKhoanIndexByTenDangNhap(String tenDangNhap) {
         for (int i = 0; i < danhSachTaiKhoan.size(); i++) {
             if (danhSachTaiKhoan.get(i).getTenDangNhap().equalsIgnoreCase(tenDangNhap)) return i;
         }

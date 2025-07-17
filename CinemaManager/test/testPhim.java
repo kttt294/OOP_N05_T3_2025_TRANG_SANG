@@ -39,13 +39,13 @@ public class testPhim {
         String moTa = sc.nextLine().trim();
 
         Phim p = new Phim(maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
-        Phim.createPhim(p);
+        Phim.Create(p);
     }
 
     public static void inputReadPhim(Scanner sc){
         System.out.println("Nhập mã phim cần xem thông tin: ");
         String maPHim = sc.nextLine().trim();
-        Phim.readPhim(maPHim);
+        Phim.Read(maPHim);
     }
     
     public static void inputUpdatePhim(Scanner sc) {
@@ -95,13 +95,13 @@ public class testPhim {
             p.setMoTa(moTa);
         }
 
-        Phim.updatePhim(maPhim, p);
+        Phim.Update(maPhim, p);
     }
 
     public static void inputDeletePhim(Scanner sc) {
         System.out.print("Nhập mã phim cần xoá: ");
         String maPhim = sc.nextLine().trim();
-        Phim.deletePhim(maPhim);
+        Phim.Delete(maPhim);
     }
 
     public static void test() {

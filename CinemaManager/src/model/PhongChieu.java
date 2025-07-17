@@ -57,15 +57,14 @@ public class PhongChieu {
         return soCotGhe;
     }
 
-    // CRUD
+    // CRUD static
     public static void Create(PhongChieu phong) {
-        if (phong.getMaPhong() == null || phong.getMaPhong().trim().isEmpty() ||
-            phong.getTenPhong() == null || phong.getTenPhong().trim().isEmpty()) {
+        if (phong == null || phong.getMaPhong() == null || phong.getMaPhong().trim().isEmpty()) {
             System.out.println("Lỗi: Thông tin phòng chiếu không được để trống.");
             return;
         }
-        if (phong.getSoHangGhe() <= 0 || phong.getSoCotGhe() <= 0) {
-            System.out.println("Lỗi: Số hàng ghế và số cột ghế phải lớn hơn 0.");
+        if (getPhongByMa(phong.getMaPhong()) != null) {
+            System.out.println("Lỗi: Phòng chiếu đã tồn tại.");
             return;
         }
         danhSachPhong.add(phong);
@@ -76,29 +75,24 @@ public class PhongChieu {
         if (danhSachPhong.isEmpty()) {
             System.out.println("Danh sách phòng chiếu trống.");
         } else {
-            PhongChieu p = getPhongById(maPhong);
-            if (p != null) {
-                System.out.println("Mã phòng: " + p.getMaPhong());
-                System.out.println("Tên phòng: " + p.getTenPhong());
-                System.out.println("Số hàng ghế: " + p.getSoHangGhe());
-                System.out.println("Số cột ghế: " + p.getSoCotGhe());
+            PhongChieu phong = getPhongByMa(maPhong);
+            if (phong != null) {
+                System.out.println("Mã phòng: " + phong.getMaPhong());
+                System.out.println("Tên phòng: " + phong.getTenPhong());
+                System.out.println("Số hàng ghế: " + phong.getSoHangGhe());
+                System.out.println("Số cột ghế: " + phong.getSoCotGhe());
             } else {
-                System.out.println("Không tìm thấy mã phòng cần tìm!");
+                System.out.println("Không tìm thấy phòng chiếu với mã đã nhập!");
             }
         }
     }
 
     public static void Update(String maPhong, PhongChieu phong) {
-        if (phong.getMaPhong() == null || phong.getMaPhong().trim().isEmpty() ||
-            phong.getTenPhong() == null || phong.getTenPhong().trim().isEmpty()) {
+        if (phong == null || phong.getMaPhong() == null || phong.getMaPhong().trim().isEmpty()) {
             System.out.println("Lỗi: Thông tin phòng chiếu không được để trống.");
             return;
         }
-        if (phong.getSoHangGhe() <= 0 || phong.getSoCotGhe() <= 0) {
-            System.out.println("Lỗi: Số hàng ghế và số cột ghế phải lớn hơn 0.");
-            return;
-        }
-        int index = getPhongIndexById(maPhong);
+        int index = getPhongIndexByMa(maPhong);
         if (index != -1) {
             phong.setMaPhong(maPhong);
             danhSachPhong.set(index, phong);
@@ -109,27 +103,25 @@ public class PhongChieu {
     }
 
     public static void Delete(String maPhong) {
-        PhongChieu p = getPhongById(maPhong);
-        if (p != null) {
-            danhSachPhong.remove(p);
-            System.out.println("Xoá phòng chiếu thành công.");
+        int index = getPhongIndexByMa(maPhong);
+        if (index != -1) {
+            danhSachPhong.remove(index);
+            System.out.println("Đã xóa phòng chiếu thành công.");
         } else {
             System.out.println("Không tìm thấy phòng chiếu với mã đã nhập.");
         }
     }
 
-    public static PhongChieu getPhongById(String maPhong) {
-        return danhSachPhong.stream()
-                .filter(p -> p.getMaPhong().equalsIgnoreCase(maPhong))
-                .findFirst()
-                .orElse(null);
+    public static PhongChieu getPhongByMa(String maPhong) {
+        for (PhongChieu phong : danhSachPhong) {
+            if (phong.getMaPhong().equalsIgnoreCase(maPhong)) return phong;
+        }
+        return null;
     }
 
-    private static int getPhongIndexById(String maPhong) {
+    private static int getPhongIndexByMa(String maPhong) {
         for (int i = 0; i < danhSachPhong.size(); i++) {
-            if (danhSachPhong.get(i).getMaPhong().equalsIgnoreCase(maPhong)) {
-                return i;
-            }
+            if (danhSachPhong.get(i).getMaPhong().equalsIgnoreCase(maPhong)) return i;
         }
         return -1;
     }

@@ -3,6 +3,5 @@ public class App {
         testKhachHang.test();
         testPhim.test();
         testSuatChieu.test();
-        
     }
 }
