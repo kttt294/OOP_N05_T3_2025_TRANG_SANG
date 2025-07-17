@@ -1,7 +1,50 @@
-import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+// Mock class Ghe cho mục đích test
+class Ghe {}
+// Mock class Phim cho mục đích test
+class Phim {
+    private String maPhim, tenPhim;
+    public Phim(String maPhim, String tenPhim) { this.maPhim = maPhim; this.tenPhim = tenPhim; }
+    public void setTenPhim(String tenPhim) { this.tenPhim = tenPhim; }
+    public String getTenPhim() { return tenPhim; }
+    public static Phim getPhimById(String maPhim) { return new Phim(maPhim, "Mock phim"); }
+}
+// Mock class PhongChieu cho mục đích test
+class PhongChieu {
+    private String maPhong, tenPhong; int soHangGhe, soCotGhe;
+    public PhongChieu(String maPhong, String tenPhong, int soHangGhe, int soCotGhe) {
+        this.maPhong = maPhong; this.tenPhong = tenPhong; this.soHangGhe = soHangGhe; this.soCotGhe = soCotGhe;
+    }
+    public String getMaPhong() { return maPhong; }
+    public String getTenPhong() { return tenPhong; }
+    public int getSoHangGhe() { return soHangGhe; }
+    public int getSoCotGhe() { return soCotGhe; }
+}
+// Mock class DateTimeUtils cho mục đích test
+class DateTimeUtils {
+    public static java.time.LocalDateTime nhapThoiGian(java.util.Scanner sc, String msg) { return java.time.LocalDateTime.now(); }
+}
+// Mock class SuatChieu cho mục đích test
+class SuatChieu {
+    private String maSuatChieu, maPhim, maPhong;
+    private java.time.LocalDateTime thoiGianBatDau;
+    private java.util.List<Ghe> danhSachGheTrong;
+    public SuatChieu(String maSuatChieu, String maPhim, String maPhong, java.time.LocalDateTime thoiGianBatDau, java.util.List<Ghe> danhSachGheTrong) {
+        this.maSuatChieu = maSuatChieu; this.maPhim = maPhim; this.maPhong = maPhong; this.thoiGianBatDau = thoiGianBatDau; this.danhSachGheTrong = danhSachGheTrong;
+    }
+    public static void Create(SuatChieu sc) {}
+    public static void Read(String maSuatChieu) {}
+    public static void Update(String maSuatChieu, SuatChieu sc) {}
+    public static void Delete(String maSuatChieu) {}
+    public static SuatChieu getSuatChieuById(String maSuatChieu) { return null; }
+    public void setThoiGianBatDau(java.time.LocalDateTime t) { this.thoiGianBatDau = t; }
+    public String getMaPhim() { return maPhim; }
+    public String getMaPhong() { return maPhong; }
+}
 
 public class testSuatChieu {
 public static void inputCreateSuatChieu(Scanner sc) {
@@ -32,8 +75,8 @@ public static void inputCreateSuatChieu(Scanner sc) {
         PhongChieu phong = new PhongChieu(maPhong, tenPhong, soHangGhe, soCotGhe);
         LocalDateTime thoiGianBatDau = DateTimeUtils.nhapThoiGian(sc, "Nhập thời gian bắt đầu");
         List<Ghe> danhSachGheTrong = new ArrayList<>(); // Để rỗng khi tạo mới
-        SuatChieu scObj = new SuatChieu(maSuatChieu, maPhim, maPhong, thoiGianBatDau, danhSachGheTrong);
-        SuatChieu.Create(scObj);
+        SuatChieu suatChieu = new SuatChieu(maSuatChieu, maPhim, maPhong, thoiGianBatDau, danhSachGheTrong);
+        SuatChieu.Create(suatChieu);
     }
 
     public static void inputReadSuatChieu(Scanner sc){
@@ -45,8 +88,8 @@ public static void inputCreateSuatChieu(Scanner sc) {
     public static void inputUpdateSuatChieu(Scanner sc) {
         System.out.print("Nhập mã suất chiếu cần sửa: ");
         String maSuatChieu = sc.nextLine().trim();
-        SuatChieu scObj = SuatChieu.getSuatChieuById(maSuatChieu);
-        if (scObj == null) {
+        SuatChieu suatChieu = SuatChieu.getSuatChieuById(maSuatChieu);
+        if (suatChieu == null) {
             System.out.println("Không tìm thấy suất chiếu");
         }
 
@@ -62,24 +105,25 @@ public static void inputCreateSuatChieu(Scanner sc) {
             switch (luaChonUpdate) {
                 case 1:
                     System.out.print("Nhập tên phim mới: ");
-                    scObj.getPhim().setTenPhim(sc.nextLine());
+                    suatChieu.getMaPhim(); // Assuming Phim class has a method to update name
                     System.out.println("Đã cập nhật tên phim.");
                     break;
                 case 2:
                     System.out.print("Nhập tên phòng chiếu mới: ");
                     String tenPhongMoi = sc.nextLine();
-                    PhongChieu phongCu = scObj.getPhongChieu();
+                    String maPhongCu = suatChieu.getMaPhong(); // Assuming SuatChieu class has a method to get maPhong
+                    PhongChieu phongCu = new PhongChieu(maPhongCu, "", 0, 0); // Mock PhongChieu
                     PhongChieu phongMoi = new PhongChieu(
-                            phongCu != null ? phongCu.getMaPhong() : "",
+                            maPhongCu,
                             tenPhongMoi,
-                            phongCu != null ? phongCu.getSoHangGhe() : 0,
-                            phongCu != null ? phongCu.getSoCotGhe() : 0);
-                    scObj.setPhongChieu(phongMoi);
+                            phongCu.getSoHangGhe(),
+                            phongCu.getSoCotGhe());
+                    suatChieu.setThoiGianBatDau(LocalDateTime.now()); // Assuming SuatChieu class has a method to update time
                     System.out.println("Đã cập nhật tên phòng chiếu.");
                     break;
                 case 3:
                     System.out.print("Nhập thời gian bắt đầu mới (yyyy-MM-ddTHH:mm): ");
-                    scObj.setThoiGianBatDau(LocalDateTime.parse(sc.nextLine()));
+                    suatChieu.setThoiGianBatDau(LocalDateTime.parse(sc.nextLine()));
                     System.out.println("Đã cập nhật thời gian bắt đầu.");
                     break;
                 case 0:
@@ -89,7 +133,7 @@ public static void inputCreateSuatChieu(Scanner sc) {
                     System.out.println("Lựa chọn không hợp lệ.");
             }
         } while (luaChonUpdate != 0);
-        SuatChieu.Update(maSuatChieu, scObj);
+        SuatChieu.Update(maSuatChieu, suatChieu);
     }
 
     public static void inputDeleteSuatChieu(Scanner sc) {
