@@ -1,3 +1,0 @@
-public class PhimCRUD {
-    // Em đã chuyển hết code vào phần Phim.java như yêu cầu của cô rồi ạ !
-}

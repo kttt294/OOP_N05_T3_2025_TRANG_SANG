@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
-
 public class DatVe{
     private String maDatVe;
     private KhachHang khachHang;
