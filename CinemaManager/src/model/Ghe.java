@@ -47,28 +47,67 @@ public class Ghe {
         this.maPhong = (maPhong != null) ? maPhong.trim() : "";
     }
 
-    // CRUD static giữ nguyên
-    public static boolean Create(Ghe ghe) {
-        if (ghe == null) return false;
-        if (getGheByMaGhe(ghe.getMaGhe()) != null) return false;
+    // CRUD static
+    public static void Create(Ghe ghe) {
+        if (ghe == null || ghe.getMaGhe() == null || ghe.getMaGhe().trim().isEmpty()) {
+            System.out.println("Lỗi: Thông tin ghế không được để trống.");
+            return;
+        }
+        if (getGheByMaGhe(ghe.getMaGhe()) != null) {
+            System.out.println("Lỗi: Ghế đã tồn tại.");
+            return;
+        }
         danhSachGhe.add(ghe);
-        return true;
+        System.out.println("Đã thêm ghế thành công.");
     }
+    
+    // Read toàn bộ danh sách ghế
     public static ArrayList<Ghe> Read() {
+        if (danhSachGhe.isEmpty()) {
+            System.out.println("Danh sách ghế trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số ghế: " + danhSachGhe.size());
         return new ArrayList<>(danhSachGhe);
     }
-    public static boolean Update(Ghe ghe) {
-        if (ghe == null) return false;
-        int idx = getGheIndexByMaGhe(ghe.getMaGhe());
-        if (idx == -1) return false;
-        danhSachGhe.set(idx, ghe);
-        return true;
+    
+    // Read ghế theo mã
+    public static void Read(String maGhe) {
+        if (danhSachGhe.isEmpty()) {
+            System.out.println("Danh sách ghế trống.");
+            return;
+        }
+        Ghe ghe = getGheByMaGhe(maGhe);
+        if (ghe != null) {
+            ghe.hienThiThongTin();
+        } else {
+            System.out.println("Không tìm thấy ghế với mã: " + maGhe);
+        }
     }
-    public static boolean Delete(String maGhe) {
+    
+    public static void Update(String maGhe, Ghe ghe) {
+        if (ghe == null || ghe.getMaGhe() == null || ghe.getMaGhe().trim().isEmpty()) {
+            System.out.println("Lỗi: Thông tin ghế không được để trống.");
+            return;
+        }
         int idx = getGheIndexByMaGhe(maGhe);
-        if (idx == -1) return false;
+        if (idx == -1) {
+            System.out.println("Không tìm thấy ghế với mã: " + maGhe);
+            return;
+        }
+        ghe.setMaGhe(maGhe);
+        danhSachGhe.set(idx, ghe);
+        System.out.println("Cập nhật ghế thành công.");
+    }
+    
+    public static void Delete(String maGhe) {
+        int idx = getGheIndexByMaGhe(maGhe);
+        if (idx == -1) {
+            System.out.println("Không tìm thấy ghế với mã: " + maGhe);
+            return;
+        }
         danhSachGhe.remove(idx);
-        return true;
+        System.out.println("Đã xóa ghế thành công.");
     }
     public static Ghe getGheByMaGhe(String maGhe) {
         for (Ghe ghe : danhSachGhe) {
@@ -94,5 +133,16 @@ public class Ghe {
     @Override
     public int hashCode() {
         return Objects.hash(maGhe);
+    }
+    
+    // Hiển thị thông tin chi tiết của một ghế
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN GHẾ ===");
+        System.out.println("Mã ghế: " + this.maGhe);
+        System.out.println("Hàng: " + this.hang);
+        System.out.println("Cột: " + this.cot);
+        System.out.println("Loại ghế: " + this.loaiGheMacDinh);
+        System.out.println("Mã phòng: " + this.maPhong);
+        System.out.println("====================");
     }
 }

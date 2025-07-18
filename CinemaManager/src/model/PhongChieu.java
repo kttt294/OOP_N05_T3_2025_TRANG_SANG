@@ -71,19 +71,27 @@ public class PhongChieu {
         System.out.println("Đã thêm phòng chiếu thành công.");
     }
 
+    // Read toàn bộ danh sách phòng chiếu
+    public static ArrayList<PhongChieu> Read() {
+        if (danhSachPhong.isEmpty()) {
+            System.out.println("Danh sách phòng chiếu trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số phòng chiếu: " + danhSachPhong.size());
+        return new ArrayList<>(danhSachPhong);
+    }
+    
+    // Read phòng chiếu theo mã
     public static void Read(String maPhong) {
         if (danhSachPhong.isEmpty()) {
             System.out.println("Danh sách phòng chiếu trống.");
+            return;
+        }
+        PhongChieu phong = getPhongByMa(maPhong);
+        if (phong != null) {
+            phong.hienThiThongTin();
         } else {
-            PhongChieu phong = getPhongByMa(maPhong);
-            if (phong != null) {
-                System.out.println("Mã phòng: " + phong.getMaPhong());
-                System.out.println("Tên phòng: " + phong.getTenPhong());
-                System.out.println("Số hàng ghế: " + phong.getSoHangGhe());
-                System.out.println("Số cột ghế: " + phong.getSoCotGhe());
-            } else {
-                System.out.println("Không tìm thấy phòng chiếu với mã đã nhập!");
-            }
+            System.out.println("Không tìm thấy phòng chiếu với mã: " + maPhong);
         }
     }
 
@@ -124,5 +132,16 @@ public class PhongChieu {
             if (danhSachPhong.get(i).getMaPhong().equalsIgnoreCase(maPhong)) return i;
         }
         return -1;
+    }
+    
+    // Hiển thị thông tin chi tiết của một phòng chiếu
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN PHÒNG CHIẾU ===");
+        System.out.println("Mã phòng: " + this.maPhong);
+        System.out.println("Tên phòng: " + this.tenPhong);
+        System.out.println("Số hàng ghế: " + this.soHangGhe);
+        System.out.println("Số cột ghế: " + this.soCotGhe);
+        System.out.println("Tổng số ghế: " + (this.soHangGhe * this.soCotGhe));
+        System.out.println("=============================");
     }
 }

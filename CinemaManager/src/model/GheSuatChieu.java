@@ -50,27 +50,69 @@ public class GheSuatChieu {
     }
 
     // CRUD static
-    public static boolean Create(GheSuatChieu gsc) {
-        if (gsc == null) return false;
-        if (getByMaGheAndMaSuatChieu(gsc.getMaGhe(), gsc.getMaSuatChieu()) != null) return false;
+    public static void Create(GheSuatChieu gsc) {
+        if (gsc == null || gsc.getMaGhe() == null || gsc.getMaGhe().trim().isEmpty() ||
+            gsc.getMaSuatChieu() == null || gsc.getMaSuatChieu().trim().isEmpty()) {
+            System.out.println("Lỗi: Thông tin ghế suất chiếu không được để trống.");
+            return;
+        }
+        if (getByMaGheAndMaSuatChieu(gsc.getMaGhe(), gsc.getMaSuatChieu()) != null) {
+            System.out.println("Lỗi: Ghế suất chiếu đã tồn tại.");
+            return;
+        }
         danhSachGheSuatChieu.add(gsc);
-        return true;
+        System.out.println("Đã thêm ghế suất chiếu thành công.");
     }
+    
+    // Read toàn bộ danh sách ghế suất chiếu
     public static ArrayList<GheSuatChieu> Read() {
+        if (danhSachGheSuatChieu.isEmpty()) {
+            System.out.println("Danh sách ghế suất chiếu trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số ghế suất chiếu: " + danhSachGheSuatChieu.size());
         return new ArrayList<>(danhSachGheSuatChieu);
     }
-    public static boolean Update(GheSuatChieu gsc) {
-        if (gsc == null) return false;
-        int idx = getIndexByMaGheAndMaSuatChieu(gsc.getMaGhe(), gsc.getMaSuatChieu());
-        if (idx == -1) return false;
-        danhSachGheSuatChieu.set(idx, gsc);
-        return true;
+    
+    // Read ghế suất chiếu theo mã ghế và mã suất chiếu
+    public static void Read(String maGhe, String maSuatChieu) {
+        if (danhSachGheSuatChieu.isEmpty()) {
+            System.out.println("Danh sách ghế suất chiếu trống.");
+            return;
+        }
+        GheSuatChieu gsc = getByMaGheAndMaSuatChieu(maGhe, maSuatChieu);
+        if (gsc != null) {
+            gsc.hienThiThongTin();
+        } else {
+            System.out.println("Không tìm thấy ghế suất chiếu với mã ghế: " + maGhe + " và mã suất chiếu: " + maSuatChieu);
+        }
     }
-    public static boolean Delete(String maGhe, String maSuatChieu) {
+    
+    public static void Update(String maGhe, String maSuatChieu, GheSuatChieu gsc) {
+        if (gsc == null || gsc.getMaGhe() == null || gsc.getMaGhe().trim().isEmpty() ||
+            gsc.getMaSuatChieu() == null || gsc.getMaSuatChieu().trim().isEmpty()) {
+            System.out.println("Lỗi: Thông tin ghế suất chiếu không được để trống.");
+            return;
+        }
         int idx = getIndexByMaGheAndMaSuatChieu(maGhe, maSuatChieu);
-        if (idx == -1) return false;
+        if (idx == -1) {
+            System.out.println("Không tìm thấy ghế suất chiếu với mã ghế: " + maGhe + " và mã suất chiếu: " + maSuatChieu);
+            return;
+        }
+        gsc.setMaGhe(maGhe);
+        gsc.setMaSuatChieu(maSuatChieu);
+        danhSachGheSuatChieu.set(idx, gsc);
+        System.out.println("Cập nhật ghế suất chiếu thành công.");
+    }
+    
+    public static void Delete(String maGhe, String maSuatChieu) {
+        int idx = getIndexByMaGheAndMaSuatChieu(maGhe, maSuatChieu);
+        if (idx == -1) {
+            System.out.println("Không tìm thấy ghế suất chiếu với mã ghế: " + maGhe + " và mã suất chiếu: " + maSuatChieu);
+            return;
+        }
         danhSachGheSuatChieu.remove(idx);
-        return true;
+        System.out.println("Đã xóa ghế suất chiếu thành công.");
     }
     public static GheSuatChieu getByMaGheAndMaSuatChieu(String maGhe, String maSuatChieu) {
         for (GheSuatChieu gsc : danhSachGheSuatChieu) {
@@ -86,5 +128,17 @@ public class GheSuatChieu {
                 return i;
         }
         return -1;
+    }
+    
+    // Hiển thị thông tin chi tiết của một ghế suất chiếu
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN GHẾ SUẤT CHIẾU ===");
+        System.out.println("Mã ghế: " + this.maGhe);
+        System.out.println("Mã suất chiếu: " + this.maSuatChieu);
+        System.out.println("Giá ghế: " + this.giaGhe + " VNĐ");
+        System.out.println("Trạng thái: " + this.trangThai);
+        System.out.println("Loại ghế: " + this.loaiGhe);
+        System.out.println("Mô tả: " + this.moTa);
+        System.out.println("================================");
     }
 } 

@@ -101,22 +101,27 @@ public class Voucher {
         System.out.println("Đã thêm voucher thành công.");
     }
 
+    // Read toàn bộ danh sách voucher
+    public static ArrayList<Voucher> Read() {
+        if (danhSachVoucher.isEmpty()) {
+            System.out.println("Danh sách voucher trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số voucher: " + danhSachVoucher.size());
+        return new ArrayList<>(danhSachVoucher);
+    }
+    
+    // Read voucher theo mã
     public static void Read(String maVoucher) {
         if (danhSachVoucher.isEmpty()) {
             System.out.println("Danh sách voucher trống.");
+            return;
+        }
+        Voucher v = getVoucherById(maVoucher);
+        if (v != null) {
+            v.hienThiThongTin();
         } else {
-            Voucher v = getVoucherById(maVoucher);
-            if (v != null) {
-                System.out.println("Mã voucher: " + v.getMaVoucher());
-                System.out.println("Mô tả: " + v.getMoTa());
-                System.out.println("Phần trăm giảm giá: " + v.getPhanTramGiamGia());
-                System.out.println("Ngày bắt đầu: " + v.getNgayBatDau());
-                System.out.println("Ngày kết thúc: " + v.getNgayKetThuc());
-                System.out.println("Số lượng còn lại: " + v.getSoLuongConLai());
-                System.out.println("Trạng thái: " + v.getTrangThai());
-            } else {
-                System.out.println("Không tìm thấy mã voucher cần tìm!");
-            }
+            System.out.println("Không tìm thấy voucher với mã: " + maVoucher);
         }
     }
 
@@ -167,5 +172,18 @@ public class Voucher {
             }
         }
         return -1;
+    }
+    
+    // Hiển thị thông tin chi tiết của một voucher
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN VOUCHER ===");
+        System.out.println("Mã voucher: " + this.maVoucher);
+        System.out.println("Mô tả: " + this.moTa);
+        System.out.println("Phần trăm giảm giá: " + this.phanTramGiamGia + "%");
+        System.out.println("Ngày bắt đầu: " + this.ngayBatDau);
+        System.out.println("Ngày kết thúc: " + this.ngayKetThuc);
+        System.out.println("Số lượng còn lại: " + this.soLuongConLai);
+        System.out.println("Trạng thái: " + this.trangThai);
+        System.out.println("=========================");
     }
 }

@@ -61,16 +61,27 @@ public class KhachHang extends Nguoi {
         System.out.println("Đã thêm khách hàng thành công.");
     }
 
+    // Read toàn bộ danh sách khách hàng
+    public static ArrayList<KhachHang> Read() {
+        if (danhSachKhachHang.isEmpty()) {
+            System.out.println("Danh sách khách hàng trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số khách hàng: " + danhSachKhachHang.size());
+        return new ArrayList<>(danhSachKhachHang);
+    }
+    
+    // Read khách hàng theo CCCD
     public static void Read(String CCCD) {
         if (danhSachKhachHang.isEmpty()) {
             System.out.println("Danh sách khách hàng trống.");
+            return;
+        }
+        KhachHang kh = getKhachHangByCCCD(CCCD);
+        if (kh != null) {
+            kh.hienThiThongTin();
         } else {
-            KhachHang kh = getKhachHangByCCCD(CCCD);
-            if (kh != null) {
-                kh.hienThiThongTin();
-            } else {
-                System.out.println("Không tìm thấy khách hàng với CCCD đã nhập!");
-            }
+            System.out.println("Không tìm thấy khách hàng với CCCD: " + CCCD);
         }
     }
 

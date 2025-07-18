@@ -40,15 +40,36 @@ public class DoAn {
         this.soLuongCon = soLuong;
     }
 
-    // CRUD static
+    // CRUD
     public static boolean Create(DoAn doAn) {
         if (doAn == null) return false;
         if (getDoAnByMa(doAn.getMaDoAn()) != null) return false;
         danhSachDoAn.add(doAn);
         return true;
     }
+
+    // Read toàn bộ danh sách đồ ăn
     public static ArrayList<DoAn> Read() {
+        if (danhSachDoAn.isEmpty()) {
+            System.out.println("Danh sách đồ ăn trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số đồ ăn: " + danhSachDoAn.size());
         return new ArrayList<>(danhSachDoAn);
+    }
+    
+    // Read đồ ăn theo mã
+    public static void Read(String maDoAn) {
+        if (danhSachDoAn.isEmpty()) {
+            System.out.println("Danh sách đồ ăn trống.");
+            return;
+        }
+        DoAn da = getDoAnByMa(maDoAn);
+        if (da != null) {
+            da.hienThiThongTin();
+        } else {
+            System.out.println("Không tìm thấy đồ ăn với mã: " + maDoAn);
+        }
     }
     public static boolean Update(DoAn doAn) {
         if (doAn == null) return false;
@@ -63,6 +84,7 @@ public class DoAn {
         danhSachDoAn.remove(idx);
         return true;
     }
+    // Nếu muốn xem thông tin Đồ Ăn thông cụ thể thông qua maDoAn
     public static DoAn getDoAnByMa(String maDoAn) {
         for (DoAn da : danhSachDoAn) {
             if (da.getMaDoAn().equalsIgnoreCase(maDoAn)) return da;
@@ -74,5 +96,15 @@ public class DoAn {
             if (danhSachDoAn.get(i).getMaDoAn().equalsIgnoreCase(maDoAn)) return i;
         }
         return -1;
+    }
+    
+    // Hiển thị thông tin chi tiết của một đồ ăn
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN ĐỒ ĂN ===");
+        System.out.println("Mã đồ ăn: " + this.maDoAn);
+        System.out.println("Tên đồ ăn: " + this.tenDoAn);
+        System.out.println("Giá: " + this.gia + " VNĐ");
+        System.out.println("Số lượng còn: " + this.soLuongCon);
+        System.out.println("======================");
     }
 }

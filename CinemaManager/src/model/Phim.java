@@ -96,23 +96,40 @@ public class Phim {
         System.out.println("Đã thêm phim thành công.");
     }
 
+    // Read toàn bộ danh sách phim
+    public static ArrayList<Phim> Read() {
+        if (danhSachPhim.isEmpty()) {
+            System.out.println("Danh sách phim trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số phim: " + danhSachPhim.size());
+        return new ArrayList<>(danhSachPhim);
+    }
+    
+    // Read phim theo mã
     public static void Read(String maPhim) {
         if (danhSachPhim.isEmpty()) {
             System.out.println("Danh sách phim trống.");
-        } else {
-            Phim p = getPhimById(maPhim);
-            if (p != null) {
-                System.out.println("Mã phim: " + p.getMaPhim());
-                System.out.println("Tên phim: " + p.getTenPhim());
-                System.out.println("Thể loại: " + p.getTheLoai());
-                System.out.println("Thời lượng: " + p.getThoiLuong());
-                System.out.println("Ngôn ngữ: " + p.getNgonNgu());
-                System.out.println("Giới hạn tuổi: " + p.getGioiHanTuoi());
-                System.out.println("Mô tả: " + p.getMoTa());
-            } else {
-                System.out.println("Không tìm thấy mã phim cần tìm!");
-            }
         }
+        Phim p = getPhimById(maPhim);
+        if (p != null) {
+            p.hienThiThongTin();
+        } else {
+            System.out.println("Không tìm thấy phim với mã: " + maPhim);
+        }
+    }
+    
+    // Hiển thị thông tin chi tiết của một phim
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN PHIM ===");
+        System.out.println("Mã phim: " + this.maPhim);
+        System.out.println("Tên phim: " + this.tenPhim);
+        System.out.println("Thể loại: " + this.theLoai);
+        System.out.println("Thời lượng: " + this.thoiLuong + " phút");
+        System.out.println("Ngôn ngữ: " + this.ngonNgu);
+        System.out.println("Giới hạn tuổi: " + this.gioiHanTuoi + "+");
+        System.out.println("Mô tả: " + this.moTa);
+        System.out.println("=====================");
     }
 
     public static void Update(String maPhim, Phim phim) {

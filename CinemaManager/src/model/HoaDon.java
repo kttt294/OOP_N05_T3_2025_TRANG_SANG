@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class HoaDon {
     private String maHoaDon;
@@ -11,7 +12,7 @@ public class HoaDon {
 
     private static java.util.ArrayList<HoaDon> danhSachHoaDon = new java.util.ArrayList<>();
 
-    HoaDon(){};
+    public HoaDon(){};
 
     public HoaDon(String maHoaDon, KhachHang khachHang, Ve veDaDat, DoAn doAn,
                   int tongTien, LocalDateTime thoiGianThanhToan, String phuongThucThanhToan) {
@@ -94,23 +95,41 @@ public class HoaDon {
         System.out.println("Đã thêm hóa đơn thành công.");
     }
 
+    // Read toàn bộ danh sách hóa đơn
+    public static ArrayList<HoaDon> Read() {
+        if (danhSachHoaDon.isEmpty()) {
+            System.out.println("Danh sách hóa đơn trống.");
+            return new java.util.ArrayList<>();
+        }
+        System.out.println("Tổng số hóa đơn: " + danhSachHoaDon.size());
+        return new java.util.ArrayList<>(danhSachHoaDon);
+    }
+    
+    // Read hóa đơn theo mã
     public static void Read(String maHoaDon) {
         if (danhSachHoaDon.isEmpty()) {
             System.out.println("Danh sách hóa đơn trống.");
-        } else {
-            HoaDon hd = getHoaDonByMa(maHoaDon);
-            if (hd != null) {
-                System.out.println("Mã hóa đơn: " + hd.getMaHoaDon());
-                System.out.println("Khách hàng: " + (hd.getKhachHang() != null ? hd.getKhachHang().getCCCD() : ""));
-                System.out.println("Vé đã đặt: " + (hd.getVeDaDat() != null ? hd.getVeDaDat().getMaVe() : ""));
-                System.out.println("Đồ ăn: " + (hd.getDoAn() != null ? hd.getDoAn().getMaDoAn() : ""));
-                System.out.println("Tổng tiền: " + hd.getTongTien());
-                System.out.println("Thời gian thanh toán: " + hd.getThoiGianThanhToan());
-                System.out.println("Phương thức thanh toán: " + hd.getPhuongThucThanhToan());
-            } else {
-                System.out.println("Không tìm thấy hóa đơn với mã đã nhập!");
-            }
+            return;
         }
+        HoaDon hd = getHoaDonByMa(maHoaDon);
+        if (hd != null) {
+            hd.hienThiThongTin();
+        } else {
+            System.out.println("Không tìm thấy hóa đơn với mã: " + maHoaDon);
+        }
+    }
+    
+    // Hiển thị thông tin chi tiết của một hóa đơn
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN HÓA ĐƠN ===");
+        System.out.println("Mã hóa đơn: " + this.maHoaDon);
+        System.out.println("Khách hàng: " + (this.khachHang != null ? this.khachHang.getCCCD() : "N/A"));
+        System.out.println("Vé đã đặt: " + (this.veDaDat != null ? this.veDaDat.getMaVe() : "N/A"));
+        System.out.println("Đồ ăn: " + (this.doAn != null ? this.doAn.getMaDoAn() : "N/A"));
+        System.out.println("Tổng tiền: " + this.tongTien + " VNĐ");
+        System.out.println("Thời gian thanh toán: " + this.thoiGianThanhToan);
+        System.out.println("Phương thức thanh toán: " + this.phuongThucThanhToan);
+        System.out.println("========================");
     }
 
     public static void Update(String maHoaDon, HoaDon hd) {

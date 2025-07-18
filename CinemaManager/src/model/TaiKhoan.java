@@ -70,19 +70,27 @@ public class TaiKhoan {
         System.out.println("Đã thêm tài khoản thành công.");
     }
 
+    // Read toàn bộ danh sách tài khoản
+    public static ArrayList<TaiKhoan> Read() {
+        if (danhSachTaiKhoan.isEmpty()) {
+            System.out.println("Danh sách tài khoản trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số tài khoản: " + danhSachTaiKhoan.size());
+        return new ArrayList<>(danhSachTaiKhoan);
+    }
+    
+    // Read tài khoản theo tên đăng nhập
     public static void Read(String tenDangNhap) {
         if (danhSachTaiKhoan.isEmpty()) {
             System.out.println("Danh sách tài khoản trống.");
+            return;
+        }
+        TaiKhoan tk = getTaiKhoanByTenDangNhap(tenDangNhap);
+        if (tk != null) {
+            tk.hienThiThongTin();
         } else {
-            TaiKhoan tk = getTaiKhoanByTenDangNhap(tenDangNhap);
-            if (tk != null) {
-                System.out.println("Tên đăng nhập: " + tk.getTenDangNhap());
-                System.out.println("Vai trò: " + tk.getVaiTro());
-                System.out.println("Trạng thái: " + (tk.isTrangThai() ? "Hoạt động" : "Bị khóa"));
-                System.out.println("Mã người dùng: " + tk.getMaNguoiDung());
-            } else {
-                System.out.println("Không tìm thấy tài khoản với tên đăng nhập đã nhập!");
-            }
+            System.out.println("Không tìm thấy tài khoản với tên đăng nhập: " + tenDangNhap);
         }
     }
 
@@ -145,5 +153,15 @@ public class TaiKhoan {
             if (danhSachTaiKhoan.get(i).getTenDangNhap().equalsIgnoreCase(tenDangNhap)) return i;
         }
         return -1;
+    }
+    
+    // Hiển thị thông tin chi tiết của một tài khoản
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN TÀI KHOẢN ===");
+        System.out.println("Tên đăng nhập: " + this.tenDangNhap);
+        System.out.println("Vai trò: " + this.vaiTro);
+        System.out.println("Trạng thái: " + (this.trangThai ? "Hoạt động" : "Bị khóa"));
+        System.out.println("Mã người dùng: " + this.maNguoiDung);
+        System.out.println("===========================");
     }
 }

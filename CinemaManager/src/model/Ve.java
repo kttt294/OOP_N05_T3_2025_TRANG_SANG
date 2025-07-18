@@ -52,21 +52,27 @@ public class Ve {
         System.out.println("Đã thêm vé thành công.");
     }
 
+    // Read toàn bộ danh sách vé
+    public static ArrayList<Ve> Read() {
+        if (danhSachVe.isEmpty()) {
+            System.out.println("Danh sách vé trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số vé: " + danhSachVe.size());
+        return new ArrayList<>(danhSachVe);
+    }
+    
+    // Read vé theo mã
     public static void Read(String maVe) {
         if (danhSachVe.isEmpty()) {
             System.out.println("Danh sách vé trống.");
+            return;
+        }
+        Ve v = getVeById(maVe);
+        if (v != null) {
+            v.hienThiThongTin();
         } else {
-            Ve v = getVeById(maVe);
-            if (v != null) {
-                System.out.println("Mã vé: " + v.getMaVe());
-                System.out.println("Mã khách hàng: " + v.getMaKH());
-                System.out.println("Mã suất chiếu: " + v.getMaSuatChieu());
-                System.out.println("Mã ghế: " + v.getMaGhe());
-                System.out.println("Giá vé: " + v.getGiaVe() + " VND");
-                System.out.println("Trạng thái: " + (v.isDaThanhToan() ? "Đã thanh toán" : "Chưa thanh toán"));
-            } else {
-                System.out.println("Không tìm thấy mã vé cần tìm!");
-            }
+            System.out.println("Không tìm thấy vé với mã: " + maVe);
         }
     }
 
@@ -116,5 +122,17 @@ public class Ve {
             }
         }
         return -1;
+    }
+    
+    // Hiển thị thông tin chi tiết của một vé
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN VÉ ===");
+        System.out.println("Mã vé: " + this.maVe);
+        System.out.println("Mã khách hàng: " + this.maKH);
+        System.out.println("Mã suất chiếu: " + this.maSuatChieu);
+        System.out.println("Mã ghế: " + this.maGhe);
+        System.out.println("Giá vé: " + this.giaVe + " VNĐ");
+        System.out.println("Trạng thái: " + (this.daThanhToan ? "Đã thanh toán" : "Chưa thanh toán"));
+        System.out.println("====================");
     }
 }

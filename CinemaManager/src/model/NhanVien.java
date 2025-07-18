@@ -40,30 +40,64 @@ public class NhanVien extends Nguoi {
     }
 
     // CRUD static
-    public static boolean Create(NhanVien nv) {
-        if (nv == null || nv.getCCCD() == null || nv.getCCCD().trim().isEmpty() ||
-            nv.getTen() == null || nv.getTen().trim().isEmpty()) {
-            return false;
+    public static void Create(NhanVien nv) {
+        if (nv == null || nv.getCCCD() == null || nv.getCCCD().trim().isEmpty()) {
+            System.out.println("Lỗi: Thông tin nhân viên không được để trống.");
+            return;
         }
-        if (getNhanVienByCCCD(nv.getCCCD()) != null) return false;
+        if (getNhanVienByCCCD(nv.getCCCD()) != null) {
+            System.out.println("Lỗi: Nhân viên đã tồn tại.");
+            return;
+        }
         danhSachNhanVien.add(nv);
-        return true;
+        System.out.println("Đã thêm nhân viên thành công.");
     }
+    // Read toàn bộ danh sách nhân viên
     public static java.util.ArrayList<NhanVien> Read() {
+        if (danhSachNhanVien.isEmpty()) {
+            System.out.println("Danh sách nhân viên trống.");
+            return new java.util.ArrayList<>();
+        }
+        System.out.println("Tổng số nhân viên: " + danhSachNhanVien.size());
         return new java.util.ArrayList<>(danhSachNhanVien);
     }
-    public static boolean Update(NhanVien nv) {
-        if (nv == null || nv.getCCCD() == null || nv.getCCCD().trim().isEmpty()) return false;
-        int idx = getNhanVienIndexByCCCD(nv.getCCCD());
-        if (idx == -1) return false;
-        danhSachNhanVien.set(idx, nv);
-        return true;
+    
+    // Read nhân viên theo CCCD
+    public static void Read(String CCCD) {
+        if (danhSachNhanVien.isEmpty()) {
+            System.out.println("Danh sách nhân viên trống.");
+            return;
+        }
+        NhanVien nv = getNhanVienByCCCD(CCCD);
+        if (nv != null) {
+            nv.hienThiThongTin();
+        } else {
+            System.out.println("Không tìm thấy nhân viên với CCCD: " + CCCD);
+        }
     }
-    public static boolean Delete(String CCCD) {
+    public static void Update(String CCCD, NhanVien nv) {
+        if (nv == null || nv.getCCCD() == null || nv.getCCCD().trim().isEmpty()) {
+            System.out.println("Lỗi: Thông tin nhân viên không được để trống.");
+            return;
+        }
         int idx = getNhanVienIndexByCCCD(CCCD);
-        if (idx == -1) return false;
+        if (idx == -1) {
+            System.out.println("Không tìm thấy nhân viên với CCCD: " + CCCD);
+            return;
+        }
+        nv.setCCCD(CCCD);
+        danhSachNhanVien.set(idx, nv);
+        System.out.println("Cập nhật nhân viên thành công.");
+    }
+    
+    public static void Delete(String CCCD) {
+        int idx = getNhanVienIndexByCCCD(CCCD);
+        if (idx == -1) {
+            System.out.println("Không tìm thấy nhân viên với CCCD: " + CCCD);
+            return;
+        }
         danhSachNhanVien.remove(idx);
-        return true;
+        System.out.println("Đã xóa nhân viên thành công.");
     }
     public static NhanVien getNhanVienByCCCD(String CCCD) {
         for (NhanVien nv : danhSachNhanVien) {

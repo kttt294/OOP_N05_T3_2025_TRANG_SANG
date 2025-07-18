@@ -76,12 +76,14 @@ public class SuatChieu {
 
     // Hiển thị thông tin suất chiếu
     public void hienThiThongTin() {
-        System.out.println("Mã suất chiếu: " + maSuatChieu);
-        System.out.println("Mã phim: " + maPhim);
-        System.out.println("Mã phòng chiếu: " + maPhong);
-        System.out.println("Thời gian bắt đầu: " + thoiGianBatDau);
-        System.out.println("Thời gian kết thúc: " + thoiGianKetThuc);
-        System.out.println("Danh sách ghế trống: " + danhSachGheTrong);
+        System.out.println("=== THÔNG TIN SUẤT CHIẾU ===");
+        System.out.println("Mã suất chiếu: " + this.maSuatChieu);
+        System.out.println("Mã phim: " + this.maPhim);
+        System.out.println("Mã phòng chiếu: " + this.maPhong);
+        System.out.println("Thời gian bắt đầu: " + this.thoiGianBatDau);
+        System.out.println("Thời gian kết thúc: " + this.thoiGianKetThuc);
+        System.out.println("Số ghế trống: " + (this.danhSachGheTrong != null ? this.danhSachGheTrong.size() : 0));
+        System.out.println("============================");
     }
 
     // Tính thời gian kết thúc dựa trên thời lượng phim
@@ -111,16 +113,27 @@ public class SuatChieu {
         System.out.println("Thêm suất chiếu thành công.");
     }
 
+    // Read toàn bộ danh sách suất chiếu
+    public static List<SuatChieu> Read() {
+        if (danhSachSuatChieu.isEmpty()) {
+            System.out.println("Danh sách suất chiếu trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số suất chiếu: " + danhSachSuatChieu.size());
+        return new ArrayList<>(danhSachSuatChieu);
+    }
+    
+    // Read suất chiếu theo mã
     public static void Read(String maSuatChieu) {
         if (danhSachSuatChieu.isEmpty()) {
             System.out.println("Danh sách suất chiếu trống.");
+            return;
+        }
+        SuatChieu p = getSuatChieuById(maSuatChieu);
+        if (p != null) {
+            p.hienThiThongTin();
         } else {
-            SuatChieu p = getSuatChieuById(maSuatChieu);
-            if (p != null) {
-                p.hienThiThongTin();
-            } else {
-                System.out.println("Không tìm thấy mã suất chiếu cần tìm!");
-            }
+            System.out.println("Không tìm thấy suất chiếu với mã: " + maSuatChieu);
         }
     }
 

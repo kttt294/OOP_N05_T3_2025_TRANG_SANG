@@ -1,6 +1,5 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DanhGia {
     private String maDanhGia;
@@ -10,7 +9,7 @@ public class DanhGia {
     private String binhLuan;
     private LocalDateTime thoiGian;
 
-    private static List<DanhGia> danhSachDanhGia = new ArrayList<>();
+    private static ArrayList<DanhGia> danhSachDanhGia = new ArrayList<>();
 
     public DanhGia() {}
 
@@ -55,32 +54,67 @@ public class DanhGia {
         this.thoiGian = thoiGian;
     }
 
-    // CRUD static
-    public static boolean Create(DanhGia dg) {
+    // CRUD
+    public static void Create(DanhGia dg) {
         if (dg == null || dg.getMaDanhGia() == null || dg.getMaDanhGia().trim().isEmpty() ||
             dg.getMaKhachHang() == null || dg.getMaKhachHang().trim().isEmpty() ||
             dg.getMaPhim() == null || dg.getMaPhim().trim().isEmpty()) {
-            return false;
+            System.out.println("Lỗi: Thông tin đánh giá không được để trống.");
+            return;
         }
-        if (getDanhGiaByMa(dg.getMaDanhGia()) != null) return false;
+        if (getDanhGiaByMa(dg.getMaDanhGia()) != null) {
+            System.out.println("Lỗi: Đánh giá đã tồn tại.");
+            return;
+        }
         danhSachDanhGia.add(dg);
-        return true;
+        System.out.println("Đã thêm đánh giá thành công.");
     }
-    public static List<DanhGia> Read() {
+    // Read toàn bộ danh sách đánh giá
+    public static ArrayList<DanhGia> Read() {
+        if (danhSachDanhGia.isEmpty()) {
+            System.out.println("Danh sách đánh giá trống.");
+            return new ArrayList<>();
+        }
+        System.out.println("Tổng số đánh giá: " + danhSachDanhGia.size());
         return new ArrayList<>(danhSachDanhGia);
     }
-    public static boolean Update(DanhGia dg) {
-        if (dg == null || dg.getMaDanhGia() == null || dg.getMaDanhGia().trim().isEmpty()) return false;
-        int idx = getDanhGiaIndexByMa(dg.getMaDanhGia());
-        if (idx == -1) return false;
-        danhSachDanhGia.set(idx, dg);
-        return true;
+    
+    // Read đánh giá theo mã
+    public static void Read(String maDanhGia) {
+        if (danhSachDanhGia.isEmpty()) {
+            System.out.println("Danh sách đánh giá trống.");
+            return;
+        }
+        DanhGia dg = getDanhGiaByMa(maDanhGia);
+        if (dg != null) {
+            dg.hienThiThongTin();
+        } else {
+            System.out.println("Không tìm thấy đánh giá với mã: " + maDanhGia);
+        }
     }
-    public static boolean Delete(String maDanhGia) {
+    public static void Update(String maDanhGia, DanhGia dg) {
+        if (dg == null || dg.getMaDanhGia() == null || dg.getMaDanhGia().trim().isEmpty()) {
+            System.out.println("Lỗi: Thông tin đánh giá không được để trống.");
+            return;
+        }
         int idx = getDanhGiaIndexByMa(maDanhGia);
-        if (idx == -1) return false;
+        if (idx == -1) {
+            System.out.println("Không tìm thấy đánh giá với mã: " + maDanhGia);
+            return;
+        }
+        dg.setMaDanhGia(maDanhGia);
+        danhSachDanhGia.set(idx, dg);
+        System.out.println("Cập nhật đánh giá thành công.");
+    }
+    
+    public static void Delete(String maDanhGia) {
+        int idx = getDanhGiaIndexByMa(maDanhGia);
+        if (idx == -1) {
+            System.out.println("Không tìm thấy đánh giá với mã: " + maDanhGia);
+            return;
+        }
         danhSachDanhGia.remove(idx);
-        return true;
+        System.out.println("Đã xóa đánh giá thành công.");
     }
     public static DanhGia getDanhGiaByMa(String maDanhGia) {
         for (DanhGia dg : danhSachDanhGia) {
@@ -93,5 +127,17 @@ public class DanhGia {
             if (danhSachDanhGia.get(i).getMaDanhGia().equalsIgnoreCase(maDanhGia)) return i;
         }
         return -1;
+    }
+    
+    // Hiển thị thông tin chi tiết của một đánh giá
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN ĐÁNH GIÁ ===");
+        System.out.println("Mã đánh giá: " + this.maDanhGia);
+        System.out.println("Mã khách hàng: " + this.maKhachHang);
+        System.out.println("Mã phim: " + this.maPhim);
+        System.out.println("Số sao: " + this.soSao + "/5");
+        System.out.println("Bình luận: " + this.binhLuan);
+        System.out.println("Thời gian: " + this.thoiGian);
+        System.out.println("=========================");
     }
 }
