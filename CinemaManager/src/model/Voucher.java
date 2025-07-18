@@ -117,10 +117,10 @@ public class Voucher {
             System.out.println("Danh sách voucher trống.");
             return;
         }
-        Voucher v = getVoucherById(maVoucher);
-        if (v != null) {
+            Voucher v = getVoucherById(maVoucher);
+            if (v != null) {
             v.hienThiThongTin();
-        } else {
+            } else {
             System.out.println("Không tìm thấy voucher với mã: " + maVoucher);
         }
     }

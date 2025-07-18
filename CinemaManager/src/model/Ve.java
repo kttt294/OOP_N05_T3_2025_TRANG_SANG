@@ -68,10 +68,10 @@ public class Ve {
             System.out.println("Danh sách vé trống.");
             return;
         }
-        Ve v = getVeById(maVe);
-        if (v != null) {
+            Ve v = getVeById(maVe);
+            if (v != null) {
             v.hienThiThongTin();
-        } else {
+            } else {
             System.out.println("Không tìm thấy vé với mã: " + maVe);
         }
     }

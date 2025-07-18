@@ -129,10 +129,10 @@ public class SuatChieu {
             System.out.println("Danh sách suất chiếu trống.");
             return;
         }
-        SuatChieu p = getSuatChieuById(maSuatChieu);
-        if (p != null) {
-            p.hienThiThongTin();
-        } else {
+            SuatChieu p = getSuatChieuById(maSuatChieu);
+            if (p != null) {
+                p.hienThiThongTin();
+            } else {
             System.out.println("Không tìm thấy suất chiếu với mã: " + maSuatChieu);
         }
     }

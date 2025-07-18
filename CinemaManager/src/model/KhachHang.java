@@ -77,10 +77,10 @@ public class KhachHang extends Nguoi {
             System.out.println("Danh sách khách hàng trống.");
             return;
         }
-        KhachHang kh = getKhachHangByCCCD(CCCD);
-        if (kh != null) {
-            kh.hienThiThongTin();
-        } else {
+            KhachHang kh = getKhachHangByCCCD(CCCD);
+            if (kh != null) {
+                kh.hienThiThongTin();
+            } else {
             System.out.println("Không tìm thấy khách hàng với CCCD: " + CCCD);
         }
     }

@@ -86,10 +86,10 @@ public class TaiKhoan {
             System.out.println("Danh sách tài khoản trống.");
             return;
         }
-        TaiKhoan tk = getTaiKhoanByTenDangNhap(tenDangNhap);
-        if (tk != null) {
+            TaiKhoan tk = getTaiKhoanByTenDangNhap(tenDangNhap);
+            if (tk != null) {
             tk.hienThiThongTin();
-        } else {
+            } else {
             System.out.println("Không tìm thấy tài khoản với tên đăng nhập: " + tenDangNhap);
         }
     }

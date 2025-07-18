@@ -111,10 +111,10 @@ public class HoaDon {
             System.out.println("Danh sách hóa đơn trống.");
             return;
         }
-        HoaDon hd = getHoaDonByMa(maHoaDon);
-        if (hd != null) {
+            HoaDon hd = getHoaDonByMa(maHoaDon);
+            if (hd != null) {
             hd.hienThiThongTin();
-        } else {
+            } else {
             System.out.println("Không tìm thấy hóa đơn với mã: " + maHoaDon);
         }
     }
