@@ -1,7 +1,7 @@
+import javax.swing.SwingUtilities;
+
 public class App {
-    public static void main(String[] args){
-        testKhachHang.test();
-        testPhim.test();
-        testSuatChieu.test();
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new MainFrame().setVisible(true))
     }
 }
