@@ -25,4 +25,4 @@ public class VeController {
     public static void xoaVe(String maVe) {
         Ve.Delete(maVe);
     }
-} 
+}
