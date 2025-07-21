@@ -4,8 +4,8 @@ public class TestTune {
         //ObnoxiousTune ot = new Tune();
         Tune t1 = new Tune();
         Tune t2 = new ObnoxiousTune();
-        noiseMarker.ring(t1);
+        noiseMarker.ring((ObnoxiousTune)t1);
         System.out.println(" ");
-        noiseMarker.ring((Tune)t2);
+        noiseMarker.ring((ObnoxiousTune)t2);
     }
 }
