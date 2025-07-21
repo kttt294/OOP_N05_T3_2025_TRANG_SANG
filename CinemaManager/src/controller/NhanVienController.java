@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import model.NhanVien;
 
 public class NhanVienController {
     public static void themNhanVien(NhanVien nv) {

@@ -1,5 +1,4 @@
 import java.util.List;
-import model.SuatChieu;
 
 public class SuatChieuController {
     // Thêm suất chiếu mới

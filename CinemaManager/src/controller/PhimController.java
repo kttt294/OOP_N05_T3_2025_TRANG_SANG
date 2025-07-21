@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import model.Phim;
 
 public class PhimController {
     public static void themPhim(Phim phim) {
