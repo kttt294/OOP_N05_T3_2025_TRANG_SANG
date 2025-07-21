@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class testKhachHang {
     public static void inputCreateKhachHang(Scanner sc) {
@@ -34,8 +33,6 @@ public class testKhachHang {
 
         System.out.print("Giới tính: ");
         String gioiTinh = sc.nextLine().trim();
-
-        ArrayList<Ve> lichSuDatVe = null; // Khởi tạo danh sách vé rỗng
 
         KhachHang kh = new KhachHang(CCCD, tenKH, tuoi, sdt, email, gioiTinh, null, null);
         KhachHang.Create(kh);

@@ -8,29 +8,10 @@ public class testSuatChieu {
 public static void inputCreateSuatChieu(Scanner sc) {
         System.out.print("Nhập mã suất chiếu: ");
         String maSuatChieu = sc.nextLine();
-        if (SuatChieu.getSuatChieuById(maSuatChieu) != null) {
-            System.out.println("Lỗi: Mã suất chiếu đã tồn tại!");
-            return;
-        }
-        // Nhập thông tin phim
         System.out.print("Nhập mã phim: ");
         String maPhim = sc.nextLine();
-        Phim phim = Phim.getPhimById(maPhim);
-        if (phim == null) {
-            System.out.println("Không tìm thấy phim với mã này.");
-            return;
-        }
-
-        // Nhập thông tin phòng chiếu
-        System.out.print("Nhập mã phòng: ");
-        String maPhong = sc.nextLine();
-        System.out.print("Nhập tên phòng: ");
-        String tenPhong = sc.nextLine();
-        System.out.print("Nhập số hàng ghế: ");
-        int soHangGhe = Integer.parseInt(sc.nextLine());
-        System.out.print("Nhập số cột ghế: ");
-        int soCotGhe = Integer.parseInt(sc.nextLine());
-        PhongChieu phong = new PhongChieu(maPhong, tenPhong, soHangGhe, soCotGhe);
+        System.out.println("Nhập mã phòng: ");
+        String maPhong = sc.nextLine();        
         // Thay thế nhập thời gian bằng giá trị mặc định
         LocalDateTime thoiGianBatDau = LocalDateTime.now();
         List<Ghe> danhSachGheTrong = new ArrayList<>(); // Để rỗng khi tạo mới
