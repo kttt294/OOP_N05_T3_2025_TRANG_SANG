@@ -10,7 +10,8 @@ public class KhachHang extends Nguoi {
         super();
     }
 
-    public KhachHang(String CCCD, String tenKH, int tuoi, String sdt, String email, String gioiTinh, ArrayList<Ve> lichSuDatVe, TaiKhoan taiKhoan) {
+    public KhachHang(String CCCD, String tenKH, int tuoi, String sdt, String email, String gioiTinh,
+            ArrayList<Ve> lichSuDatVe, TaiKhoan taiKhoan) {
         super(CCCD, tenKH, tuoi, sdt, email);
         this.gioiTinh = gioiTinh;
         this.lichSuDatVe = (lichSuDatVe != null) ? lichSuDatVe : new ArrayList<>();
@@ -36,6 +37,7 @@ public class KhachHang extends Nguoi {
     public TaiKhoan getTaiKhoan() {
         return taiKhoan;
     }
+
     public void setTaiKhoan(TaiKhoan taiKhoan) {
         this.taiKhoan = taiKhoan;
     }
@@ -48,79 +50,106 @@ public class KhachHang extends Nguoi {
     }
 
     public static void Create(KhachHang kh) {
-        if (kh == null || kh.getCCCD() == null || kh.getCCCD().trim().isEmpty() ||
-            kh.getTen() == null || kh.getTen().trim().isEmpty()) {
-            System.out.println("Lỗi: Thông tin khách hàng không được để trống.");
-            return;
+        try {
+            if (kh == null || kh.getCCCD() == null || kh.getCCCD().trim().isEmpty() ||
+                    kh.getTen() == null || kh.getTen().trim().isEmpty()) {
+                System.out.println("Lỗi: Thông tin khách hàng không được để trống.");
+                return;
+            }
+
+            if (getKhachHangByCCCD(kh.getCCCD()) != null) {
+                System.out.println("Lỗi: Khách hàng đã tồn tại.");
+                return;
+            }
+
+            danhSachKhachHang.add(kh);
+            System.out.println("Đã thêm khách hàng thành công.");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if (getKhachHangByCCCD(kh.getCCCD()) != null) {
-            System.out.println("Lỗi: Khách hàng đã tồn tại.");
-            return;
-        }
-        danhSachKhachHang.add(kh);
-        System.out.println("Đã thêm khách hàng thành công.");
+
     }
 
     // Read toàn bộ danh sách khách hàng
-    public static ArrayList<KhachHang> Read() {
-        if (danhSachKhachHang.isEmpty()) {
-            System.out.println("Danh sách khách hàng trống.");
-            return new ArrayList<>();
+    public static void Read() {
+        try {
+            if (danhSachKhachHang.isEmpty()) {
+                System.out.println("Danh sách khách hàng trống.");
+            } else {
+                for (KhachHang kh : danhSachKhachHang) {
+                    kh.hienThiThongTin();
+                }
+            }
+            System.out.println("Tổng số khách hàng: " + danhSachKhachHang.size());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        System.out.println("Tổng số khách hàng: " + danhSachKhachHang.size());
-        return new ArrayList<>(danhSachKhachHang);
     }
-    
+
     // Read khách hàng theo CCCD
     public static void Read(String CCCD) {
-        if (danhSachKhachHang.isEmpty()) {
-            System.out.println("Danh sách khách hàng trống.");
-            return;
-        }
+        try {
+            if (danhSachKhachHang.isEmpty()) {
+                System.out.println("Danh sách khách hàng trống.");
+                return;
+            }
             KhachHang kh = getKhachHangByCCCD(CCCD);
             if (kh != null) {
                 kh.hienThiThongTin();
             } else {
-            System.out.println("Không tìm thấy khách hàng với CCCD: " + CCCD);
+                System.out.println("Không tìm thấy khách hàng với CCCD: " + CCCD);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public static void Update(String CCCD, KhachHang kh) {
-        if (kh == null || kh.getCCCD() == null || kh.getCCCD().trim().isEmpty() ||
-            kh.getTen() == null || kh.getTen().trim().isEmpty()) {
-            System.out.println("Lỗi: Thông tin khách hàng không được để trống.");
-            return;
-        }
-        int index = getKhachHangIndexByCCCD(CCCD);
-        if (index != -1) {
-            kh.setCCCD(CCCD);
-            danhSachKhachHang.set(index, kh);
-            System.out.println("Cập nhật thông tin khách hàng thành công.");
-        } else {
-            System.out.println("Không tìm thấy khách hàng với CCCD đã nhập.");
+        try {
+            if (kh == null || kh.getCCCD() == null || kh.getCCCD().trim().isEmpty() ||
+                    kh.getTen() == null || kh.getTen().trim().isEmpty()) {
+                System.out.println("Lỗi: Thông tin khách hàng không được để trống.");
+                return;
+            }
+            int index = getKhachHangIndexByCCCD(CCCD);
+            if (index != -1) {
+                kh.setCCCD(CCCD);
+                danhSachKhachHang.set(index, kh);
+                System.out.println("Cập nhật thông tin khách hàng thành công.");
+            } else {
+                System.out.println("Không tìm thấy khách hàng với CCCD đã nhập.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public static void Delete(String CCCD) {
-        int index = getKhachHangIndexByCCCD(CCCD);
-        if (index != -1) {
-            danhSachKhachHang.remove(index);
-            System.out.println("Đã xóa khách hàng thành công.");
-        } else {
-            System.out.println("Không tìm thấy khách hàng với CCCD đã nhập.");
+        try {
+            int index = getKhachHangIndexByCCCD(CCCD);
+            if (index != -1) {
+                danhSachKhachHang.remove(index);
+                System.out.println("Đã xóa khách hàng thành công.");
+            } else {
+                System.out.println("Không tìm thấy khách hàng với CCCD đã nhập.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public static KhachHang getKhachHangByCCCD(String CCCD) {
         for (KhachHang kh : danhSachKhachHang) {
-            if (kh.getCCCD().equalsIgnoreCase(CCCD)) return kh;
+            if (kh.getCCCD().equalsIgnoreCase(CCCD))
+                return kh;
         }
         return null;
     }
 
     private static int getKhachHangIndexByCCCD(String CCCD) {
         for (int i = 0; i < danhSachKhachHang.size(); i++) {
-            if (danhSachKhachHang.get(i).getCCCD().equalsIgnoreCase(CCCD)) return i;
+            if (danhSachKhachHang.get(i).getCCCD().equalsIgnoreCase(CCCD))
+                return i;
         }
         return -1;
     }
