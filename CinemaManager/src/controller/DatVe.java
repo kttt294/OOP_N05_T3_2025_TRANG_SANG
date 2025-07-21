@@ -1,5 +1,4 @@
 public class DatVe {
-
     KhachHang kh;
     SuatChieu suatChieu;
     String maVe;
@@ -14,11 +13,28 @@ public class DatVe {
         this.giaVe = giaVe;
     }
 
-    // Đặt vé
-    String CCCD = kh.getCCCD();
-    String maSuatChieu = suatChieu.getMaSuatChieu();
-    Ve veDat = new Ve(maVe, CCCD, maSuatChieu, maGhe, giaVe, true);
-    public static void KhachHangDatVe(Ve veDat) {
+    public boolean datVe() {
+        String CCCD = kh.getCCCD();
+        String maSuatChieu = suatChieu.getMaSuatChieu();
+
+        // Lấy ghế suất chiếu tương ứng
+        GheSuatChieu gsc = GheSuatChieu.getByMaGheAndMaSuatChieu(maGhe, maSuatChieu);
+        if (gsc == null) {
+            System.out.println("Không tìm thấy ghế suất chiếu!");
+            return false;
+        }
+        // Kiểm tra trạng thái ghế
+        if (!"BinhThuong".equalsIgnoreCase(gsc.getTrangThai())) {
+            System.out.println("Ghế đã được đặt hoặc không khả dụng!");
+            return false;
+        }
+        // Tạo vé mới
+        Ve veDat = new Ve(maVe, CCCD, maSuatChieu, maGhe, giaVe, true);
         Ve.Create(veDat);
+        // Cập nhật trạng thái ghế thành "Khoa" (đã đặt)
+        gsc.setTrangThai("Khoa");
+        GheSuatChieu.Update(maGhe, maSuatChieu, gsc);
+        System.out.println("Đặt vé thành công!");
+        return true;
     }
 }
