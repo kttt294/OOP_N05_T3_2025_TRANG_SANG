@@ -2,19 +2,19 @@ import java.util.ArrayList;
 
 public class Ve {
     private String maVe;
-    private String maKH;
+    private String CCCD;
     private String maSuatChieu;
     private String maGhe;
-    private double giaVe;
+    private int giaVe; // đơn vị đồng
     private boolean daThanhToan;
 
     private static ArrayList<Ve> danhSachVe = new ArrayList<>();
 
     public Ve(){};
-    
-    public Ve(String maVe, String maKH, String maSuatChieu, String maGhe, double giaVe, boolean daThanhToan) {
+
+    public Ve(String maVe, String CCCD, String maSuatChieu, String maGhe, int giaVe, boolean daThanhToan) {
         this.maVe = maVe;
-        this.maKH = maKH;
+        this.CCCD = CCCD;
         this.maSuatChieu = maSuatChieu;
         this.maGhe = maGhe;
         setGiaVe(giaVe);
@@ -23,14 +23,14 @@ public class Ve {
 
     public String getMaVe() { return maVe; }
     public void setMaVe(String maVe) { this.maVe = maVe; }
-    public String getMaKH() { return maKH; }
-    public void setMaKH(String maKH) { this.maKH = maKH; }
+    public String getCCCD() { return CCCD; }
+    public void setCCCD(String CCCD) { this.CCCD = CCCD; }
     public String getMaSuatChieu() { return maSuatChieu; }
     public void setMaSuatChieu(String maSuatChieu) { this.maSuatChieu = maSuatChieu; }
     public String getMaGhe() { return maGhe; }
     public void setMaGhe(String maGhe) { this.maGhe = maGhe; }
     public double getGiaVe() { return giaVe; }
-    public void setGiaVe(double giaVe) { if (giaVe > 0) this.giaVe = giaVe; else throw new IllegalArgumentException("Giá vé phải lớn hơn 0"); }
+    public void setGiaVe(int giaVe) { if (giaVe > 0) this.giaVe = giaVe; else throw new IllegalArgumentException("Giá vé phải lớn hơn 0"); }
     public boolean isDaThanhToan() { return daThanhToan; }
     public void setDaThanhToan(boolean daThanhToan) { this.daThanhToan = daThanhToan; }
     public void xacNhanThanhToan() { this.daThanhToan = true; }
@@ -38,7 +38,7 @@ public class Ve {
     // CRUD
     public static void Create(Ve ve) {
         if (ve.getMaVe() == null || ve.getMaVe().trim().isEmpty() ||
-            ve.getMaKH() == null || ve.getMaKH().trim().isEmpty() ||
+            ve.getCCCD() == null || ve.getCCCD().trim().isEmpty() ||
             ve.getMaSuatChieu() == null || ve.getMaSuatChieu().trim().isEmpty() ||
             ve.getMaGhe() == null || ve.getMaGhe().trim().isEmpty()) {
             System.out.println("Lỗi: Thông tin vé không được để trống.");
@@ -78,7 +78,7 @@ public class Ve {
 
     public static void Update(String maVe, Ve ve) {
         if (ve.getMaVe() == null || ve.getMaVe().trim().isEmpty() ||
-            ve.getMaKH() == null || ve.getMaKH().trim().isEmpty() ||
+            ve.getCCCD() == null || ve.getCCCD().trim().isEmpty() ||
             ve.getMaSuatChieu() == null || ve.getMaSuatChieu().trim().isEmpty() ||
             ve.getMaGhe() == null || ve.getMaGhe().trim().isEmpty()) {
             System.out.println("Lỗi: Thông tin vé không được để trống.");
@@ -128,7 +128,7 @@ public class Ve {
     public void hienThiThongTin() {
         System.out.println("=== THÔNG TIN VÉ ===");
         System.out.println("Mã vé: " + this.maVe);
-        System.out.println("Mã khách hàng: " + this.maKH);
+        System.out.println("Mã khách hàng: " + this.CCCD);
         System.out.println("Mã suất chiếu: " + this.maSuatChieu);
         System.out.println("Mã ghế: " + this.maGhe);
         System.out.println("Giá vé: " + this.giaVe + " VNĐ");
