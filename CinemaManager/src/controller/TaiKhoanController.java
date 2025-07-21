@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import model.TaiKhoan;
 
 public class TaiKhoanController {
     public static void themTaiKhoan(TaiKhoan tk) {

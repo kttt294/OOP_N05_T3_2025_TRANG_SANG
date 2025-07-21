@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import model.HoaDon;
 
 public class HoaDonController {
     public static void themHoaDon(HoaDon hd) {

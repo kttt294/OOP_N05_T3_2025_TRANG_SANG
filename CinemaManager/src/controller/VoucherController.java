@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import model.Voucher;
 
 public class VoucherController {
     public static void themVoucher(Voucher voucher) {

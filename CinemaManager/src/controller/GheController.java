@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import model.Ghe;
 
 public class GheController {
     public static void themGhe(Ghe ghe) {

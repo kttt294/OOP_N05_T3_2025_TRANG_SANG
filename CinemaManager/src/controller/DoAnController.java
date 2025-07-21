@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import model.DoAn;
 
 public class DoAnController {
     public static void themDoAn(DoAn doAn) {

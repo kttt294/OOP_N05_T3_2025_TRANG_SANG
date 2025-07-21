@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import model.Feedback;
 
 public class FeedbackController {
     public static void themFeedback(Feedback fb) {

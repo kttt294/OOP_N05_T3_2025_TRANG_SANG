@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import model.GheSuatChieu;
 
 public class GheSuatChieuController {
     public static void themGheSuatChieu(GheSuatChieu gsc) {

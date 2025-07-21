@@ -1,5 +1,4 @@
 import java.util.List;
-import model.DanhGia;
 
 public class DanhGiaController {
     public static void themDanhGia(DanhGia dg) {
