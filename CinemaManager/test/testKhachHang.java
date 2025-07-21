@@ -106,6 +106,7 @@ public class testKhachHang {
             System.out.println("2. Xem danh sách khách hàng");
             System.out.println("3. Sửa thông tin khách hàng");
             System.out.println("4. Xóa khách hàng");
+            System.out.println("5. Kiểm tra tổng tiền khách hàng đã sử dụng");
             System.out.println("0. Thoát");
             System.out.print("Chọn chức năng: ");
             try {
@@ -126,6 +127,9 @@ public class testKhachHang {
                 case 4:
                     inputDeleteKhachHang(sc);
                     break;
+                case 5:
+                    testTinhTongTienDaSuDung(sc);
+                    break;
                 case 0:
                     System.out.println("Thoát chương trình.");
                     break;
@@ -133,6 +137,12 @@ public class testKhachHang {
                     System.out.println("Lựa chọn không hợp lệ.");
             }
         } while (luaChon != 0);
+    }
+
+    public static void testTinhTongTienDaSuDung(Scanner sc) {
+        System.out.print("Nhập CCCD khách hàng cần kiểm tra tổng tiền đã sử dụng: ");
+        String cccd = sc.nextLine().trim();
+        KhachHangController.tinhTongTienDaSuDung(cccd);
     }
 }
 

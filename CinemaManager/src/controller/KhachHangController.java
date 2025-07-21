@@ -46,6 +46,19 @@ public class KhachHangController {
         }
     }
 
+    // Tính tổng số tiền mà khách hàng đã sử dụng
+    public static void tinhTongTienDaSuDung(String CCCD) {
+        int tongTien = 0;
+        ArrayList<HoaDon> hoaDons = HoaDon.Read();
+        for (HoaDon hd : hoaDons) {
+            KhachHang kh = hd.getKhachHang();
+            if (kh != null && kh.getCCCD().equals(CCCD)) {
+                tongTien += hd.getTongTien();
+            }
+        }
+        System.out.println("Tổng số tiền khách hàng với CCCD " + CCCD + " đã sử dụng là: " + tongTien + " VNĐ");
+    }
+
     // Gửi feedback
     public static void guiFeedback(Feedback fb) {
         Feedback.Create(fb);
