@@ -1,5 +1,5 @@
 public class ObnoxiousTune extends Tune {
-    ObnoxiousTune {
+    ObnoxiousTune() {
         System.out.println("ObnoxiousTune.play()");
     }
 }
