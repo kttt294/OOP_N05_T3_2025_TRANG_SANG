@@ -1,6 +1,7 @@
 import java.util.List;
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
 
 public class SuatChieuController {
     public void hienThiSuatChieuTrongNgay(List<SuatChieu> danhSachSuatChieu) {
@@ -8,7 +9,8 @@ public class SuatChieuController {
         System.out.print("Nhập ngày (dd/MM/yyyy): ");
         String input = scanner.nextLine();
 
-        LocalDate ngay = LocalDate.parse(input);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate ngay = LocalDate.parse(input, formatter);
         boolean tim = false;
         System.out.println("Danh sách suất chiếu trong ngày " + ngay + ":");
         for (SuatChieu sc : danhSachSuatChieu) {

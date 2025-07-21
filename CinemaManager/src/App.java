@@ -1,5 +1,6 @@
 public class App {
     public static void main(String[] args) {
-        TestTune.test();
+        // TestTune.test();
+        testSuatChieuController.test();
     }
 }

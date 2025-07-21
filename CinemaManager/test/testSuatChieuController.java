@@ -12,15 +12,12 @@ public class testSuatChieuController {
 
         SuatChieu sc1 = new SuatChieu("SC01", "P01", "PH01",
                 LocalDateTime.of(2025, 7, 22, 14, 0),
-                LocalDateTime.of(2025, 7, 22, 16, 0),
                 danhSachGhe);
         SuatChieu sc2 = new SuatChieu("SC02", "P02", "PH02",
                 LocalDateTime.of(2025, 7, 22, 18, 0),
-                LocalDateTime.of(2025, 7, 22, 20, 0),
                 danhSachGhe);
         SuatChieu sc3 = new SuatChieu("SC03", "P01", "PH01",
                 LocalDateTime.of(2025, 7, 23, 14, 0),
-                LocalDateTime.of(2025, 7, 23, 16, 0),
                 danhSachGhe);
 
         List<SuatChieu> danhSach = Arrays.asList(sc1, sc2, sc3);
