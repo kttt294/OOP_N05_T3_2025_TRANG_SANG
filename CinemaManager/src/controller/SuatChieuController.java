@@ -20,5 +20,6 @@ public class SuatChieuController {
         if (!tim) {
             System.out.println("Không có suất chiếu nào trong ngày " + ngay);
         }
+        scanner.close();
     }
 }
