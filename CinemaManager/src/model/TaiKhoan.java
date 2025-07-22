@@ -4,18 +4,15 @@ public class TaiKhoan {
     private String tenDangNhap;
     private String matKhau;
     private String vaiTro; // "Admin", "NhanVien", "KhachHang"
-    private boolean trangThai; // true: hoạt động, false: bị khóa
-    private String maNguoiDung; // Liên kết với KhachHang hoặc NhanVien
+    private boolean trangThai = true; // true: hoạt động, false: bị khóa
 
     private static ArrayList<TaiKhoan> danhSachTaiKhoan = new ArrayList<>();
 
     public TaiKhoan() {}
-    public TaiKhoan(String tenDangNhap, String matKhau, String vaiTro, boolean trangThai, String maNguoiDung) {
+    public TaiKhoan(String tenDangNhap, String matKhau, String vaiTro) {
         setTenDangNhap(tenDangNhap);
         setMatKhau(matKhau);
         setVaiTro(vaiTro);
-        this.trangThai = trangThai;
-        setMaNguoiDung(maNguoiDung);
     }
 
     // Getter & Setter (có kiểm tra hợp lệ)
@@ -48,13 +45,6 @@ public class TaiKhoan {
 
     public boolean isTrangThai() { return trangThai; }
     public void setTrangThai(boolean trangThai) { this.trangThai = trangThai; }
-
-    public String getMaNguoiDung() { return maNguoiDung; }
-    public void setMaNguoiDung(String maNguoiDung) {
-        if (maNguoiDung == null || maNguoiDung.trim().isEmpty())
-            throw new IllegalArgumentException("Mã người dùng không được để trống!");
-        this.maNguoiDung = maNguoiDung.trim();
-    }
 
     // CRUD static
     public static void Create(TaiKhoan tk) {
@@ -161,7 +151,6 @@ public class TaiKhoan {
         System.out.println("Tên đăng nhập: " + this.tenDangNhap);
         System.out.println("Vai trò: " + this.vaiTro);
         System.out.println("Trạng thái: " + (this.trangThai ? "Hoạt động" : "Bị khóa"));
-        System.out.println("Mã người dùng: " + this.maNguoiDung);
         System.out.println("===========================");
     }
 }
