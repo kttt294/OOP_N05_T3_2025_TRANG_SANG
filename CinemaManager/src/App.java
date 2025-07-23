@@ -3,6 +3,6 @@ public class App {
         // TestTune.test();
         //testSuatChieuController.test();
         //testDatVe.test();
-    
+        testDog.test();
     }
 }
