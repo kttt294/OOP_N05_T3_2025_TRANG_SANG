@@ -4,6 +4,7 @@ public class App {
         //testSuatChieuController.test();
         //testDatVe.test();
         //testDog.test();
-        testStudent.test();
+        //testStudent.test();
+        testOuterInner.test();
     }
 }
