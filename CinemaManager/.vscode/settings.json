@@ -1,7 +1,13 @@
 {
-    "java.project.sourcePaths": ["src"],
-    "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar"
-    ]
+  "java.project.sourcePaths": [
+    "CinemaManager/reviews/model",
+    "CinemaManager/reviews/test",
+    "CinemaManager/src",
+    "CinemaManager/src/controller",
+    "CinemaManager/src/model",
+    "CinemaManager/src/utils",
+    "CinemaManager/src/view",
+    "CinemaManager/test"
+  ],
+  "java.project.referencedLibraries": []
 }
