@@ -1,15 +1,15 @@
 {
   "java.project.sourcePaths": [
-    "CinemaManager/src",
-    "CinemaManager/src/controller",
-    "CinemaManager/src/model",
-    "CinemaManager/src/utils",
-    "CinemaManager/src/view",
-    "CinemaManager/reviews/model",
-    "CinemaManager/reviews/test",
-    "CinemaManager/test"
+    "CinemaManagement/src",
+    "CinemaManagement/src/model",
+    "CinemaManagement/src/controller",
+    "CinemaManagement/src/util",
+    "CinemaManagement/src/view",
+    "CinemaManagement/test",
+    "CinemaManagement/reviews/model",
+    "CinemaManagement/reviews/test"
   ],
   "java.project.referencedLibraries": [],
-  "java.project.outputPath": "CinemaManager/bin",
+  "java.project.outputPath": "CinemaManagement/bin",
   "java.compile.nullAnalysis.mode": "automatic"
 }
