@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 public class testDatVe {
     public static void test() {
-        // Tạo khách hàng với tài khoản
-        KhachHang kh = new KhachHang("123456789", "Nguyen Van A", 25, "0123456789", "a@gmail.com", "Nam", new ArrayList<>(), "user1", "pass1");
+        // Tạo khách hàng
+        KhachHang kh = new KhachHang("123456789", "Nguyen Van A", 25, "0123456789", "a@gmail.com", "Nam", new ArrayList<>());
+        KhachHang.Create(kh);
 
         // Tạo ghế
         Ghe g1 = new Ghe("G01", 1, 1, Ghe.LoaiGhe.THUONG, "PH01");
