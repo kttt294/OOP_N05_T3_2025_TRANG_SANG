@@ -1,2 +1,0 @@
-Exercise 6: (1) Using Chess.java, prove the statements in the previous paragraph. 
-

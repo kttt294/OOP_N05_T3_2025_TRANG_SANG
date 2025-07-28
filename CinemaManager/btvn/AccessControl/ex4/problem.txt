@@ -1,1 +1,0 @@
-Ex4: Show that protected methods have package access but are not accessible outside the package.

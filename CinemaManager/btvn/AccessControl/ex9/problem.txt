@@ -1,2 +1,0 @@
-Ex9: Create the library according to the code fragments describing interfaceprocessor.
-Create a class in a separate package that implements the interface and code that uses the interfaceprocessor framework to process your class.

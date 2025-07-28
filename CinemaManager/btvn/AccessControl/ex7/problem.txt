@@ -1,2 +1,0 @@
-Ex7: Create the library according to the code fragments describing access.local.
-Create a class in a separate package that tries to access the classes in access.local.
