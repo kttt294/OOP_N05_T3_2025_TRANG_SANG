@@ -2,6 +2,6 @@ public class testOuterInner {
     public static void test() {
         OuterClassTest outer = new OuterClassTest();
         OuterClassTest.InnerClassTest inner = outer.new InnerClassTest();
-        System.out.println(inner);
+        System.out.println("hello world");
     }
 }
