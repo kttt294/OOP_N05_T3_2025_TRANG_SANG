@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class testKhachHang {
     public static void inputCreateKhachHang(Scanner sc) {
@@ -10,7 +11,7 @@ public class testKhachHang {
             System.out.println("CCCD khách hàng không được để trống.");
             return;
         }
-        if (KhachHang.getKhachHangByCCCD(CCCD) != null) {
+        if (User.getNguoiByCCCD(CCCD) != null) {
             System.out.println("Khách hàng đã tồn tại.");
             return;
         }
@@ -34,22 +35,34 @@ public class testKhachHang {
         System.out.print("Giới tính: ");
         String gioiTinh = sc.nextLine().trim();
 
-        KhachHang kh = new KhachHang(CCCD, tenKH, tuoi, sdt, email, gioiTinh, null, null);
-        KhachHang.Create(kh);
+        // Tạo khách hàng với tài khoản mặc định
+        System.out.print("Tên đăng nhập: ");
+        String tenDangNhap = sc.nextLine().trim();
+        if (tenDangNhap.isEmpty()) {
+            tenDangNhap = "user_" + CCCD;
+        }
+        
+        System.out.print("Mật khẩu: ");
+        String matKhau = sc.nextLine().trim();
+        if (matKhau.isEmpty()) {
+            matKhau = "123456";
+        }
+
+        KhachHang kh = new KhachHang(CCCD, tenKH, tuoi, sdt, email, gioiTinh, new ArrayList<>(), tenDangNhap, matKhau);
+        User.Create(kh);
     }
 
     public static void inputReadKhachHang(Scanner sc){
         System.out.println("Nhập mã khách hàng cần xem thông tin: ");
         String maKH = sc.nextLine().trim();
-        // KhachHang.Read(maKH); // Chưa có static CRUD
-        KhachHang.Read(maKH);
+        User.Read(maKH);
     }
 
     public static void inputUpdateKhachHang(Scanner sc) {
         System.out.print("Nhập mã khách hàng cần sửa: ");
         String maKH = sc.nextLine().trim();
 
-        KhachHang kh = KhachHang.getKhachHangByCCCD(maKH);
+        User kh = User.getNguoiByCCCD(maKH);
         if (kh == null) {
             System.out.println("Không tìm thấy khách hàng.");
             return;
@@ -81,20 +94,14 @@ public class testKhachHang {
             kh.setEmail(email);
         }
 
-        System.out.print("Giới tính mới: ");
-        String gioiTinh = sc.nextLine().trim();
-        if (!gioiTinh.isEmpty()) {
-            kh.setGioiTinh(gioiTinh);
-        }
-
-        KhachHang.Update(maKH, kh);
+        User.Update(maKH, kh);
     }
 
     public static void inputDeleteKhachHang(Scanner sc) {
         System.out.print("Nhập mã khách hàng cần xoá: ");
         String maKH = sc.nextLine().trim();
 
-        KhachHang.Delete(maKH);
+        User.Delete(maKH);
     }
 
     public static void test() {
@@ -142,7 +149,16 @@ public class testKhachHang {
     public static void testTinhTongTienDaSuDung(Scanner sc) {
         System.out.print("Nhập CCCD khách hàng cần kiểm tra tổng tiền đã sử dụng: ");
         String cccd = sc.nextLine().trim();
-        KhachHangController.tinhTongTienDaSuDung(cccd);
+        
+        // Tính tổng tiền từ danh sách vé
+        int tongTien = 0;
+        ArrayList<Ve> ves = Ve.Read();
+        for (Ve ve : ves) {
+            if (ve.getCCCD() != null && ve.getCCCD().equals(cccd) && ve.isDaThanhToan()) {
+                tongTien += ve.getTongTien();
+            }
+        }
+        System.out.println("Tổng số tiền khách hàng với CCCD " + cccd + " đã sử dụng là: " + tongTien + " VNĐ");
     }
 }
 
