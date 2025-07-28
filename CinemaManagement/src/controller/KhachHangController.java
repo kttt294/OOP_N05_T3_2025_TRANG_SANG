@@ -1,33 +1,27 @@
 import java.util.ArrayList;
 
 public class KhachHangController {
-    // Đăng ký khách hàng mới
-    public static void dangKy(KhachHang kh) {
-        User.Create(kh);
+    // Tạo khách hàng mới (cho Admin)
+    public static void taoKhachHang(KhachHang kh) {
+        KhachHang.Create(kh);
     }
 
-    // Đăng nhập (trả về true nếu thành công)
-    public static boolean dangNhap(String tenDangNhap, String matKhau) {
-        User user = User.dangNhap(tenDangNhap, matKhau);
-        return user != null && user.isKhachHang();
-    }
-
-    // Cập nhật thông tin khách hàng
+    // Cập nhật thông tin khách hàng (cho Admin)
     public static void capNhatThongTin(String CCCD, KhachHang khMoi) {
         KhachHang.Update(CCCD, khMoi);
     }
 
-    // Xóa khách hàng
+    // Xóa khách hàng (cho Admin)
     public static void xoaKhachHang(String CCCD) {
         KhachHang.Delete(CCCD);
     }
 
-    // Xem thông tin khách hàng
+    // Xem thông tin khách hàng (cho Admin)
     public static void xemThongTin(String CCCD) {
         KhachHang.Read(CCCD);
     }
 
-    // Xem lịch sử đặt vé của khách hàng
+    // Xem lịch sử đặt vé của khách hàng (cho Admin)
     public static void xemLichSuDatVe(String CCCD) {
         KhachHang kh = KhachHang.getKhachHangByCCCD(CCCD);
         if (kh != null) {
@@ -45,7 +39,7 @@ public class KhachHangController {
         }
     }
 
-    // Tính tổng số tiền mà khách hàng đã sử dụng
+    // Tính tổng số tiền mà khách hàng đã sử dụng (cho Admin)
     public static void tinhTongTienDaSuDung(String CCCD) {
         int tongTien = 0;
         ArrayList<Ve> ves = Ve.Read();
@@ -57,8 +51,17 @@ public class KhachHangController {
         System.out.println("Tổng số tiền khách hàng với CCCD " + CCCD + " đã sử dụng là: " + tongTien + " VNĐ");
     }
 
-    // Gửi feedback
+    // Gửi feedback (cho Admin)
     public static void guiFeedback(DanhGia fb) {
         DanhGia.Create(fb);
+    }
+
+    // === CÁC PHƯƠNG THỨC MỚI CHO ADMIN ===
+    
+    // Admin xem thống kê khách hàng
+    public static void xemThongKeKhachHang() {
+        ArrayList<KhachHang> danhSach = KhachHang.ReadKhachHang();
+        System.out.println("=== THỐNG KÊ KHÁCH HÀNG ===");
+        System.out.println("Tổng số khách hàng: " + danhSach.size());
     }
 } 

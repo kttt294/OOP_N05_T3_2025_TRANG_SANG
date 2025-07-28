@@ -11,7 +11,7 @@ public class testKhachHang {
             System.out.println("CCCD khách hàng không được để trống.");
             return;
         }
-        if (User.getNguoiByCCCD(CCCD) != null) {
+        if (Nguoi.getNguoiByCCCD(CCCD) != null) {
             System.out.println("Khách hàng đã tồn tại.");
             return;
         }
@@ -48,14 +48,14 @@ public class testKhachHang {
             matKhau = "123456";
         }
 
-        KhachHang kh = new KhachHang(CCCD, tenKH, tuoi, sdt, email, gioiTinh, new ArrayList<>(), tenDangNhap, matKhau);
-        User.Create(kh);
+        KhachHang kh = new KhachHang(CCCD, tenKH, tuoi, sdt, email, gioiTinh, new ArrayList<>());
+        KhachHang.Create(kh);
     }
 
     public static void inputReadKhachHang(Scanner sc){
         System.out.println("Nhập mã khách hàng cần xem thông tin: ");
         String maKH = sc.nextLine().trim();
-        User.Read(maKH);
+        KhachHang.Read(maKH);
     }
 
     public static void inputUpdateKhachHang(Scanner sc) {

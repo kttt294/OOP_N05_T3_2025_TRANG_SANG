@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class KhachHang extends User {
+public class KhachHang extends Nguoi {
     private String gioiTinh; // Nam, Nu, Khac
     private ArrayList<Ve> lichSuDatVe;
     private static ArrayList<KhachHang> danhSachKhachHang = new ArrayList<>();
@@ -12,13 +12,6 @@ public class KhachHang extends User {
     public KhachHang(String CCCD, String tenKH, int tuoi, String sdt, String email, String gioiTinh,
             ArrayList<Ve> lichSuDatVe) {
         super(CCCD, tenKH, tuoi, sdt, email);
-        this.gioiTinh = gioiTinh;
-        this.lichSuDatVe = (lichSuDatVe != null) ? lichSuDatVe : new ArrayList<>();
-    }
-
-    public KhachHang(String CCCD, String tenKH, int tuoi, String sdt, String email, String gioiTinh,
-            ArrayList<Ve> lichSuDatVe, String tenDangNhap, String matKhau) {
-        super(CCCD, tenKH, tuoi, sdt, email, tenDangNhap, matKhau, VaiTro.KHACH_HANG);
         this.gioiTinh = gioiTinh;
         this.lichSuDatVe = (lichSuDatVe != null) ? lichSuDatVe : new ArrayList<>();
     }
@@ -39,8 +32,6 @@ public class KhachHang extends User {
         this.lichSuDatVe = lichSuDatVe;
     }
 
-
-
     public void themVe(Ve ve) {
         if (lichSuDatVe == null) {
             lichSuDatVe = new ArrayList<>();
@@ -48,6 +39,7 @@ public class KhachHang extends User {
         lichSuDatVe.add(ve);
     }
 
+    // CRUD cho Admin quản lý khách hàng
     public static void Create(KhachHang kh) {
         try {
             if (kh == null || kh.getCCCD() == null || kh.getCCCD().trim().isEmpty() ||
@@ -62,14 +54,14 @@ public class KhachHang extends User {
             }
 
             danhSachKhachHang.add(kh);
+            // Thêm vào danh sách Nguoi để quản lý tài khoản
+            Nguoi.Create(kh);
             System.out.println("Đã thêm khách hàng thành công.");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    // Read toàn bộ danh sách khách hàng
     public static ArrayList<KhachHang> ReadKhachHang() {
         try {
             if (danhSachKhachHang.isEmpty()) {
@@ -86,7 +78,6 @@ public class KhachHang extends User {
         return new ArrayList<>(danhSachKhachHang);
     }
 
-    // Read khách hàng theo CCCD
     public static void Read(String CCCD) {
         try {
             if (danhSachKhachHang.isEmpty()) {
@@ -115,6 +106,8 @@ public class KhachHang extends User {
             if (index != -1) {
                 kh.setCCCD(CCCD);
                 danhSachKhachHang.set(index, kh);
+                // Cập nhật trong danh sách Nguoi
+                Nguoi.Update(CCCD, kh);
                 System.out.println("Cập nhật thông tin khách hàng thành công.");
             } else {
                 System.out.println("Không tìm thấy khách hàng với CCCD đã nhập.");
@@ -129,6 +122,8 @@ public class KhachHang extends User {
             int index = getKhachHangIndexByCCCD(CCCD);
             if (index != -1) {
                 danhSachKhachHang.remove(index);
+                // Xóa khỏi danh sách Nguoi
+                Nguoi.Delete(CCCD);
                 System.out.println("Đã xóa khách hàng thành công.");
             } else {
                 System.out.println("Không tìm thấy khách hàng với CCCD đã nhập.");
@@ -167,5 +162,6 @@ public class KhachHang extends User {
         System.out.println("SĐT: " + getSdt());
         System.out.println("Email: " + getEmail());
         System.out.println("Giới tính: " + gioiTinh);
+        System.out.println("Số vé đã đặt: " + (lichSuDatVe != null ? lichSuDatVe.size() : 0));
     }
 }

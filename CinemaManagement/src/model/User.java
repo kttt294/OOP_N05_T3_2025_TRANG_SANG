@@ -40,6 +40,7 @@ public abstract class User {
         this.trangThaiTaiKhoan = TrangThaiTaiKhoan.HOAT_DONG;
     }
 
+    // Getters và Setters cơ bản
     public String getCCCD() { return CCCD; }
     public void setCCCD(String CCCD) { this.CCCD = CCCD; }
     public String getTen() { return ten; }
@@ -79,15 +80,7 @@ public abstract class User {
     public boolean isKhachHang() { return vaiTro == VaiTro.KHACH_HANG; }
     public boolean isTaiKhoanHoatDong() { return trangThaiTaiKhoan == TrangThaiTaiKhoan.HOAT_DONG; }
 
-    // Phương thức quản lý tài khoản
-    public boolean doiMatKhau(String matKhauCu, String matKhauMoi) {
-        if (matKhauCu != null && matKhauCu.equals(this.matKhau)) {
-            setMatKhau(matKhauMoi);
-            return true;
-        }
-        return false;
-    }
-
+    // Phương thức quản lý tài khoản cho Admin
     public void khoaTaiKhoan() {
         this.trangThaiTaiKhoan = TrangThaiTaiKhoan.BI_KHOA;
     }
@@ -100,7 +93,7 @@ public abstract class User {
     public abstract String getLoaiNguoi();
     public abstract void hienThiThongTin();
 
-    // CRUD static cho tài khoản
+    // CRUD static cho Admin quản lý tài khoản
     public static void Create(User nguoi) {
         if (nguoi == null || nguoi.getCCCD() == null || nguoi.getCCCD().trim().isEmpty() ||
             nguoi.getTenDangNhap() == null || nguoi.getTenDangNhap().trim().isEmpty()) {
@@ -195,7 +188,7 @@ public abstract class User {
         return -1;
     }
 
-    // Phương thức đăng nhập
+    // Phương thức đăng nhập cho Admin
     public static User dangNhap(String tenDangNhap, String matKhau) {
         User nguoi = getNguoiByTenDangNhap(tenDangNhap);
         if (nguoi != null && nguoi.getMatKhau() != null && nguoi.getMatKhau().equals(matKhau) 
@@ -205,7 +198,7 @@ public abstract class User {
         return null;
     }
 
-    // Phương thức tìm kiếm theo vai trò
+    // Phương thức tìm kiếm theo vai trò cho Admin
     public static ArrayList<User> getNguoiByVaiTro(VaiTro vaiTro) {
         ArrayList<User> result = new ArrayList<>();
         for (User nguoi : danhSachNguoi) {
@@ -214,5 +207,26 @@ public abstract class User {
             }
         }
         return result;
+    }
+
+    // Phương thức quản lý tài khoản cho Admin
+    public static void khoaTaiKhoan(String CCCD) {
+        User nguoi = getNguoiByCCCD(CCCD);
+        if (nguoi != null) {
+            nguoi.khoaTaiKhoan();
+            System.out.println("Đã khóa tài khoản của " + nguoi.getTen());
+        } else {
+            System.out.println("Không tìm thấy người dùng với CCCD: " + CCCD);
+        }
+    }
+
+    public static void moKhoaTaiKhoan(String CCCD) {
+        User nguoi = getNguoiByCCCD(CCCD);
+        if (nguoi != null) {
+            nguoi.moKhoaTaiKhoan();
+            System.out.println("Đã mở khóa tài khoản của " + nguoi.getTen());
+        } else {
+            System.out.println("Không tìm thấy người dùng với CCCD: " + CCCD);
+        }
     }
 }

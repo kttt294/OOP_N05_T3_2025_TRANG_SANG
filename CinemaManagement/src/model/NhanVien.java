@@ -1,8 +1,10 @@
 
-public class NhanVien extends User {
+import java.util.ArrayList;
+
+public class NhanVien extends Nguoi {
     private String chucVu;
     private double luong;
-    private static java.util.ArrayList<NhanVien> danhSachNhanVien = new java.util.ArrayList<>();
+    private static ArrayList<NhanVien> danhSachNhanVien = new ArrayList<>();
 
     public NhanVien() {
         super();
@@ -14,12 +16,7 @@ public class NhanVien extends User {
         this.luong = luong;
     }
 
-    public NhanVien(String CCCD, String ten, int tuoi, String sdt, String email, String chucVu, double luong, 
-                    String tenDangNhap, String matKhau) {
-        super(CCCD, ten, tuoi, sdt, email, tenDangNhap, matKhau, VaiTro.NHAN_VIEN);
-        this.chucVu = chucVu;
-        this.luong = luong;
-    }
+
 
     public String getChucVu() {
         return chucVu;
@@ -37,9 +34,7 @@ public class NhanVien extends User {
         this.luong = luong;
     }
 
-
-
-    // CRUD static
+    // CRUD cho Admin quản lý nhân viên
     public static void Create(NhanVien nv) {
         if (nv == null || nv.getCCCD() == null || nv.getCCCD().trim().isEmpty()) {
             System.out.println("Lỗi: Thông tin nhân viên không được để trống.");
@@ -50,19 +45,20 @@ public class NhanVien extends User {
             return;
         }
         danhSachNhanVien.add(nv);
+        // Thêm vào danh sách Nguoi để quản lý tài khoản
+        Nguoi.Create(nv);
         System.out.println("Đã thêm nhân viên thành công.");
     }
-    // Read toàn bộ danh sách nhân viên
-    public static java.util.ArrayList<NhanVien> ReadNhanVien() {
+
+    public static ArrayList<NhanVien> ReadNhanVien() {
         if (danhSachNhanVien.isEmpty()) {
             System.out.println("Danh sách nhân viên trống.");
-            return new java.util.ArrayList<>();
+            return new ArrayList<>();
         }
         System.out.println("Tổng số nhân viên: " + danhSachNhanVien.size());
-        return new java.util.ArrayList<>(danhSachNhanVien);
+        return new ArrayList<>(danhSachNhanVien);
     }
     
-    // Read nhân viên theo CCCD
     public static void Read(String CCCD) {
         if (danhSachNhanVien.isEmpty()) {
             System.out.println("Danh sách nhân viên trống.");
@@ -75,6 +71,7 @@ public class NhanVien extends User {
             System.out.println("Không tìm thấy nhân viên với CCCD: " + CCCD);
         }
     }
+
     public static void Update(String CCCD, NhanVien nv) {
         if (nv == null || nv.getCCCD() == null || nv.getCCCD().trim().isEmpty()) {
             System.out.println("Lỗi: Thông tin nhân viên không được để trống.");
@@ -87,6 +84,8 @@ public class NhanVien extends User {
         }
         nv.setCCCD(CCCD);
         danhSachNhanVien.set(idx, nv);
+        // Cập nhật trong danh sách Nguoi
+        Nguoi.Update(CCCD, nv);
         System.out.println("Cập nhật nhân viên thành công.");
     }
     
@@ -97,14 +96,18 @@ public class NhanVien extends User {
             return;
         }
         danhSachNhanVien.remove(idx);
+        // Xóa khỏi danh sách Nguoi
+        Nguoi.Delete(CCCD);
         System.out.println("Đã xóa nhân viên thành công.");
     }
+
     public static NhanVien getNhanVienByCCCD(String CCCD) {
         for (NhanVien nv : danhSachNhanVien) {
             if (nv.getCCCD().equalsIgnoreCase(CCCD)) return nv;
         }
         return null;
     }
+
     public static int getNhanVienIndexByCCCD(String CCCD) {
         for (int i = 0; i < danhSachNhanVien.size(); i++) {
             if (danhSachNhanVien.get(i).getCCCD().equalsIgnoreCase(CCCD)) return i;
