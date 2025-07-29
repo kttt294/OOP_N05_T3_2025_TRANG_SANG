@@ -353,7 +353,7 @@ public class testDanhGia {
     // === MAIN TEST METHOD ===
     
     public static void test() {
-        System.out.println("🚀 BẮT ĐẦU TEST DANH GIA MODEL");
+        System.out.println("🚀 BẮT ĐẦU TEST DANH GIÁ MODEL");
         System.out.println("===============================");
         
         try {
@@ -369,11 +369,11 @@ public class testDanhGia {
             testValidation();
             
             System.out.println("\n===============================");
-            System.out.println("✅ TẤT CẢ TEST DANH GIA THÀNH CÔNG!");
+            System.out.println("✅ TẤT CẢ TEST DANH GIÁ THÀNH CÔNG!");
             
         } catch (Exception e) {
             System.out.println("\n===============================");
-            System.out.println("❌ TEST DANH GIA THẤT BẠI: " + e.getMessage());
+            System.out.println("❌ TEST DANH GIÁ THẤT BẠI: " + e.getMessage());
             e.printStackTrace();
         }
     }
