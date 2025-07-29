@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý Tài Khoản</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Quản lý Tài Khoản</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Vai trò</th>
+        </tr>
+        <tr th:each="tk : ${dsTK}">
+            <td th:text="${tk.id}"></td>
+            <td th:text="${tk.ten}"></td>
+            <td th:text="${tk.vaiTro}"></td>
+        </tr>
+    </table>
+    <a href="/">Về trang chủ</a>
+</body>
+</html> 

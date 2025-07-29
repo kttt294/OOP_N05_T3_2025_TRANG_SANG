@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý Phim</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Quản lý Phim</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Tên phim</th>
+            <th>Thể loại</th>
+        </tr>
+        <tr th:each="phim : ${dsPhim}">
+            <td th:text="${phim.id}"></td>
+            <td th:text="${phim.ten}"></td>
+            <td th:text="${phim.theLoai}"></td>
+        </tr>
+    </table>
+    <a href="/">Về trang chủ</a>
+</body>
+</html> 

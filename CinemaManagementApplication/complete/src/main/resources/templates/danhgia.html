@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý Đánh Giá</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Quản lý Đánh Giá</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Tên KH</th>
+            <th>Nội dung</th>
+            <th>Điểm</th>
+        </tr>
+        <tr th:each="dg : ${dsDG}">
+            <td th:text="${dg.id}"></td>
+            <td th:text="${dg.tenKH}"></td>
+            <td th:text="${dg.noiDung}"></td>
+            <td th:text="${dg.diem}"></td>
+        </tr>
+    </table>
+    <a href="/">Về trang chủ</a>
+</body>
+</html> 

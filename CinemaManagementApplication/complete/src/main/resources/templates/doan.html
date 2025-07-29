@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý Đồ Ăn</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Quản lý Đồ Ăn</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Giá</th>
+        </tr>
+        <tr th:each="doan : ${dsDoAn}">
+            <td th:text="${doan.id}"></td>
+            <td th:text="${doan.ten}"></td>
+            <td th:text="${doan.gia}"></td>
+        </tr>
+    </table>
+    <a href="/">Về trang chủ</a>
+</body>
+</html> 

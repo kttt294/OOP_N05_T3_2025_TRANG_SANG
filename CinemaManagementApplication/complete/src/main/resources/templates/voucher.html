@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý Voucher</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Quản lý Voucher</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Mã</th>
+            <th>Giảm giá (%)</th>
+        </tr>
+        <tr th:each="voucher : ${dsVoucher}">
+            <td th:text="${voucher.id}"></td>
+            <td th:text="${voucher.ma}"></td>
+            <td th:text="${voucher.giamGia}"></td>
+        </tr>
+    </table>
+    <a href="/">Về trang chủ</a>
+</body>
+</html> 
