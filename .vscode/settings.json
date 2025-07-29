@@ -7,7 +7,8 @@
     "CinemaManagement/src/view",
     "CinemaManagement/test",
     "CinemaManagement/reviews/model",
-    "CinemaManagement/reviews/test"
+    "CinemaManagement/reviews/test",
+    "CinemaManagementApplication.complete.src.main.java.com.example.servingwebcontent.model"
   ],
   "java.project.referencedLibraries": [],
   "java.project.outputPath": "CinemaManagement/bin",

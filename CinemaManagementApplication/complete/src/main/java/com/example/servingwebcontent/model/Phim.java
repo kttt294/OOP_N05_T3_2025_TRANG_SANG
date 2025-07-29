@@ -1,3 +1,4 @@
+package com.example.servingwebcontent.model;
 import java.util.ArrayList;
 
 public class Phim {
