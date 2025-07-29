@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import controller.GenericController;
 
-public class GheController {
+public class GheController implements GenericController {
     
     // Tạo ghế mới
     public static boolean taoGhe(Ghe ghe) {
@@ -215,4 +216,13 @@ public class GheController {
             return false;
         }
     }
+
+    @Override
+    public Object them(Object obj) { return null; }
+    @Override
+    public Object sua(Object obj) { return null; }
+    @Override
+    public boolean xoa(Object obj) { return false; }
+    @Override
+    public Object hienThi(Object obj) { return null; }
 } 

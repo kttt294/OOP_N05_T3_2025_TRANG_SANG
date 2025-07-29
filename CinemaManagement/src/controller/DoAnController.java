@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import controller.GenericController;
 
-public class DoAnController {
+public class DoAnController implements GenericController {
     
     // Tạo đồ ăn mới
     public static boolean taoDoAn(DoAn doAn) {
@@ -215,4 +216,13 @@ public class DoAnController {
             return false;
         }
     }
+
+    @Override
+    public Object them(Object obj) { return null; }
+    @Override
+    public Object sua(Object obj) { return null; }
+    @Override
+    public boolean xoa(Object obj) { return false; }
+    @Override
+    public Object hienThi(Object obj) { return null; }
 } 

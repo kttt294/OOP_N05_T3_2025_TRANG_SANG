@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import controller.GenericController;
 
-public class PhongChieuController {
+public class PhongChieuController implements GenericController {
     
     // Tạo phòng chiếu mới
     public static boolean taoPhongChieu(PhongChieu phongChieu) {
@@ -167,4 +168,13 @@ public class PhongChieuController {
             return false;
         }
     }
+
+    @Override
+    public Object them(Object obj) { return null; }
+    @Override
+    public Object sua(Object obj) { return null; }
+    @Override
+    public boolean xoa(Object obj) { return false; }
+    @Override
+    public Object hienThi(Object obj) { return null; }
 } 

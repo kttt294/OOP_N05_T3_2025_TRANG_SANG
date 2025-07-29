@@ -3,8 +3,9 @@ import java.time.LocalDate;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import controller.GenericController;
 
-public class SuatChieuController {
+public class SuatChieuController implements GenericController {
     
     // Hiển thị suất chiếu trong ngày
     public static boolean hienThiSuatChieuTrongNgay(List<SuatChieu> danhSachSuatChieu) {
@@ -240,4 +241,13 @@ public class SuatChieuController {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public Object them(Object obj) { return null; }
+    @Override
+    public Object sua(Object obj) { return null; }
+    @Override
+    public boolean xoa(Object obj) { return false; }
+    @Override
+    public Object hienThi(Object obj) { return null; }
 }

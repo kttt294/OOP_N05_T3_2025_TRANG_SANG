@@ -54,7 +54,7 @@ public class testPhim {
         // Test setNhaSanXuat
         phim.setNhaSanXuat("Sony Pictures");
         assert "Sony Pictures".equals(phim.getNhaSanXuat()) : "setNhaSanXuat/getNhaSanXuat không đúng";
-        
+
         System.out.println("✓ Tất cả getters/setters OK");
     }
     
@@ -97,7 +97,7 @@ public class testPhim {
         
         System.out.println("✓ CRUD Integration OK");
     }
-    
+
     // === EDGE CASE TESTING ===
     
     // Test với dữ liệu null
@@ -129,7 +129,7 @@ public class testPhim {
             System.out.println("✗ Không bắt được lỗi mã rỗng");
         } catch (Exception e) {
             System.out.println("✓ Bắt được lỗi mã rỗng: " + e.getMessage());
-        }
+    }
     }
     
     // Test với dữ liệu không hợp lệ
@@ -202,7 +202,7 @@ public class testPhim {
         for (Phim phim : mockData) {
             if ("Hành động".equals(phim.getTheLoai())) {
                 result1.add(phim);
-            }
+        }
         }
         assert result1.size() == 1 : "Tìm kiếm theo thể loại không đúng";
         
@@ -259,8 +259,8 @@ public class testPhim {
         duration = endTime - startTime;
         
         System.out.println("✓ Tìm kiếm phim trong " + duration + "ms");
-    }
-    
+        }
+
     // === BUSINESS LOGIC TESTING ===
     
     // Test logic nghiệp vụ
@@ -305,8 +305,8 @@ public class testPhim {
             System.out.println("✓ Validation mã phim OK");
         } catch (Exception e) {
             System.out.println("✗ Validation mã phim thất bại: " + e.getMessage());
-        }
-        
+    }
+
         // Test validation thời lượng
         try {
             Phim phim = new Phim("PHIM001", "Test Movie", "Test", 120, 2024, "Test Studio");
@@ -328,11 +328,11 @@ public class testPhim {
             System.out.println("✓ Validation năm sản xuất OK");
         } catch (Exception e) {
             System.out.println("✗ Validation năm sản xuất thất bại: " + e.getMessage());
-        }
+    }
     }
     
     // === MAIN TEST METHOD ===
-    
+
     public static void test() {
         System.out.println("🚀 BẮT ĐẦU TEST PHIM MODEL");
         System.out.println("============================");
