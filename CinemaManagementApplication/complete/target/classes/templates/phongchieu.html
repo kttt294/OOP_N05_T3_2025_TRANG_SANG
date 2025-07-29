@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý Phòng Chiếu</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Quản lý Phòng Chiếu</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Sức chứa</th>
+        </tr>
+        <tr th:each="pc : ${dsPC}">
+            <td th:text="${pc.id}"></td>
+            <td th:text="${pc.ten}"></td>
+            <td th:text="${pc.sucChua}"></td>
+        </tr>
+    </table>
+    <a href="/">Về trang chủ</a>
+</body>
+</html> 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý Ghế</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Quản lý Ghế</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Số ghế</th>
+            <th>Loại</th>
+        </tr>
+        <tr th:each="ghe : ${dsGhe}">
+            <td th:text="${ghe.id}"></td>
+            <td th:text="${ghe.soGhe}"></td>
+            <td th:text="${ghe.loai}"></td>
+        </tr>
+    </table>
+    <a href="/">Về trang chủ</a>
+</body>
+</html> 

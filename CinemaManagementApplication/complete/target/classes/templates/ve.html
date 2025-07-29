@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý Vé</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Quản lý Vé</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Tên phim</th>
+            <th>Ghế</th>
+        </tr>
+        <tr th:each="ve : ${dsVe}">
+            <td th:text="${ve.id}"></td>
+            <td th:text="${ve.tenPhim}"></td>
+            <td th:text="${ve.ghe}"></td>
+        </tr>
+    </table>
+    <a href="/">Về trang chủ</a>
+</body>
+</html> 
