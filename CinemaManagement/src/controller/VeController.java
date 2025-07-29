@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import controller.GenericController;
 
-public class VeController {
+public class VeController implements GenericController {
     
     // Tạo vé mới
     public static boolean taoVe(Ve ve) {
@@ -234,4 +235,13 @@ public class VeController {
             return false;
         }
     }
+
+    @Override
+    public Object them(Object obj) { return null; }
+    @Override
+    public Object sua(Object obj) { return null; }
+    @Override
+    public boolean xoa(Object obj) { return false; }
+    @Override
+    public Object hienThi(Object obj) { return null; }
 } 

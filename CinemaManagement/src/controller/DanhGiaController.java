@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import controller.GenericController;
 
-public class DanhGiaController {
+public class DanhGiaController implements GenericController {
     
     // Tạo đánh giá mới
     public static boolean taoDanhGia(DanhGia danhGia) {
@@ -177,4 +178,13 @@ public class DanhGiaController {
             return false;
         }
     }
+
+    @Override
+    public Object them(Object obj) { return null; }
+    @Override
+    public Object sua(Object obj) { return null; }
+    @Override
+    public boolean xoa(Object obj) { return false; }
+    @Override
+    public Object hienThi(Object obj) { return null; }
 } 
