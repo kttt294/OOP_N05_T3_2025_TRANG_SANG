@@ -1,4 +1,4 @@
-CinemaManager/
+CinemaManagement/
 │
 ├── src/
 │   ├── model/           # Chứa các class đối tượng, entity, business logic, CRUD
@@ -33,7 +33,7 @@ CinemaManager/
 │   │   ├── ReservationHoldController.java
 │   │   └── ... (các controller khác)
 │   │
-│   ├── view/            # Chứa các class giao diện (Swing GUI)
+│   ├── view/            # Chứa các class giao diện (Spring Boot GUI)
 │   │   ├── MainFrame.java
 │   │   ├── KhachHangPanel.java
 │   │   ├── PhimPanel.java

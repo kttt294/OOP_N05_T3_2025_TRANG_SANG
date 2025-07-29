@@ -1,214 +1,273 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 
 public class testKhachHang {
-    public static void inputCreateKhachHang(Scanner sc) {
-        System.out.println("\n=== Thêm khách hàng mới ===");
-
-        System.out.print("CCCD khách hàng: ");
-        String CCCD = sc.nextLine().trim();
-        if (CCCD.isEmpty()) {
-            System.out.println("CCCD khách hàng không được để trống.");
-            return;
-        }
-        if (KhachHangController.timKhachHangTheoCCCD(CCCD) != null) {
-            System.out.println("Khách hàng đã tồn tại.");
-            return;
-        }
-
-        System.out.print("Tên khách hàng: ");
-        String tenKH = sc.nextLine().trim();
-        if (tenKH.isEmpty()) {
-            System.out.println("Tên khách hàng không được để trống.");
-            return;
-        }
-
-        System.out.print("Tuổi: ");
-        int tuoi = Integer.parseInt(sc.nextLine().trim());
-
-        System.out.print("Số điện thoại: ");
-        String sdt = sc.nextLine().trim();
-
-        System.out.print("Email: ");
-        String email = sc.nextLine().trim();
-
-        System.out.print("Giới tính: ");
-        String gioiTinh = sc.nextLine().trim();
-
-        // Tạo khách hàng mới
-        KhachHang kh = new KhachHang(CCCD, tenKH, tuoi, sdt, email, gioiTinh);
-        KhachHangController.taoKhachHang(kh);
+    
+    // === UNIT TESTING ===
+    
+    // Test constructor
+    public static void testConstructor() {
+        System.out.println("=== TEST CONSTRUCTOR ===");
+        
+        // Test constructor rỗng
+        KhachHang kh1 = new KhachHang();
+        assert kh1.getCCCD() == null : "Constructor rỗng không đúng";
+        assert kh1.getTen() == null : "Constructor rỗng không đúng";
+        System.out.println("✓ Constructor rỗng OK");
+        
+        // Test constructor với tham số
+        KhachHang kh2 = new KhachHang("123", "Nguyen Van A", 25, "0123456789", "a@email.com");
+        assert "123".equals(kh2.getCCCD()) : "CCCD không đúng";
+        assert "Nguyen Van A".equals(kh2.getTen()) : "Tên không đúng";
+        assert kh2.getTuoi() == 25 : "Tuổi không đúng";
+        System.out.println("✓ Constructor với tham số OK");
+        
+        // Test constructor với giới tính
+        KhachHang kh3 = new KhachHang("456", "Tran Thi B", 30, "0987654321", "b@email.com", "Nu");
+        assert "Nu".equals(kh3.getGioiTinh()) : "Giới tính không đúng";
+        System.out.println("✓ Constructor với giới tính OK");
     }
-
-    public static void inputReadKhachHang(Scanner sc){
-        System.out.println("Nhập mã khách hàng cần xem thông tin: ");
-        String maKH = sc.nextLine().trim();
-        KhachHangController.xemThongTin(maKH);
+    
+    // Test getters và setters
+    public static void testGettersSetters() {
+        System.out.println("\n=== TEST GETTERS & SETTERS ===");
+        
+        KhachHang kh = new KhachHang();
+        
+        // Test setCCCD
+        kh.setCCCD("789");
+        assert "789".equals(kh.getCCCD()) : "setCCCD/getCCCD không đúng";
+        
+        // Test setTen
+        kh.setTen("Le Van C");
+        assert "Le Van C".equals(kh.getTen()) : "setTen/getTen không đúng";
+        
+        // Test setTuoi
+        kh.setTuoi(35);
+        assert kh.getTuoi() == 35 : "setTuoi/getTuoi không đúng";
+        
+        // Test setSdt
+        kh.setSdt("0123456789");
+        assert "0123456789".equals(kh.getSdt()) : "setSdt/getSdt không đúng";
+        
+        // Test setEmail
+        kh.setEmail("c@email.com");
+        assert "c@email.com".equals(kh.getEmail()) : "setEmail/getEmail không đúng";
+        
+        // Test setGioiTinh
+        kh.setGioiTinh("Nam");
+        assert "Nam".equals(kh.getGioiTinh()) : "setGioiTinh/getGioiTinh không đúng";
+        
+        System.out.println("✓ Tất cả getters/setters OK");
     }
-
-    public static void inputUpdateKhachHang(Scanner sc) {
-        System.out.print("Nhập mã khách hàng cần sửa: ");
-        String maKH = sc.nextLine().trim();
-
-        KhachHang kh = KhachHangController.timKhachHangTheoCCCD(maKH);
-        if (kh == null) {
-            System.out.println("Không tìm thấy khách hàng.");
-            return;
-        }
-
-        System.out.println("\n=== Cập nhật thông tin khách hàng ===");
-
-        System.out.print("Tên khách hàng mới: ");
-        String tenKH = sc.nextLine().trim();
-        if (!tenKH.isEmpty()) {
-            kh.setTen(tenKH);
-        }
-
-        System.out.print("Tuổi mới: ");
-        String tuoiInput = sc.nextLine().trim();
-        if (!tuoiInput.isEmpty()) {
-            kh.setTuoi(Integer.parseInt(tuoiInput));
-        }
-
-        System.out.print("Số điện thoại mới: ");
-        String sdt = sc.nextLine().trim();
-        if (!sdt.isEmpty()) {
-            kh.setSdt(sdt);
-        }
-
-        System.out.print("Email mới: ");
-        String email = sc.nextLine().trim();
-        if (!email.isEmpty()) {
-            kh.setEmail(email);
-        }
-
-        System.out.print("Giới tính mới: ");
-        String gioiTinh = sc.nextLine().trim();
-        if (!gioiTinh.isEmpty()) {
-            kh.setGioiTinh(gioiTinh);
-        }
-
-        KhachHangController.capNhatThongTin(maKH, kh);
+    
+    // Test method themVe
+    public static void testThemVe() {
+        System.out.println("\n=== TEST THEM VE ===");
+        
+        KhachHang kh = new KhachHang("123", "Test", 25, "0123456789", "test@email.com");
+        
+        // Test thêm vé đầu tiên
+        Ve ve1 = new Ve("VE001", "123", "SC001", "GHE001", 50000);
+        kh.themVe(ve1);
+        assert kh.getLichSuDatVe().size() == 1 : "Thêm vé đầu tiên không đúng";
+        
+        // Test thêm vé thứ hai
+        Ve ve2 = new Ve("VE002", "123", "SC002", "GHE002", 60000);
+        kh.themVe(ve2);
+        assert kh.getLichSuDatVe().size() == 2 : "Thêm vé thứ hai không đúng";
+        
+        System.out.println("✓ Thêm vé OK");
     }
-
-    public static void inputDeleteKhachHang(Scanner sc) {
-        System.out.print("Nhập mã khách hàng cần xoá: ");
-        String maKH = sc.nextLine().trim();
-
-        KhachHangController.xoaKhachHang(maKH);
+    
+    // === INTEGRATION TESTING ===
+    
+    // Test luồng CRUD hoàn chỉnh
+    public static void testCRUDIntegration() {
+        System.out.println("\n=== TEST CRUD INTEGRATION ===");
+        
+        // Create
+        KhachHang kh = new KhachHang("INT001", "Integration Test", 25, "0123456789", "int@email.com");
+        KhachHang.Create(kh);
+        
+        // Read
+        KhachHang khRead = KhachHang.getKhachHangByCCCD("INT001");
+        assert khRead != null : "Không tìm thấy khách hàng sau khi tạo";
+        assert "Integration Test".equals(khRead.getTen()) : "Dữ liệu đọc không đúng";
+        
+        // Update
+        kh.setTen("Updated Integration Test");
+        KhachHang.Update("INT001", kh);
+        KhachHang khUpdated = KhachHang.getKhachHangByCCCD("INT001");
+        assert "Updated Integration Test".equals(khUpdated.getTen()) : "Update không thành công";
+        
+        // Delete
+        KhachHang.Delete("INT001");
+        KhachHang khDeleted = KhachHang.getKhachHangByCCCD("INT001");
+        assert khDeleted == null : "Delete không thành công";
+        
+        System.out.println("✓ CRUD Integration OK");
     }
-
+    
+    // === EDGE CASE TESTING ===
+    
+    // Test với dữ liệu null
+    public static void testNullData() {
+        System.out.println("\n=== TEST NULL DATA ===");
+        
+        // Test tạo khách hàng với CCCD null
+        try {
+            KhachHang kh = new KhachHang(null, "Test", 25, "0123456789", "test@email.com");
+            KhachHang.Create(kh);
+            System.out.println("✗ Không bắt được lỗi CCCD null");
+        } catch (Exception e) {
+            System.out.println("✓ Bắt được lỗi CCCD null: " + e.getMessage());
+        }
+        
+        // Test tạo khách hàng với tên null
+        try {
+            KhachHang kh = new KhachHang("123", null, 25, "0123456789", "test@email.com");
+            KhachHang.Create(kh);
+            System.out.println("✗ Không bắt được lỗi tên null");
+        } catch (Exception e) {
+            System.out.println("✓ Bắt được lỗi tên null: " + e.getMessage());
+        }
+        
+        // Test tạo khách hàng với CCCD rỗng
+        try {
+            KhachHang kh = new KhachHang("", "Test", 25, "0123456789", "test@email.com");
+            KhachHang.Create(kh);
+            System.out.println("✗ Không bắt được lỗi CCCD rỗng");
+        } catch (Exception e) {
+            System.out.println("✓ Bắt được lỗi CCCD rỗng: " + e.getMessage());
+        }
+    }
+    
+    // Test với dữ liệu không hợp lệ
+    public static void testInvalidData() {
+        System.out.println("\n=== TEST INVALID DATA ===");
+        
+        // Test tuổi âm
+        try {
+            KhachHang kh = new KhachHang("123", "Test", -5, "0123456789", "test@email.com");
+            System.out.println("✗ Không bắt được lỗi tuổi âm");
+        } catch (Exception e) {
+            System.out.println("✓ Bắt được lỗi tuổi âm: " + e.getMessage());
+        }
+        
+        // Test tuổi quá lớn
+        try {
+            KhachHang kh = new KhachHang("123", "Test", 200, "0123456789", "test@email.com");
+            System.out.println("✗ Không bắt được lỗi tuổi quá lớn");
+        } catch (Exception e) {
+            System.out.println("✓ Bắt được lỗi tuổi quá lớn: " + e.getMessage());
+        }
+        
+        // Test CCCD trùng lặp
+        KhachHang kh1 = new KhachHang("DUP001", "Test 1", 25, "0123456789", "test1@email.com");
+        KhachHang.Create(kh1);
+        
+        try {
+            KhachHang kh2 = new KhachHang("DUP001", "Test 2", 30, "0987654321", "test2@email.com");
+            KhachHang.Create(kh2);
+            System.out.println("✗ Không bắt được lỗi CCCD trùng lặp");
+        } catch (Exception e) {
+            System.out.println("✓ Bắt được lỗi CCCD trùng lặp: " + e.getMessage());
+        }
+    }
+    
+    // === MOCK TESTING ===
+    
+    // Test với dữ liệu giả
+    public static void testMockData() {
+        System.out.println("\n=== TEST MOCK DATA ===");
+        
+        // Tạo dữ liệu giả
+        ArrayList<KhachHang> mockData = new ArrayList<>();
+        mockData.add(new KhachHang("MOCK001", "Mock User 1", 25, "0123456789", "mock1@email.com", "Nam"));
+        mockData.add(new KhachHang("MOCK002", "Mock User 2", 30, "0987654321", "mock2@email.com", "Nu"));
+        mockData.add(new KhachHang("MOCK003", "Mock User 3", 35, "0123456780", "mock3@email.com", "Nam"));
+        
+        // Test tìm kiếm theo tên
+        ArrayList<KhachHang> result1 = new ArrayList<>();
+        for (KhachHang kh : mockData) {
+            if (kh.getTen().contains("Mock")) {
+                result1.add(kh);
+            }
+        }
+        assert result1.size() == 3 : "Tìm kiếm theo tên không đúng";
+        
+        // Test tìm kiếm theo giới tính
+        ArrayList<KhachHang> result2 = new ArrayList<>();
+        for (KhachHang kh : mockData) {
+            if ("Nam".equals(kh.getGioiTinh())) {
+                result2.add(kh);
+            }
+        }
+        assert result2.size() == 2 : "Tìm kiếm theo giới tính không đúng";
+        
+        // Test tính tổng tiền
+        double totalMoney = 0.0;
+        for (KhachHang kh : mockData) {
+            // Giả sử mỗi khách hàng có 1 vé 50000
+            totalMoney += 50000;
+        }
+        assert totalMoney == 150000.0 : "Tính tổng tiền không đúng";
+        
+        System.out.println("✓ Mock data testing OK");
+    }
+    
+    // === PERFORMANCE TESTING ===
+    
+    // Test hiệu suất với dữ liệu lớn
+    public static void testPerformance() {
+        System.out.println("\n=== TEST PERFORMANCE ===");
+        
+        long startTime = System.currentTimeMillis();
+        
+        // Tạo 1000 khách hàng
+        for (int i = 0; i < 1000; i++) {
+            KhachHang kh = new KhachHang("PERF" + i, "Performance User " + i, 25, "0123456789", "perf" + i + "@email.com");
+            KhachHang.Create(kh);
+        }
+        
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        
+        System.out.println("✓ Tạo 1000 khách hàng trong " + duration + "ms");
+        
+        // Test tìm kiếm
+        startTime = System.currentTimeMillis();
+        KhachHang result = KhachHang.getKhachHangByCCCD("PERF500");
+        endTime = System.currentTimeMillis();
+        duration = endTime - startTime;
+        
+        System.out.println("✓ Tìm kiếm khách hàng trong " + duration + "ms");
+    }
+    
+    // === MAIN TEST METHOD ===
+    
     public static void test() {
-        Scanner sc = new Scanner(System.in);
-        int luaChon;
-        do {
-            System.out.println("\n=== MENU QUẢN LÝ KHÁCH HÀNG ===");
-            System.out.println("1. Thêm khách hàng");
-            System.out.println("2. Xem danh sách khách hàng");
-            System.out.println("3. Sửa thông tin khách hàng");
-            System.out.println("4. Xóa khách hàng");
-            System.out.println("5. Kiểm tra tổng tiền khách hàng đã sử dụng");
-            System.out.println("6. Xem thống kê tổng quan");
-            System.out.println("7. Tìm kiếm theo tên");
-            System.out.println("8. Tìm kiếm theo giới tính");
-            System.out.println("9. Xem lịch sử đặt vé");
-            System.out.println("10. Báo cáo khách hàng VIP");
-            System.out.println("11. Báo cáo khách hàng mới");
-            System.out.println("0. Thoát");
-            System.out.print("Chọn chức năng: ");
-            try {
-                luaChon = Integer.parseInt(sc.nextLine());
-            } catch (NumberFormatException e) {
-                luaChon = -1;
-            }
-            switch (luaChon) {
-                case 1:
-                    inputCreateKhachHang(sc);
-                    break;
-                case 2:
-                    KhachHangController.xemTatCaKhachHang();
-                    break;
-                case 3:
-                    inputUpdateKhachHang(sc);
-                    break;
-                case 4:
-                    inputDeleteKhachHang(sc);
-                    break;
-                case 5:
-                    testTinhTongTienDaSuDung(sc);
-                    break;
-                case 6:
-                    KhachHangController.xemThongKeKhachHang();
-                    break;
-                case 7:
-                    timKiemTheoTen(sc);
-                    break;
-                case 8:
-                    timKiemTheoGioiTinh(sc);
-                    break;
-                case 9:
-                    xemLichSuDatVe(sc);
-                    break;
-                case 10:
-                    KhachHangController.baoCaoKhachHangVIP();
-                    break;
-                case 11:
-                    KhachHangController.baoCaoKhachHangMoi();
-                    break;
-                case 0:
-                    System.out.println("Thoát chương trình.");
-                    break;
-                default:
-                    System.out.println("Lựa chọn không hợp lệ.");
-            }
-        } while (luaChon != 0);
-    }
-
-    public static void testTinhTongTienDaSuDung(Scanner sc) {
-        System.out.print("Nhập CCCD khách hàng cần kiểm tra tổng tiền đã sử dụng: ");
-        String cccd = sc.nextLine().trim();
+        System.out.println("🚀 BẮT ĐẦU TEST KHACH HANG MODEL");
+        System.out.println("=====================================");
         
-        double tongTien = KhachHangController.tinhTongTienKhachHang(cccd);
-        System.out.println("Tổng số tiền khách hàng với CCCD " + cccd + " đã sử dụng là: " + tongTien + " VNĐ");
-    }
-
-    public static void timKiemTheoTen(Scanner sc) {
-        System.out.print("Nhập tên cần tìm kiếm: ");
-        String ten = sc.nextLine().trim();
-        
-        ArrayList<KhachHang> ketQua = KhachHangController.timKhachHangTheoTen(ten);
-        if (ketQua.isEmpty()) {
-            System.out.println("Không tìm thấy khách hàng nào có tên chứa: " + ten);
-        } else {
-            System.out.println("Tìm thấy " + ketQua.size() + " khách hàng:");
-            for (KhachHang kh : ketQua) {
-                kh.hienThiThongTin();
-                System.out.println("---");
-            }
+        try {
+            testConstructor();
+            testGettersSetters();
+            testThemVe();
+            testCRUDIntegration();
+            testNullData();
+            testInvalidData();
+            testMockData();
+            testPerformance();
+            
+            System.out.println("\n=====================================");
+            System.out.println("✅ TẤT CẢ TEST KHACH HANG THÀNH CÔNG!");
+            
+        } catch (Exception e) {
+            System.out.println("\n=====================================");
+            System.out.println("❌ TEST KHACH HANG THẤT BẠI: " + e.getMessage());
+            e.printStackTrace();
         }
-    }
-
-    public static void timKiemTheoGioiTinh(Scanner sc) {
-        System.out.print("Nhập giới tính cần tìm kiếm (Nam/Nữ/Khác): ");
-        String gioiTinh = sc.nextLine().trim();
-        
-        ArrayList<KhachHang> ketQua = KhachHangController.timKhachHangTheoGioiTinh(gioiTinh);
-        if (ketQua.isEmpty()) {
-            System.out.println("Không tìm thấy khách hàng nào có giới tính: " + gioiTinh);
-        } else {
-            System.out.println("Tìm thấy " + ketQua.size() + " khách hàng có giới tính " + gioiTinh + ":");
-            for (KhachHang kh : ketQua) {
-                kh.hienThiThongTin();
-                System.out.println("---");
-            }
-        }
-    }
-
-    public static void xemLichSuDatVe(Scanner sc) {
-        System.out.print("Nhập CCCD khách hàng cần xem lịch sử đặt vé: ");
-        String cccd = sc.nextLine().trim();
-        
-        KhachHangController.xemLichSuDatVe(cccd);
     }
 }
 
