@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Phim {
-    private String maPhim;
-    private String tenPhim;
+    public String maPhim;
+    public String tenPhim;
     private String theLoai;
     private int thoiLuong; // đơn vị: phút
     private String ngonNgu;
@@ -21,6 +21,10 @@ public class Phim {
         this.ngonNgu = ngonNgu;
         setGioiHanTuoi(gioiHanTuoi);
         this.moTa = moTa;
+    }
+    public Phim(String maPhim, String tenPhim){
+        this.maPhim = maPhim;
+        this.tenPhim = tenPhim;
     }
 
     public String getMaPhim() {
