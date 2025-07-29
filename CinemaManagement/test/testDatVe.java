@@ -78,8 +78,8 @@ public class testDatVe {
         }
         
         System.out.println("✓ Luồng đặt vé: " + result);
-    }
-    
+        }
+        
     // === EDGE CASE TESTING ===
     
     // Test với dữ liệu null
@@ -120,7 +120,7 @@ public class testDatVe {
     // Test với dữ liệu không hợp lệ
     public static void testInvalidData() {
         System.out.println("\n=== TEST INVALID DATA ===");
-        
+            
         // Test giá vé âm
         try {
             KhachHang kh = new KhachHang("INV001", "Invalid User", 25, "0123456789", "invalid@email.com");
@@ -248,7 +248,7 @@ public class testDatVe {
                 thread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+    }
         }
         
         // Kiểm tra kết quả

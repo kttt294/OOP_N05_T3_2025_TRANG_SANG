@@ -312,7 +312,7 @@ public class testSuatChieu {
     }
     
     // === MAIN TEST METHOD ===
-    
+
     public static void test() {
         System.out.println("🚀 BẮT ĐẦU TEST SUAT CHIEU MODEL");
         System.out.println("===================================");
