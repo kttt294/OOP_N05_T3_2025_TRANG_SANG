@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import controller.GenericController;
+import com.example.servingwebcontent.controller.GenericController;
 
 public class KhachHangController implements GenericController {
     public static boolean taoKhachHang(KhachHang kh) {

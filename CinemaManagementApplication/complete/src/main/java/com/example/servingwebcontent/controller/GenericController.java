@@ -1,4 +1,4 @@
-package controller;
+package com.example.servingwebcontent.controller;
 
 public interface GenericController {
     Object them(Object obj);
