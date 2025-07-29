@@ -137,11 +137,47 @@ public class PhongChieu {
     // Hiển thị thông tin chi tiết của một phòng chiếu
     public void hienThiThongTin() {
         System.out.println("=== THÔNG TIN PHÒNG CHIẾU ===");
-        System.out.println("Mã phòng: " + this.maPhong);
-        System.out.println("Tên phòng: " + this.tenPhong);
-        System.out.println("Số hàng ghế: " + this.soHangGhe);
-        System.out.println("Số cột ghế: " + this.soCotGhe);
-        System.out.println("Tổng số ghế: " + (this.soHangGhe * this.soCotGhe));
+        System.out.println("Mã phòng: " + maPhong);
+        System.out.println("Tên phòng: " + tenPhong);
+        System.out.println("Số hàng ghế: " + soHangGhe);
+        System.out.println("Số cột ghế: " + soCotGhe);
+        System.out.println("Tổng số ghế: " + (soHangGhe * soCotGhe));
+        System.out.println("=============================");
+    }
+
+    public static ArrayList<PhongChieu> timKiemTheoTen(String tenPhong) {
+        ArrayList<PhongChieu> ketQua = new ArrayList<>();
+        for (PhongChieu phong : danhSachPhong) {
+            if (phong.getTenPhong().toLowerCase().contains(tenPhong.toLowerCase())) {
+                ketQua.add(phong);
+            }
+        }
+        return ketQua;
+    }
+
+    public static void thongKePhongChieu() {
+        System.out.println("=== THỐNG KÊ PHÒNG CHIẾU ===");
+        System.out.println("Tổng số phòng chiếu: " + danhSachPhong.size());
+        
+        int tongGhe = 0;
+        for (PhongChieu phong : danhSachPhong) {
+            tongGhe += phong.getSoHangGhe() * phong.getSoCotGhe();
+        }
+        
+        System.out.println("Tổng số ghế: " + tongGhe);
+        
+        // Thống kê phòng theo kích thước
+        int nho = 0, vua = 0, lon = 0;
+        for (PhongChieu phong : danhSachPhong) {
+            int soGhe = phong.getSoHangGhe() * phong.getSoCotGhe();
+            if (soGhe < 50) nho++;
+            else if (soGhe < 100) vua++;
+            else lon++;
+        }
+        
+        System.out.println("Phòng nhỏ (<50 ghế): " + nho);
+        System.out.println("Phòng vừa (50-100 ghế): " + vua);
+        System.out.println("Phòng lớn (>100 ghế): " + lon);
         System.out.println("=============================");
     }
 }

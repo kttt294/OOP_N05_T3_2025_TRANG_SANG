@@ -16,14 +16,17 @@ public class VoucherController implements GenericController {
             if (voucher.getMaVoucher() == null || voucher.getMaVoucher().trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã voucher không được để trống!");
             }
-            if (voucher.getTenVoucher() == null || voucher.getTenVoucher().trim().isEmpty()) {
+            if (voucher.getMoTa() == null || voucher.getMoTa().trim().isEmpty()) {
                 throw new IllegalArgumentException("Tên voucher không được để trống!");
             }
-            if (voucher.getGiaTri() <= 0) {
+            if (voucher.getMoTa() == null || voucher.getMoTa().trim().isEmpty()) {
+                throw new IllegalArgumentException("Tên voucher không được để trống!");
+            }
+            if (voucher.getPhanTramGiamGia() <= 0) {
                 throw new IllegalArgumentException("Giá trị voucher phải lớn hơn 0!");
             }
-            if (voucher.getSoLuong() < 0) {
-                throw new IllegalArgumentException("Số lượng không được âm!");
+            if (voucher.getSoLuongConLai() == null || voucher.getSoLuongConLai().trim().isEmpty()) {
+                throw new IllegalArgumentException("Số lượng không được để trống!");
             }
 
             Voucher.Create(voucher);
@@ -50,7 +53,7 @@ public class VoucherController implements GenericController {
             }
 
             // Kiểm tra voucher có tồn tại không
-            Voucher voucherCu = Voucher.getVoucherByMaVoucher(maVoucher);
+            Voucher voucherCu = Voucher.getVoucherById(maVoucher);
             if (voucherCu == null) {
                 System.out.println("Không tìm thấy voucher với mã: " + maVoucher);
                 return false;
@@ -77,7 +80,7 @@ public class VoucherController implements GenericController {
             }
 
             // Kiểm tra voucher có tồn tại không
-            Voucher voucher = Voucher.getVoucherByMaVoucher(maVoucher);
+            Voucher voucher = Voucher.getVoucherById(maVoucher);
             if (voucher == null) {
                 System.out.println("Không tìm thấy voucher với mã: " + maVoucher);
                 return false;
@@ -133,7 +136,7 @@ public class VoucherController implements GenericController {
                 throw new IllegalArgumentException("Mã voucher không được để trống!");
             }
 
-            return Voucher.getVoucherByMaVoucher(maVoucher);
+            return Voucher.getVoucherById(maVoucher);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;

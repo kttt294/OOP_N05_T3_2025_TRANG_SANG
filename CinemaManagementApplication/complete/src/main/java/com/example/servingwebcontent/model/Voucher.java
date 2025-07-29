@@ -178,13 +178,110 @@ public class Voucher {
     // Hiển thị thông tin chi tiết của một voucher
     public void hienThiThongTin() {
         System.out.println("=== THÔNG TIN VOUCHER ===");
-        System.out.println("Mã voucher: " + this.maVoucher);
-        System.out.println("Mô tả: " + this.moTa);
-        System.out.println("Phần trăm giảm giá: " + this.phanTramGiamGia + "%");
-        System.out.println("Ngày bắt đầu: " + this.ngayBatDau);
-        System.out.println("Ngày kết thúc: " + this.ngayKetThuc);
-        System.out.println("Số lượng còn lại: " + this.soLuongConLai);
-        System.out.println("Trạng thái: " + this.trangThai);
+        System.out.println("Mã voucher: " + maVoucher);
+        System.out.println("Mô tả: " + moTa);
+        System.out.println("Phần trăm giảm giá: " + phanTramGiamGia + "%");
+        System.out.println("Ngày bắt đầu: " + ngayBatDau);
+        System.out.println("Ngày kết thúc: " + ngayKetThuc);
+        System.out.println("Số lượng còn lại: " + soLuongConLai);
+        System.out.println("Trạng thái: " + trangThai);
+        System.out.println("=========================");
+    }
+
+    public static ArrayList<Voucher> timKiemTheoTen(String tenVoucher) {
+        ArrayList<Voucher> ketQua = new ArrayList<>();
+        for (Voucher voucher : danhSachVoucher) {
+            if (voucher.getMoTa().toLowerCase().contains(tenVoucher.toLowerCase())) {
+                ketQua.add(voucher);
+            }
+        }
+        return ketQua;
+    }
+
+    public static boolean kiemTraVoucherHopLe(String maVoucher) {
+        Voucher voucher = getVoucherById(maVoucher);
+        if (voucher == null) {
+            return false;
+        }
+        
+        // Kiểm tra ngày hiệu lực
+        LocalDateTime now = LocalDateTime.now();
+        if (now.isBefore(voucher.getNgayBatDau()) || now.isAfter(voucher.getNgayKetThuc())) {
+            return false;
+        }
+        
+        // Kiểm tra số lượng còn lại
+        try {
+            int soLuong = Integer.parseInt(voucher.getSoLuongConLai());
+            if (soLuong <= 0) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        
+        // Kiểm tra trạng thái
+        if (!"HoatDong".equalsIgnoreCase(voucher.getTrangThai())) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    public static boolean suDungVoucher(String maVoucher) {
+        Voucher voucher = getVoucherById(maVoucher);
+        if (voucher == null) {
+            return false;
+        }
+        
+        if (!kiemTraVoucherHopLe(maVoucher)) {
+            return false;
+        }
+        
+        // Giảm số lượng
+        try {
+            int soLuong = Integer.parseInt(voucher.getSoLuongConLai());
+            soLuong--;
+            voucher.setSoLuongConLai(String.valueOf(soLuong));
+            
+            // Nếu hết voucher thì cập nhật trạng thái
+            if (soLuong <= 0) {
+                voucher.setTrangThai("HetHang");
+            }
+            
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static void thongKeVoucher() {
+        System.out.println("=== THỐNG KÊ VOUCHER ===");
+        System.out.println("Tổng số voucher: " + danhSachVoucher.size());
+        
+        int hoatDong = 0, hetHang = 0, hetHan = 0;
+        int tongGiamGia = 0;
+        
+        LocalDateTime now = LocalDateTime.now();
+        
+        for (Voucher voucher : danhSachVoucher) {
+            if ("HoatDong".equalsIgnoreCase(voucher.getTrangThai())) {
+                hoatDong++;
+            } else if ("HetHang".equalsIgnoreCase(voucher.getTrangThai())) {
+                hetHang++;
+            }
+            
+            if (now.isAfter(voucher.getNgayKetThuc())) {
+                hetHan++;
+            }
+            
+            tongGiamGia += voucher.getPhanTramGiamGia();
+        }
+        
+        System.out.println("Voucher hoạt động: " + hoatDong);
+        System.out.println("Voucher hết hàng: " + hetHang);
+        System.out.println("Voucher hết hạn: " + hetHan);
+        System.out.println("Tổng phần trăm giảm giá: " + tongGiamGia + "%");
         System.out.println("=========================");
     }
 }

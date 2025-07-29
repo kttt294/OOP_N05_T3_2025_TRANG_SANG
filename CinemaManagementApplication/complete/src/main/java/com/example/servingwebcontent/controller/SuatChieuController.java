@@ -116,7 +116,7 @@ public class SuatChieuController implements GenericController {
             }
 
             // Kiểm tra suất chiếu có tồn tại không
-            SuatChieu suatChieuCu = SuatChieu.getSuatChieuByMaSuatChieu(maSuatChieu);
+            SuatChieu suatChieuCu = SuatChieu.getSuatChieuById(maSuatChieu);
             if (suatChieuCu == null) {
                 System.out.println("Không tìm thấy suất chiếu với mã: " + maSuatChieu);
                 return false;
@@ -143,7 +143,7 @@ public class SuatChieuController implements GenericController {
             }
 
             // Kiểm tra suất chiếu có tồn tại không
-            SuatChieu suatChieu = SuatChieu.getSuatChieuByMaSuatChieu(maSuatChieu);
+            SuatChieu suatChieu = SuatChieu.getSuatChieuById(maSuatChieu);
             if (suatChieu == null) {
                 System.out.println("Không tìm thấy suất chiếu với mã: " + maSuatChieu);
                 return false;
@@ -199,7 +199,7 @@ public class SuatChieuController implements GenericController {
                 throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
             }
 
-            return SuatChieu.getSuatChieuByMaSuatChieu(maSuatChieu);
+            return SuatChieu.getSuatChieuById(maSuatChieu);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;

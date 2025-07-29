@@ -127,13 +127,64 @@ public class Phim {
     // Hiển thị thông tin chi tiết của một phim
     public void hienThiThongTin() {
         System.out.println("=== THÔNG TIN PHIM ===");
-        System.out.println("Mã phim: " + this.maPhim);
-        System.out.println("Tên phim: " + this.tenPhim);
-        System.out.println("Thể loại: " + this.theLoai);
-        System.out.println("Thời lượng: " + this.thoiLuong + " phút");
-        System.out.println("Ngôn ngữ: " + this.ngonNgu);
-        System.out.println("Giới hạn tuổi: " + this.gioiHanTuoi + "+");
-        System.out.println("Mô tả: " + this.moTa);
+        System.out.println("Mã phim: " + maPhim);
+        System.out.println("Tên phim: " + tenPhim);
+        System.out.println("Thể loại: " + theLoai);
+        System.out.println("Thời lượng: " + thoiLuong + " phút");
+        System.out.println("Ngôn ngữ: " + ngonNgu);
+        System.out.println("Giới hạn tuổi: " + gioiHanTuoi + "+");
+        System.out.println("Mô tả: " + moTa);
+        System.out.println("======================");
+    }
+
+    public static ArrayList<Phim> timKiemTheoTen(String tenPhim) {
+        ArrayList<Phim> ketQua = new ArrayList<>();
+        for (Phim phim : danhSachPhim) {
+            if (phim.getTenPhim().toLowerCase().contains(tenPhim.toLowerCase())) {
+                ketQua.add(phim);
+            }
+        }
+        return ketQua;
+    }
+
+    public static ArrayList<Phim> timKiemTheoTheLoai(String theLoai) {
+        ArrayList<Phim> ketQua = new ArrayList<>();
+        for (Phim phim : danhSachPhim) {
+            if (phim.getTheLoai().toLowerCase().contains(theLoai.toLowerCase())) {
+                ketQua.add(phim);
+            }
+        }
+        return ketQua;
+    }
+
+    public static void thongKePhim() {
+        System.out.println("=== THỐNG KÊ PHIM ===");
+        System.out.println("Tổng số phim: " + danhSachPhim.size());
+        
+        // Thống kê theo thể loại
+        java.util.Map<String, Integer> theLoaiCount = new java.util.HashMap<>();
+        for (Phim phim : danhSachPhim) {
+            String theLoai = phim.getTheLoai();
+            theLoaiCount.put(theLoai, theLoaiCount.getOrDefault(theLoai, 0) + 1);
+        }
+        
+        System.out.println("Thống kê theo thể loại:");
+        for (java.util.Map.Entry<String, Integer> entry : theLoaiCount.entrySet()) {
+            System.out.println("  " + entry.getKey() + ": " + entry.getValue() + " phim");
+        }
+        
+        // Thống kê theo ngôn ngữ
+        java.util.Map<String, Integer> ngonNguCount = new java.util.HashMap<>();
+        for (Phim phim : danhSachPhim) {
+            String ngonNgu = phim.getNgonNgu();
+            ngonNguCount.put(ngonNgu, ngonNguCount.getOrDefault(ngonNgu, 0) + 1);
+        }
+        
+        System.out.println("Thống kê theo ngôn ngữ:");
+        for (java.util.Map.Entry<String, Integer> entry : ngonNguCount.entrySet()) {
+            System.out.println("  " + entry.getKey() + ": " + entry.getValue() + " phim");
+        }
+        
         System.out.println("=====================");
     }
 

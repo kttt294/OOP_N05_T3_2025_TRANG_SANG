@@ -19,10 +19,10 @@ public class PhongChieuController implements GenericController {
             if (phongChieu.getTenPhong() == null || phongChieu.getTenPhong().trim().isEmpty()) {
                 throw new IllegalArgumentException("Tên phòng không được để trống!");
             }
-            if (phongChieu.getSoHang() <= 0) {
+            if (phongChieu.getSoHangGhe() <= 0) {
                 throw new IllegalArgumentException("Số hàng phải lớn hơn 0!");
             }
-            if (phongChieu.getSoCot() <= 0) {
+            if (phongChieu.getSoCotGhe() <= 0) {
                 throw new IllegalArgumentException("Số cột phải lớn hơn 0!");
             }
 
@@ -50,7 +50,7 @@ public class PhongChieuController implements GenericController {
             }
 
             // Kiểm tra phòng chiếu có tồn tại không
-            PhongChieu phongChieuCu = PhongChieu.getPhongChieuByMaPhong(maPhong);
+            PhongChieu phongChieuCu = PhongChieu.getPhongByMa(maPhong);
             if (phongChieuCu == null) {
                 System.out.println("Không tìm thấy phòng chiếu với mã: " + maPhong);
                 return false;
@@ -77,7 +77,7 @@ public class PhongChieuController implements GenericController {
             }
 
             // Kiểm tra phòng chiếu có tồn tại không
-            PhongChieu phongChieu = PhongChieu.getPhongChieuByMaPhong(maPhong);
+            PhongChieu phongChieu = PhongChieu.getPhongByMa(maPhong);
             if (phongChieu == null) {
                 System.out.println("Không tìm thấy phòng chiếu với mã: " + maPhong);
                 return false;
@@ -133,7 +133,7 @@ public class PhongChieuController implements GenericController {
                 throw new IllegalArgumentException("Mã phòng không được để trống!");
             }
 
-            return PhongChieu.getPhongChieuByMaPhong(maPhong);
+            return PhongChieu.getPhongByMa(maPhong);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;

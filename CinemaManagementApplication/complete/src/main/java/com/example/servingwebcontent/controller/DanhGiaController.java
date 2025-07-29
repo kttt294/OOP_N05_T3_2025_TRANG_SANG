@@ -22,7 +22,7 @@ public class DanhGiaController implements GenericController {
             if (danhGia.getNoiDung() == null || danhGia.getNoiDung().trim().isEmpty()) {
                 throw new IllegalArgumentException("Nội dung đánh giá không được để trống!");
             }
-            if (danhGia.getDiem() < 1 || danhGia.getDiem() > 5) {
+            if (danhGia.getSoSao() < 1 || danhGia.getSoSao() > 5) {
                 throw new IllegalArgumentException("Điểm đánh giá phải từ 1-5!");
             }
 
@@ -50,7 +50,7 @@ public class DanhGiaController implements GenericController {
             }
 
             // Kiểm tra đánh giá có tồn tại không
-            DanhGia danhGiaCu = DanhGia.getDanhGiaByMaDanhGia(maDanhGia);
+            DanhGia danhGiaCu = DanhGia.getDanhGiaByMa(maDanhGia);
             if (danhGiaCu == null) {
                 System.out.println("Không tìm thấy đánh giá với mã: " + maDanhGia);
                 return false;
@@ -77,7 +77,7 @@ public class DanhGiaController implements GenericController {
             }
 
             // Kiểm tra đánh giá có tồn tại không
-            DanhGia danhGia = DanhGia.getDanhGiaByMaDanhGia(maDanhGia);
+            DanhGia danhGia = DanhGia.getDanhGiaByMa(maDanhGia);
             if (danhGia == null) {
                 System.out.println("Không tìm thấy đánh giá với mã: " + maDanhGia);
                 return false;
@@ -133,7 +133,7 @@ public class DanhGiaController implements GenericController {
                 throw new IllegalArgumentException("Mã đánh giá không được để trống!");
             }
 
-            return DanhGia.getDanhGiaByMaDanhGia(maDanhGia);
+            return DanhGia.getDanhGiaByMa(maDanhGia);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;
@@ -151,7 +151,7 @@ public class DanhGiaController implements GenericController {
                 throw new IllegalArgumentException("CCCD không được để trống!");
             }
 
-            return DanhGia.getDanhGiaByKhachHang(CCCD);
+            return DanhGia.getDanhGiaByCCCD(CCCD);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return new ArrayList<>();
@@ -164,7 +164,7 @@ public class DanhGiaController implements GenericController {
     // Tính điểm trung bình
     public static double tinhDiemTrungBinh() {
         try {
-            return DanhGia.tinhDiemTrungBinh();
+            return DanhGia.tinhDiemTrungBinhPhim("ALL");
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
             return 0.0;

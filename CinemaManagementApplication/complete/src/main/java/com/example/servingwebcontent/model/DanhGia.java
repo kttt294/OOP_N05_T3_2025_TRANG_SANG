@@ -7,7 +7,7 @@ public class DanhGia {
     public enum TrangThaiXuLy { MOI, DANG_XU_LY, DA_XU_LY }
 
     private String maDanhGia;
-    private String maKhachHang;
+    private String CCCD;
     private String maPhim; // null nếu là feedback
     private int soSao; // từ 0 đến 5, chỉ dùng cho đánh giá phim
     private String noiDung; // bình luận cho đánh giá phim hoặc nội dung feedback
@@ -21,42 +21,39 @@ public class DanhGia {
     public DanhGia() {}
 
     // Constructor cho đánh giá phim
-    public DanhGia(String maDanhGia, String maKhachHang, String maPhim, int soSao, String noiDung, LocalDateTime thoiGian) {
+    public DanhGia(String maDanhGia, String CCCD, String maPhim, int soSao, String noiDung, LocalDateTime thoiGian) {
         setMaDanhGia(maDanhGia);
-        setMaKhachHang(maKhachHang);
+        setCCCD(CCCD);
         setMaPhim(maPhim);
         setSoSao(soSao);
         setNoiDung(noiDung);
         setThoiGian(thoiGian);
         this.loaiDanhGia = LoaiDanhGia.DANH_GIA_PHIM;
+        this.trangThaiXuLy = TrangThaiXuLy.DA_XU_LY;
     }
 
     // Constructor cho feedback
-    public DanhGia(String maDanhGia, String maKhachHang, String noiDung, LocalDateTime thoiGian, 
-                   TrangThaiXuLy trangThaiXuLy, String loaiFeedback) {
+    public DanhGia(String maDanhGia, String CCCD, String noiDung, LocalDateTime thoiGian,
+                   LoaiDanhGia loaiDanhGia, TrangThaiXuLy trangThaiXuLy) {
         setMaDanhGia(maDanhGia);
-        setMaKhachHang(maKhachHang);
+        setCCCD(CCCD);
         setNoiDung(noiDung);
         setThoiGian(thoiGian);
-        setTrangThaiXuLy(trangThaiXuLy);
-        setLoaiFeedback(loaiFeedback);
-        this.loaiDanhGia = LoaiDanhGia.FEEDBACK;
-        this.maPhim = null;
-        this.soSao = 0;
+        this.loaiDanhGia = loaiDanhGia;
+        this.trangThaiXuLy = trangThaiXuLy;
     }
 
     // Constructor đầy đủ
-    public DanhGia(String maDanhGia, String maKhachHang, String maPhim, int soSao, String noiDung, 
-                   LocalDateTime thoiGian, LoaiDanhGia loaiDanhGia, TrangThaiXuLy trangThaiXuLy, String loaiFeedback) {
+    public DanhGia(String maDanhGia, String CCCD, String maPhim, int soSao, String noiDung,
+                   LocalDateTime thoiGian, LoaiDanhGia loaiDanhGia, TrangThaiXuLy trangThaiXuLy) {
         setMaDanhGia(maDanhGia);
-        setMaKhachHang(maKhachHang);
+        setCCCD(CCCD);
         setMaPhim(maPhim);
         setSoSao(soSao);
         setNoiDung(noiDung);
         setThoiGian(thoiGian);
-        setLoaiDanhGia(loaiDanhGia);
-        setTrangThaiXuLy(trangThaiXuLy);
-        setLoaiFeedback(loaiFeedback);
+        this.loaiDanhGia = loaiDanhGia;
+        this.trangThaiXuLy = trangThaiXuLy;
     }
 
     public String getMaDanhGia() { return maDanhGia; }
@@ -65,11 +62,11 @@ public class DanhGia {
             throw new IllegalArgumentException("Mã đánh giá không được để trống!");
         this.maDanhGia = maDanhGia.trim();
     }
-    public String getMaKhachHang() { return maKhachHang; }
-    public void setMaKhachHang(String maKhachHang) {
-        if (maKhachHang == null || maKhachHang.trim().isEmpty())
-            throw new IllegalArgumentException("Mã khách hàng không được để trống!");
-        this.maKhachHang = maKhachHang.trim();
+    public String getCCCD() { return CCCD; }
+    public void setCCCD(String CCCD) {
+        if (CCCD == null || CCCD.trim().isEmpty())
+            throw new IllegalArgumentException("CCCD không được để trống!");
+        this.CCCD = CCCD.trim();
     }
     public String getMaPhim() { return maPhim; }
     public void setMaPhim(String maPhim) {
@@ -115,7 +112,7 @@ public class DanhGia {
     // CRUD
     public static void Create(DanhGia dg) {
         if (dg == null || dg.getMaDanhGia() == null || dg.getMaDanhGia().trim().isEmpty() ||
-            dg.getMaKhachHang() == null || dg.getMaKhachHang().trim().isEmpty()) {
+            dg.getCCCD() == null || dg.getCCCD().trim().isEmpty()) {
             System.out.println("Lỗi: Thông tin đánh giá không được để trống.");
             return;
         }
@@ -231,24 +228,74 @@ public class DanhGia {
     // Phương thức tính điểm trung bình của phim
     public static double tinhDiemTrungBinhPhim(String maPhim) {
         ArrayList<DanhGia> danhGiaPhim = getDanhGiaByMaPhim(maPhim);
-        if (danhGiaPhim.isEmpty()) return 0.0;
+        if (danhGiaPhim.isEmpty()) {
+            return 0.0;
+        }
         
-        int tongSao = 0;
+        double tongDiem = 0.0;
         int soDanhGia = 0;
+        
         for (DanhGia dg : danhGiaPhim) {
-            if (dg.getSoSao() > 0) {
-                tongSao += dg.getSoSao();
+            if (dg.isDanhGiaPhim()) {
+                tongDiem += dg.getSoSao();
                 soDanhGia++;
             }
         }
-        return soDanhGia > 0 ? (double) tongSao / soDanhGia : 0.0;
+        
+        return soDanhGia > 0 ? tongDiem / soDanhGia : 0.0;
+    }
+
+    public static ArrayList<DanhGia> getDanhGiaByCCCD(String CCCD) {
+        ArrayList<DanhGia> ketQua = new ArrayList<>();
+        for (DanhGia dg : danhSachDanhGia) {
+            if (dg.getCCCD().equalsIgnoreCase(CCCD)) {
+                ketQua.add(dg);
+            }
+        }
+        return ketQua;
+    }
+
+    public static void thongKeDanhGia() {
+        System.out.println("=== THỐNG KÊ ĐÁNH GIÁ ===");
+        System.out.println("Tổng số đánh giá: " + danhSachDanhGia.size());
+        
+        int soDanhGiaPhim = 0;
+        int soFeedback = 0;
+        
+        for (DanhGia dg : danhSachDanhGia) {
+            if (dg.isDanhGiaPhim()) {
+                soDanhGiaPhim++;
+            } else if (dg.isFeedback()) {
+                soFeedback++;
+            }
+        }
+        
+        System.out.println("Số đánh giá phim: " + soDanhGiaPhim);
+        System.out.println("Số feedback: " + soFeedback);
+        
+        // Thống kê theo trạng thái xử lý
+        int moi = 0, dangXuLy = 0, daXuLy = 0;
+        for (DanhGia dg : danhSachDanhGia) {
+            if (dg.isFeedback()) {
+                switch (dg.getTrangThaiXuLy()) {
+                    case MOI: moi++; break;
+                    case DANG_XU_LY: dangXuLy++; break;
+                    case DA_XU_LY: daXuLy++; break;
+                }
+            }
+        }
+        
+        System.out.println("Feedback mới: " + moi);
+        System.out.println("Feedback đang xử lý: " + dangXuLy);
+        System.out.println("Feedback đã xử lý: " + daXuLy);
+        System.out.println("=========================");
     }
 
     public void hienThiThongTin() {
         if (isDanhGiaPhim()) {
             System.out.println("=== THÔNG TIN ĐÁNH GIÁ PHIM ===");
             System.out.println("Mã đánh giá: " + maDanhGia);
-            System.out.println("Mã khách hàng: " + maKhachHang);
+            System.out.println("Mã khách hàng: " + CCCD);
             System.out.println("Mã phim: " + maPhim);
             System.out.println("Số sao: " + soSao + "/5");
             System.out.println("Bình luận: " + noiDung);
@@ -256,7 +303,7 @@ public class DanhGia {
         } else {
             System.out.println("=== THÔNG TIN FEEDBACK ===");
             System.out.println("Mã feedback: " + maDanhGia);
-            System.out.println("Mã khách hàng: " + maKhachHang);
+            System.out.println("Mã khách hàng: " + CCCD);
             System.out.println("Nội dung: " + noiDung);
             System.out.println("Thời gian: " + thoiGian);
             System.out.println("Trạng thái xử lý: " + trangThaiXuLy);

@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Ghe {
     public enum LoaiGhe { THUONG, VIP, COUPLE }
     public enum TrangThaiGhe { TRONG, DA_DAT, DANG_GIU, KHOA }
-    public enum TrangThaiGiu { DANG_GIU, DA_HUY, DA_DAT_THANH_CONG }
+    public enum TrangThaiGiu { DANG_GIU, DA_HUY, DA_DAT_THANH_CONG, KHONG_GIU }
     private String maGhe;
     private int hang;
     private int cot;
@@ -18,7 +18,7 @@ public class Ghe {
     private String loaiGheHienTai;
     private String moTa;
     private String maHold;
-    private String maKhachHang;
+    private String CCCD;
     private LocalDateTime thoiGianBatDauHold;
     private LocalDateTime thoiGianKetThucHold;
     private TrangThaiGiu trangThaiGiu;
@@ -52,11 +52,11 @@ public class Ghe {
     // Constructor đầy đủ cho giữ ghế
     public Ghe(String maGhe, int hang, int cot, LoaiGhe loaiGheMacDinh, String maPhong,
                String maSuatChieu, double giaGhe, TrangThaiGhe trangThai, String loaiGheHienTai, String moTa,
-               String maHold, String maKhachHang, LocalDateTime thoiGianBatDauHold, 
+               String maHold, String CCCD, LocalDateTime thoiGianBatDauHold, 
                LocalDateTime thoiGianKetThucHold, TrangThaiGiu trangThaiGiu) {
         this(maGhe, hang, cot, loaiGheMacDinh, maPhong, maSuatChieu, giaGhe, trangThai, loaiGheHienTai, moTa);
         setMaHold(maHold);
-        setMaKhachHang(maKhachHang);
+        setCCCD(CCCD);
         setThoiGianBatDauHold(thoiGianBatDauHold);
         setThoiGianKetThucHold(thoiGianKetThucHold);
         setTrangThaiGiu(trangThaiGiu);
@@ -114,8 +114,8 @@ public class Ghe {
     // Getters và Setters cho GiuGhe
     public String getMaHold() { return maHold; }
     public void setMaHold(String maHold) { this.maHold = maHold; }
-    public String getMaKhachHang() { return maKhachHang; }
-    public void setMaKhachHang(String maKhachHang) { this.maKhachHang = maKhachHang; }
+    public String getCCCD() { return CCCD; }
+    public void setCCCD(String CCCD) { this.CCCD = CCCD; }
     public LocalDateTime getThoiGianBatDauHold() { return thoiGianBatDauHold; }
     public void setThoiGianBatDauHold(LocalDateTime thoiGianBatDauHold) { this.thoiGianBatDauHold = thoiGianBatDauHold; }
     public LocalDateTime getThoiGianKetThucHold() { return thoiGianKetThucHold; }
@@ -137,17 +137,17 @@ public class Ghe {
             this.trangThaiGiu = TrangThaiGiu.DA_DAT_THANH_CONG;
         }
     }
-    public void giuGhe(String maKhachHang, LocalDateTime thoiGianKetThuc) {
-        this.trangThai = TrangThaiGhe.DANG_GIU;
-        this.maKhachHang = maKhachHang;
-        this.thoiGianBatDauHold = LocalDateTime.now();
-        this.thoiGianKetThucHold = thoiGianKetThuc;
-        this.trangThaiGiu = TrangThaiGiu.DANG_GIU;
+    public void giuGhe(String CCCD, LocalDateTime thoiGianKetThuc) {
+        if (this.trangThai == TrangThaiGhe.TRONG) {
+            this.trangThaiGiu = TrangThaiGiu.DANG_GIU;
+            this.CCCD = CCCD;
+            this.thoiGianBatDauHold = LocalDateTime.now();
+            this.thoiGianKetThucHold = thoiGianKetThuc;
+        }
     }
     public void huyGiuGhe() {
-        this.trangThai = TrangThaiGhe.TRONG;
-        this.trangThaiGiu = TrangThaiGiu.DA_HUY;
-        this.maKhachHang = null;
+        this.trangThaiGiu = TrangThaiGiu.KHONG_GIU;
+        this.CCCD = null;
         this.thoiGianBatDauHold = null;
         this.thoiGianKetThucHold = null;
     }
@@ -241,15 +241,59 @@ public class Ghe {
     }
 
     // Phương thức tìm kiếm theo khách hàng đang giữ
-    public static ArrayList<Ghe> getGheDangGiuByKhachHang(String maKhachHang) {
-        ArrayList<Ghe> result = new ArrayList<>();
+    public static ArrayList<Ghe> getGheDangGiuByKhachHang(String CCCD) {
+        ArrayList<Ghe> ketQua = new ArrayList<>();
         for (Ghe ghe : danhSachGhe) {
-            if (ghe.isDangGiuGhe() && ghe.getMaKhachHang() != null && 
-                ghe.getMaKhachHang().equals(maKhachHang)) {
-                result.add(ghe);
+            if (ghe.isDangGiuGhe() && ghe.getCCCD() != null &&
+                ghe.getCCCD().equals(CCCD)) {
+                ketQua.add(ghe);
             }
         }
-        return result;
+        return ketQua;
+    }
+
+    public static ArrayList<Ghe> getGheByMaPhong(String maPhong) {
+        ArrayList<Ghe> ketQua = new ArrayList<>();
+        for (Ghe ghe : danhSachGhe) {
+            if (ghe.getMaPhong().equalsIgnoreCase(maPhong)) {
+                ketQua.add(ghe);
+            }
+        }
+        return ketQua;
+    }
+
+    public static void thongKeGhe() {
+        System.out.println("=== THỐNG KÊ GHẾ ===");
+        System.out.println("Tổng số ghế: " + danhSachGhe.size());
+        
+        int trong = 0, daDat = 0, dangGiu = 0, khoa = 0;
+        int thuong = 0, vip = 0, couple = 0;
+        
+        for (Ghe ghe : danhSachGhe) {
+            // Thống kê theo trạng thái
+            switch (ghe.getTrangThai()) {
+                case TRONG: trong++; break;
+                case DA_DAT: daDat++; break;
+                case DANG_GIU: dangGiu++; break;
+                case KHOA: khoa++; break;
+            }
+            
+            // Thống kê theo loại ghế
+            switch (ghe.getLoaiGheMacDinh()) {
+                case THUONG: thuong++; break;
+                case VIP: vip++; break;
+                case COUPLE: couple++; break;
+            }
+        }
+        
+        System.out.println("Ghế trống: " + trong);
+        System.out.println("Ghế đã đặt: " + daDat);
+        System.out.println("Ghế đang giữ: " + dangGiu);
+        System.out.println("Ghế khóa: " + khoa);
+        System.out.println("Ghế thường: " + thuong);
+        System.out.println("Ghế VIP: " + vip);
+        System.out.println("Ghế couple: " + couple);
+        System.out.println("===================");
     }
 
     @Override
@@ -284,7 +328,7 @@ public class Ghe {
         
         if (maHold != null && !maHold.isEmpty()) {
             System.out.println("Mã giữ ghế: " + maHold);
-            System.out.println("Mã khách hàng: " + maKhachHang);
+            System.out.println("Mã khách hàng: " + CCCD);
             System.out.println("Thời gian bắt đầu giữ: " + thoiGianBatDauHold);
             System.out.println("Thời gian kết thúc giữ: " + thoiGianKetThucHold);
             System.out.println("Trạng thái giữ: " + trangThaiGiu);

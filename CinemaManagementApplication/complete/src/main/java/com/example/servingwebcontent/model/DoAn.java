@@ -102,10 +102,58 @@ public class DoAn {
     // Hiển thị thông tin chi tiết của một đồ ăn
     public void hienThiThongTin() {
         System.out.println("=== THÔNG TIN ĐỒ ĂN ===");
-        System.out.println("Mã đồ ăn: " + this.maDoAn);
-        System.out.println("Tên đồ ăn: " + this.tenDoAn);
-        System.out.println("Giá: " + this.gia + " VNĐ");
-        System.out.println("Số lượng còn: " + this.soLuongCon);
-        System.out.println("======================");
+        System.out.println("Mã đồ ăn: " + maDoAn);
+        System.out.println("Tên đồ ăn: " + tenDoAn);
+        System.out.println("Giá: " + gia + " VNĐ");
+        System.out.println("Số lượng còn lại: " + soLuongCon);
+        System.out.println("=======================");
+    }
+
+    public static ArrayList<DoAn> timKiemTheoTen(String tenDoAn) {
+        ArrayList<DoAn> ketQua = new ArrayList<>();
+        for (DoAn da : danhSachDoAn) {
+            if (da.getTenDoAn().toLowerCase().contains(tenDoAn.toLowerCase())) {
+                ketQua.add(da);
+            }
+        }
+        return ketQua;
+    }
+
+    public static ArrayList<DoAn> timKiemTheoLoai(String loaiDoAn) {
+        // Giả sử loại đồ ăn được lưu trong tên hoặc có thể thêm thuộc tính loai
+        ArrayList<DoAn> ketQua = new ArrayList<>();
+        for (DoAn da : danhSachDoAn) {
+            if (da.getTenDoAn().toLowerCase().contains(loaiDoAn.toLowerCase())) {
+                ketQua.add(da);
+            }
+        }
+        return ketQua;
+    }
+
+    public static void thongKeDoAn() {
+        System.out.println("=== THỐNG KÊ ĐỒ ĂN ===");
+        System.out.println("Tổng số đồ ăn: " + danhSachDoAn.size());
+        
+        int tongGia = 0;
+        int tongSoLuong = 0;
+        
+        for (DoAn da : danhSachDoAn) {
+            tongGia += da.getGia();
+            tongSoLuong += da.getSoLuong();
+        }
+        
+        System.out.println("Tổng giá trị: " + tongGia + " VNĐ");
+        System.out.println("Tổng số lượng: " + tongSoLuong);
+        
+        // Thống kê đồ ăn hết hàng
+        int hetHang = 0;
+        for (DoAn da : danhSachDoAn) {
+            if (da.getSoLuong() == 0) {
+                hetHang++;
+            }
+        }
+        
+        System.out.println("Số đồ ăn hết hàng: " + hetHang);
+        System.out.println("=======================");
     }
 }

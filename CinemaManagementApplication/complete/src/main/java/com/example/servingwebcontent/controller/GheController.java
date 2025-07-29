@@ -151,7 +151,7 @@ public class GheController implements GenericController {
                 throw new IllegalArgumentException("Mã phòng không được để trống!");
             }
 
-            return Ghe.getGheByPhong(maPhong);
+            return Ghe.getGheByMaPhong(maPhong);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return new ArrayList<>();

@@ -235,14 +235,52 @@ public class Ve {
         int tongDoanhThu = 0;
         for (Ve ve : danhSachVe) {
             if (ve.isDaThanhToan() && ve.getThoiGianThanhToan() != null) {
-                LocalDateTime thoiGian = ve.getThoiGianThanhToan();
-                if ((tuNgay == null || thoiGian.isAfter(tuNgay)) && 
-                    (denNgay == null || thoiGian.isBefore(denNgay))) {
+                LocalDateTime thoiGianThanhToan = ve.getThoiGianThanhToan();
+                if (thoiGianThanhToan.isAfter(tuNgay) && thoiGianThanhToan.isBefore(denNgay)) {
                     tongDoanhThu += ve.getTongTien();
                 }
             }
         }
         return tongDoanhThu;
+    }
+
+    public static void thongKeVe() {
+        System.out.println("=== THỐNG KÊ VÉ ===");
+        System.out.println("Tổng số vé: " + danhSachVe.size());
+        
+        int chuaThanhToan = 0, daThanhToan = 0, daHuy = 0;
+        int tongDoanhThu = 0;
+        
+        for (Ve ve : danhSachVe) {
+            switch (ve.getTrangThai()) {
+                case CHUA_THANH_TOAN: chuaThanhToan++; break;
+                case DA_THANH_TOAN: 
+                    daThanhToan++; 
+                    tongDoanhThu += ve.getTongTien();
+                    break;
+                case DA_HUY: daHuy++; break;
+            }
+        }
+        
+        System.out.println("Vé chưa thanh toán: " + chuaThanhToan);
+        System.out.println("Vé đã thanh toán: " + daThanhToan);
+        System.out.println("Vé đã hủy: " + daHuy);
+        System.out.println("Tổng doanh thu: " + tongDoanhThu + " VNĐ");
+        
+        // Thống kê theo phương thức thanh toán
+        int tienMat = 0, chuyenKhoan = 0;
+        for (Ve ve : danhSachVe) {
+            if (ve.isDaThanhToan() && ve.getPhuongThucThanhToan() != null) {
+                switch (ve.getPhuongThucThanhToan()) {
+                    case TIEN_MAT: tienMat++; break;
+                    case CHUYEN_KHOAN: chuyenKhoan++; break;
+                }
+            }
+        }
+        
+        System.out.println("Thanh toán tiền mặt: " + tienMat);
+        System.out.println("Thanh toán chuyển khoản: " + chuyenKhoan);
+        System.out.println("=====================");
     }
 
     public void hienThiThongTin() {

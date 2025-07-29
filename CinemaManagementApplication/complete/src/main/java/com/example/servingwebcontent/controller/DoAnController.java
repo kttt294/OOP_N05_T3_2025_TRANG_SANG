@@ -50,13 +50,14 @@ public class DoAnController implements GenericController {
             }
 
             // Kiểm tra đồ ăn có tồn tại không
-            DoAn doAnCu = DoAn.getDoAnByMaDoAn(maDoAn);
+            DoAn doAnCu = DoAn.getDoAnByMa(maDoAn);
             if (doAnCu == null) {
                 System.out.println("Không tìm thấy đồ ăn với mã: " + maDoAn);
                 return false;
             }
 
-            DoAn.Update(maDoAn, doAnMoi);
+            doAnMoi.setMaDoAn(maDoAn);
+            DoAn.Update(doAnMoi);
             System.out.println("Cập nhật đồ ăn thành công!");
             return true;
         } catch (IllegalArgumentException e) {
@@ -77,7 +78,7 @@ public class DoAnController implements GenericController {
             }
 
             // Kiểm tra đồ ăn có tồn tại không
-            DoAn doAn = DoAn.getDoAnByMaDoAn(maDoAn);
+            DoAn doAn = DoAn.getDoAnByMa(maDoAn);
             if (doAn == null) {
                 System.out.println("Không tìm thấy đồ ăn với mã: " + maDoAn);
                 return false;
@@ -133,7 +134,7 @@ public class DoAnController implements GenericController {
                 throw new IllegalArgumentException("Mã đồ ăn không được để trống!");
             }
 
-            return DoAn.getDoAnByMaDoAn(maDoAn);
+            return DoAn.getDoAnByMa(maDoAn);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;
@@ -190,14 +191,14 @@ public class DoAnController implements GenericController {
                 throw new IllegalArgumentException("Số lượng không được âm!");
             }
 
-            DoAn doAn = DoAn.getDoAnByMaDoAn(maDoAn);
+            DoAn doAn = DoAn.getDoAnByMa(maDoAn);
             if (doAn == null) {
                 System.out.println("Không tìm thấy đồ ăn với mã: " + maDoAn);
                 return false;
             }
 
             doAn.setSoLuong(soLuongMoi);
-            DoAn.Update(maDoAn, doAn);
+            DoAn.Update(doAn);
             System.out.println("Cập nhật số lượng đồ ăn thành công!");
             return true;
         } catch (IllegalArgumentException e) {

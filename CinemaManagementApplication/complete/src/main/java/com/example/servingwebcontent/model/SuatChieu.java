@@ -166,10 +166,32 @@ public class SuatChieu {
     }
 
     public static SuatChieu getSuatChieuById(String maSuatChieu) {
-        return danhSachSuatChieu.stream()
-                .filter(sc -> sc.getMaSuatChieu().equalsIgnoreCase(maSuatChieu))
-                .findFirst()
-                .orElse(null);
+        for (SuatChieu sc : danhSachSuatChieu) {
+            if (sc.getMaSuatChieu().equalsIgnoreCase(maSuatChieu)) {
+                return sc;
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<SuatChieu> getSuatChieuByPhim(String maPhim) {
+        ArrayList<SuatChieu> ketQua = new ArrayList<>();
+        for (SuatChieu sc : danhSachSuatChieu) {
+            if (sc.getMaPhim().equalsIgnoreCase(maPhim)) {
+                ketQua.add(sc);
+            }
+        }
+        return ketQua;
+    }
+
+    public static ArrayList<SuatChieu> getSuatChieuByPhong(String maPhong) {
+        ArrayList<SuatChieu> ketQua = new ArrayList<>();
+        for (SuatChieu sc : danhSachSuatChieu) {
+            if (sc.getMaPhong().equalsIgnoreCase(maPhong)) {
+                ketQua.add(sc);
+            }
+        }
+        return ketQua;
     }
 
     private static int getSuatChieuIndexById(String maSuatChieu) {

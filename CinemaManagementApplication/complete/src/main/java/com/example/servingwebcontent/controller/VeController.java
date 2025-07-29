@@ -3,6 +3,7 @@ package com.example.servingwebcontent.controller;
 import java.util.ArrayList;
 import com.example.servingwebcontent.model.Ve;
 import com.example.servingwebcontent.controller.GenericController;
+import java.time.LocalDateTime;
 
 public class VeController implements GenericController {
     
@@ -53,7 +54,7 @@ public class VeController implements GenericController {
             }
 
             // Kiểm tra vé có tồn tại không
-            Ve veCu = Ve.getVeByMaVe(maVe);
+            Ve veCu = Ve.getVeById(maVe);
             if (veCu == null) {
                 System.out.println("Không tìm thấy vé với mã: " + maVe);
                 return false;
@@ -80,7 +81,7 @@ public class VeController implements GenericController {
             }
 
             // Kiểm tra vé có tồn tại không
-            Ve ve = Ve.getVeByMaVe(maVe);
+            Ve ve = Ve.getVeById(maVe);
             if (ve == null) {
                 System.out.println("Không tìm thấy vé với mã: " + maVe);
                 return false;
@@ -136,7 +137,7 @@ public class VeController implements GenericController {
                 throw new IllegalArgumentException("Mã vé không được để trống!");
             }
 
-            return Ve.getVeByMaVe(maVe);
+            return Ve.getVeById(maVe);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;
@@ -191,14 +192,14 @@ public class VeController implements GenericController {
             }
 
             // Kiểm tra vé có tồn tại không
-            Ve ve = Ve.getVeByMaVe(maVe);
+            Ve ve = Ve.getVeById(maVe);
             if (ve == null) {
                 System.out.println("Không tìm thấy vé với mã: " + maVe);
                 return false;
             }
 
             // Kiểm tra trạng thái vé
-            if (ve.getTrangThai() != Ve.TrangThaiVe.DA_DAT) {
+            if (ve.getTrangThai() != Ve.TrangThaiVe.CHUA_THANH_TOAN) {
                 System.out.println("Vé không thể hủy (đã hủy hoặc đã sử dụng)!");
                 return false;
             }
@@ -221,7 +222,7 @@ public class VeController implements GenericController {
     // Tính tổng doanh thu
     public static double tinhTongDoanhThu() {
         try {
-            return Ve.tinhTongDoanhThu();
+            return Ve.tinhDoanhThu(LocalDateTime.now().minusDays(30), LocalDateTime.now());
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
             return 0.0;

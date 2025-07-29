@@ -22,8 +22,8 @@ public class PhimController implements GenericController {
             if (phim.getThoiLuong() <= 0) {
                 throw new IllegalArgumentException("Thời lượng phim phải lớn hơn 0!");
             }
-            if (phim.getNamSanXuat() < 1900 || phim.getNamSanXuat() > 2030) {
-                throw new IllegalArgumentException("Năm sản xuất không hợp lệ!");
+            if (phim.getGioiHanTuoi() < 0 || phim.getGioiHanTuoi() > 25) {
+                throw new IllegalArgumentException("Giới hạn tuổi không hợp lệ!");
             }
 
             Phim.Create(phim);
@@ -50,7 +50,7 @@ public class PhimController implements GenericController {
             }
 
             // Kiểm tra phim có tồn tại không
-            Phim phimCu = Phim.getPhimByMaPhim(maPhim);
+            Phim phimCu = Phim.getPhimById(maPhim);
             if (phimCu == null) {
                 System.out.println("Không tìm thấy phim với mã: " + maPhim);
                 return false;
@@ -77,7 +77,7 @@ public class PhimController implements GenericController {
             }
 
             // Kiểm tra phim có tồn tại không
-            Phim phim = Phim.getPhimByMaPhim(maPhim);
+            Phim phim = Phim.getPhimById(maPhim);
             if (phim == null) {
                 System.out.println("Không tìm thấy phim với mã: " + maPhim);
                 return false;
@@ -133,7 +133,7 @@ public class PhimController implements GenericController {
                 throw new IllegalArgumentException("Mã phim không được để trống!");
             }
 
-            return Phim.getPhimByMaPhim(maPhim);
+            return Phim.getPhimById(maPhim);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;

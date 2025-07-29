@@ -39,7 +39,7 @@ public class DatVe {
                 return false;
             }
             // Tạo vé mới
-            Ve veDat = new Ve(maVe, CCCD, maSuatChieu, maGhe, giaVe, true);
+            Ve veDat = new Ve(maVe, CCCD, maSuatChieu, maGhe, giaVe);
             Ve.Create(veDat);
             // Cập nhật trạng thái ghế thành "Khoa" (đã đặt)
             ghe.setTrangThai(Ghe.TrangThaiGhe.KHOA);
