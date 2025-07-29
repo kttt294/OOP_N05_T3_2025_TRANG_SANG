@@ -2,7 +2,7 @@ package com.example.servingwebcontent.controller;
 
 import com.example.servingwebcontent.model.KhachHang;
 import com.example.servingwebcontent.model.SuatChieu;
-import com.example.servingwebcontent.model.GheSuatChieu;
+import com.example.servingwebcontent.model.Ghe;
 import com.example.servingwebcontent.model.Ve;
 
 import java.util.ArrayList;
@@ -27,27 +27,23 @@ public class DatVe {
             String CCCD = kh.getCCCD();
             String maSuatChieu = suatChieu.getMaSuatChieu();
 
-            // Lấy ghế suất chiếu tương ứng
-            GheSuatChieu gsc = GheSuatChieu.getByMaGheAndMaSuatChieu(maGhe, maSuatChieu);
-            if (gsc == null) {
-                System.out.println("Không tìm thấy ghế suất chiếu!");
+            // Lấy ghế tương ứng
+            Ghe ghe = Ghe.getGheByMaGhe(maGhe);
+            if (ghe == null) {
+                System.out.println("Không tìm thấy ghế!");
                 return false;
             }
-            
             // Kiểm tra trạng thái ghế
-            if (!"BinhThuong".equalsIgnoreCase(gsc.getTrangThai())) {
+            if (!"BinhThuong".equalsIgnoreCase(ghe.getTrangThai().toString())) {
                 System.out.println("Ghế đã được đặt hoặc không khả dụng!");
                 return false;
             }
-            
             // Tạo vé mới
             Ve veDat = new Ve(maVe, CCCD, maSuatChieu, maGhe, giaVe, true);
             Ve.Create(veDat);
-            
             // Cập nhật trạng thái ghế thành "Khoa" (đã đặt)
-            gsc.setTrangThai("Khoa");
-            GheSuatChieu.Update(maGhe, maSuatChieu, gsc);
-            
+            ghe.setTrangThai(Ghe.TrangThaiGhe.KHOA);
+            Ghe.Update(maGhe, ghe);
             System.out.println("Đặt vé thành công!");
             return true;
             
