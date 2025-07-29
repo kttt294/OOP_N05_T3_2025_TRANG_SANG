@@ -1,8 +1,8 @@
 package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
-import com.example.servingwebcontent.controller.GenericController;
 import com.example.servingwebcontent.model.DanhGia;
+import com.example.servingwebcontent.controller.GenericController;
 
 public class DanhGiaController implements GenericController {
     

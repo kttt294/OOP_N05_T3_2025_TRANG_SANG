@@ -1,5 +1,8 @@
+package com.example.servingwebcontent.controller;
+
 import java.util.ArrayList;
-import controller.GenericController;
+import com.example.servingwebcontent.model.Phim;
+import com.example.servingwebcontent.controller.GenericController;
 
 public class PhimController implements GenericController {
     

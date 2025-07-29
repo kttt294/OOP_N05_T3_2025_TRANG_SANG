@@ -1,9 +1,12 @@
+package com.example.servingwebcontent.controller;
+
 import java.util.List;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import controller.GenericController;
+import com.example.servingwebcontent.model.SuatChieu;
+import com.example.servingwebcontent.controller.GenericController;
 
 public class SuatChieuController implements GenericController {
     

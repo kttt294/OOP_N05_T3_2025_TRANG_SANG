@@ -1,5 +1,8 @@
+package com.example.servingwebcontent.controller;
+
 import java.util.ArrayList;
-import controller.GenericController;
+import com.example.servingwebcontent.model.DoAn;
+import com.example.servingwebcontent.controller.GenericController;
 
 public class DoAnController implements GenericController {
     
