@@ -11,15 +11,11 @@ public class Ghe {
     private int cot;
     private LoaiGhe loaiGheMacDinh;
     private String maPhong;
-    
-    // Thuộc tính cho GheSuatChieu
     private String maSuatChieu;
     private double giaGhe;
     private TrangThaiGhe trangThai;
     private String loaiGheHienTai;
     private String moTa;
-    
-    // Thuộc tính cho GiuGhe
     private String maHold;
     private String maKhachHang;
     private LocalDateTime thoiGianBatDauHold;

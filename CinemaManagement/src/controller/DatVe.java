@@ -16,37 +16,37 @@ public class DatVe {
     }
 
     public boolean datVe() {
-        String CCCD = kh.getCCCD();
-        String maSuatChieu = suatChieu.getMaSuatChieu();
+        try {
+            String CCCD = kh.getCCCD();
+            String maSuatChieu = suatChieu.getMaSuatChieu();
 
-        // Lấy ghế tương ứng
-        Ghe ghe = Ghe.getGheByMaGhe(maGhe);
-        if (ghe == null) {
-            System.out.println("Không tìm thấy ghế!");
+            // Lấy ghế suất chiếu tương ứng
+            GheSuatChieu gsc = GheSuatChieu.getByMaGheAndMaSuatChieu(maGhe, maSuatChieu);
+            if (gsc == null) {
+                System.out.println("Không tìm thấy ghế suất chiếu!");
+                return false;
+            }
+            
+            // Kiểm tra trạng thái ghế
+            if (!"BinhThuong".equalsIgnoreCase(gsc.getTrangThai())) {
+                System.out.println("Ghế đã được đặt hoặc không khả dụng!");
+                return false;
+            }
+            
+            // Tạo vé mới
+            Ve veDat = new Ve(maVe, CCCD, maSuatChieu, maGhe, giaVe, true);
+            Ve.Create(veDat);
+            
+            // Cập nhật trạng thái ghế thành "Khoa" (đã đặt)
+            gsc.setTrangThai("Khoa");
+            GheSuatChieu.Update(maGhe, maSuatChieu, gsc);
+            
+            System.out.println("Đặt vé thành công!");
+            return true;
+            
+        } catch (Exception e) {
+            System.out.println("Lỗi khi đặt vé: " + e.getMessage());
             return false;
         }
-        
-        // Kiểm tra ghế có thuộc suất chiếu này không
-        if (!maSuatChieu.equals(ghe.getMaSuatChieu())) {
-            System.out.println("Ghế không thuộc suất chiếu này!");
-            return false;
-        }
-        
-        // Kiểm tra trạng thái ghế
-        if (ghe.getTrangThai() != Ghe.TrangThaiGhe.TRONG) {
-            System.out.println("Ghế đã được đặt hoặc không khả dụng!");
-            return false;
-        }
-        
-        // Tạo vé mới
-        Ve veDat = new Ve(maVe, CCCD, maSuatChieu, maGhe, giaVe);
-        Ve.Create(veDat);
-        
-        // Cập nhật trạng thái ghế thành đã đặt
-        ghe.setTrangThai(Ghe.TrangThaiGhe.DA_DAT);
-        Ghe.Update(maGhe, ghe);
-        
-        System.out.println("Đặt vé thành công!");
-        return true;
     }
 }
