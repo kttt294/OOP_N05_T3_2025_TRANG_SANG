@@ -1,15 +1,17 @@
 package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
-import com.example.servingwebcontent.model.Ve;
 import java.time.LocalDateTime;
+import java.util.Scanner;
+
+import com.example.servingwebcontent.model.Ve;
+import com.example.servingwebcontent.util.DateTimeUtils;
 
 public class VeController {
-    
+
     // Tạo vé mới
     public static boolean taoVe(Ve ve) {
         try {
-            // Kiểm tra dữ liệu đầu vào
             if (ve == null) {
                 throw new IllegalArgumentException("Vé không được null!");
             }
@@ -44,7 +46,6 @@ public class VeController {
     // Cập nhật vé
     public static boolean capNhatVe(String maVe, Ve veMoi) {
         try {
-            // Kiểm tra dữ liệu đầu vào
             if (maVe == null || maVe.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã vé không được để trống!");
             }
@@ -52,7 +53,6 @@ public class VeController {
                 throw new IllegalArgumentException("Thông tin vé mới không được null!");
             }
 
-            // Kiểm tra vé có tồn tại không
             Ve veCu = Ve.getVeById(maVe);
             if (veCu == null) {
                 System.out.println("Không tìm thấy vé với mã: " + maVe);
@@ -74,12 +74,10 @@ public class VeController {
     // Xóa vé
     public static boolean xoaVe(String maVe) {
         try {
-            // Kiểm tra dữ liệu đầu vào
             if (maVe == null || maVe.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã vé không được để trống!");
             }
 
-            // Kiểm tra vé có tồn tại không
             Ve ve = Ve.getVeById(maVe);
             if (ve == null) {
                 System.out.println("Không tìm thấy vé với mã: " + maVe);
@@ -101,7 +99,6 @@ public class VeController {
     // Xem thông tin vé
     public static boolean xemThongTinVe(String maVe) {
         try {
-            // Kiểm tra dữ liệu đầu vào
             if (maVe == null || maVe.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã vé không được để trống!");
             }
@@ -131,7 +128,6 @@ public class VeController {
     // Tìm kiếm vé theo mã
     public static Ve timVeTheoMa(String maVe) {
         try {
-            // Kiểm tra dữ liệu đầu vào
             if (maVe == null || maVe.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã vé không được để trống!");
             }
@@ -149,7 +145,6 @@ public class VeController {
     // Tìm kiếm vé theo khách hàng
     public static ArrayList<Ve> timVeTheoKhachHang(String CCCD) {
         try {
-            // Kiểm tra dữ liệu đầu vào
             if (CCCD == null || CCCD.trim().isEmpty()) {
                 throw new IllegalArgumentException("CCCD không được để trống!");
             }
@@ -167,7 +162,6 @@ public class VeController {
     // Tìm kiếm vé theo suất chiếu
     public static ArrayList<Ve> timVeTheoSuatChieu(String maSuatChieu) {
         try {
-            // Kiểm tra dữ liệu đầu vào
             if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
             }
@@ -185,28 +179,24 @@ public class VeController {
     // Hủy vé
     public static boolean huyVe(String maVe) {
         try {
-            // Kiểm tra dữ liệu đầu vào
             if (maVe == null || maVe.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã vé không được để trống!");
             }
 
-            // Kiểm tra vé có tồn tại không
             Ve ve = Ve.getVeById(maVe);
             if (ve == null) {
                 System.out.println("Không tìm thấy vé với mã: " + maVe);
                 return false;
             }
 
-            // Kiểm tra trạng thái vé
             if (ve.getTrangThai() != Ve.TrangThaiVe.CHUA_THANH_TOAN) {
                 System.out.println("Vé không thể hủy (đã hủy hoặc đã sử dụng)!");
                 return false;
             }
 
-            // Cập nhật trạng thái vé thành đã hủy
             ve.setTrangThai(Ve.TrangThaiVe.DA_HUY);
             Ve.Update(maVe, ve);
-            
+
             System.out.println("Hủy vé thành công!");
             return true;
         } catch (IllegalArgumentException e) {
@@ -218,10 +208,18 @@ public class VeController {
         }
     }
 
-    // Tính tổng doanh thu
+    // Tính tổng doanh thu (người dùng nhập khoảng thời gian)
     public static double tinhTongDoanhThu() {
         try {
-            return Ve.tinhDoanhThu(LocalDateTime.now().minusDays(30), LocalDateTime.now());
+            Scanner scanner = new Scanner(System.in);
+            LocalDateTime tuNgay = DateTimeUtils.nhapThoiGian(scanner, "Nhập thời gian bắt đầu");
+            LocalDateTime denNgay = DateTimeUtils.nhapThoiGian(scanner, "Nhập thời gian kết thúc");
+
+            double doanhThu = Ve.tinhDoanhThu(tuNgay, denNgay);
+            System.out.println("Tổng doanh thu từ " + DateTimeUtils.formatVietDateTime(tuNgay) +
+                               " đến " + DateTimeUtils.formatVietDateTime(denNgay) +
+                               " là: " + doanhThu + " VND");
+            return doanhThu;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
             return 0.0;
@@ -238,4 +236,4 @@ public class VeController {
             return false;
         }
     }
-} 
+}

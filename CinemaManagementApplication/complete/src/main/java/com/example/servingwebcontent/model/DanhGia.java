@@ -2,6 +2,7 @@ package com.example.servingwebcontent.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import com.example.servingwebcontent.util.DateTimeUtils;
 
 public class DanhGia {
     private String maDanhGia;
@@ -175,7 +176,6 @@ public class DanhGia {
     public static void thongKeDanhGia() {
         System.out.println("=== THỐNG KÊ ĐÁNH GIÁ ===");
         System.out.println("Tổng số đánh giá: " + danhSachDanhGia.size());
-        // Có thể thêm thống kê số sao, số người đánh giá theo mã phim...
         System.out.println("=========================");
     }
 
@@ -186,7 +186,7 @@ public class DanhGia {
         System.out.println("Mã phim: " + maPhim);
         System.out.println("Số sao: " + soSao + "/5");
         System.out.println("Bình luận: " + noiDung);
-        System.out.println("Thời gian: " + thoiGian);
+        System.out.println("Thời gian: " + DateTimeUtils.formatVietDateTime(thoiGian));
         System.out.println("=========================");
     }
 }
