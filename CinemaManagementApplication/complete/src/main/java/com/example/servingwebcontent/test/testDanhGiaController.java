@@ -1,5 +1,7 @@
 package com.example.servingwebcontent.test;
 import java.util.ArrayList;
+import com.example.servingwebcontent.model.DanhGia;
+import com.example.servingwebcontent.controller.DanhGiaController;
 
 public class testDanhGiaController {
     

@@ -2,9 +2,8 @@ package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
 import com.example.servingwebcontent.model.DoAn;
-import com.example.servingwebcontent.controller.GenericController;
 
-public class DoAnController implements GenericController {
+public class DoAnController {
     
     // Tạo đồ ăn mới
     public static boolean taoDoAn(DoAn doAn) {
@@ -220,13 +219,4 @@ public class DoAnController implements GenericController {
             return false;
         }
     }
-
-    @Override
-    public Object them(Object obj) { return null; }
-    @Override
-    public Object sua(Object obj) { return null; }
-    @Override
-    public boolean xoa(Object obj) { return false; }
-    @Override
-    public Object hienThi(Object obj) { return null; }
 } 

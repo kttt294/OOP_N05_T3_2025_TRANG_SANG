@@ -2,9 +2,8 @@ package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
 import com.example.servingwebcontent.model.PhongChieu;
-import com.example.servingwebcontent.controller.GenericController;
 
-public class PhongChieuController implements GenericController {
+public class PhongChieuController{
     
     // Tạo phòng chiếu mới
     public static boolean taoPhongChieu(PhongChieu phongChieu) {
@@ -171,13 +170,4 @@ public class PhongChieuController implements GenericController {
             return false;
         }
     }
-
-    @Override
-    public Object them(Object obj) { return null; }
-    @Override
-    public Object sua(Object obj) { return null; }
-    @Override
-    public boolean xoa(Object obj) { return false; }
-    @Override
-    public Object hienThi(Object obj) { return null; }
 } 

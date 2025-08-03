@@ -2,9 +2,8 @@ package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
 import com.example.servingwebcontent.model.Phim;
-import com.example.servingwebcontent.controller.GenericController;
 
-public class PhimController implements GenericController {
+public class PhimController {
     
     // Tạo phim mới
     public static boolean taoPhim(Phim phim) {
@@ -189,13 +188,4 @@ public class PhimController implements GenericController {
             return false;
         }
     }
-
-    @Override
-    public Object them(Object obj) { return null; }
-    @Override
-    public Object sua(Object obj) { return null; }
-    @Override
-    public boolean xoa(Object obj) { return false; }
-    @Override
-    public Object hienThi(Object obj) { return null; }
 } 

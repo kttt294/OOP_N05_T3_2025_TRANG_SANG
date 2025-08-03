@@ -2,10 +2,9 @@ package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
 import com.example.servingwebcontent.model.Ve;
-import com.example.servingwebcontent.controller.GenericController;
 import java.time.LocalDateTime;
 
-public class VeController implements GenericController {
+public class VeController {
     
     // Tạo vé mới
     public static boolean taoVe(Ve ve) {
@@ -239,13 +238,4 @@ public class VeController implements GenericController {
             return false;
         }
     }
-
-    @Override
-    public Object them(Object obj) { return null; }
-    @Override
-    public Object sua(Object obj) { return null; }
-    @Override
-    public boolean xoa(Object obj) { return false; }
-    @Override
-    public Object hienThi(Object obj) { return null; }
 } 

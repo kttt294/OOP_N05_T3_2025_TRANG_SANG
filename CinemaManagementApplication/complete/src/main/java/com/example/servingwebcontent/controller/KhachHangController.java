@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import com.example.servingwebcontent.model.KhachHang;
 import com.example.servingwebcontent.model.Ve;
 import com.example.servingwebcontent.model.DanhGia;
-import com.example.servingwebcontent.controller.GenericController;
 
-public class KhachHangController implements GenericController {
+public class KhachHangController {
     public static boolean taoKhachHang(KhachHang kh) {
         try {
             // Kiểm tra dữ liệu đầu vào
@@ -355,13 +354,4 @@ public class KhachHangController implements GenericController {
             return false;
         }
     }
-
-    @Override
-    public Object them(Object obj) { return null; }
-    @Override
-    public Object sua(Object obj) { return null; }
-    @Override
-    public boolean xoa(Object obj) { return false; }
-    @Override
-    public Object hienThi(Object obj) { return null; }
 } 

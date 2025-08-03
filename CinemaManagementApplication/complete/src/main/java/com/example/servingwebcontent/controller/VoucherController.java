@@ -2,9 +2,8 @@ package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
 import com.example.servingwebcontent.model.Voucher;
-import com.example.servingwebcontent.controller.GenericController;
 
-public class VoucherController implements GenericController {
+public class VoucherController {
     
     // Tạo voucher mới
     public static boolean taoVoucher(Voucher voucher) {
@@ -210,13 +209,4 @@ public class VoucherController implements GenericController {
             return false;
         }
     }
-
-    @Override
-    public Object them(Object obj) { return null; }
-    @Override
-    public Object sua(Object obj) { return null; }
-    @Override
-    public boolean xoa(Object obj) { return false; }
-    @Override
-    public Object hienThi(Object obj) { return null; }
 } 

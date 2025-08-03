@@ -2,9 +2,8 @@ package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
 import com.example.servingwebcontent.model.DanhGia;
-import com.example.servingwebcontent.controller.GenericController;
 
-public class DanhGiaController implements GenericController {
+public class DanhGiaController{
     
     // Tạo đánh giá mới
     public static boolean taoDanhGia(DanhGia danhGia) {
@@ -181,13 +180,4 @@ public class DanhGiaController implements GenericController {
             return false;
         }
     }
-
-    @Override
-    public Object them(Object obj) { return null; }
-    @Override
-    public Object sua(Object obj) { return null; }
-    @Override
-    public boolean xoa(Object obj) { return false; }
-    @Override
-    public Object hienThi(Object obj) { return null; }
 } 

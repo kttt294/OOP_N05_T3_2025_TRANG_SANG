@@ -2,9 +2,8 @@ package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
 import com.example.servingwebcontent.model.Ghe;
-import com.example.servingwebcontent.controller.GenericController;
 
-public class GheController implements GenericController {
+public class GheController{
     
     // Tạo ghế mới
     public static boolean taoGhe(Ghe ghe) {
@@ -219,13 +218,4 @@ public class GheController implements GenericController {
             return false;
         }
     }
-
-    @Override
-    public Object them(Object obj) { return null; }
-    @Override
-    public Object sua(Object obj) { return null; }
-    @Override
-    public boolean xoa(Object obj) { return false; }
-    @Override
-    public Object hienThi(Object obj) { return null; }
 } 

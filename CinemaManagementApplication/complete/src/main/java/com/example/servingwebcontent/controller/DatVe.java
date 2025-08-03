@@ -5,8 +5,6 @@ import com.example.servingwebcontent.model.SuatChieu;
 import com.example.servingwebcontent.model.Ghe;
 import com.example.servingwebcontent.model.Ve;
 
-import java.util.ArrayList;
-
 public class DatVe {
     KhachHang kh;
     SuatChieu suatChieu;
