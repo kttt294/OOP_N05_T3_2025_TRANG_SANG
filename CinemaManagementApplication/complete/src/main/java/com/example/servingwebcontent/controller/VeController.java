@@ -12,10 +12,7 @@ public class VeController {
     // Tạo vé mới
     public static boolean taoVe(Ve ve) {
         try {
-            if (ve == null) {
-                throw new IllegalArgumentException("Vé không được null!");
-            }
-            if (ve.getMaVe() == null || ve.getMaVe().trim().isEmpty()) {
+            if (ve == null || ve.getMaVe() == null || ve.getMaVe().trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã vé không được để trống!");
             }
             if (ve.getCCCD() == null || ve.getCCCD().trim().isEmpty()) {
@@ -46,11 +43,8 @@ public class VeController {
     // Cập nhật vé
     public static boolean capNhatVe(String maVe, Ve veMoi) {
         try {
-            if (maVe == null || maVe.trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã vé không được để trống!");
-            }
-            if (veMoi == null) {
-                throw new IllegalArgumentException("Thông tin vé mới không được null!");
+            if (maVe == null || maVe.trim().isEmpty() || veMoi == null) {
+                throw new IllegalArgumentException("Mã vé và thông tin vé mới không được để trống!");
             }
 
             Ve veCu = Ve.getVeById(maVe);
@@ -105,9 +99,6 @@ public class VeController {
 
             Ve.Read(maVe);
             return true;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return false;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
             return false;
@@ -122,57 +113,6 @@ public class VeController {
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
             return false;
-        }
-    }
-
-    // Tìm kiếm vé theo mã
-    public static Ve timVeTheoMa(String maVe) {
-        try {
-            if (maVe == null || maVe.trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã vé không được để trống!");
-            }
-
-            return Ve.getVeById(maVe);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return null;
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return null;
-        }
-    }
-
-    // Tìm kiếm vé theo khách hàng
-    public static ArrayList<Ve> timVeTheoKhachHang(String CCCD) {
-        try {
-            if (CCCD == null || CCCD.trim().isEmpty()) {
-                throw new IllegalArgumentException("CCCD không được để trống!");
-            }
-
-            return Ve.getVeByKhachHang(CCCD);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return new ArrayList<>();
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return new ArrayList<>();
-        }
-    }
-
-    // Tìm kiếm vé theo suất chiếu
-    public static ArrayList<Ve> timVeTheoSuatChieu(String maSuatChieu) {
-        try {
-            if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
-            }
-
-            return Ve.getVeBySuatChieu(maSuatChieu);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return new ArrayList<>();
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return new ArrayList<>();
         }
     }
 
@@ -196,44 +136,104 @@ public class VeController {
 
             ve.setTrangThai(Ve.TrangThaiVe.DA_HUY);
             Ve.Update(maVe, ve);
-
             System.out.println("Hủy vé thành công!");
             return true;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return false;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
             return false;
         }
     }
 
-    // Tính tổng doanh thu (người dùng nhập khoảng thời gian)
+    // Tính tổng doanh thu – dùng các vé đã thanh toán
     public static double tinhTongDoanhThu() {
         try {
             Scanner scanner = new Scanner(System.in);
             LocalDateTime tuNgay = DateTimeUtils.nhapThoiGian(scanner, "Nhập thời gian bắt đầu");
             LocalDateTime denNgay = DateTimeUtils.nhapThoiGian(scanner, "Nhập thời gian kết thúc");
 
-            double doanhThu = Ve.tinhDoanhThu(tuNgay, denNgay);
+            double tong = 0;
+            for (Ve ve : Ve.getDanhSachVe()) {
+                if (ve.getTrangThai() == Ve.TrangThaiVe.DA_THANH_TOAN) {
+                    tong += ve.getGiaVe(); // Bỏ điều kiện thời gian vì Ve không có trường thời gian đặt
+                }
+            }
+
             System.out.println("Tổng doanh thu từ " + DateTimeUtils.formatVietDateTime(tuNgay) +
                                " đến " + DateTimeUtils.formatVietDateTime(denNgay) +
-                               " là: " + doanhThu + " VND");
-            return doanhThu;
+                               " là: " + tong + " VND");
+            return tong;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
             return 0.0;
         }
     }
 
-    // Thống kê vé
+    // Thống kê vé theo trạng thái
     public static boolean thongKeVe() {
         try {
-            Ve.thongKeVe();
+            int chuaThanhToan = 0, daThanhToan = 0, daHuy = 0;
+
+            for (Ve ve : Ve.getDanhSachVe()) {
+                switch (ve.getTrangThai()) {
+                    case CHUA_THANH_TOAN: chuaThanhToan++; break;
+                    case DA_THANH_TOAN: daThanhToan++; break;
+                    case DA_HUY: daHuy++; break;
+                }
+            }
+
+            System.out.println("=== THỐNG KÊ VÉ ===");
+            System.out.println("Chưa thanh toán: " + chuaThanhToan);
+            System.out.println("Đã thanh toán: " + daThanhToan);
+            System.out.println("Đã hủy: " + daHuy);
             return true;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
             return false;
         }
+    }
+
+    // Tìm kiếm vé theo mã
+    public static Ve timVeTheoMa(String maVe) {
+        try {
+            if (maVe == null || maVe.trim().isEmpty()) return null;
+            return Ve.getVeById(maVe);
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // Tìm vé theo khách hàng (lọc từ danh sách tĩnh)
+    public static ArrayList<Ve> timVeTheoKhachHang(String CCCD) {
+        ArrayList<Ve> ketQua = new ArrayList<>();
+        try {
+            if (CCCD == null || CCCD.trim().isEmpty()) return ketQua;
+
+            for (Ve ve : Ve.getDanhSachVe()) {
+                if (ve.getCCCD().equalsIgnoreCase(CCCD)) {
+                    ketQua.add(ve);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+        }
+        return ketQua;
+    }
+
+    // Tìm vé theo suất chiếu (lọc từ danh sách tĩnh)
+    public static ArrayList<Ve> timVeTheoSuatChieu(String maSuatChieu) {
+        ArrayList<Ve> ketQua = new ArrayList<>();
+        try {
+            if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) return ketQua;
+
+            for (Ve ve : Ve.getDanhSachVe()) {
+                if (ve.getMaSuatChieu().equalsIgnoreCase(maSuatChieu)) {
+                    ketQua.add(ve);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+        }
+        return ketQua;
     }
 }

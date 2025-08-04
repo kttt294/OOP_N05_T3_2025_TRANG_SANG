@@ -47,6 +47,7 @@ public class Ve {
     public TrangThaiVe getTrangThai() { return trangThai; }
     public void setTrangThai(TrangThaiVe trangThai) { this.trangThai = trangThai; }
 
+    public static ArrayList<Ve> getDanhSachVe() { return danhSachVe; }
     // === CRUD ===
     public static void Create(Ve ve) {
         if (ve.getMaVe() == null || ve.getMaVe().trim().isEmpty()) {
