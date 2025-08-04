@@ -1,14 +1,14 @@
 {
   "java.project.sourcePaths": [
-    "CinemaManagement/src",
+    "CinemaManagement/test",
+    "CinemaManagement/src/view",
+    "CinemaManagement/src/util",
     "CinemaManagement/src/model",
     "CinemaManagement/src/controller",
-    "CinemaManagement/src/util",
-    "CinemaManagement/src/view",
-    "CinemaManagement/test",
-    "CinemaManagement/reviews/model",
+    "CinemaManagement/src",
     "CinemaManagement/reviews/test",
-    "CinemaManagementApplication.complete.src.main.java.com.example.servingwebcontent.model"
+    "CinemaManagement/reviews/model",
+    "reviews/main"
   ],
   "java.project.referencedLibraries": [],
   "java.project.outputPath": "CinemaManagement/bin",
