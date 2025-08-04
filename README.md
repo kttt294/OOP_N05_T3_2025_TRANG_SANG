@@ -5,20 +5,15 @@
 # Describe and Analyse the Project
 
 Đối tượng:
-- KhachHang (maKH, tenKH, tuoi, sdt, email, lichSuDatVe)
-- Phim (maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa, danhGia)
-- SuatChieu (maSuatChieu, phim, phong, thoiGianBatDau, thoiGianKetThuc, danhSachGheTrong)
-- PhongChieu (maPhong, tenPhong, soHangGhe, soCotGhe, danhSachGhe)
-- Ghe (maGhe, hang, cot, daDat)
-- Ve (maVe, khachHang, suatChieu, ghe, giaVe, daThanhToan)
-- DatVe (maDatVe, khachHang, danhSachVe, tongTien, thoiGianDat)
-- NhanVien (maNV, hoTen, username, password, chucVu)
-- DanhGia (maDanhGia, nguoiDanhGia, phim, soSao, binhLuan, thoiGian)
-- DoAn (maDoAn, tenDoAn, gia, soLuong)
-- HoaDon (maHoaDon, khachHang, veDaDat, doAn, tongTien, thoiGianThanhToan, phuongThucThanhToan)
-- TaiKhoan (tenDangNhap, matKhau, vaiTro, trangThai)
-- Voucher (maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai)
-- DoanhThuThongKe(ngayThongKe, soLuongVeBanRa, tongDoanhThu, phimBanChayNhat, tiLeChoNgoiDay)
+- Phim (maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa)
+- KhachHang (CCCD, ten, tuoi, sdt, email, gioiTinh, lichSuDatVe)
+- PhongChieu (maPhong, tenPhong, soHangGhe, soCotGhe)
+- Ghe (maGhe, hang, cot, maPhong, maSuatChieu, trangThai)
+- Ve (maVe, CCCD, maSuatChieu, maGhe, giaVe, trangThai)
+- SuatChieu (maSuatCHieu, maPhim, maPhong, thoiGianBatDau, thoiGianKetThuc, danhSachGheTrong)
+- Voucher (maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai)
+- DanhGia (maDanhGia, CCCD, maPhim, soSao, noiDung, thoiGian)
+- HoaDon (maHoaDon, doAn, tongTien, thoiGianThanhToan, phuongThucThanhToan, CCCD)
 
 Thành viên:
 1. Kiều Thị Thu Trang, MSV: 24100093 (kttt294)
