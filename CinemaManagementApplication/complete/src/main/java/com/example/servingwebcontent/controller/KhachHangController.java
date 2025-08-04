@@ -201,8 +201,8 @@ public class KhachHangController {
             if (CCCD == null || CCCD.trim().isEmpty()) {
                 throw new IllegalArgumentException("CCCD không được để trống!");
             }
-
-        return KhachHang.tinhTongTienKhachHang(CCCD);
+        KhachHang kh = KhachHang.getKhachHangByCCCD(CCCD);
+        return kh.tinhTongTienKhachHang();
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return 0.0;
