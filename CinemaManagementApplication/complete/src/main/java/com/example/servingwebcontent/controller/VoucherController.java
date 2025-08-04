@@ -1,199 +1,89 @@
-package com.example.servingwebcontent.controller;
+package com.example.servingwebcontent.test;
 
+import com.example.servingwebcontent.controller.VoucherController;
 import com.example.servingwebcontent.model.Voucher;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class VoucherController {
+public class testVoucherController {
 
-    // Tạo voucher mới
-    public static boolean taoVoucher(Voucher voucher) {
-        try {
-            if (voucher == null || voucher.getMaVoucher() == null || voucher.getMaVoucher().trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã voucher không được để trống!");
-            }
-            if (voucher.getMoTa() == null || voucher.getMoTa().trim().isEmpty()) {
-                throw new IllegalArgumentException("Mô tả voucher không được để trống!");
-            }
-            if (voucher.getPhanTramGiamGia() <= 0) {
-                throw new IllegalArgumentException("Phần trăm giảm giá phải lớn hơn 0!");
-            }
-            if (voucher.getSoLuongConLai() == null || voucher.getSoLuongConLai().trim().isEmpty()) {
-                throw new IllegalArgumentException("Số lượng còn lại không được để trống!");
-            }
-
-            Voucher.Create(voucher);
-            return true;
-        } catch (Exception e) {
-            System.out.println("Lỗi khi tạo voucher: " + e.getMessage());
-            return false;
-        }
+    public static void test() {
+        testTaoVoucher();
+        testCapNhatVoucher();
+        testXemThongTinVoucher();
+        testXemTatCaVoucher();
+        testTimVoucherTheoMa();
+        testTimVoucherTheoTen();
+        testKiemTraVoucherHopLe();
+        testSuDungVoucher();
+        testThongKeVoucher();
+        testXoaVoucher();
     }
 
-    // Cập nhật voucher
-    public static boolean capNhatVoucher(String maVoucher, Voucher voucherMoi) {
-        try {
-            if (maVoucher == null || maVoucher.trim().isEmpty() || voucherMoi == null) {
-                throw new IllegalArgumentException("Dữ liệu đầu vào không hợp lệ!");
-            }
-
-            Voucher cu = Voucher.getVoucherById(maVoucher);
-            if (cu == null) {
-                System.out.println("Không tìm thấy voucher với mã: " + maVoucher);
-                return false;
-            }
-
-            Voucher.Update(maVoucher, voucherMoi);
-            return true;
-        } catch (Exception e) {
-            System.out.println("Lỗi khi cập nhật voucher: " + e.getMessage());
-            return false;
-        }
+    public static void testTaoVoucher() {
+        System.out.println("=== TEST: TẠO VOUCHER ===");
+        Voucher v = new Voucher("VC001", "Giảm 10%", 10, LocalDateTime.now().minusDays(1),
+                LocalDateTime.now().plusDays(10), "10", "HoatDong");
+        assert VoucherController.taoVoucher(v) : "Tạo voucher thất bại";
+        System.out.println("✓ Tạo voucher OK\n");
     }
 
-    // Xóa voucher
-    public static boolean xoaVoucher(String maVoucher) {
-        try {
-            if (maVoucher == null || maVoucher.trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã voucher không được để trống!");
-            }
-
-            Voucher v = Voucher.getVoucherById(maVoucher);
-            if (v == null) {
-                System.out.println("Không tìm thấy voucher với mã: " + maVoucher);
-                return false;
-            }
-
-            Voucher.Delete(maVoucher);
-            return true;
-        } catch (Exception e) {
-            System.out.println("Lỗi khi xóa voucher: " + e.getMessage());
-            return false;
-        }
+    public static void testCapNhatVoucher() {
+        System.out.println("=== TEST: CẬP NHẬT VOUCHER ===");
+        Voucher vMoi = new Voucher("VC001", "Giảm 15%", 15, LocalDateTime.now().minusDays(1),
+                LocalDateTime.now().plusDays(5), "5", "HoatDong");
+        assert VoucherController.capNhatVoucher("VC001", vMoi) : "Cập nhật voucher thất bại";
+        System.out.println("✓ Cập nhật voucher OK\n");
     }
 
-    // Xem 1 voucher
-    public static boolean xemThongTinVoucher(String maVoucher) {
-        try {
-            if (maVoucher == null || maVoucher.trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã voucher không được để trống!");
-            }
-
-            Voucher.Read(maVoucher);
-            return true;
-        } catch (Exception e) {
-            System.out.println("Lỗi khi xem thông tin voucher: " + e.getMessage());
-            return false;
-        }
+    public static void testXoaVoucher() {
+        System.out.println("=== TEST: XOÁ VOUCHER ===");
+        assert VoucherController.xoaVoucher("VC001") : "Xoá voucher thất bại";
+        System.out.println("✓ Xoá voucher OK\n");
     }
 
-    // Xem tất cả voucher
-    public static boolean xemTatCaVoucher() {
-        try {
-            Voucher.Read();
-            return true;
-        } catch (Exception e) {
-            System.out.println("Lỗi khi xem danh sách voucher: " + e.getMessage());
-            return false;
-        }
+    public static void testXemThongTinVoucher() {
+        System.out.println("=== TEST: XEM THÔNG TIN VOUCHER ===");
+        assert VoucherController.xemThongTinVoucher("VC001") : "Xem thông tin thất bại";
+        System.out.println("✓ Xem thông tin voucher OK\n");
     }
 
-    // Tìm voucher theo mã
-    public static Voucher timVoucherTheoMa(String maVoucher) {
-        try {
-            if (maVoucher == null || maVoucher.trim().isEmpty()) return null;
-            return Voucher.getVoucherById(maVoucher);
-        } catch (Exception e) {
-            System.out.println("Lỗi khi tìm voucher: " + e.getMessage());
-            return null;
-        }
+    public static void testXemTatCaVoucher() {
+        System.out.println("=== TEST: XEM TẤT CẢ VOUCHER ===");
+        assert VoucherController.xemTatCaVoucher() : "Xem tất cả thất bại";
+        System.out.println("✓ Xem tất cả voucher OK\n");
     }
 
-    // Tìm voucher theo tên
-    public static ArrayList<Voucher> timVoucherTheoTen(String keyword) {
-        ArrayList<Voucher> ketQua = new ArrayList<>();
-        try {
-            if (keyword == null || keyword.trim().isEmpty()) return ketQua;
-
-            for (Voucher v : Voucher.Read()) {
-                if (v.getMoTa().toLowerCase().contains(keyword.toLowerCase())) {
-                    ketQua.add(v);
-                }
-            }
-
-            return ketQua;
-        } catch (Exception e) {
-            System.out.println("Lỗi khi tìm kiếm voucher theo tên: " + e.getMessage());
-            return ketQua;
-        }
+    public static void testTimVoucherTheoMa() {
+        System.out.println("=== TEST: TÌM VOUCHER THEO MÃ ===");
+        Voucher v = VoucherController.timVoucherTheoMa("VC001");
+        assert v != null : "Không tìm thấy voucher";
+        System.out.println("✓ Tìm voucher theo mã OK\n");
     }
 
-    // Kiểm tra voucher hợp lệ
-    public static boolean kiemTraVoucherHopLe(String maVoucher) {
-        try {
-            Voucher v = Voucher.getVoucherById(maVoucher);
-            if (v == null) return false;
-
-            LocalDateTime now = LocalDateTime.now();
-            if (now.isBefore(v.getNgayBatDau()) || now.isAfter(v.getNgayKetThuc())) return false;
-
-            int sl = Integer.parseInt(v.getSoLuongConLai());
-            if (sl <= 0) return false;
-
-            return "HoatDong".equalsIgnoreCase(v.getTrangThai());
-        } catch (Exception e) {
-            System.out.println("Lỗi khi kiểm tra voucher hợp lệ: " + e.getMessage());
-            return false;
-        }
+    public static void testTimVoucherTheoTen() {
+        System.out.println("=== TEST: TÌM VOUCHER THEO TÊN ===");
+        ArrayList<Voucher> list = VoucherController.timVoucherTheoTen("Giảm");
+        assert list != null && !list.isEmpty() : "Không tìm thấy theo mô tả";
+        System.out.println("✓ Tìm voucher theo tên OK\n");
     }
 
-    // Sử dụng voucher
-    public static boolean suDungVoucher(String maVoucher) {
-        try {
-            Voucher v = Voucher.getVoucherById(maVoucher);
-            if (v == null || !kiemTraVoucherHopLe(maVoucher)) return false;
-
-            int sl = Integer.parseInt(v.getSoLuongConLai());
-            sl--;
-            v.setSoLuongConLai(String.valueOf(sl));
-            if (sl <= 0) v.setTrangThai("HetHang");
-
-            return true;
-        } catch (Exception e) {
-            System.out.println("Lỗi khi sử dụng voucher: " + e.getMessage());
-            return false;
-        }
+    public static void testKiemTraVoucherHopLe() {
+        System.out.println("=== TEST: KIỂM TRA VOUCHER HỢP LỆ ===");
+        assert VoucherController.kiemTraVoucherHopLe("VC001") : "Voucher không hợp lệ";
+        System.out.println("✓ Voucher hợp lệ OK\n");
     }
 
-    // Thống kê
-    public static boolean thongKeVoucher() {
-        try {
-            ArrayList<Voucher> danhSach = Voucher.Read();
-            if (danhSach.isEmpty()) {
-                System.out.println("Không có voucher để thống kê.");
-                return false;
-            }
+    public static void testSuDungVoucher() {
+        System.out.println("=== TEST: SỬ DỤNG VOUCHER ===");
+        assert VoucherController.suDungVoucher("VC001") : "Không sử dụng được";
+        System.out.println("✓ Sử dụng voucher OK\n");
+    }
 
-            int hoatDong = 0, hetHang = 0, hetHan = 0;
-            int tongGiamGia = 0;
-            LocalDateTime now = LocalDateTime.now();
-
-            for (Voucher v : danhSach) {
-                if ("HoatDong".equalsIgnoreCase(v.getTrangThai())) hoatDong++;
-                else if ("HetHang".equalsIgnoreCase(v.getTrangThai())) hetHang++;
-                if (now.isAfter(v.getNgayKetThuc())) hetHan++;
-                tongGiamGia += v.getPhanTramGiamGia();
-            }
-
-            System.out.println("=== THỐNG KÊ VOUCHER ===");
-            System.out.println("Voucher hoạt động: " + hoatDong);
-            System.out.println("Voucher hết hàng: " + hetHang);
-            System.out.println("Voucher hết hạn: " + hetHan);
-            System.out.println("Tổng phần trăm giảm giá: " + tongGiamGia + "%");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Lỗi thống kê voucher: " + e.getMessage());
-            return false;
-        }
+    public static void testThongKeVoucher() {
+        System.out.println("=== TEST: THỐNG KÊ VOUCHER ===");
+        assert VoucherController.thongKeVoucher() : "Thống kê thất bại";
+        System.out.println("✓ Thống kê voucher OK\n");
     }
 }
