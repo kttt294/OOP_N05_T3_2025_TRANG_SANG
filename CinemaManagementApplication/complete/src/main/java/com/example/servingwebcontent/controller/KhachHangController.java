@@ -260,7 +260,7 @@ public class KhachHangController {
 
         KhachHang kh = KhachHang.getKhachHangByCCCD(CCCD);
         if (kh != null) {
-            kh.themVe(ve);
+            kh.getLichSuDatVe().add(ve);
             System.out.println("Đã thêm vé vào lịch sử khách hàng.");
                 return true;
         } else {

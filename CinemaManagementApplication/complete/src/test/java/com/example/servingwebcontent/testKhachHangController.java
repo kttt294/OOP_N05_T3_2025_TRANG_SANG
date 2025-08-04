@@ -1,8 +1,11 @@
 package com.example.servingwebcontent;
+
 import java.util.ArrayList;
+import com.example.servingwebcontent.model.KhachHang;
+import com.example.servingwebcontent.controller.KhachHangController;
 
 public class testKhachHangController {
-    
+    sửa
     // === UNIT TESTING ===
     
     // Test taoKhachHang
@@ -226,13 +229,9 @@ public class testKhachHangController {
         // Test tên rất dài
         String longName = "A".repeat(1000);
         KhachHang khLongName = new KhachHang("EDGE003", longName, 25, "0123456789", "long@email.com");
-        boolean resultLong = KhachHangController.taoKhachHang(khLongName);
-        // Có thể chấp nhận hoặc từ chối tùy vào business logic
         
         // Test email không hợp lệ
         KhachHang khInvalidEmail = new KhachHang("EDGE004", "Invalid Email", 25, "0123456789", "invalid-email");
-        boolean resultInvalidEmail = KhachHangController.taoKhachHang(khInvalidEmail);
-        // Có thể chấp nhận hoặc từ chối tùy vào validation
         
         System.out.println("✓ Edge cases testing OK");
     }

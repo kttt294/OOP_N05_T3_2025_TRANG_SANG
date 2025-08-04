@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.test;
+package com.example.servingwebcontent;
 
 import com.example.servingwebcontent.model.Voucher;
 import java.time.LocalDateTime;

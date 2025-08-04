@@ -88,7 +88,7 @@ public class testPhim {
         System.out.println("=== TEST getPhimIndexById ===");
 
         Phim.Create(new Phim("P014", "The Matrix", "Hành động", 136, "Anh", 18, ""));
-        int index = getPhimIndexByIdProxy("P014");
+        int index = Phim.getPhimIndexById("P014");
 
         assert index >= 0 : "✓ Phải tìm thấy index lớn hơn hoặc bằng 0";
         System.out.println("✓ getPhimIndexById OK. Index: " + index);

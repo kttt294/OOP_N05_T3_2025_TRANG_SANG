@@ -12,7 +12,7 @@ public class testDatVe {
         System.out.println("=== TEST ĐẶT VÉ ===");
 
         // Bước 1: Tạo khách hàng
-        KhachHang kh = new KhachHang("123456789", "Nguyen Van A", "0123456789");
+        KhachHang kh = new KhachHang("123456789", "Nguyen Van A", 30, "0123456789", "NguyenVanA89@gmail.com");
 
         // Bước 2: Tạo ghế và thêm vào danh sách ghế
         Ghe ghe = new Ghe("G100", 1, 1, "P100");

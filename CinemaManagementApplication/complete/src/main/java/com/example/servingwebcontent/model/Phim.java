@@ -158,7 +158,7 @@ public class Phim {
                 .orElse(null);
     }
 
-    private static int getPhimIndexById(String maPhim) {
+    public static int getPhimIndexById(String maPhim) {
         for (int i = 0; i < danhSachPhim.size(); i++) {
             if (danhSachPhim.get(i).getMaPhim().equalsIgnoreCase(maPhim)) {
                 return i;

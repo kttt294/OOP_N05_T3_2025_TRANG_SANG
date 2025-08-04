@@ -2,8 +2,6 @@ package com.example.servingwebcontent;
 
 import com.example.servingwebcontent.model.PhongChieu;
 
-import java.util.ArrayList;
-
 public class testPhongChieu {
 
     public static void test() {
