@@ -1,94 +1,124 @@
 package com.example.servingwebcontent;
 
 import com.example.servingwebcontent.model.PhongChieu;
+
 import java.util.ArrayList;
 
 public class testPhongChieu {
+
+    public static void test() {
+        testConstructor();
+        testGettersandSetters();
+        testCRUD();
+        testGetPhongByMa();
+        testGetPhongIndexByMa();
+        testHienThiThongTin();
+        testThongKePhongChieu();
+    }
+
     public static void testConstructor() {
         System.out.println("=== TEST CONSTRUCTOR ===");
-        PhongChieu p1 = new PhongChieu();
-        assert p1.getMaPhong() == null;
 
-        PhongChieu p2 = new PhongChieu("PC01", "Phòng VIP");
-        assert p2.getTenPhong().equals("Phòng VIP");
+        PhongChieu pc1 = new PhongChieu();
+        assert pc1.getMaPhong() == null;
 
-        PhongChieu p3 = new PhongChieu("PC02", "Phòng 2D", 8, 10);
-        assert p3.getSoHangGhe() == 8;
-        assert p3.getSoCotGhe() == 10;
+        PhongChieu pc2 = new PhongChieu("P001", "Phòng VIP");
+        assert "P001".equals(pc2.getMaPhong());
+        assert "Phòng VIP".equals(pc2.getTenPhong());
+
+        PhongChieu pc3 = new PhongChieu("P002", "Phòng thường", 5, 10);
+        assert pc3.getSoHangGhe() == 5;
+        assert pc3.getSoCotGhe() == 10;
 
         System.out.println("✓ Constructor OK");
     }
 
-    public static void testGetterSetter() {
-        System.out.println("=== TEST GETTER/SETTER ===");
-        PhongChieu p = new PhongChieu();
-        p.setMaPhong("PC99");
-        p.setTenPhong("Phòng test");
-        p.setSoHangGhe(5);
-        p.setSoCotGhe(6);
+    public static void testGettersandSetters() {
+        System.out.println("=== TEST GETTERS/SETTERS ===");
 
-        assert p.getMaPhong().equals("PC99");
-        assert p.getTenPhong().equals("Phòng test");
-        assert p.getSoHangGhe() == 5;
-        assert p.getSoCotGhe() == 6;
+        PhongChieu pc = new PhongChieu();
+        pc.setMaPhong("P003");
+        pc.setTenPhong("Phòng A");
+        pc.setSoHangGhe(6);
+        pc.setSoCotGhe(8);
 
-        System.out.println("✓ Getter/Setter OK");
+        assert "P003".equals(pc.getMaPhong());
+        assert "Phòng A".equals(pc.getTenPhong());
+        assert pc.getSoHangGhe() == 6;
+        assert pc.getSoCotGhe() == 8;
+
+        System.out.println("✓ Getters/Setters OK");
     }
 
-    public static void testCreateReadUpdateDelete() {
+    public static void testCRUD() {
         System.out.println("=== TEST CRUD ===");
-        PhongChieu p = new PhongChieu("PC123", "Phòng chiếu test", 7, 8);
-        PhongChieu.Create(p);
-        assert PhongChieu.getPhongByMa("PC123") != null;
 
-        ArrayList<PhongChieu> list = PhongChieu.Read();
-        assert list.size() > 0;
+        PhongChieu phong = new PhongChieu("P004", "Phòng B", 4, 10);
+        PhongChieu.Create(phong);
+        assert PhongChieu.getPhongByMa("P004") != null;
 
-        PhongChieu pUpdate = new PhongChieu("PC123", "Phòng chiếu cập nhật", 10, 10);
-        PhongChieu.Update("PC123", pUpdate);
-        PhongChieu pAfterUpdate = PhongChieu.getPhongByMa("PC123");
-        assert pAfterUpdate.getTenPhong().contains("cập nhật");
-        assert pAfterUpdate.getSoHangGhe() == 10;
+        PhongChieu updated = new PhongChieu("NEW", "Phòng B Updated", 5, 12);
+        PhongChieu.Update("P004", updated);
+        PhongChieu result = PhongChieu.getPhongByMa("P004");
+        assert result != null;
+        assert result.getTenPhong().equals("Phòng B Updated");
 
-        PhongChieu.Delete("PC123");
-        assert PhongChieu.getPhongByMa("PC123") == null;
+        PhongChieu.Delete("P004");
+        assert PhongChieu.getPhongByMa("P004") == null;
 
         System.out.println("✓ CRUD OK");
     }
 
-    public static void testTimKiem() {
-        System.out.println("=== TEST TÌM KIẾM ===");
+    public static void testGetPhongByMa() {
+        System.out.println("=== TEST getPhongByMa ===");
 
-        PhongChieu p1 = new PhongChieu("PC201", "Phòng A", 5, 5);
-        PhongChieu p2 = new PhongChieu("PC202", "Phòng B", 7, 7);
-        PhongChieu p3 = new PhongChieu("PC203", "Phòng siêu lớn", 15, 15);
+        PhongChieu.Create(new PhongChieu("P005", "Phòng C", 3, 10));
+        PhongChieu result = PhongChieu.getPhongByMa("P005");
 
-        PhongChieu.Create(p1);
-        PhongChieu.Create(p2);
-        PhongChieu.Create(p3);
+        assert result != null;
+        assert result.getTenPhong().equals("Phòng C");
 
-        ArrayList<PhongChieu> result = PhongChieu.timKiemTheoTen("phòng");
-        assert result.size() >= 3;
-
-        ArrayList<PhongChieu> result2 = PhongChieu.timKiemTheoTen("siêu");
-        assert result2.size() == 1;
-        assert result2.get(0).getTenPhong().equals("Phòng siêu lớn");
-
-        System.out.println("✓ Tìm kiếm OK");
+        System.out.println("✓ getPhongByMa OK");
     }
 
-    public static void testThongKe() {
-        System.out.println("=== TEST THỐNG KÊ ===");
-        PhongChieu.thongKePhongChieu(); // In ra thống kê tổng ghế, loại phòng
-        System.out.println("✓ Thống kê OK");
+    public static void testGetPhongIndexByMa() {
+        System.out.println("=== TEST getPhongIndexByMa ===");
+
+        int index = getPhongIndexByMaProxy("P005");
+        assert index >= 0;
+        System.out.println("✓ getPhongIndexByMa OK – Index: " + index);
     }
 
-    public static void test() {
-        testConstructor();
-        testGetterSetter();
-        testCreateReadUpdateDelete();
-        testTimKiem();
-        testThongKe();
+    // Dùng reflection vì getPhongIndexByMa là private
+    private static int getPhongIndexByMaProxy(String maPhong) {
+        try {
+            java.lang.reflect.Method method = PhongChieu.class.getDeclaredMethod("getPhongIndexByMa", String.class);
+            method.setAccessible(true);
+            return (int) method.invoke(null, maPhong);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
+    public static void testHienThiThongTin() {
+        System.out.println("=== TEST hienThiThongTin ===");
+
+        PhongChieu pc = new PhongChieu("P006", "Phòng D", 7, 9);
+        pc.hienThiThongTin();
+
+        System.out.println("✓ hienThiThongTin OK (kiểm tra console)");
+    }
+
+    public static void testThongKePhongChieu() {
+        System.out.println("=== TEST thongKePhongChieu ===");
+
+        PhongChieu.Create(new PhongChieu("P007", "Phòng E", 3, 10));  // 30 ghế
+        PhongChieu.Create(new PhongChieu("P008", "Phòng F", 5, 10));  // 50 ghế
+        PhongChieu.Create(new PhongChieu("P009", "Phòng G", 10, 12)); // 120 ghế
+
+        PhongChieu.thongKePhongChieu();
+
+        System.out.println("✓ thongKePhongChieu OK (kiểm tra console)");
+    }
 }

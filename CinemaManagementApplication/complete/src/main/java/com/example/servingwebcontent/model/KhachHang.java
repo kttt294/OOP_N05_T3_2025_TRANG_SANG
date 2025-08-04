@@ -46,23 +46,7 @@ public class KhachHang {
     public ArrayList<Ve> getLichSuDatVe() { return lichSuDatVe; }
     public void setLichSuDatVe(ArrayList<Ve> lichSuDatVe) { this.lichSuDatVe = lichSuDatVe; }
 
-    public void themVe(Ve ve) {
-        if (lichSuDatVe == null) {
-            lichSuDatVe = new ArrayList<>();
-        }
-        lichSuDatVe.add(ve);
-    }
-
-    public void hienThiThongTin() {
-        System.out.println("CCCD: " + CCCD);
-        System.out.println("Tên khách hàng: " + ten);
-        System.out.println("Tuổi: " + tuoi);
-        System.out.println("SĐT: " + sdt);
-        System.out.println("Email: " + email);
-        System.out.println("Giới tính: " + gioiTinh);
-        System.out.println("Số vé đã đặt: " + (lichSuDatVe != null ? lichSuDatVe.size() : 0));
-    }
-
+    // CRUD
     public static void Create(KhachHang khachHang) {
         if (khachHang == null || khachHang.getCCCD() == null || khachHang.getCCCD().trim().isEmpty() ||
             khachHang.getTen() == null || khachHang.getTen().trim().isEmpty()) {
@@ -171,6 +155,17 @@ public class KhachHang {
         return ketQua;
     }
 
+    // Hiển thị thông tin
+    public void hienThiThongTin() {
+        System.out.println("CCCD: " + CCCD);
+        System.out.println("Tên khách hàng: " + ten);
+        System.out.println("Tuổi: " + tuoi);
+        System.out.println("SĐT: " + sdt);
+        System.out.println("Email: " + email);
+        System.out.println("Giới tính: " + gioiTinh);
+        System.out.println("Số vé đã đặt: " + (lichSuDatVe != null ? lichSuDatVe.size() : 0));
+    }
+
     // Phương thức thống kê cho Admin
     public static void xemThongKe() {
         if (danhSachKhachHang.isEmpty()) {
@@ -240,7 +235,7 @@ public class KhachHang {
     // Phương thức tính tổng tiền khách hàng đã sử dụng
     public double tinhTongTienKhachHang() {
         double tongTien = 0;
-        for (HoaDon hd : HoaDon.getDanhSachHoaDon()) {
+        for (HoaDon hd : HoaDon.Read()) {
             if (this.CCCD != null && this.CCCD.equals(hd.getCCCD())) {
                 tongTien += hd.getTongTien();
             }

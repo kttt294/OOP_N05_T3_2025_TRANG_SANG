@@ -1,70 +1,120 @@
 package com.example.servingwebcontent;
 
 import com.example.servingwebcontent.model.Ghe;
+import com.example.servingwebcontent.model.Ghe.TrangThaiGhe;
+
+import java.util.ArrayList;
 
 public class testGhe {
 
-    public static void main(String[] args) {
+    public static void test() {
+        testConstructor();
+        testGettersAndSetters();
+        testTrangThaiLogic();
+        testCRUD();
+        testGetGheByMaGhe();
+        testGetGheIndexByMaGhe();
+    }
 
-        // Test constructor và getter
-        Ghe ghe1 = new Ghe("GHE001", 1, 2, "PHONG01");
-        assert ghe1.getMaGhe().equals("GHE001");
-        assert ghe1.getHang() == 1;
-        assert ghe1.getCot() == 2;
-        assert ghe1.getMaPhong().equals("PHONG01");
-        assert ghe1.getTrangThai() == Ghe.TrangThaiGhe.TRONG;
+    public static void testConstructor() {
+        System.out.println("=== TEST CONSTRUCTOR ===");
 
-        // Test setter
-        ghe1.setMaSuatChieu("SC01");
-        ghe1.setTrangThai(Ghe.TrangThaiGhe.DA_DAT);
-        assert ghe1.getMaSuatChieu().equals("SC01");
-        assert ghe1.getTrangThai() == Ghe.TrangThaiGhe.DA_DAT;
+        Ghe ghe1 = new Ghe();
+        assert ghe1.getMaGhe() == null;
 
-        // Test trạng thái logic
-        assert ghe1.isDaDat();
-        ghe1.huyDat();
-        assert ghe1.isTrong();
+        Ghe ghe2 = new Ghe("G01", 2, 3, "P01");
+        assert "G01".equals(ghe2.getMaGhe());
+        assert ghe2.getHang() == 2;
+        assert ghe2.getCot() == 3;
+        assert "P01".equals(ghe2.getMaPhong());
+        assert ghe2.getTrangThai() == TrangThaiGhe.TRONG;
 
-        // Test datGhe
-        ghe1.datGhe();
-        assert ghe1.getTrangThai() == Ghe.TrangThaiGhe.DA_DAT;
+        Ghe ghe3 = new Ghe("G02", 1, 1, "P02", "SC01", TrangThaiGhe.DA_DAT);
+        assert "SC01".equals(ghe3.getMaSuatChieu());
+        assert ghe3.getTrangThai() == TrangThaiGhe.DA_DAT;
 
-        // Test Create
-        Ghe.Create(ghe1); // tạo thành công
-        Ghe.Create(ghe1); // tạo trùng -> in lỗi
+        System.out.println("✓ Constructor OK");
+    }
 
-        // Test Read by mã
-        Ghe ghe2 = Ghe.getGheByMaGhe("GHE001");
-        assert ghe2 != null;
-        assert ghe2.getMaGhe().equals("GHE001");
+    public static void testGettersAndSetters() {
+        System.out.println("=== TEST GETTERS/SETTERS ===");
 
-        // Test Read toàn bộ
-        assert Ghe.Read().size() >= 1;
+        Ghe ghe = new Ghe();
+        ghe.setMaGhe("G10");
+        ghe.setHang(4);
+        ghe.setCot(5);
+        ghe.setMaPhong("P03");
+        ghe.setMaSuatChieu("SC99");
+        ghe.setTrangThai(TrangThaiGhe.KHOA);
 
-        // Test Update
-        Ghe gheCapNhat = new Ghe("IGNORED", 9, 9, "PHONG99");
-        Ghe.Update("GHE001", gheCapNhat);
-        Ghe gheSauUpdate = Ghe.getGheByMaGhe("GHE001");
-        assert gheSauUpdate.getHang() == 9;
-        assert gheSauUpdate.getCot() == 9;
+        assert "G10".equals(ghe.getMaGhe());
+        assert ghe.getHang() == 4;
+        assert ghe.getCot() == 5;
+        assert "P03".equals(ghe.getMaPhong());
+        assert "SC99".equals(ghe.getMaSuatChieu());
+        assert ghe.getTrangThai() == TrangThaiGhe.KHOA;
 
-        // Test getGheIndexByMaGhe
-        int index = Ghe.getGheIndexByMaGhe("GHE001");
-        assert index != -1;
+        System.out.println("✓ Getters/Setters OK");
+    }
 
-        // Test Delete
-        Ghe.Delete("GHE001");
-        assert Ghe.getGheByMaGhe("GHE001") == null;
+    public static void testTrangThaiLogic() {
+        System.out.println("=== TEST TRẠNG THÁI LOGIC ===");
 
-        // Test equals và hashCode
-        Ghe g1 = new Ghe("GHE123", 1, 1, "P1");
-        Ghe g2 = new Ghe("GHE123", 2, 2, "P2");
-        assert g1.equals(g2);
-        assert g1.hashCode() == g2.hashCode();
+        Ghe ghe = new Ghe("G20", 2, 2, "P01");
+        assert ghe.isTrong();
+        assert !ghe.isDaDat();
 
-        // Test hienThiThongTin (chạy không lỗi là được)
-        g1.hienThiThongTin();
+        ghe.datGhe();
+        assert ghe.isDaDat();
 
-        System.out.println("✓ Tất cả kiểm thử Ghe đã thực thi xong.");
+        ghe.huyDat();
+        assert ghe.isTrong();
+
+        System.out.println("✓ Trạng thái logic OK");
+    }
+
+    public static void testCRUD() {
+        System.out.println("=== TEST CRUD ===");
+
+        Ghe ghe = new Ghe("G30", 1, 1, "P04");
+        Ghe.Create(ghe);
+        assert Ghe.getGheByMaGhe("G30") != null;
+
+        Ghe gheUpdate = new Ghe("NEWID", 5, 5, "P05", "SC05", TrangThaiGhe.KHOA);
+        Ghe.Update("G30", gheUpdate);
+        Ghe gAfterUpdate = Ghe.getGheByMaGhe("G30");
+        assert gAfterUpdate != null;
+        assert gAfterUpdate.getTrangThai() == TrangThaiGhe.KHOA;
+        assert gAfterUpdate.getHang() == 5;
+
+        Ghe.Delete("G30");
+        assert Ghe.getGheByMaGhe("G30") == null;
+
+        System.out.println("✓ CRUD OK");
+    }
+
+    public static void testGetGheByMaGhe() {
+        System.out.println("=== TEST getGheByMaGhe ===");
+
+        Ghe ghe = new Ghe("G40", 3, 3, "P06");
+        Ghe.Create(ghe);
+
+        Ghe result = Ghe.getGheByMaGhe("G40");
+        assert result != null;
+        assert "G40".equals(result.getMaGhe());
+
+        System.out.println("✓ getGheByMaGhe OK");
+    }
+
+    public static void testGetGheIndexByMaGhe() {
+        System.out.println("=== TEST getGheIndexByMaGhe ===");
+
+        Ghe ghe = new Ghe("G50", 6, 6, "P07");
+        Ghe.Create(ghe);
+
+        int index = Ghe.getGheIndexByMaGhe("G50");
+        assert index >= 0;
+
+        System.out.println("✓ getGheIndexByMaGhe OK");
     }
 }

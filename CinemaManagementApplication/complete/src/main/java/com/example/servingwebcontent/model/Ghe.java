@@ -25,8 +25,7 @@ public class Ghe {
         this.trangThai = TrangThaiGhe.TRONG;
     }
 
-    public Ghe(String maGhe, int hang, int cot, String maPhong,
-               String maSuatChieu, TrangThaiGhe trangThai) {
+    public Ghe(String maGhe, int hang, int cot, String maPhong, String maSuatChieu, TrangThaiGhe trangThai) {
         this(maGhe, hang, cot, maPhong);
         setMaSuatChieu(maSuatChieu);
         setTrangThai(trangThai);

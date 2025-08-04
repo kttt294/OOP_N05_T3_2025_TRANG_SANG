@@ -119,17 +119,6 @@ public class DoAn {
         return ketQua;
     }
 
-    public static ArrayList<DoAn> timKiemTheoLoai(String loaiDoAn) {
-        // Giả sử loại đồ ăn được lưu trong tên hoặc có thể thêm thuộc tính loai
-        ArrayList<DoAn> ketQua = new ArrayList<>();
-        for (DoAn da : danhSachDoAn) {
-            if (da.getTenDoAn().toLowerCase().contains(loaiDoAn.toLowerCase())) {
-                ketQua.add(da);
-            }
-        }
-        return ketQua;
-    }
-
     public static void thongKeDoAn() {
         System.out.println("=== THỐNG KÊ ĐỒ ĂN ===");
         System.out.println("Tổng số đồ ăn: " + danhSachDoAn.size());

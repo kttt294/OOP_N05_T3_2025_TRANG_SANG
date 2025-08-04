@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class testDanhGiaController {
 
-    public static void main(String[] args) {
+    public static void test() {
         testTaoDanhGia();
         testCapNhatDanhGia();
         testXoaDanhGia();

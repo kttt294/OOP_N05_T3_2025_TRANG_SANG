@@ -74,20 +74,6 @@ public class SuatChieu {
         this.danhSachGheTrong = danhSachGheTrong;
     }
 
-    public void hienThiThongTin() {
-        System.out.println("=== THÔNG TIN SUẤT CHIẾU ===");
-        System.out.println("Mã suất chiếu: " + this.maSuatChieu);
-        System.out.println("Mã phim: " + this.maPhim);
-        System.out.println("Mã phòng chiếu: " + this.maPhong);
-        System.out.println("Thời gian bắt đầu: " + 
-            (this.thoiGianBatDau != null ? DateTimeUtils.formatVietDateTime(this.thoiGianBatDau) : "Chưa xác định"));
-        System.out.println("Thời gian kết thúc: " + 
-            (this.thoiGianKetThuc != null ? DateTimeUtils.formatVietDateTime(this.thoiGianKetThuc) : "Chưa xác định"));
-        System.out.println("Số ghế trống: " + 
-            (this.danhSachGheTrong != null ? this.danhSachGheTrong.size() : 0));
-        System.out.println("============================");
-    }
-
     public LocalDateTime tinhThoiGianKetThuc() {
         Phim phim = Phim.getPhimById(maPhim);
         if (phim != null && thoiGianBatDau != null) {
@@ -196,5 +182,19 @@ public class SuatChieu {
             }
         }
         return -1;
+    }
+
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN SUẤT CHIẾU ===");
+        System.out.println("Mã suất chiếu: " + this.maSuatChieu);
+        System.out.println("Mã phim: " + this.maPhim);
+        System.out.println("Mã phòng chiếu: " + this.maPhong);
+        System.out.println("Thời gian bắt đầu: " + 
+            (this.thoiGianBatDau != null ? DateTimeUtils.formatVietDateTime(this.thoiGianBatDau) : "Chưa xác định"));
+        System.out.println("Thời gian kết thúc: " + 
+            (this.thoiGianKetThuc != null ? DateTimeUtils.formatVietDateTime(this.thoiGianKetThuc) : "Chưa xác định"));
+        System.out.println("Số ghế trống: " + 
+            (this.danhSachGheTrong != null ? this.danhSachGheTrong.size() : 0));
+        System.out.println("============================");
     }
 }

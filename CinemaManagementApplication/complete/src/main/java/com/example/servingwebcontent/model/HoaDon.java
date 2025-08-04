@@ -54,8 +54,6 @@ public class HoaDon {
     public String getCCCD() { return CCCD; }
     public void setCCCD(String CCCD) { this.CCCD = CCCD; }
 
-    public static ArrayList<HoaDon> getDanhSachHoaDon() { return danhSachHoaDon; }
-
     // === CRUD ===
     public static void Create(HoaDon hoaDon) {
         if (hoaDon.getMaHoaDon() == null || hoaDon.getMaHoaDon().trim().isEmpty()) {

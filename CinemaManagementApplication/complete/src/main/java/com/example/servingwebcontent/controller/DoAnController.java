@@ -161,24 +161,6 @@ public class DoAnController {
         }
     }
 
-    // Tìm kiếm đồ ăn theo loại
-    public static ArrayList<DoAn> timDoAnTheoLoai(String loaiDoAn) {
-        try {
-            // Kiểm tra dữ liệu đầu vào
-            if (loaiDoAn == null || loaiDoAn.trim().isEmpty()) {
-                throw new IllegalArgumentException("Loại đồ ăn không được để trống!");
-            }
-
-            return DoAn.timKiemTheoLoai(loaiDoAn);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return new ArrayList<>();
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return new ArrayList<>();
-        }
-    }
-
     // Cập nhật số lượng đồ ăn
     public static boolean capNhatSoLuong(String maDoAn, int soLuongMoi) {
         try {

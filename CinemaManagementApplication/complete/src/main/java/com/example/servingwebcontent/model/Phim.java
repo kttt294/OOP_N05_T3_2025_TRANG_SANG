@@ -10,11 +10,9 @@ public class Phim {
     private int gioiHanTuoi;
     private String moTa = "";
 
-    public Phim() {
-    }
+    public Phim() {}
 
-    public Phim(String maPhim, String tenPhim, String theLoai, int thoiLuong,
-            String ngonNgu, int gioiHanTuoi, String moTa) {
+    public Phim(String maPhim, String tenPhim, String theLoai, int thoiLuong, String ngonNgu, int gioiHanTuoi, String moTa) {
         this.maPhim = maPhim;
         this.tenPhim = tenPhim;
         this.theLoai = theLoai;
@@ -23,6 +21,7 @@ public class Phim {
         setGioiHanTuoi(gioiHanTuoi);
         this.moTa = moTa;
     }
+
     public Phim(String maPhim, String tenPhim){
         this.maPhim = maPhim;
         this.tenPhim = tenPhim;
@@ -123,18 +122,49 @@ public class Phim {
             System.out.println("Không tìm thấy phim với mã: " + maPhim);
         }
     }
-    
-    // Hiển thị thông tin chi tiết của một phim
-    public void hienThiThongTin() {
-        System.out.println("=== THÔNG TIN PHIM ===");
-        System.out.println("Mã phim: " + maPhim);
-        System.out.println("Tên phim: " + tenPhim);
-        System.out.println("Thể loại: " + theLoai);
-        System.out.println("Thời lượng: " + thoiLuong + " phút");
-        System.out.println("Ngôn ngữ: " + ngonNgu);
-        System.out.println("Giới hạn tuổi: " + gioiHanTuoi + "+");
-        System.out.println("Mô tả: " + moTa);
-        System.out.println("======================");
+
+    public static void Update(String maPhim, Phim phim) {
+        if (phim.getMaPhim() == null || phim.getMaPhim().trim().isEmpty() ||
+            phim.getTenPhim() == null || phim.getTenPhim().trim().isEmpty() ||
+            phim.getTheLoai() == null || phim.getTheLoai().trim().isEmpty() ||
+            phim.getNgonNgu() == null || phim.getNgonNgu().trim().isEmpty()) {
+            System.out.println("Lỗi: Thông tin phim không được để trống.");
+            return;
+        }
+        int index = getPhimIndexById(maPhim);
+        if (index != -1) {
+            phim.setMaPhim(maPhim);
+            danhSachPhim.set(index, phim);
+            System.out.println("Cập nhật thông tin phim thành công.");
+        } else {
+            System.out.println("Không tìm thấy phim với mã đã nhập.");
+        }
+    }
+
+    public static void Delete(String maPhim) {
+        Phim p = getPhimById(maPhim);
+        if (p != null) {
+            danhSachPhim.remove(p);
+            System.out.println("Xoá phim thành công.");
+        } else {
+            System.out.println("Không tìm thấy phim với mã đã nhập.");
+        }
+    }
+
+    public static Phim getPhimById(String maPhim) {
+        return danhSachPhim.stream()
+                .filter(p -> p.getMaPhim().equalsIgnoreCase(maPhim))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private static int getPhimIndexById(String maPhim) {
+        for (int i = 0; i < danhSachPhim.size(); i++) {
+            if (danhSachPhim.get(i).getMaPhim().equalsIgnoreCase(maPhim)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static ArrayList<Phim> timKiemTheoTen(String tenPhim) {
@@ -188,47 +218,16 @@ public class Phim {
         System.out.println("=====================");
     }
 
-    public static void Update(String maPhim, Phim phim) {
-        if (phim.getMaPhim() == null || phim.getMaPhim().trim().isEmpty() ||
-            phim.getTenPhim() == null || phim.getTenPhim().trim().isEmpty() ||
-            phim.getTheLoai() == null || phim.getTheLoai().trim().isEmpty() ||
-            phim.getNgonNgu() == null || phim.getNgonNgu().trim().isEmpty()) {
-            System.out.println("Lỗi: Thông tin phim không được để trống.");
-            return;
-        }
-        int index = getPhimIndexById(maPhim);
-        if (index != -1) {
-            phim.setMaPhim(maPhim);
-            danhSachPhim.set(index, phim);
-            System.out.println("Cập nhật thông tin phim thành công.");
-        } else {
-            System.out.println("Không tìm thấy phim với mã đã nhập.");
-        }
-    }
-
-    public static void Delete(String maPhim) {
-        Phim p = getPhimById(maPhim);
-        if (p != null) {
-            danhSachPhim.remove(p);
-            System.out.println("Xoá phim thành công.");
-        } else {
-            System.out.println("Không tìm thấy phim với mã đã nhập.");
-        }
-    }
-
-    public static Phim getPhimById(String maPhim) {
-        return danhSachPhim.stream()
-                .filter(p -> p.getMaPhim().equalsIgnoreCase(maPhim))
-                .findFirst()
-                .orElse(null);
-    }
-
-    private static int getPhimIndexById(String maPhim) {
-        for (int i = 0; i < danhSachPhim.size(); i++) {
-            if (danhSachPhim.get(i).getMaPhim().equalsIgnoreCase(maPhim)) {
-                return i;
-            }
-        }
-        return -1;
+    // Hiển thị thông tin chi tiết của một phim
+    public void hienThiThongTin() {
+        System.out.println("=== THÔNG TIN PHIM ===");
+        System.out.println("Mã phim: " + maPhim);
+        System.out.println("Tên phim: " + tenPhim);
+        System.out.println("Thể loại: " + theLoai);
+        System.out.println("Thời lượng: " + thoiLuong + " phút");
+        System.out.println("Ngôn ngữ: " + ngonNgu);
+        System.out.println("Giới hạn tuổi: " + gioiHanTuoi + "+");
+        System.out.println("Mô tả: " + moTa);
+        System.out.println("======================");
     }
 }

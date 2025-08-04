@@ -5,6 +5,16 @@ import com.example.servingwebcontent.model.DanhGia;
 
 public class testDanhGia {
 
+    public static void test() {
+        testConstructor();
+        testGettersSetters();
+        testHienThiThongTin();
+        testCRUD();
+        testGetByMaPhimAndCCCD();
+        testTinhDiemTrungBinh();
+        testThongKe();
+    }
+
     public static void testConstructor() {
         System.out.println("=== TEST CONSTRUCTOR ===");
         DanhGia dg1 = new DanhGia();
@@ -46,7 +56,7 @@ public class testDanhGia {
         System.out.println("✓ Hiển thị thông tin OK");
     }
 
-    public static void testCRUDIntegration() {
+    public static void testCRUD() {
         System.out.println("\n=== TEST CRUD INTEGRATION ===");
         DanhGia dg = new DanhGia("INT001", "123456789", "PHIM001", 5, "Phim rất hay!", LocalDateTime.now());
         DanhGia.Create(dg);
@@ -91,15 +101,5 @@ public class testDanhGia {
         System.out.println("\n=== TEST THONG KE ===");
         DanhGia.thongKeDanhGia();
         System.out.println("✓ Thống kê OK (Xem output thủ công)");
-    }
-
-    public static void test() {
-        testConstructor();
-        testGettersSetters();
-        testHienThiThongTin();
-        testCRUDIntegration();
-        testGetByMaPhimAndCCCD();
-        testTinhDiemTrungBinh();
-        testThongKe();
     }
 }

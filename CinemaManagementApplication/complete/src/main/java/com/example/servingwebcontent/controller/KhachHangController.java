@@ -334,8 +334,6 @@ public class KhachHangController {
         }
     }
 
-    // === PHƯƠNG THỨC GỬI ĐÁNH GIÁ ===
-
     public static boolean guiDanhGia(DanhGia danhGia) {
         try {
             // Kiểm tra dữ liệu đầu vào
