@@ -1,5 +1,7 @@
 package com.example.servingwebcontent.model;
 
+import com.example.servingwebcontent.util.DateTimeUtils;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -135,7 +137,7 @@ public class HoaDon {
             System.out.println("Đồ ăn: Không có");
         }
         System.out.println("Tổng tiền: " + tongTien + " VNĐ");
-        System.out.println("Thời gian thanh toán: " + thoiGianThanhToan);
+        System.out.println("Thời gian thanh toán: " + DateTimeUtils.formatVietDateTime(thoiGianThanhToan));
         System.out.println("Phương thức thanh toán: " + phuongThucThanhToan);
         System.out.println("=========================");
     }

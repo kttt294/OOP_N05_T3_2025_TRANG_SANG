@@ -1,32 +1,31 @@
 package com.example.servingwebcontent.model;
+
+import com.example.servingwebcontent.util.DateTimeUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SuatChieu {
     private String maSuatChieu;
-    private String maPhim; // chỉ lưu mã phim
-    private String maPhong; // chỉ lưu mã phòng chiếu
+    private String maPhim;
+    private String maPhong;
     private LocalDateTime thoiGianBatDau;
     private LocalDateTime thoiGianKetThuc;
     private List<Ghe> danhSachGheTrong;
 
     private static List<SuatChieu> danhSachSuatChieu = new ArrayList<>();
 
-    public SuatChieu() {
-    };
+    public SuatChieu() {}
 
-    public SuatChieu(String maSuatChieu, String maPhim, String maPhong,
-            LocalDateTime thoiGianBatDau, List<Ghe> danhSachGheTrong) {
+    public SuatChieu(String maSuatChieu, String maPhim, String maPhong, LocalDateTime thoiGianBatDau, List<Ghe> danhSachGheTrong) {
         this.maSuatChieu = maSuatChieu;
         this.maPhim = maPhim;
         this.maPhong = maPhong;
         this.thoiGianBatDau = thoiGianBatDau;
         this.danhSachGheTrong = danhSachGheTrong;
-        this.thoiGianKetThuc = null; // hoặc tính toán nếu cần
+        this.thoiGianKetThuc = null;
     }
 
-    // Getter & Setter
     public String getMaSuatChieu() {
         return maSuatChieu;
     }
@@ -75,19 +74,20 @@ public class SuatChieu {
         this.danhSachGheTrong = danhSachGheTrong;
     }
 
-    // Hiển thị thông tin suất chiếu
     public void hienThiThongTin() {
         System.out.println("=== THÔNG TIN SUẤT CHIẾU ===");
         System.out.println("Mã suất chiếu: " + this.maSuatChieu);
         System.out.println("Mã phim: " + this.maPhim);
         System.out.println("Mã phòng chiếu: " + this.maPhong);
-        System.out.println("Thời gian bắt đầu: " + this.thoiGianBatDau);
-        System.out.println("Thời gian kết thúc: " + this.thoiGianKetThuc);
-        System.out.println("Số ghế trống: " + (this.danhSachGheTrong != null ? this.danhSachGheTrong.size() : 0));
+        System.out.println("Thời gian bắt đầu: " + 
+            (this.thoiGianBatDau != null ? DateTimeUtils.formatVietDateTime(this.thoiGianBatDau) : "Chưa xác định"));
+        System.out.println("Thời gian kết thúc: " + 
+            (this.thoiGianKetThuc != null ? DateTimeUtils.formatVietDateTime(this.thoiGianKetThuc) : "Chưa xác định"));
+        System.out.println("Số ghế trống: " + 
+            (this.danhSachGheTrong != null ? this.danhSachGheTrong.size() : 0));
         System.out.println("============================");
     }
 
-    // Tính thời gian kết thúc dựa trên thời lượng phim
     public LocalDateTime tinhThoiGianKetThuc() {
         Phim phim = Phim.getPhimById(maPhim);
         if (phim != null && thoiGianBatDau != null) {
@@ -96,12 +96,9 @@ public class SuatChieu {
         return null;
     }
 
-    // Cập nhật danh sách ghế sau khi đặt
     public void capNhatGheTrong(Ghe gheDaDat) {
         danhSachGheTrong.remove(gheDaDat);
     }
-
-    // CRUD
 
     public static void Create(SuatChieu scObj) {
         if (scObj.getMaSuatChieu() == null || scObj.getMaSuatChieu().trim().isEmpty() ||
@@ -114,7 +111,6 @@ public class SuatChieu {
         System.out.println("Thêm suất chiếu thành công.");
     }
 
-    // Read toàn bộ danh sách suất chiếu
     public static List<SuatChieu> Read() {
         if (danhSachSuatChieu.isEmpty()) {
             System.out.println("Danh sách suất chiếu trống.");
@@ -123,17 +119,16 @@ public class SuatChieu {
         System.out.println("Tổng số suất chiếu: " + danhSachSuatChieu.size());
         return new ArrayList<>(danhSachSuatChieu);
     }
-    
-    // Read suất chiếu theo mã
+
     public static void Read(String maSuatChieu) {
         if (danhSachSuatChieu.isEmpty()) {
             System.out.println("Danh sách suất chiếu trống.");
             return;
         }
-            SuatChieu p = getSuatChieuById(maSuatChieu);
-            if (p != null) {
-                p.hienThiThongTin();
-            } else {
+        SuatChieu p = getSuatChieuById(maSuatChieu);
+        if (p != null) {
+            p.hienThiThongTin();
+        } else {
             System.out.println("Không tìm thấy suất chiếu với mã: " + maSuatChieu);
         }
     }
