@@ -17,6 +17,13 @@ public class SuatChieu {
 
     public SuatChieu() {}
 
+    public SuatChieu(String maSuatChieu, String maPhim, String maPhong, LocalDateTime thoiGianBatDau){
+        this.maSuatChieu = maSuatChieu;
+        this.maPhim = maPhim;
+        this.maPhong = maPhong;
+        this.thoiGianBatDau = thoiGianBatDau;
+    }
+    
     public SuatChieu(String maSuatChieu, String maPhim, String maPhong, LocalDateTime thoiGianBatDau, List<Ghe> danhSachGheTrong) {
         this.maSuatChieu = maSuatChieu;
         this.maPhim = maPhim;

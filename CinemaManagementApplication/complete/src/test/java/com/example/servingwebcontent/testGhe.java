@@ -3,8 +3,6 @@ package com.example.servingwebcontent;
 import com.example.servingwebcontent.model.Ghe;
 import com.example.servingwebcontent.model.Ghe.TrangThaiGhe;
 
-import java.util.ArrayList;
-
 public class testGhe {
 
     public static void test() {

@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.test;
+package com.example.servingwebcontent;
 
 import com.example.servingwebcontent.controller.PhongChieuController;
 import com.example.servingwebcontent.model.PhongChieu;
@@ -17,7 +17,7 @@ public class testPhongChieuController {
         testThongKePhongChieu();
         testXoaPhongChieu();
     }
-    
+
     public static void testTaoPhongChieu() {
         System.out.println("=== TEST: TẠO PHÒNG CHIẾU ===");
         PhongChieu phong = new PhongChieu("PH001", "Phòng VIP", 5, 10);

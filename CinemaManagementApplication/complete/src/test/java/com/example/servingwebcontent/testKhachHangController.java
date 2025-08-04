@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.test;
+package com.example.servingwebcontent;
 
 import com.example.servingwebcontent.controller.KhachHangController;
 import com.example.servingwebcontent.model.KhachHang;
@@ -84,7 +84,7 @@ public class testKhachHangController {
 
     public static void testThemVeChoKhachHang() {
         System.out.println("=== TEST: THÊM VÉ CHO KHÁCH HÀNG ===");
-        Ve ve = new Ve("VE001", "PHIM001", "PHONG01", LocalDateTime.now(), 45000);
+        Ve ve = new Ve("VE001", "001306063562", "SC02", "Ghe01", 45000);
         assert KhachHangController.themVeChoKhachHang("123456789", ve) : "Thêm vé thất bại";
         System.out.println("✓ Thêm vé OK\n");
     }

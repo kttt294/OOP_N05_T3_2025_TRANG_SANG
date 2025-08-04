@@ -1,90 +1,218 @@
-package com.example.servingwebcontent.test;
+package com.example.servingwebcontent.controller;
 
-import com.example.servingwebcontent.controller.SuatChieuController;
-import com.example.servingwebcontent.model.SuatChieu;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Scanner;
+import java.util.ArrayList;
 
-public class testSuatChieuController {
+import com.example.servingwebcontent.model.SuatChieu;
+import com.example.servingwebcontent.util.DateTimeUtils;
 
-    public static void test() {
-        testTaoSuatChieu();
-        testCapNhatSuatChieu();
-        testXemThongTinSuatChieu();
-        testTimSuatChieuTheoMa();
-        testTimSuatChieuTheoPhim();
-        testTimSuatChieuTheoPhong();
-        testXemTatCaSuatChieu();
-        testHienThiSuatChieuTrongNgay();
-        testXoaSuatChieu();
-    }
-    
-    public static void testHienThiSuatChieuTrongNgay() {
-        System.out.println("=== TEST: HIỂN THỊ SUẤT CHIẾU TRONG NGÀY ===");
-        List<SuatChieu> danhSach = new ArrayList<>();
-        LocalDateTime start = LocalDateTime.of(2025, 8, 4, 10, 0);
-        LocalDateTime end = LocalDateTime.of(2025, 8, 4, 12, 0);
-        danhSach.add(new SuatChieu("SC001", "PHIM001", "PHONG01", start, end));
-        assert SuatChieuController.hienThiSuatChieuTrongNgay(danhSach) : "Hiển thị thất bại";
-        System.out.println("✓ Hiển thị suất chiếu trong ngày OK\n");
-    }
+public class SuatChieuController {
 
-    public static void testTaoSuatChieu() {
-        System.out.println("=== TEST: TẠO SUẤT CHIẾU ===");
-        LocalDateTime start = LocalDateTime.of(2025, 8, 5, 14, 0);
-        LocalDateTime end = LocalDateTime.of(2025, 8, 5, 16, 0);
-        SuatChieu sc = new SuatChieu("SC002", "PHIM001", "PHONG01", start, end);
-        assert SuatChieuController.taoSuatChieu(sc) : "Tạo suất chiếu thất bại";
-        System.out.println("✓ Tạo suất chiếu OK\n");
-    }
+    // Hiển thị suất chiếu trong ngày
+    public static boolean hienThiSuatChieuTrongNgay(List<SuatChieu> danhSachSuatChieu) {
+        try {
+            if (danhSachSuatChieu == null) {
+                throw new IllegalArgumentException("Danh sách suất chiếu không được null!");
+            }
 
-    public static void testCapNhatSuatChieu() {
-        System.out.println("=== TEST: CẬP NHẬT SUẤT CHIẾU ===");
-        LocalDateTime newStart = LocalDateTime.of(2025, 8, 5, 15, 0);
-        LocalDateTime newEnd = LocalDateTime.of(2025, 8, 5, 17, 0);
-        SuatChieu scMoi = new SuatChieu("SC002", "PHIM001", "PHONG01", newStart, newEnd);
-        assert SuatChieuController.capNhatSuatChieu("SC002", scMoi) : "Cập nhật thất bại";
-        System.out.println("✓ Cập nhật suất chiếu OK\n");
-    }
+            Scanner scanner = new Scanner(System.in);
+            LocalDateTime dateTime = DateTimeUtils.nhapThoiGian(scanner, "Nhập thời gian (lọc theo ngày)");
+            LocalDate ngay = dateTime.toLocalDate();
+            boolean tim = false;
 
-    public static void testXoaSuatChieu() {
-        System.out.println("=== TEST: XOÁ SUẤT CHIẾU ===");
-        assert SuatChieuController.xoaSuatChieu("SC002") : "Xoá suất chiếu thất bại";
-        System.out.println("✓ Xoá suất chiếu OK\n");
+            System.out.println("Danh sách suất chiếu trong ngày " + ngay + ":");
+            for (SuatChieu sc : danhSachSuatChieu) {
+                if (sc.getThoiGianBatDau().toLocalDate().equals(ngay)) {
+                    sc.hienThiThongTin();
+                    tim = true;
+                }
+            }
+
+            if (!tim) {
+                System.out.println("Không có suất chiếu nào trong ngày " + ngay);
+            }
+
+            return true;
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+            return false;
+        }
     }
 
-    public static void testXemThongTinSuatChieu() {
-        System.out.println("=== TEST: XEM THÔNG TIN SUẤT CHIẾU ===");
-        assert SuatChieuController.xemThongTinSuatChieu("SC001") : "Xem suất chiếu thất bại";
-        System.out.println("✓ Xem thông tin suất chiếu OK\n");
+    // Tạo suất chiếu mới
+    public static boolean taoSuatChieu(SuatChieu suatChieu) {
+        try {
+            if (suatChieu == null) {
+                throw new IllegalArgumentException("Suất chiếu không được null!");
+            }
+            if (suatChieu.getMaSuatChieu() == null || suatChieu.getMaSuatChieu().trim().isEmpty()) {
+                throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
+            }
+            if (suatChieu.getMaPhim() == null || suatChieu.getMaPhim().trim().isEmpty()) {
+                throw new IllegalArgumentException("Mã phim không được để trống!");
+            }
+            if (suatChieu.getMaPhong() == null || suatChieu.getMaPhong().trim().isEmpty()) {
+                throw new IllegalArgumentException("Mã phòng không được để trống!");
+            }
+            if (suatChieu.getThoiGianBatDau() == null) {
+                throw new IllegalArgumentException("Thời gian bắt đầu không được null!");
+            }
+            if (suatChieu.getThoiGianKetThuc() == null) {
+                throw new IllegalArgumentException("Thời gian kết thúc không được null!");
+            }
+            if (suatChieu.getThoiGianBatDau().isAfter(suatChieu.getThoiGianKetThuc())) {
+                throw new IllegalArgumentException("Thời gian bắt đầu phải trước thời gian kết thúc!");
+            }
+
+            SuatChieu.Create(suatChieu);
+            System.out.println("Tạo suất chiếu thành công!");
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+            return false;
+        }
     }
 
-    public static void testXemTatCaSuatChieu() {
-        System.out.println("=== TEST: XEM TẤT CẢ SUẤT CHIẾU ===");
-        assert SuatChieuController.xemTatCaSuatChieu() : "Xem tất cả suất chiếu thất bại";
-        System.out.println("✓ Xem tất cả suất chiếu OK\n");
+    // Cập nhật suất chiếu
+    public static boolean capNhatSuatChieu(String maSuatChieu, SuatChieu suatChieuMoi) {
+        try {
+            if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) {
+                throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
+            }
+            if (suatChieuMoi == null) {
+                throw new IllegalArgumentException("Thông tin suất chiếu mới không được null!");
+            }
+
+            SuatChieu suatChieuCu = SuatChieu.getSuatChieuById(maSuatChieu);
+            if (suatChieuCu == null) {
+                System.out.println("Không tìm thấy suất chiếu với mã: " + maSuatChieu);
+                return false;
+            }
+
+            SuatChieu.Update(maSuatChieu, suatChieuMoi);
+            System.out.println("Cập nhật suất chiếu thành công!");
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+            return false;
+        }
     }
 
-    public static void testTimSuatChieuTheoMa() {
-        System.out.println("=== TEST: TÌM THEO MÃ SUẤT CHIẾU ===");
-        SuatChieu sc = SuatChieuController.timSuatChieuTheoMa("SC001");
-        assert sc != null : "Không tìm thấy suất chiếu";
-        System.out.println("✓ Tìm suất chiếu theo mã OK\n");
+    // Xóa suất chiếu
+    public static boolean xoaSuatChieu(String maSuatChieu) {
+        try {
+            if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) {
+                throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
+            }
+
+            SuatChieu suatChieu = SuatChieu.getSuatChieuById(maSuatChieu);
+            if (suatChieu == null) {
+                System.out.println("Không tìm thấy suất chiếu với mã: " + maSuatChieu);
+                return false;
+            }
+
+            SuatChieu.Delete(maSuatChieu);
+            System.out.println("Xóa suất chiếu thành công!");
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+            return false;
+        }
     }
 
-    public static void testTimSuatChieuTheoPhim() {
-        System.out.println("=== TEST: TÌM THEO MÃ PHIM ===");
-        ArrayList<SuatChieu> list = SuatChieuController.timSuatChieuTheoPhim("PHIM001");
-        assert list != null : "Không tìm thấy theo phim";
-        System.out.println("✓ Tìm suất chiếu theo phim OK\n");
+    // Xem thông tin suất chiếu
+    public static boolean xemThongTinSuatChieu(String maSuatChieu) {
+        try {
+            if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) {
+                throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
+            }
+
+            SuatChieu.Read(maSuatChieu);
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+            return false;
+        }
     }
 
-    public static void testTimSuatChieuTheoPhong() {
-        System.out.println("=== TEST: TÌM THEO MÃ PHÒNG ===");
-        ArrayList<SuatChieu> list = SuatChieuController.timSuatChieuTheoPhong("PHONG01");
-        assert list != null : "Không tìm thấy theo phòng";
-        System.out.println("✓ Tìm suất chiếu theo phòng OK\n");
+    // Xem tất cả suất chiếu
+    public static boolean xemTatCaSuatChieu() {
+        try {
+            SuatChieu.Read();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Tìm kiếm suất chiếu theo mã
+    public static SuatChieu timSuatChieuTheoMa(String maSuatChieu) {
+        try {
+            if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) {
+                throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
+            }
+
+            return SuatChieu.getSuatChieuById(maSuatChieu);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // Tìm kiếm suất chiếu theo phim
+    public static ArrayList<SuatChieu> timSuatChieuTheoPhim(String maPhim) {
+        try {
+            if (maPhim == null || maPhim.trim().isEmpty()) {
+                throw new IllegalArgumentException("Mã phim không được để trống!");
+            }
+
+            return SuatChieu.getSuatChieuByPhim(maPhim);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
+            return new ArrayList<>();
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    // Tìm kiếm suất chiếu theo phòng
+    public static ArrayList<SuatChieu> timSuatChieuTheoPhong(String maPhong) {
+        try {
+            if (maPhong == null || maPhong.trim().isEmpty()) {
+                throw new IllegalArgumentException("Mã phòng không được để trống!");
+            }
+
+            return SuatChieu.getSuatChieuByPhong(maPhong);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
+            return new ArrayList<>();
+        } catch (Exception e) {
+            System.out.println("Lỗi hệ thống: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 }
