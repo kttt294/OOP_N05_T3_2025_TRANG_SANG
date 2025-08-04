@@ -10,6 +10,7 @@ public class KhachHang {
     private String email;
     private String gioiTinh; // Nam, Nu, Khac
     private ArrayList<Ve> lichSuDatVe;
+
     private static ArrayList<KhachHang> danhSachKhachHang = new ArrayList<>();
 
     public KhachHang() {
@@ -125,8 +126,6 @@ public class KhachHang {
             System.out.println("Không tìm thấy khách hàng với CCCD: " + CCCD);
             return;
         }
-        
-        KhachHang khachHang = danhSachKhachHang.get(idx);
         danhSachKhachHang.remove(idx);
         System.out.println("Đã xóa khách hàng thành công.");
     }
@@ -239,18 +238,11 @@ public class KhachHang {
     }
 
     // Phương thức tính tổng tiền khách hàng đã sử dụng
-    public static double tinhTongTienKhachHang(String CCCD) {
-        KhachHang khachHang = getKhachHangByCCCD(CCCD);
-        if (khachHang == null) {
-            return 0;
-        }
-        
+    public double tinhTongTienKhachHang() {
         double tongTien = 0;
-        if (khachHang.getLichSuDatVe() != null) {
-            for (Ve ve : khachHang.getLichSuDatVe()) {
-                if (ve.getTrangThai() == Ve.TrangThaiVe.DA_THANH_TOAN) {
-                    tongTien += ve.getTongTien();
-                }
+        for (HoaDon hd : HoaDon.getDanhSachHoaDon()) {
+            if (this.CCCD != null && this.CCCD.equals(hd.getCCCD())) {
+                tongTien += hd.getTongTien();
             }
         }
         return tongTien;

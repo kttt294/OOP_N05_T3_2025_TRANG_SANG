@@ -31,20 +31,27 @@ public class DatVe {
                 System.out.println("Không tìm thấy ghế!");
                 return false;
             }
+
             // Kiểm tra trạng thái ghế
-            if (!"BinhThuong".equalsIgnoreCase(ghe.getTrangThai().toString())) {
+            if (ghe.getTrangThai() != Ghe.TrangThaiGhe.TRONG) {
                 System.out.println("Ghế đã được đặt hoặc không khả dụng!");
                 return false;
             }
+
             // Tạo vé mới
             Ve veDat = new Ve(maVe, CCCD, maSuatChieu, maGhe, giaVe);
             Ve.Create(veDat);
-            // Cập nhật trạng thái ghế thành "Khoa" (đã đặt)
+
+            // Cập nhật trạng thái ghế
             ghe.setTrangThai(Ghe.TrangThaiGhe.KHOA);
             Ghe.Update(maGhe, ghe);
+
+            // Cập nhật lịch sử đặt vé của khách hàng
+            kh.getLichSuDatVe().add(veDat);
+
             System.out.println("Đặt vé thành công!");
             return true;
-            
+
         } catch (Exception e) {
             System.out.println("Lỗi khi đặt vé: " + e.getMessage());
             return false;
