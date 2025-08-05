@@ -2,6 +2,7 @@ package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,8 @@ import com.example.servingwebcontent.database.khachHangAiven;
 @Controller
 public class KhachHangController {
     
-    private khachHangAiven khachHangDB = new khachHangAiven();
+    @Autowired
+    private khachHangAiven khachHangDB;
     
     // Web Controller Methods
     @GetMapping("/khachhang")
@@ -35,7 +37,7 @@ public class KhachHangController {
     @PostMapping("/khachhang/create")
     public String createKhachHang(@ModelAttribute KhachHang khachHang, Model model) {
         try {
-            if (taoKhachHang(khachHang)) {
+            if (khachHangDB.createKhachHang(khachHang)) {
                 model.addAttribute("success", "Tạo khách hàng thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi tạo khách hàng!");
@@ -49,7 +51,7 @@ public class KhachHangController {
     @PostMapping("/khachhang/update")
     public String updateKhachHang(@RequestParam String CCCD, @ModelAttribute KhachHang khachHang, Model model) {
         try {
-            if (capNhatThongTin(CCCD, khachHang)) {
+            if (khachHangDB.updateKhachHang(CCCD, khachHang)) {
                 model.addAttribute("success", "Cập nhật khách hàng thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi cập nhật khách hàng!");
