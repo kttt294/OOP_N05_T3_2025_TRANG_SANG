@@ -1,23 +1,80 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Quản lý Khách Hàng</title>
     <meta charset="UTF-8">
+    <title>Danh sách Khách Hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #aaa;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .actions {
+            margin-top: 20px;
+        }
+
+        .actions a {
+            margin-right: 16px;
+            text-decoration: none;
+            color: #0056b3;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Quản lý Khách Hàng</h1>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Tên</th>
-            <th>SĐT</th>
-        </tr>
-        <tr th:each="kh : ${dsKH}">
-            <td th:text="${kh.id}"></td>
-            <td th:text="${kh.ten}"></td>
-            <td th:text="${kh.sdt}"></td>
-        </tr>
+    <h1>📋 Danh sách Khách Hàng</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>CCCD</th>
+                <th>Họ tên</th>
+                <th>Tuổi</th>
+                <th>SĐT</th>
+                <th>Email</th>
+                <th>Giới tính</th>
+                <th>Số vé đã đặt</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="kh : ${dsKH}">
+                <td th:text="${kh.CCCD}">123456789</td>
+                <td th:text="${kh.ten}">Nguyễn Văn A</td>
+                <td th:text="${kh.tuoi}">25</td>
+                <td th:text="${kh.sdt}">0901234567</td>
+                <td th:text="${kh.email}">example@email.com</td>
+                <td th:text="${kh.gioiTinh}">Nam</td>
+                <td th:text="${#lists.size(kh.lichSuDatVe)}">0</td>
+            </tr>
+        </tbody>
     </table>
-    <a href="/">Về trang chủ</a>
+
+    <div class="actions">
+        <a th:href="@{/khachhang/them}">➕ Thêm khách hàng mới</a>
+        <a th:href="@{/}">🏠 Về trang chủ</a>
+    </div>
 </body>
-</html> 
+</html>
