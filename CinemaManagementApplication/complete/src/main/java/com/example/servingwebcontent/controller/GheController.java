@@ -1,12 +1,95 @@
 package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import com.example.servingwebcontent.model.Ghe;
+import com.example.servingwebcontent.database.gheAiven;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+@Controller
 public class GheController {
 
-    // Tạo ghế mới
-    public static boolean taoGhe(Ghe ghe) {
+    private gheAiven gheDB = new gheAiven();
+
+    // Web Controller Methods
+    @GetMapping("/ghe")
+    public String ghePage(Model model) {
+        try {
+            List<Ghe> dsGhe = gheDB.getAllGhe();
+            model.addAttribute("dsGhe", dsGhe);
+            model.addAttribute("message", "");
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi khi tải danh sách ghế: " + e.getMessage());
+        }
+        return "ghe";
+    }
+
+    @PostMapping("/ghe/create")
+    public String createGhe(@ModelAttribute Ghe ghe, Model model) {
+        try {
+            if (taoGhe(ghe)) {
+                model.addAttribute("message", "Tạo ghế thành công!");
+            } else {
+                model.addAttribute("message", "Lỗi khi tạo ghế!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+        }
+        return "redirect:/ghe";
+    }
+
+    @PostMapping("/ghe/update")
+    public String updateGhe(@RequestParam String maGhe, @ModelAttribute Ghe ghe, Model model) {
+        try {
+            if (capNhatGhe(maGhe, ghe)) {
+                model.addAttribute("message", "Cập nhật ghế thành công!");
+            } else {
+                model.addAttribute("message", "Lỗi khi cập nhật ghế!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+        }
+        return "redirect:/ghe";
+    }
+
+    @PostMapping("/ghe/delete")
+    public String deleteGhe(@RequestParam String maGhe, Model model) {
+        try {
+            if (xoaGhe(maGhe)) {
+                model.addAttribute("message", "Xóa ghế thành công!");
+            } else {
+                model.addAttribute("message", "Lỗi khi xóa ghế!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+        }
+        return "redirect:/ghe";
+    }
+
+    @GetMapping("/ghe/search")
+    public String searchGhe(@RequestParam String maGhe, Model model) {
+        try {
+            Ghe ghe = timGheTheoMa(maGhe);
+            if (ghe != null) {
+                model.addAttribute("dsGhe", List.of(ghe));
+                model.addAttribute("message", "Kết quả tìm kiếm cho: " + maGhe);
+            } else {
+                model.addAttribute("dsGhe", List.of());
+                model.addAttribute("message", "Không tìm thấy ghế với mã: " + maGhe);
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi khi tìm kiếm: " + e.getMessage());
+        }
+        return "ghe";
+    }
+
+    // Business Logic Methods
+    public boolean taoGhe(Ghe ghe) {
         try {
             if (ghe == null) {
                 throw new IllegalArgumentException("Ghế không được null!");
@@ -15,9 +98,7 @@ public class GheController {
                 throw new IllegalArgumentException("Mã ghế không được để trống!");
             }
 
-            Ghe.Create(ghe);
-            System.out.println("Tạo ghế thành công!");
-            return true;
+            return gheDB.createGhe(ghe);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -27,8 +108,7 @@ public class GheController {
         }
     }
 
-    // Cập nhật ghế
-    public static boolean capNhatGhe(String maGhe, Ghe gheMoi) {
+    public boolean capNhatGhe(String maGhe, Ghe gheMoi) {
         try {
             if (maGhe == null || maGhe.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã ghế không được để trống!");
@@ -37,15 +117,13 @@ public class GheController {
                 throw new IllegalArgumentException("Thông tin ghế mới không được null!");
             }
 
-            Ghe gheCu = Ghe.getGheByMaGhe(maGhe);
+            Ghe gheCu = gheDB.getGheById(maGhe);
             if (gheCu == null) {
                 System.out.println("Không tìm thấy ghế với mã: " + maGhe);
                 return false;
             }
 
-            Ghe.Update(maGhe, gheMoi);
-            System.out.println("Cập nhật ghế thành công!");
-            return true;
+            return gheDB.updateGhe(maGhe, gheMoi);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -55,22 +133,19 @@ public class GheController {
         }
     }
 
-    // Xóa ghế
-    public static boolean xoaGhe(String maGhe) {
+    public boolean xoaGhe(String maGhe) {
         try {
             if (maGhe == null || maGhe.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã ghế không được để trống!");
             }
 
-            Ghe ghe = Ghe.getGheByMaGhe(maGhe);
+            Ghe ghe = gheDB.getGheById(maGhe);
             if (ghe == null) {
                 System.out.println("Không tìm thấy ghế với mã: " + maGhe);
                 return false;
             }
 
-            Ghe.Delete(maGhe);
-            System.out.println("Xóa ghế thành công!");
-            return true;
+            return gheDB.deleteGhe(maGhe);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -80,15 +155,26 @@ public class GheController {
         }
     }
 
-    // Xem thông tin ghế
-    public static boolean xemThongTinGhe(String maGhe) {
+    public boolean xemThongTinGhe(String maGhe) {
         try {
             if (maGhe == null || maGhe.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã ghế không được để trống!");
             }
 
-            Ghe.Read(maGhe);
-            return true;
+            Ghe ghe = gheDB.getGheById(maGhe);
+            if (ghe != null) {
+                System.out.println("=== THÔNG TIN GHẾ ===");
+                System.out.println("Mã ghế: " + ghe.getMaGhe());
+                System.out.println("Hàng: " + ghe.getHang());
+                System.out.println("Cột: " + ghe.getCot());
+                System.out.println("Mã phòng: " + ghe.getMaPhong());
+                System.out.println("Mã suất chiếu: " + ghe.getMaSuatChieu());
+                System.out.println("Trạng thái: " + ghe.getTrangThai());
+                return true;
+            } else {
+                System.out.println("Không tìm thấy ghế với mã: " + maGhe);
+                return false;
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -98,10 +184,15 @@ public class GheController {
         }
     }
 
-    // Xem tất cả ghế
-    public static boolean xemTatCaGhe() {
+    public boolean xemTatCaGhe() {
         try {
-            ArrayList<Ghe> danhSach = Ghe.Read();
+            List<Ghe> danhSach = gheDB.getAllGhe();
+            if (danhSach.isEmpty()) {
+                System.out.println("Không có ghế nào.");
+                return false;
+            }
+
+            System.out.println("=== DANH SÁCH TẤT CẢ GHẾ ===");
             for (Ghe ghe : danhSach) {
                 ghe.hienThiThongTin();
             }
@@ -112,14 +203,13 @@ public class GheController {
         }
     }
 
-    // Tìm kiếm ghế theo mã
-    public static Ghe timGheTheoMa(String maGhe) {
+    public Ghe timGheTheoMa(String maGhe) {
         try {
             if (maGhe == null || maGhe.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã ghế không được để trống!");
             }
 
-            return Ghe.getGheByMaGhe(maGhe);
+            return gheDB.getGheById(maGhe);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;

@@ -1,12 +1,101 @@
 package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import com.example.servingwebcontent.model.DanhGia;
+import com.example.servingwebcontent.database.danhGiaAiven;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+@Controller
 public class DanhGiaController{
     
-    // Tạo đánh giá mới
-    public static boolean taoDanhGia(DanhGia danhGia) {
+    private danhGiaAiven danhGiaDB = new danhGiaAiven();
+
+    // Web Controller Methods
+    @GetMapping("/danhgia")
+    public String danhGiaPage(Model model) {
+        try {
+            List<DanhGia> dsDG = danhGiaDB.getAllDanhGia();
+            model.addAttribute("dsDG", dsDG);
+            model.addAttribute("message", "");
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi khi tải danh sách đánh giá: " + e.getMessage());
+        }
+        return "danhgia";
+    }
+
+    @PostMapping("/danhgia/create")
+    public String createDanhGia(@ModelAttribute DanhGia danhGia, Model model) {
+        try {
+            if (taoDanhGia(danhGia)) {
+                model.addAttribute("message", "Tạo đánh giá thành công!");
+            } else {
+                model.addAttribute("message", "Lỗi khi tạo đánh giá!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+        }
+        return "redirect:/danhgia";
+    }
+
+    @PostMapping("/danhgia/update")
+    public String updateDanhGia(@RequestParam String maDanhGia, @ModelAttribute DanhGia danhGia, Model model) {
+        try {
+            if (capNhatDanhGia(maDanhGia, danhGia)) {
+                model.addAttribute("message", "Cập nhật đánh giá thành công!");
+            } else {
+                model.addAttribute("message", "Lỗi khi cập nhật đánh giá!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+        }
+        return "redirect:/danhgia";
+    }
+
+    @PostMapping("/danhgia/delete")
+    public String deleteDanhGia(@RequestParam String maDanhGia, Model model) {
+        try {
+            if (xoaDanhGia(maDanhGia)) {
+                model.addAttribute("message", "Xóa đánh giá thành công!");
+            } else {
+                model.addAttribute("message", "Lỗi khi xóa đánh giá!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+        }
+        return "redirect:/danhgia";
+    }
+
+    @GetMapping("/danhgia/search")
+    public String searchDanhGia(@RequestParam String keyword, Model model) {
+        try {
+            List<DanhGia> results = timDanhGiaTheoKhachHang(keyword);
+            model.addAttribute("dsDG", results);
+            model.addAttribute("message", "Kết quả tìm kiếm cho: " + keyword);
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi khi tìm kiếm: " + e.getMessage());
+        }
+        return "danhgia";
+    }
+
+    @GetMapping("/danhgia/statistics")
+    public String danhGiaStatisticsPage(Model model) {
+        try {
+            thongKeDanhGia();
+            model.addAttribute("message", "Thống kê đánh giá đã được hiển thị trong console!");
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi khi thống kê: " + e.getMessage());
+        }
+        return "danhgia";
+    }
+
+    // Business Logic Methods
+    public boolean taoDanhGia(DanhGia danhGia) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (danhGia == null) {
@@ -25,9 +114,7 @@ public class DanhGiaController{
                 throw new IllegalArgumentException("Điểm đánh giá phải từ 1-5!");
             }
 
-            DanhGia.Create(danhGia);
-            System.out.println("Tạo đánh giá thành công!");
-            return true;
+            return danhGiaDB.createDanhGia(danhGia);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -37,8 +124,7 @@ public class DanhGiaController{
         }
     }
 
-    // Cập nhật đánh giá
-    public static boolean capNhatDanhGia(String maDanhGia, DanhGia danhGiaMoi) {
+    public boolean capNhatDanhGia(String maDanhGia, DanhGia danhGiaMoi) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (maDanhGia == null || maDanhGia.trim().isEmpty()) {
@@ -49,15 +135,13 @@ public class DanhGiaController{
             }
 
             // Kiểm tra đánh giá có tồn tại không
-            DanhGia danhGiaCu = DanhGia.getDanhGiaByMa(maDanhGia);
+            DanhGia danhGiaCu = danhGiaDB.getDanhGiaById(maDanhGia);
             if (danhGiaCu == null) {
                 System.out.println("Không tìm thấy đánh giá với mã: " + maDanhGia);
                 return false;
             }
 
-            DanhGia.Update(maDanhGia, danhGiaMoi);
-            System.out.println("Cập nhật đánh giá thành công!");
-            return true;
+            return danhGiaDB.updateDanhGia(maDanhGia, danhGiaMoi);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -67,8 +151,7 @@ public class DanhGiaController{
         }
     }
 
-    // Xóa đánh giá
-    public static boolean xoaDanhGia(String maDanhGia) {
+    public boolean xoaDanhGia(String maDanhGia) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (maDanhGia == null || maDanhGia.trim().isEmpty()) {
@@ -76,15 +159,13 @@ public class DanhGiaController{
             }
 
             // Kiểm tra đánh giá có tồn tại không
-            DanhGia danhGia = DanhGia.getDanhGiaByMa(maDanhGia);
+            DanhGia danhGia = danhGiaDB.getDanhGiaById(maDanhGia);
             if (danhGia == null) {
                 System.out.println("Không tìm thấy đánh giá với mã: " + maDanhGia);
                 return false;
             }
 
-            DanhGia.Delete(maDanhGia);
-            System.out.println("Xóa đánh giá thành công!");
-            return true;
+            return danhGiaDB.deleteDanhGia(maDanhGia);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -94,16 +175,27 @@ public class DanhGiaController{
         }
     }
 
-    // Xem thông tin đánh giá
-    public static boolean xemThongTinDanhGia(String maDanhGia) {
+    public boolean xemThongTinDanhGia(String maDanhGia) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (maDanhGia == null || maDanhGia.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã đánh giá không được để trống!");
             }
 
-            DanhGia.Read(maDanhGia);
-            return true;
+            DanhGia danhGia = danhGiaDB.getDanhGiaById(maDanhGia);
+            if (danhGia != null) {
+                System.out.println("=== THÔNG TIN ĐÁNH GIÁ ===");
+                System.out.println("Mã đánh giá: " + danhGia.getMaDanhGia());
+                System.out.println("CCCD: " + danhGia.getCCCD());
+                System.out.println("Mã phim: " + danhGia.getMaPhim());
+                System.out.println("Số sao: " + danhGia.getSoSao());
+                System.out.println("Nội dung: " + danhGia.getNoiDung());
+                System.out.println("Thời gian: " + danhGia.getThoiGian());
+                return true;
+            } else {
+                System.out.println("Không tìm thấy đánh giá với mã: " + maDanhGia);
+                return false;
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -113,10 +205,19 @@ public class DanhGiaController{
         }
     }
 
-    // Xem tất cả đánh giá
-    public static boolean xemTatCaDanhGia() {
+    public boolean xemTatCaDanhGia() {
         try {
-            DanhGia.Read();
+            List<DanhGia> danhSach = danhGiaDB.getAllDanhGia();
+            if (danhSach.isEmpty()) {
+                System.out.println("Không có đánh giá nào.");
+                return false;
+            }
+
+            System.out.println("=== DANH SÁCH TẤT CẢ ĐÁNH GIÁ ===");
+            for (DanhGia dg : danhSach) {
+                System.out.println("Mã: " + dg.getMaDanhGia() + " | CCCD: " + dg.getCCCD() + 
+                    " | Phim: " + dg.getMaPhim() + " | Số sao: " + dg.getSoSao());
+            }
             return true;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
@@ -124,15 +225,14 @@ public class DanhGiaController{
         }
     }
 
-    // Tìm kiếm đánh giá theo mã
-    public static DanhGia timDanhGiaTheoMa(String maDanhGia) {
+    public DanhGia timDanhGiaTheoMa(String maDanhGia) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (maDanhGia == null || maDanhGia.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã đánh giá không được để trống!");
             }
 
-            return DanhGia.getDanhGiaByMa(maDanhGia);
+            return danhGiaDB.getDanhGiaById(maDanhGia);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;
@@ -142,15 +242,15 @@ public class DanhGiaController{
         }
     }
 
-    // Tìm kiếm đánh giá theo khách hàng
-    public static ArrayList<DanhGia> timDanhGiaTheoKhachHang(String CCCD) {
+    public ArrayList<DanhGia> timDanhGiaTheoKhachHang(String CCCD) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (CCCD == null || CCCD.trim().isEmpty()) {
                 throw new IllegalArgumentException("CCCD không được để trống!");
             }
 
-            return DanhGia.getDanhGiaByCCCD(CCCD);
+            List<DanhGia> results = danhGiaDB.getDanhGiaByCCCD(CCCD);
+            return new ArrayList<>(results);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return new ArrayList<>();
@@ -160,20 +260,49 @@ public class DanhGiaController{
         }
     }
 
-    // Tính điểm trung bình
-    public static double tinhDiemTrungBinh() {
+    public double tinhDiemTrungBinh() {
         try {
-            return DanhGia.tinhDiemTrungBinhPhim("ALL");
+            List<DanhGia> danhSach = danhGiaDB.getAllDanhGia();
+            if (danhSach.isEmpty()) {
+                return 0.0;
+            }
+
+            int tongDiem = 0;
+            for (DanhGia dg : danhSach) {
+                tongDiem += dg.getSoSao();
+            }
+
+            return (double) tongDiem / danhSach.size();
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
             return 0.0;
         }
     }
 
-    // Thống kê đánh giá
-    public static boolean thongKeDanhGia() {
+    public boolean thongKeDanhGia() {
         try {
-            DanhGia.thongKeDanhGia();
+            List<DanhGia> danhSach = danhGiaDB.getAllDanhGia();
+            if (danhSach.isEmpty()) {
+                System.out.println("Không có đánh giá để thống kê.");
+                return false;
+            }
+
+            int tongDanhGia = danhSach.size();
+            int tongDiem = 0;
+            int[] demSao = new int[6]; // 0-5 sao
+
+            for (DanhGia dg : danhSach) {
+                tongDiem += dg.getSoSao();
+                demSao[dg.getSoSao()]++;
+            }
+
+            System.out.println("=== THỐNG KÊ ĐÁNH GIÁ ===");
+            System.out.println("Tổng số đánh giá: " + tongDanhGia);
+            System.out.println("Điểm trung bình: " + String.format("%.2f", (double) tongDiem / tongDanhGia));
+            System.out.println("Phân bố số sao:");
+            for (int i = 1; i <= 5; i++) {
+                System.out.println(i + " sao: " + demSao[i] + " đánh giá");
+            }
             return true;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());

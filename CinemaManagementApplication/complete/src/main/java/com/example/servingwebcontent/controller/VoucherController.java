@@ -1,13 +1,102 @@
 package com.example.servingwebcontent.controller;
 
 import com.example.servingwebcontent.model.Voucher;
+import com.example.servingwebcontent.database.voucherAiven;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
+@Controller
 public class VoucherController {
 
-    // Tạo voucher mới
-    public static boolean taoVoucher(Voucher voucher) {
+    private voucherAiven voucherDB = new voucherAiven();
+
+    // Web Controller Methods
+    @GetMapping("/voucher")
+    public String voucherPage(Model model) {
+        try {
+            List<Voucher> dsVoucher = voucherDB.getAllVoucher();
+            model.addAttribute("dsVoucher", dsVoucher);
+            model.addAttribute("message", "");
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi khi tải danh sách voucher: " + e.getMessage());
+        }
+        return "voucher";
+    }
+
+    @PostMapping("/voucher/create")
+    public String createVoucher(@ModelAttribute Voucher voucher, Model model) {
+        try {
+            if (taoVoucher(voucher)) {
+                model.addAttribute("message", "Tạo voucher thành công!");
+            } else {
+                model.addAttribute("message", "Lỗi khi tạo voucher!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+        }
+        return "redirect:/voucher";
+    }
+
+    @PostMapping("/voucher/update")
+    public String updateVoucher(@RequestParam String maVoucher, @ModelAttribute Voucher voucher, Model model) {
+        try {
+            if (capNhatVoucher(maVoucher, voucher)) {
+                model.addAttribute("message", "Cập nhật voucher thành công!");
+            } else {
+                model.addAttribute("message", "Lỗi khi cập nhật voucher!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+        }
+        return "redirect:/voucher";
+    }
+
+    @PostMapping("/voucher/delete")
+    public String deleteVoucher(@RequestParam String maVoucher, Model model) {
+        try {
+            if (xoaVoucher(maVoucher)) {
+                model.addAttribute("message", "Xóa voucher thành công!");
+            } else {
+                model.addAttribute("message", "Lỗi khi xóa voucher!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+        }
+        return "redirect:/voucher";
+    }
+
+    @GetMapping("/voucher/search")
+    public String searchVoucher(@RequestParam String keyword, Model model) {
+        try {
+            List<Voucher> results = timVoucherTheoTen(keyword);
+            model.addAttribute("dsVoucher", results);
+            model.addAttribute("message", "Kết quả tìm kiếm cho: " + keyword);
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi khi tìm kiếm: " + e.getMessage());
+        }
+        return "voucher";
+    }
+
+    @GetMapping("/voucher/statistics")
+    public String voucherStatisticsPage(Model model) {
+        try {
+            thongKeVoucher();
+            model.addAttribute("message", "Thống kê voucher đã được hiển thị trong console!");
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi khi thống kê: " + e.getMessage());
+        }
+        return "voucher";
+    }
+
+    // Business Logic Methods
+    public boolean taoVoucher(Voucher voucher) {
         try {
             if (voucher == null || voucher.getMaVoucher() == null || voucher.getMaVoucher().trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã voucher không được để trống!");
@@ -22,75 +111,91 @@ public class VoucherController {
                 throw new IllegalArgumentException("Số lượng còn lại không được để trống!");
             }
 
-            Voucher.Create(voucher);
-            return true;
+            return voucherDB.createVoucher(voucher);
         } catch (Exception e) {
             System.out.println("Lỗi khi tạo voucher: " + e.getMessage());
             return false;
         }
     }
 
-    // Cập nhật voucher
-    public static boolean capNhatVoucher(String maVoucher, Voucher voucherMoi) {
+    public boolean capNhatVoucher(String maVoucher, Voucher voucherMoi) {
         try {
             if (maVoucher == null || maVoucher.trim().isEmpty() || voucherMoi == null) {
                 throw new IllegalArgumentException("Dữ liệu đầu vào không hợp lệ!");
             }
 
-            Voucher cu = Voucher.getVoucherById(maVoucher);
+            Voucher cu = voucherDB.getVoucherById(maVoucher);
             if (cu == null) {
                 System.out.println("Không tìm thấy voucher với mã: " + maVoucher);
                 return false;
             }
 
-            Voucher.Update(maVoucher, voucherMoi);
-            return true;
+            return voucherDB.updateVoucher(maVoucher, voucherMoi);
         } catch (Exception e) {
             System.out.println("Lỗi khi cập nhật voucher: " + e.getMessage());
             return false;
         }
     }
 
-    // Xóa voucher
-    public static boolean xoaVoucher(String maVoucher) {
+    public boolean xoaVoucher(String maVoucher) {
         try {
             if (maVoucher == null || maVoucher.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã voucher không được để trống!");
             }
 
-            Voucher v = Voucher.getVoucherById(maVoucher);
+            Voucher v = voucherDB.getVoucherById(maVoucher);
             if (v == null) {
                 System.out.println("Không tìm thấy voucher với mã: " + maVoucher);
                 return false;
             }
 
-            Voucher.Delete(maVoucher);
-            return true;
+            return voucherDB.deleteVoucher(maVoucher);
         } catch (Exception e) {
             System.out.println("Lỗi khi xóa voucher: " + e.getMessage());
             return false;
         }
     }
 
-    // Xem 1 voucher
-    public static boolean xemThongTinVoucher(String maVoucher) {
+    public boolean xemThongTinVoucher(String maVoucher) {
         try {
             if (maVoucher == null || maVoucher.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã voucher không được để trống!");
             }
 
-            Voucher.Read(maVoucher);
-            return true;
+            Voucher voucher = voucherDB.getVoucherById(maVoucher);
+            if (voucher != null) {
+                System.out.println("=== THÔNG TIN VOUCHER ===");
+                System.out.println("Mã voucher: " + voucher.getMaVoucher());
+                System.out.println("Mô tả: " + voucher.getMoTa());
+                System.out.println("Phần trăm giảm giá: " + voucher.getPhanTramGiamGia() + "%");
+                System.out.println("Ngày bắt đầu: " + voucher.getNgayBatDau());
+                System.out.println("Ngày kết thúc: " + voucher.getNgayKetThuc());
+                System.out.println("Số lượng còn lại: " + voucher.getSoLuongConLai());
+                System.out.println("Trạng thái: " + voucher.getTrangThai());
+                return true;
+            } else {
+                System.out.println("Không tìm thấy voucher với mã: " + maVoucher);
+                return false;
+            }
         } catch (Exception e) {
             System.out.println("Lỗi khi xem thông tin voucher: " + e.getMessage());
             return false;
         }
     }
 
-    // Xem tất cả voucher
-    public static boolean xemTatCaVoucher() {
+    public boolean xemTatCaVoucher() {
         try {
-            Voucher.Read();
+            List<Voucher> danhSach = voucherDB.getAllVoucher();
+            if (danhSach.isEmpty()) {
+                System.out.println("Không có voucher nào.");
+                return false;
+            }
+
+            System.out.println("=== DANH SÁCH TẤT CẢ VOUCHER ===");
+            for (Voucher v : danhSach) {
+                System.out.println("Mã: " + v.getMaVoucher() + " | Mô tả: " + v.getMoTa() + 
+                    " | Giảm giá: " + v.getPhanTramGiamGia() + "% | Trạng thái: " + v.getTrangThai());
+            }
             return true;
         } catch (Exception e) {
             System.out.println("Lỗi khi xem danh sách voucher: " + e.getMessage());
@@ -98,40 +203,32 @@ public class VoucherController {
         }
     }
 
-    // Tìm voucher theo mã
-    public static Voucher timVoucherTheoMa(String maVoucher) {
+    public Voucher timVoucherTheoMa(String maVoucher) {
         try {
             if (maVoucher == null || maVoucher.trim().isEmpty()) return null;
-            return Voucher.getVoucherById(maVoucher);
+            return voucherDB.getVoucherById(maVoucher);
         } catch (Exception e) {
             System.out.println("Lỗi khi tìm voucher: " + e.getMessage());
             return null;
         }
     }
 
-    // Tìm voucher theo tên
-    public static ArrayList<Voucher> timVoucherTheoTen(String keyword) {
+    public ArrayList<Voucher> timVoucherTheoTen(String keyword) {
         ArrayList<Voucher> ketQua = new ArrayList<>();
         try {
             if (keyword == null || keyword.trim().isEmpty()) return ketQua;
 
-            for (Voucher v : Voucher.Read()) {
-                if (v.getMoTa().toLowerCase().contains(keyword.toLowerCase())) {
-                    ketQua.add(v);
-                }
-            }
-
-            return ketQua;
+            List<Voucher> results = voucherDB.searchVoucherByMoTa(keyword);
+            return new ArrayList<>(results);
         } catch (Exception e) {
             System.out.println("Lỗi khi tìm kiếm voucher theo tên: " + e.getMessage());
             return ketQua;
         }
     }
 
-    // Kiểm tra voucher hợp lệ
-    public static boolean kiemTraVoucherHopLe(String maVoucher) {
+    public boolean kiemTraVoucherHopLe(String maVoucher) {
         try {
-            Voucher v = Voucher.getVoucherById(maVoucher);
+            Voucher v = voucherDB.getVoucherById(maVoucher);
             if (v == null) return false;
 
             LocalDateTime now = LocalDateTime.now();
@@ -147,10 +244,9 @@ public class VoucherController {
         }
     }
 
-    // Sử dụng voucher
-    public static boolean suDungVoucher(String maVoucher) {
+    public boolean suDungVoucher(String maVoucher) {
         try {
-            Voucher v = Voucher.getVoucherById(maVoucher);
+            Voucher v = voucherDB.getVoucherById(maVoucher);
             if (v == null || !kiemTraVoucherHopLe(maVoucher)) return false;
 
             int sl = Integer.parseInt(v.getSoLuongConLai());
@@ -158,17 +254,16 @@ public class VoucherController {
             v.setSoLuongConLai(String.valueOf(sl));
             if (sl <= 0) v.setTrangThai("HetHang");
 
-            return true;
+            return voucherDB.updateVoucher(maVoucher, v);
         } catch (Exception e) {
             System.out.println("Lỗi khi sử dụng voucher: " + e.getMessage());
             return false;
         }
     }
 
-    // Thống kê
-    public static boolean thongKeVoucher() {
+    public boolean thongKeVoucher() {
         try {
-            ArrayList<Voucher> danhSach = Voucher.Read();
+            List<Voucher> danhSach = voucherDB.getAllVoucher();
             if (danhSach.isEmpty()) {
                 System.out.println("Không có voucher để thống kê.");
                 return false;

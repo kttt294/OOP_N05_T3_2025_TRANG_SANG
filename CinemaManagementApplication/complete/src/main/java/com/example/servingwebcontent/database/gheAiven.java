@@ -199,4 +199,78 @@ public class gheAiven {
         }
         return danhSachGhe;
     }
+    
+    public boolean createGhe(Ghe ghe) {
+        Connection conn = null;
+        try {
+            myDBConnection mydb = new myDBConnection();
+            conn = mydb.getOnlyConn();
+            
+            Statement sta = conn.createStatement();
+            String sql = "INSERT INTO ghe (maGhe, hang, cot, maPhong, maSuatChieu, trangThai) VALUES ('" +
+                ghe.getMaGhe() + "', " + ghe.getHang() + ", " + ghe.getCot() + ", '" + 
+                ghe.getMaPhong() + "', '" + ghe.getMaSuatChieu() + "', '" + 
+                ghe.getTrangThai().toString() + "')";
+            
+            int result = sta.executeUpdate(sql);
+            System.out.println("Tạo ghế thành công: " + ghe.getMaGhe());
+            
+            sta.close();
+            conn.close();
+            return result > 0;
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo ghế: " + e);
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean updateGhe(String maGhe, Ghe gheMoi) {
+        Connection conn = null;
+        try {
+            myDBConnection mydb = new myDBConnection();
+            conn = mydb.getOnlyConn();
+            
+            Statement sta = conn.createStatement();
+            String sql = "UPDATE ghe SET hang = " + gheMoi.getHang() + 
+                ", cot = " + gheMoi.getCot() + 
+                ", maPhong = '" + gheMoi.getMaPhong() + "'" +
+                ", maSuatChieu = '" + gheMoi.getMaSuatChieu() + "'" +
+                ", trangThai = '" + gheMoi.getTrangThai().toString() + "'" +
+                " WHERE maGhe = '" + maGhe + "'";
+            
+            int result = sta.executeUpdate(sql);
+            System.out.println("Cập nhật ghế thành công: " + maGhe);
+            
+            sta.close();
+            conn.close();
+            return result > 0;
+        } catch (Exception e) {
+            System.out.println("Lỗi cập nhật ghế: " + e);
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean deleteGhe(String maGhe) {
+        Connection conn = null;
+        try {
+            myDBConnection mydb = new myDBConnection();
+            conn = mydb.getOnlyConn();
+            
+            Statement sta = conn.createStatement();
+            String sql = "DELETE FROM ghe WHERE maGhe = '" + maGhe + "'";
+            
+            int result = sta.executeUpdate(sql);
+            System.out.println("Xóa ghế thành công: " + maGhe);
+            
+            sta.close();
+            conn.close();
+            return result > 0;
+        } catch (Exception e) {
+            System.out.println("Lỗi xóa ghế: " + e);
+            e.printStackTrace();
+            return false;
+        }
+    }
 } 
