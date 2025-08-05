@@ -158,4 +158,62 @@ public class phimAiven {
             return false;
         }
     }
+    
+    public ArrayList<Phim> searchPhimByTen(String tenPhim) {
+        Connection conn = null;
+        ArrayList<Phim> ketQua = new ArrayList<>();
+        try {
+            myDBConnection mydb = new myDBConnection();
+            conn = mydb.getOnlyConn();
+            Statement sta = conn.createStatement();
+            ResultSet reset = sta.executeQuery("SELECT * FROM phim WHERE tenPhim LIKE '%" + tenPhim + "%'");
+            while (reset.next()) {
+                String maPhim = reset.getString("maPhim");
+                String ten = reset.getString("tenPhim");
+                String theLoai = reset.getString("theLoai");
+                int thoiLuong = reset.getInt("thoiLuong");
+                String ngonNgu = reset.getString("ngonNgu");
+                int gioiHanTuoi = reset.getInt("gioiHanTuoi");
+                String moTa = reset.getString("moTa");
+                Phim phim = new Phim(maPhim, ten, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
+                ketQua.add(phim);
+            }
+            reset.close();
+            sta.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("Lỗi tìm kiếm phim theo tên: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
+    
+    public ArrayList<Phim> searchPhimByTheLoai(String theLoai) {
+        Connection conn = null;
+        ArrayList<Phim> ketQua = new ArrayList<>();
+        try {
+            myDBConnection mydb = new myDBConnection();
+            conn = mydb.getOnlyConn();
+            Statement sta = conn.createStatement();
+            ResultSet reset = sta.executeQuery("SELECT * FROM phim WHERE theLoai LIKE '%" + theLoai + "%'");
+            while (reset.next()) {
+                String maPhim = reset.getString("maPhim");
+                String ten = reset.getString("tenPhim");
+                String theLoaiPhim = reset.getString("theLoai");
+                int thoiLuong = reset.getInt("thoiLuong");
+                String ngonNgu = reset.getString("ngonNgu");
+                int gioiHanTuoi = reset.getInt("gioiHanTuoi");
+                String moTa = reset.getString("moTa");
+                Phim phim = new Phim(maPhim, ten, theLoaiPhim, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
+                ketQua.add(phim);
+            }
+            reset.close();
+            sta.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("Lỗi tìm kiếm phim theo thể loại: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
 } 
