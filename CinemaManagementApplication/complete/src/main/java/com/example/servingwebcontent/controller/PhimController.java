@@ -2,6 +2,7 @@ package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,8 @@ import com.example.servingwebcontent.database.phimAiven;
 @Controller
 public class PhimController {
     
-    private phimAiven phimDB = new phimAiven();
+    @Autowired
+    private phimAiven phimDB;
     
     // Web Controller Methods
     @GetMapping("/phim")
@@ -33,7 +35,7 @@ public class PhimController {
     @PostMapping("/phim/create")
     public String createPhim(@ModelAttribute Phim phim, Model model) {
         try {
-            if (taoPhim(phim)) {
+            if (phimDB.createPhim(phim)) {
                 model.addAttribute("success", "Tạo phim thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi tạo phim!");
@@ -47,7 +49,7 @@ public class PhimController {
     @PostMapping("/phim/update")
     public String updatePhim(@RequestParam String maPhim, @ModelAttribute Phim phim, Model model) {
         try {
-            if (capNhatPhim(maPhim, phim)) {
+            if (phimDB.updatePhim(maPhim, phim)) {
                 model.addAttribute("success", "Cập nhật phim thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi cập nhật phim!");
@@ -61,7 +63,7 @@ public class PhimController {
     @PostMapping("/phim/delete")
     public String deletePhim(@RequestParam String maPhim, Model model) {
         try {
-            if (xoaPhim(maPhim)) {
+            if (phimDB.deletePhim(maPhim)) {
                 model.addAttribute("success", "Xóa phim thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi xóa phim!");
@@ -78,13 +80,13 @@ public class PhimController {
             List<Phim> results = new ArrayList<>();
             switch (type) {
                 case "ten":
-                    results = timPhimTheoTen(keyword);
+                    results = phimDB.searchPhimByTen(keyword);
                     break;
                 case "theloai":
-                    results = timPhimTheoTheLoai(keyword);
+                    results = phimDB.searchPhimByTheLoai(keyword);
                     break;
                 default:
-                    Phim phim = timPhimTheoMa(keyword);
+                    Phim phim = phimDB.getPhimById(keyword);
                     if (phim != null) {
                         results.add(phim);
                     }
@@ -99,215 +101,68 @@ public class PhimController {
         return "phim";
     }
     
-    // Business Logic Methods
+    // Business Logic Methods (delegated to database layer)
     public boolean taoPhim(Phim phim) {
-        try {
-            // Kiểm tra dữ liệu đầu vào
-            if (phim == null) {
-                throw new IllegalArgumentException("Phim không được null!");
-            }
-            if (phim.getMaPhim() == null || phim.getMaPhim().trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã phim không được để trống!");
-            }
-            if (phim.getTenPhim() == null || phim.getTenPhim().trim().isEmpty()) {
-                throw new IllegalArgumentException("Tên phim không được để trống!");
-            }
-            if (phim.getThoiLuong() <= 0) {
-                throw new IllegalArgumentException("Thời lượng phim phải lớn hơn 0!");
-            }
-            if (phim.getGioiHanTuoi() < 0 || phim.getGioiHanTuoi() > 25) {
-                throw new IllegalArgumentException("Giới hạn tuổi không hợp lệ!");
-            }
-
-            return phimDB.createPhim(phim);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return false;
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return false;
-        }
+        return phimDB.createPhim(phim);
     }
-
+    
     public boolean capNhatPhim(String maPhim, Phim phimMoi) {
-        try {
-            // Kiểm tra dữ liệu đầu vào
-            if (maPhim == null || maPhim.trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã phim không được để trống!");
-            }
-            if (phimMoi == null) {
-                throw new IllegalArgumentException("Thông tin phim mới không được null!");
-            }
-
-            // Kiểm tra phim có tồn tại không
-            Phim phimCu = phimDB.getPhimById(maPhim);
-            if (phimCu == null) {
-                System.out.println("Không tìm thấy phim với mã: " + maPhim);
-                return false;
-            }
-
-            return phimDB.updatePhim(maPhim, phimMoi);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return false;
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return false;
-        }
+        return phimDB.updatePhim(maPhim, phimMoi);
     }
-
+    
     public boolean xoaPhim(String maPhim) {
-        try {
-            // Kiểm tra dữ liệu đầu vào
-            if (maPhim == null || maPhim.trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã phim không được để trống!");
-            }
-
-            // Kiểm tra phim có tồn tại không
-            Phim phim = phimDB.getPhimById(maPhim);
-            if (phim == null) {
-                System.out.println("Không tìm thấy phim với mã: " + maPhim);
-                return false;
-            }
-
-            return phimDB.deletePhim(maPhim);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return false;
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return false;
-        }
+        return phimDB.deletePhim(maPhim);
     }
-
+    
     public boolean xemThongTinPhim(String maPhim) {
-        try {
-            // Kiểm tra dữ liệu đầu vào
-            if (maPhim == null || maPhim.trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã phim không được để trống!");
-            }
-
-            Phim phim = phimDB.getPhimById(maPhim);
-            if (phim != null) {
-                phim.hienThiThongTin();
-                return true;
-            } else {
-                System.out.println("Không tìm thấy phim với mã: " + maPhim);
-                return false;
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return false;
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return false;
+        Phim phim = phimDB.getPhimById(maPhim);
+        if (phim != null) {
+            System.out.println("Thông tin phim: " + phim.getTenPhim());
+            return true;
         }
+        return false;
     }
-
+    
     public boolean xemTatCaPhim() {
-        try {
-            List<Phim> danhSachPhim = phimDB.getAllPhim();
-            if (danhSachPhim.isEmpty()) {
-                System.out.println("Danh sách phim trống.");
-            } else {
-                System.out.println("Tổng số phim: " + danhSachPhim.size());
-                for (Phim phim : danhSachPhim) {
-                    phim.hienThiThongTin();
-                }
-            }
-            return true;
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return false;
+        List<Phim> dsPhim = phimDB.getAllPhim();
+        System.out.println("Tổng số phim: " + dsPhim.size());
+        for (Phim phim : dsPhim) {
+            System.out.println("Mã phim: " + phim.getMaPhim() + " | Tên: " + phim.getTenPhim());
         }
+        return true;
     }
-
+    
     public Phim timPhimTheoMa(String maPhim) {
-        try {
-            // Kiểm tra dữ liệu đầu vào
-            if (maPhim == null || maPhim.trim().isEmpty()) {
-                throw new IllegalArgumentException("Mã phim không được để trống!");
-            }
-
-            return phimDB.getPhimById(maPhim);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return null;
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return null;
-        }
+        return phimDB.getPhimByMaPhim(maPhim);
     }
-
+    
     public ArrayList<Phim> timPhimTheoTen(String tenPhim) {
-        try {
-            // Kiểm tra dữ liệu đầu vào
-            if (tenPhim == null || tenPhim.trim().isEmpty()) {
-                throw new IllegalArgumentException("Tên phim không được để trống!");
-            }
-
-            return phimDB.searchPhimByTen(tenPhim);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return new ArrayList<>();
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return new ArrayList<>();
-        }
+        List<Phim> results = phimDB.searchPhimByTen(tenPhim);
+        return new ArrayList<>(results);
     }
-
+    
     public ArrayList<Phim> timPhimTheoTheLoai(String theLoai) {
-        try {
-            // Kiểm tra dữ liệu đầu vào
-            if (theLoai == null || theLoai.trim().isEmpty()) {
-                throw new IllegalArgumentException("Thể loại không được để trống!");
-            }
-
-            return phimDB.searchPhimByTheLoai(theLoai);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
-            return new ArrayList<>();
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return new ArrayList<>();
-        }
+        List<Phim> results = phimDB.searchPhimByTheLoai(theLoai);
+        return new ArrayList<>(results);
     }
-
+    
     public boolean thongKePhim() {
-        try {
-            List<Phim> danhSachPhim = phimDB.getAllPhim();
-            System.out.println("=== THỐNG KÊ PHIM ===");
-            System.out.println("Tổng số phim: " + danhSachPhim.size());
-            
-            // Thống kê theo thể loại
-            java.util.Map<String, Integer> theLoaiCount = new java.util.HashMap<>();
-            for (Phim phim : danhSachPhim) {
-                String theLoai = phim.getTheLoai();
-                theLoaiCount.put(theLoai, theLoaiCount.getOrDefault(theLoai, 0) + 1);
-            }
-            
-            System.out.println("Thống kê theo thể loại:");
-            for (java.util.Map.Entry<String, Integer> entry : theLoaiCount.entrySet()) {
-                System.out.println("  " + entry.getKey() + ": " + entry.getValue() + " phim");
-            }
-            
-            // Thống kê theo ngôn ngữ
-            java.util.Map<String, Integer> ngonNguCount = new java.util.HashMap<>();
-            for (Phim phim : danhSachPhim) {
-                String ngonNgu = phim.getNgonNgu();
-                ngonNguCount.put(ngonNgu, ngonNguCount.getOrDefault(ngonNgu, 0) + 1);
-            }
-            
-            System.out.println("Thống kê theo ngôn ngữ:");
-            for (java.util.Map.Entry<String, Integer> entry : ngonNguCount.entrySet()) {
-                System.out.println("  " + entry.getKey() + ": " + entry.getValue() + " phim");
-            }
-            
-            System.out.println("=====================");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Lỗi hệ thống: " + e.getMessage());
-            return false;
+        List<Phim> dsPhim = phimDB.getAllPhim();
+        System.out.println("=== THỐNG KÊ PHIM ===");
+        System.out.println("Tổng số phim: " + dsPhim.size());
+        
+        // Thống kê theo thể loại
+        java.util.Map<String, Integer> theLoaiCount = new java.util.HashMap<>();
+        for (Phim phim : dsPhim) {
+            String theLoai = phim.getTheLoai();
+            theLoaiCount.put(theLoai, theLoaiCount.getOrDefault(theLoai, 0) + 1);
         }
+        
+        System.out.println("\nThống kê theo thể loại:");
+        for (java.util.Map.Entry<String, Integer> entry : theLoaiCount.entrySet()) {
+            System.out.println("- " + entry.getKey() + ": " + entry.getValue() + " phim");
+        }
+        
+        return true;
     }
 } 
