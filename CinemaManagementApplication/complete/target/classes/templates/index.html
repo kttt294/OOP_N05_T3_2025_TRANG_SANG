@@ -1,30 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Cinema Management System</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 0;
-        }
-        .feature-card {
-            transition: transform 0.3s ease;
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -50,172 +31,198 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/suatchieu">Suất chiếu</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/db-status">
+                            <i class="fas fa-database me-1"></i>DB Status
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container text-center">
-            <h1 class="display-4 fw-bold mb-4">
-                <i class="fas fa-film me-3"></i>Hệ Thống Quản Lý Rạp Phim
-            </h1>
-            <p class="lead mb-5">Quản lý toàn diện rạp phim với giao diện hiện đại và dễ sử dụng</p>
-            <div class="row">
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="text-center">
-                        <i class="fas fa-ticket-alt fa-3x mb-3"></i>
-                        <h5>Quản lý Vé</h5>
-                        <p class="text-light">Đặt vé, hủy vé, thống kê</p>
-                    </div>
+    <div class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold">
+                        <i class="fas fa-film me-3"></i>Cinema Management System
+                    </h1>
+                    <p class="lead">Hệ thống quản lý rạp phim hiện đại với giao diện Bootstrap responsive</p>
+                    <p class="mb-4">Quản lý phim, khách hàng, vé, suất chiếu và nhiều tính năng khác</p>
+                    <a href="/khachhang" class="btn btn-light btn-lg me-3">
+                        <i class="fas fa-users me-2"></i>Quản lý Khách hàng
+                    </a>
+                    <a href="/phim" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-video me-2"></i>Quản lý Phim
+                    </a>
                 </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="text-center">
-                        <i class="fas fa-users fa-3x mb-3"></i>
-                        <h5>Khách hàng</h5>
-                        <p class="text-light">Thông tin khách hàng</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="text-center">
-                        <i class="fas fa-video fa-3x mb-3"></i>
-                        <h5>Phim & Suất chiếu</h5>
-                        <p class="text-light">Quản lý lịch chiếu</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="text-center">
-                        <i class="fas fa-chart-bar fa-3x mb-3"></i>
-                        <h5>Báo cáo</h5>
-                        <p class="text-light">Thống kê doanh thu</p>
-                    </div>
+                <div class="col-lg-4 text-center">
+                    <i class="fas fa-film fa-8x opacity-75"></i>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Features Section -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Chức Năng Chính</h2>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <div class="card-icon text-primary">
-                                <i class="fas fa-film"></i>
-                            </div>
-                            <h5 class="card-title">Quản lý Phim</h5>
-                            <p class="card-text">Thêm, sửa, xóa thông tin phim, quản lý thể loại và thời lượng.</p>
-                            <a href="/phim" class="btn btn-primary">Quản lý Phim</a>
+    <div class="container my-5">
+        <h2 class="text-center mb-5">
+            <i class="fas fa-star me-2"></i>Tính Năng Chính
+        </h2>
+        
+        <div class="row g-4">
+            <!-- Customer Management -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-users fa-2x"></i>
                         </div>
+                        <h5 class="card-title">Quản lý Khách hàng</h5>
+                        <p class="card-text">Thêm, sửa, xóa và tìm kiếm thông tin khách hàng với giao diện Bootstrap đẹp mắt.</p>
+                        <a href="/khachhang" class="btn btn-primary">
+                            <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <div class="card-icon text-success">
-                                <i class="fas fa-ticket-alt"></i>
-                            </div>
-                            <h5 class="card-title">Quản lý Vé</h5>
-                            <p class="card-text">Đặt vé, hủy vé, quản lý trạng thái vé và tính toán doanh thu.</p>
-                            <a href="/ve" class="btn btn-success">Quản lý Vé</a>
+            </div>
+
+            <!-- Movie Management -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-video fa-2x"></i>
                         </div>
+                        <h5 class="card-title">Quản lý Phim</h5>
+                        <p class="card-text">Quản lý danh sách phim với thông tin chi tiết và hình ảnh minh họa.</p>
+                        <a href="/phim" class="btn btn-success">
+                            <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <div class="card-icon text-info">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h5 class="card-title">Quản lý Khách Hàng</h5>
-                            <p class="card-text">Thông tin khách hàng, lịch sử đặt vé và phân tích VIP.</p>
-                            <a href="/khachhang" class="btn btn-info">Quản lý KH</a>
+            </div>
+
+            <!-- Ticket Management -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-ticket-alt fa-2x"></i>
                         </div>
+                        <h5 class="card-title">Quản lý Vé</h5>
+                        <p class="card-text">Đặt vé, thanh toán và quản lý trạng thái vé với giao diện hiện đại.</p>
+                        <a href="/ve" class="btn btn-warning">
+                            <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <div class="card-icon text-warning">
-                                <i class="fas fa-chair"></i>
-                            </div>
-                            <h5 class="card-title">Quản lý Ghế</h5>
-                            <p class="card-text">Quản lý vị trí ghế, trạng thái đặt và bố cục phòng chiếu.</p>
-                            <a href="/ghe" class="btn btn-warning">Quản lý Ghế</a>
+            </div>
+
+            <!-- Showtime Management -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-clock fa-2x"></i>
                         </div>
+                        <h5 class="card-title">Quản lý Suất chiếu</h5>
+                        <p class="card-text">Lập lịch chiếu phim và quản lý thời gian biểu một cách hiệu quả.</p>
+                        <a href="/suatchieu" class="btn btn-info">
+                            <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <div class="card-icon text-danger">
-                                <i class="fas fa-hamburger"></i>
-                            </div>
-                            <h5 class="card-title">Quản lý Đồ Ăn</h5>
-                            <p class="card-text">Quản lý menu đồ ăn, giá cả và tồn kho.</p>
-                            <a href="/doan" class="btn btn-danger">Quản lý Đồ Ăn</a>
+            </div>
+
+            <!-- Voucher Management -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-gift fa-2x"></i>
                         </div>
+                        <h5 class="card-title">Quản lý Voucher</h5>
+                        <p class="card-text">Tạo và quản lý mã giảm giá, khuyến mãi cho khách hàng.</p>
+                        <a href="/voucher" class="btn btn-secondary">
+                            <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <div class="card-icon text-secondary">
-                                <i class="fas fa-calendar-alt"></i>
-                            </div>
-                            <h5 class="card-title">Quản lý Suất Chiếu</h5>
-                            <p class="card-text">Lập lịch chiếu, quản lý thời gian và phòng chiếu.</p>
-                            <a href="/suatchieu" class="btn btn-secondary">Quản lý Suất Chiếu</a>
+            </div>
+
+            <!-- Database Status -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-database fa-2x"></i>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <div class="card-icon text-primary">
-                                <i class="fas fa-building"></i>
-                            </div>
-                            <h5 class="card-title">Quản lý Phòng Chiếu</h5>
-                            <p class="card-text">Thông tin phòng chiếu, sức chứa và thiết bị.</p>
-                            <a href="/phongchieu" class="btn btn-primary">Quản lý Phòng</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <div class="card-icon text-success">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h5 class="card-title">Quản lý Đánh Giá</h5>
-                            <p class="card-text">Đánh giá phim, thống kê điểm và phản hồi khách hàng.</p>
-                            <a href="/danhgia" class="btn btn-success">Quản lý Đánh Giá</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <div class="card-icon text-info">
-                                <i class="fas fa-gift"></i>
-                            </div>
-                            <h5 class="card-title">Quản lý Voucher</h5>
-                            <p class="card-text">Tạo voucher, quản lý khuyến mãi và mã giảm giá.</p>
-                            <a href="/voucher" class="btn btn-info">Quản lý Voucher</a>
-                        </div>
+                        <h5 class="card-title">Trạng thái Database</h5>
+                        <p class="card-text">Kiểm tra kết nối database và xem thống kê dữ liệu hệ thống.</p>
+                        <a href="/db-status" class="btn btn-dark">
+                            <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <h3 class="text-center mb-4">
+                <i class="fas fa-chart-bar me-2"></i>Thống Kê Hệ Thống
+            </h3>
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="border rounded p-3 bg-white">
+                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                        <h4 class="text-primary">Khách hàng</h4>
+                        <p class="h2 text-primary">100+</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="border rounded p-3 bg-white">
+                        <i class="fas fa-video fa-3x text-success mb-3"></i>
+                        <h4 class="text-success">Phim</h4>
+                        <p class="h2 text-success">50+</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="border rounded p-3 bg-white">
+                        <i class="fas fa-ticket-alt fa-3x text-warning mb-3"></i>
+                        <h4 class="text-warning">Vé đã bán</h4>
+                        <p class="h2 text-warning">1000+</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="border rounded p-3 bg-white">
+                        <i class="fas fa-clock fa-3x text-info mb-3"></i>
+                        <h4 class="text-info">Suất chiếu</h4>
+                        <p class="h2 text-info">200+</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-4 mt-5">
-        <div class="container text-center">
-            <p>&copy; 2025 Cinema Management System. All rights reserved.</p>
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-film me-2"></i>Cinema Management System</h5>
+                    <p class="mb-0">Hệ thống quản lý rạp phim hiện đại với Bootstrap</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">
+                        <i class="fas fa-code me-2"></i>Developed with ❤️ using Spring Boot & Bootstrap
+                    </p>
+                </div>
+            </div>
         </div>
     </footer>
 
