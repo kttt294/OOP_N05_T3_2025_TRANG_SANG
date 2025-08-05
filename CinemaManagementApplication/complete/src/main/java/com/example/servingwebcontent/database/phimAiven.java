@@ -100,7 +100,7 @@ public class phimAiven {
             pstmt.setInt(6, phim.getGioiHanTuoi());
             pstmt.setString(7, phim.getMoTa());
             
-            int result = pstmt.executeUpdate(sql);
+            int result = pstmt.executeUpdate();
             System.out.println("Tạo phim thành công: " + result + " dòng được thêm");
             
             pstmt.close();
