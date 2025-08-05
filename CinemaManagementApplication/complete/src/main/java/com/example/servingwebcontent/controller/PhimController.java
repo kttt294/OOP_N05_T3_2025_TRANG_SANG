@@ -133,7 +133,7 @@ public class PhimController {
     }
     
     public Phim timPhimTheoMa(String maPhim) {
-        return phimDB.getPhimByMaPhim(maPhim);
+        return phimDB.getPhimById(maPhim);
     }
     
     public ArrayList<Phim> timPhimTheoTen(String tenPhim) {
