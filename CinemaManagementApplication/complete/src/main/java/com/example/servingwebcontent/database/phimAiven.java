@@ -3,24 +3,26 @@ package com.example.servingwebcontent.database;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import com.example.servingwebcontent.model.Phim;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class phimAiven {
   
     public List<Phim> getAllPhim() {
         Connection conn = null;
         List<Phim> danhSachPhim = new ArrayList<>();
         try {
-
             myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
-
-             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from phim");
+            
+            String sql = "SELECT * FROM phim ORDER BY tenPhim";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet reset = pstmt.executeQuery();
+            
             System.out.println("Lấy tất cả dữ liệu phim từ database: ");
             while (reset.next()) {
                 String maPhim = reset.getString("maPhim");
@@ -34,15 +36,13 @@ public class phimAiven {
                 Phim phim = new Phim(maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
                 danhSachPhim.add(phim);
                 System.out.println("Mã phim: " + maPhim + " | Tên phim: " + tenPhim + " | Thể loại: " + theLoai);
-
             }
 
             reset.close();
-            sta.close();
+            pstmt.close();
             conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi lấy dữ liệu phim: " + e);
-
             e.printStackTrace();
         }
         return danhSachPhim;
@@ -52,14 +52,14 @@ public class phimAiven {
         Connection conn = null;
         Phim phim = null;
         try {
-
             myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
-
-             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from phim where maPhim = '" + maPhim + "'");
+            
+            String sql = "SELECT * FROM phim WHERE maPhim = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, maPhim);
+            ResultSet reset = pstmt.executeQuery();
+            
             System.out.println("Tìm phim theo mã: " + maPhim);
             if (reset.next()) {
                 String tenPhim = reset.getString("tenPhim");
@@ -71,15 +71,13 @@ public class phimAiven {
                 
                 phim = new Phim(maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
                 System.out.println("Tìm thấy phim: " + tenPhim);
-
             }
 
             reset.close();
-            sta.close();
+            pstmt.close();
             conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi tìm phim: " + e);
-
             e.printStackTrace();
         }
         return phim;
@@ -91,16 +89,21 @@ public class phimAiven {
         try {
             myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
-            Statement sta = conn.createStatement();
             
-            String sql = "INSERT INTO phim (maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa) VALUES " +
-                        "('" + phim.getMaPhim() + "', '" + phim.getTenPhim() + "', '" + phim.getTheLoai() + "', " +
-                        phim.getThoiLuong() + ", '" + phim.getNgonNgu() + "', " + phim.getGioiHanTuoi() + ", '" + phim.getMoTa() + "')";
+            String sql = "INSERT INTO phim (maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, phim.getMaPhim());
+            pstmt.setString(2, phim.getTenPhim());
+            pstmt.setString(3, phim.getTheLoai());
+            pstmt.setInt(4, phim.getThoiLuong());
+            pstmt.setString(5, phim.getNgonNgu());
+            pstmt.setInt(6, phim.getGioiHanTuoi());
+            pstmt.setString(7, phim.getMoTa());
             
-            int result = sta.executeUpdate(sql);
+            int result = pstmt.executeUpdate(sql);
             System.out.println("Tạo phim thành công: " + result + " dòng được thêm");
             
-            sta.close();
+            pstmt.close();
             conn.close();
             return result > 0;
         } catch (Exception e) {
@@ -116,17 +119,21 @@ public class phimAiven {
         try {
             myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
-            Statement sta = conn.createStatement();
             
-            String sql = "UPDATE phim SET tenPhim = '" + phim.getTenPhim() + "', theLoai = '" + phim.getTheLoai() + 
-                        "', thoiLuong = " + phim.getThoiLuong() + ", ngonNgu = '" + phim.getNgonNgu() + 
-                        "', gioiHanTuoi = " + phim.getGioiHanTuoi() + ", moTa = '" + phim.getMoTa() + 
-                        "' WHERE maPhim = '" + maPhim + "'";
+            String sql = "UPDATE phim SET tenPhim = ?, theLoai = ?, thoiLuong = ?, ngonNgu = ?, gioiHanTuoi = ?, moTa = ? WHERE maPhim = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, phim.getTenPhim());
+            pstmt.setString(2, phim.getTheLoai());
+            pstmt.setInt(3, phim.getThoiLuong());
+            pstmt.setString(4, phim.getNgonNgu());
+            pstmt.setInt(5, phim.getGioiHanTuoi());
+            pstmt.setString(6, phim.getMoTa());
+            pstmt.setString(7, maPhim);
             
-            int result = sta.executeUpdate(sql);
+            int result = pstmt.executeUpdate();
             System.out.println("Cập nhật phim thành công: " + result + " dòng được cập nhật");
             
-            sta.close();
+            pstmt.close();
             conn.close();
             return result > 0;
         } catch (Exception e) {
@@ -142,14 +149,15 @@ public class phimAiven {
         try {
             myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
-            Statement sta = conn.createStatement();
             
-            String sql = "DELETE FROM phim WHERE maPhim = '" + maPhim + "'";
+            String sql = "DELETE FROM phim WHERE maPhim = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, maPhim);
             
-            int result = sta.executeUpdate(sql);
+            int result = pstmt.executeUpdate();
             System.out.println("Xóa phim thành công: " + result + " dòng được xóa");
             
-            sta.close();
+            pstmt.close();
             conn.close();
             return result > 0;
         } catch (Exception e) {
@@ -159,61 +167,75 @@ public class phimAiven {
         }
     }
     
-    public ArrayList<Phim> searchPhimByTen(String tenPhim) {
+    // Thêm method tìm kiếm theo tên
+    public List<Phim> searchPhimByTen(String tenPhim) {
         Connection conn = null;
-        ArrayList<Phim> ketQua = new ArrayList<>();
+        List<Phim> danhSachPhim = new ArrayList<>();
         try {
             myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("SELECT * FROM phim WHERE tenPhim LIKE '%" + tenPhim + "%'");
+            
+            String sql = "SELECT * FROM phim WHERE tenPhim LIKE ? ORDER BY tenPhim";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "%" + tenPhim + "%");
+            ResultSet reset = pstmt.executeQuery();
+            
             while (reset.next()) {
                 String maPhim = reset.getString("maPhim");
-                String ten = reset.getString("tenPhim");
+                String tenPhimResult = reset.getString("tenPhim");
                 String theLoai = reset.getString("theLoai");
                 int thoiLuong = reset.getInt("thoiLuong");
                 String ngonNgu = reset.getString("ngonNgu");
                 int gioiHanTuoi = reset.getInt("gioiHanTuoi");
                 String moTa = reset.getString("moTa");
-                Phim phim = new Phim(maPhim, ten, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
-                ketQua.add(phim);
+                
+                Phim phim = new Phim(maPhim, tenPhimResult, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
+                danhSachPhim.add(phim);
             }
+            
             reset.close();
-            sta.close();
+            pstmt.close();
             conn.close();
         } catch (Exception e) {
-            System.out.println("Lỗi tìm kiếm phim theo tên: " + e.getMessage());
+            System.out.println("Lỗi tìm kiếm phim theo tên: " + e);
             e.printStackTrace();
         }
-        return ketQua;
+        return danhSachPhim;
     }
     
-    public ArrayList<Phim> searchPhimByTheLoai(String theLoai) {
+    // Thêm method tìm kiếm theo thể loại
+    public List<Phim> searchPhimByTheLoai(String theLoai) {
         Connection conn = null;
-        ArrayList<Phim> ketQua = new ArrayList<>();
+        List<Phim> danhSachPhim = new ArrayList<>();
         try {
             myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("SELECT * FROM phim WHERE theLoai LIKE '%" + theLoai + "%'");
+            
+            String sql = "SELECT * FROM phim WHERE theLoai LIKE ? ORDER BY tenPhim";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "%" + theLoai + "%");
+            ResultSet reset = pstmt.executeQuery();
+            
             while (reset.next()) {
                 String maPhim = reset.getString("maPhim");
-                String ten = reset.getString("tenPhim");
-                String theLoaiPhim = reset.getString("theLoai");
+                String tenPhim = reset.getString("tenPhim");
+                String theLoaiResult = reset.getString("theLoai");
                 int thoiLuong = reset.getInt("thoiLuong");
                 String ngonNgu = reset.getString("ngonNgu");
                 int gioiHanTuoi = reset.getInt("gioiHanTuoi");
                 String moTa = reset.getString("moTa");
-                Phim phim = new Phim(maPhim, ten, theLoaiPhim, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
-                ketQua.add(phim);
+                
+                Phim phim = new Phim(maPhim, tenPhim, theLoaiResult, thoiLuong, ngonNgu, gioiHanTuoi, moTa);
+                danhSachPhim.add(phim);
             }
+            
             reset.close();
-            sta.close();
+            pstmt.close();
             conn.close();
         } catch (Exception e) {
-            System.out.println("Lỗi tìm kiếm phim theo thể loại: " + e.getMessage());
+            System.out.println("Lỗi tìm kiếm phim theo thể loại: " + e);
             e.printStackTrace();
         }
-        return ketQua;
+        return danhSachPhim;
     }
 } 
