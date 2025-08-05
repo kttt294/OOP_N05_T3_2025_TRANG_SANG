@@ -1,12 +1,103 @@
 package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import com.example.servingwebcontent.model.PhongChieu;
+import com.example.servingwebcontent.database.phongChieuAiven;
 
+@Controller
 public class PhongChieuController{
     
-    // Tạo phòng chiếu mới
-    public static boolean taoPhongChieu(PhongChieu phongChieu) {
+    private phongChieuAiven phongChieuDB = new phongChieuAiven();
+    
+    // Web Controller Methods
+    @GetMapping("/phongchieu")
+    public String phongChieuPage(Model model) {
+        try {
+            List<PhongChieu> dsPC = phongChieuDB.getAllPhongChieu();
+            model.addAttribute("dsPC", dsPC);
+            model.addAttribute("phongChieu", new PhongChieu());
+            return "phongchieu";
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi khi tải danh sách phòng chiếu: " + e.getMessage());
+            return "phongchieu";
+        }
+    }
+    
+    @PostMapping("/phongchieu/create")
+    public String createPhongChieu(@ModelAttribute PhongChieu phongChieu, Model model) {
+        try {
+            if (taoPhongChieu(phongChieu)) {
+                model.addAttribute("success", "Tạo phòng chiếu thành công!");
+            } else {
+                model.addAttribute("error", "Lỗi khi tạo phòng chiếu!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi hệ thống: " + e.getMessage());
+        }
+        return "redirect:/phongchieu";
+    }
+    
+    @PostMapping("/phongchieu/update")
+    public String updatePhongChieu(@RequestParam String maPhong, @ModelAttribute PhongChieu phongChieu, Model model) {
+        try {
+            if (capNhatPhongChieu(maPhong, phongChieu)) {
+                model.addAttribute("success", "Cập nhật phòng chiếu thành công!");
+            } else {
+                model.addAttribute("error", "Lỗi khi cập nhật phòng chiếu!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi hệ thống: " + e.getMessage());
+        }
+        return "redirect:/phongchieu";
+    }
+    
+    @PostMapping("/phongchieu/delete")
+    public String deletePhongChieu(@RequestParam String maPhong, Model model) {
+        try {
+            if (xoaPhongChieu(maPhong)) {
+                model.addAttribute("success", "Xóa phòng chiếu thành công!");
+            } else {
+                model.addAttribute("error", "Lỗi khi xóa phòng chiếu!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi hệ thống: " + e.getMessage());
+        }
+        return "redirect:/phongchieu";
+    }
+    
+    @GetMapping("/phongchieu/search")
+    public String searchPhongChieu(@RequestParam String keyword, @RequestParam String type, Model model) {
+        try {
+            List<PhongChieu> results = new ArrayList<>();
+            switch (type) {
+                case "ten":
+                    results = timPhongChieuTheoTen(keyword);
+                    break;
+                default:
+                    PhongChieu pc = timPhongChieuTheoMa(keyword);
+                    if (pc != null) {
+                        results.add(pc);
+                    }
+                    break;
+            }
+            model.addAttribute("dsPC", results);
+            model.addAttribute("searchKeyword", keyword);
+            model.addAttribute("searchType", type);
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi khi tìm kiếm: " + e.getMessage());
+        }
+        return "phongchieu";
+    }
+    
+    // Business Logic Methods
+    public boolean taoPhongChieu(PhongChieu phongChieu) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (phongChieu == null) {
@@ -25,9 +116,7 @@ public class PhongChieuController{
                 throw new IllegalArgumentException("Số cột phải lớn hơn 0!");
             }
 
-            PhongChieu.Create(phongChieu);
-            System.out.println("Tạo phòng chiếu thành công!");
-            return true;
+            return phongChieuDB.createPhongChieu(phongChieu);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -37,8 +126,7 @@ public class PhongChieuController{
         }
     }
 
-    // Cập nhật phòng chiếu
-    public static boolean capNhatPhongChieu(String maPhong, PhongChieu phongChieuMoi) {
+    public boolean capNhatPhongChieu(String maPhong, PhongChieu phongChieuMoi) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (maPhong == null || maPhong.trim().isEmpty()) {
@@ -49,15 +137,13 @@ public class PhongChieuController{
             }
 
             // Kiểm tra phòng chiếu có tồn tại không
-            PhongChieu phongChieuCu = PhongChieu.getPhongByMa(maPhong);
+            PhongChieu phongChieuCu = phongChieuDB.getPhongChieuById(maPhong);
             if (phongChieuCu == null) {
                 System.out.println("Không tìm thấy phòng chiếu với mã: " + maPhong);
                 return false;
             }
 
-            PhongChieu.Update(maPhong, phongChieuMoi);
-            System.out.println("Cập nhật phòng chiếu thành công!");
-            return true;
+            return phongChieuDB.updatePhongChieu(maPhong, phongChieuMoi);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -67,8 +153,7 @@ public class PhongChieuController{
         }
     }
 
-    // Xóa phòng chiếu
-    public static boolean xoaPhongChieu(String maPhong) {
+    public boolean xoaPhongChieu(String maPhong) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (maPhong == null || maPhong.trim().isEmpty()) {
@@ -76,15 +161,13 @@ public class PhongChieuController{
             }
 
             // Kiểm tra phòng chiếu có tồn tại không
-            PhongChieu phongChieu = PhongChieu.getPhongByMa(maPhong);
+            PhongChieu phongChieu = phongChieuDB.getPhongChieuById(maPhong);
             if (phongChieu == null) {
                 System.out.println("Không tìm thấy phòng chiếu với mã: " + maPhong);
                 return false;
             }
 
-            PhongChieu.Delete(maPhong);
-            System.out.println("Xóa phòng chiếu thành công!");
-            return true;
+            return phongChieuDB.deletePhongChieu(maPhong);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -94,16 +177,21 @@ public class PhongChieuController{
         }
     }
 
-    // Xem thông tin phòng chiếu
-    public static boolean xemThongTinPhongChieu(String maPhong) {
+    public boolean xemThongTinPhongChieu(String maPhong) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (maPhong == null || maPhong.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã phòng không được để trống!");
             }
 
-            PhongChieu.Read(maPhong);
-            return true;
+            PhongChieu phongChieu = phongChieuDB.getPhongChieuById(maPhong);
+            if (phongChieu != null) {
+                phongChieu.hienThiThongTin();
+                return true;
+            } else {
+                System.out.println("Không tìm thấy phòng chiếu với mã: " + maPhong);
+                return false;
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -113,10 +201,17 @@ public class PhongChieuController{
         }
     }
 
-    // Xem tất cả phòng chiếu
-    public static boolean xemTatCaPhongChieu() {
+    public boolean xemTatCaPhongChieu() {
         try {
-            PhongChieu.Read();
+            List<PhongChieu> danhSachPhongChieu = phongChieuDB.getAllPhongChieu();
+            if (danhSachPhongChieu.isEmpty()) {
+                System.out.println("Danh sách phòng chiếu trống.");
+            } else {
+                System.out.println("Tổng số phòng chiếu: " + danhSachPhongChieu.size());
+                for (PhongChieu pc : danhSachPhongChieu) {
+                    pc.hienThiThongTin();
+                }
+            }
             return true;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
@@ -124,15 +219,14 @@ public class PhongChieuController{
         }
     }
 
-    // Tìm kiếm phòng chiếu theo mã
-    public static PhongChieu timPhongChieuTheoMa(String maPhong) {
+    public PhongChieu timPhongChieuTheoMa(String maPhong) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (maPhong == null || maPhong.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã phòng không được để trống!");
             }
 
-            return PhongChieu.getPhongByMa(maPhong);
+            return phongChieuDB.getPhongChieuById(maPhong);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;
@@ -142,15 +236,15 @@ public class PhongChieuController{
         }
     }
 
-    // Tìm kiếm phòng chiếu theo tên
-    public static ArrayList<PhongChieu> timPhongChieuTheoTen(String tenPhong) {
+    public ArrayList<PhongChieu> timPhongChieuTheoTen(String tenPhong) {
         try {
             // Kiểm tra dữ liệu đầu vào
             if (tenPhong == null || tenPhong.trim().isEmpty()) {
                 throw new IllegalArgumentException("Tên phòng không được để trống!");
             }
 
-            return PhongChieu.timKiemTheoTen(tenPhong);
+            List<PhongChieu> results = phongChieuDB.searchPhongChieuByTen(tenPhong);
+            return new ArrayList<>(results);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return new ArrayList<>();
@@ -160,10 +254,19 @@ public class PhongChieuController{
         }
     }
 
-    // Thống kê phòng chiếu
-    public static boolean thongKePhongChieu() {
+    public boolean thongKePhongChieu() {
         try {
-            PhongChieu.thongKePhongChieu();
+            List<PhongChieu> danhSachPhongChieu = phongChieuDB.getAllPhongChieu();
+            System.out.println("=== THỐNG KÊ PHÒNG CHIẾU ===");
+            System.out.println("Tổng số phòng chiếu: " + danhSachPhongChieu.size());
+            
+            int tongSoGhe = 0;
+            for (PhongChieu pc : danhSachPhongChieu) {
+                tongSoGhe += pc.getSoHangGhe() * pc.getSoCotGhe();
+            }
+            
+            System.out.println("Tổng số ghế: " + tongSoGhe);
+            System.out.println("=====================");
             return true;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());

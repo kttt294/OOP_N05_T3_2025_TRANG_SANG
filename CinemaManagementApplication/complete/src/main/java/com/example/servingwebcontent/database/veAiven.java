@@ -203,4 +203,77 @@ public class veAiven {
         }
         return danhSachVe;
     }
+    
+    // Thêm method tạo vé mới
+    public boolean createVe(Ve ve) {
+        Connection conn = null;
+        try {
+            myDBConnection mydb = new myDBConnection();
+            conn = mydb.getOnlyConn();
+            Statement sta = conn.createStatement();
+            
+            String sql = "INSERT INTO ve (maVe, CCCD, maSuatChieu, maGhe, giaVe, trangThai) VALUES " +
+                        "('" + ve.getMaVe() + "', '" + ve.getCCCD() + "', '" + ve.getMaSuatChieu() + 
+                        "', '" + ve.getMaGhe() + "', " + ve.getGiaVe() + ", '" + ve.getTrangThai().toString() + "')";
+            
+            int result = sta.executeUpdate(sql);
+            System.out.println("Tạo vé thành công: " + result + " dòng được thêm");
+            
+            sta.close();
+            conn.close();
+            return result > 0;
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo vé: " + e);
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    // Thêm method cập nhật vé
+    public boolean updateVe(String maVe, Ve veMoi) {
+        Connection conn = null;
+        try {
+            myDBConnection mydb = new myDBConnection();
+            conn = mydb.getOnlyConn();
+            Statement sta = conn.createStatement();
+            
+            String sql = "UPDATE ve SET CCCD = '" + veMoi.getCCCD() + "', maSuatChieu = '" + veMoi.getMaSuatChieu() + 
+                        "', maGhe = '" + veMoi.getMaGhe() + "', giaVe = " + veMoi.getGiaVe() + 
+                        ", trangThai = '" + veMoi.getTrangThai().toString() + "' WHERE maVe = '" + maVe + "'";
+            
+            int result = sta.executeUpdate(sql);
+            System.out.println("Cập nhật vé thành công: " + result + " dòng được cập nhật");
+            
+            sta.close();
+            conn.close();
+            return result > 0;
+        } catch (Exception e) {
+            System.out.println("Lỗi cập nhật vé: " + e);
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    // Thêm method xóa vé
+    public boolean deleteVe(String maVe) {
+        Connection conn = null;
+        try {
+            myDBConnection mydb = new myDBConnection();
+            conn = mydb.getOnlyConn();
+            Statement sta = conn.createStatement();
+            
+            String sql = "DELETE FROM ve WHERE maVe = '" + maVe + "'";
+            
+            int result = sta.executeUpdate(sql);
+            System.out.println("Xóa vé thành công: " + result + " dòng được xóa");
+            
+            sta.close();
+            conn.close();
+            return result > 0;
+        } catch (Exception e) {
+            System.out.println("Lỗi xóa vé: " + e);
+            e.printStackTrace();
+            return false;
+        }
+    }
 } 

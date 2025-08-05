@@ -5,14 +5,128 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.ArrayList;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.servingwebcontent.model.SuatChieu;
 import com.example.servingwebcontent.util.DateTimeUtils;
+import com.example.servingwebcontent.database.suatChieuAiven;
 
+@Controller
 public class SuatChieuController {
 
-    // Hiển thị suất chiếu trong ngày
-    public static boolean hienThiSuatChieuTrongNgay(List<SuatChieu> danhSachSuatChieu) {
+    private suatChieuAiven suatChieuDB = new suatChieuAiven();
+    
+    // Web Controller Methods
+    @GetMapping("/suatchieu")
+    public String suatChieuPage(Model model) {
+        try {
+            List<SuatChieu> dsSC = suatChieuDB.getAllSuatChieu();
+            model.addAttribute("dsSC", dsSC);
+            model.addAttribute("suatChieu", new SuatChieu());
+            return "suatchieu";
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi khi tải danh sách suất chiếu: " + e.getMessage());
+            return "suatchieu";
+        }
+    }
+    
+    @PostMapping("/suatchieu/create")
+    public String createSuatChieu(@ModelAttribute SuatChieu suatChieu, Model model) {
+        try {
+            if (taoSuatChieu(suatChieu)) {
+                model.addAttribute("success", "Tạo suất chiếu thành công!");
+            } else {
+                model.addAttribute("error", "Lỗi khi tạo suất chiếu!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi hệ thống: " + e.getMessage());
+        }
+        return "redirect:/suatchieu";
+    }
+    
+    @PostMapping("/suatchieu/update")
+    public String updateSuatChieu(@RequestParam String maSuatChieu, @ModelAttribute SuatChieu suatChieu, Model model) {
+        try {
+            if (capNhatSuatChieu(maSuatChieu, suatChieu)) {
+                model.addAttribute("success", "Cập nhật suất chiếu thành công!");
+            } else {
+                model.addAttribute("error", "Lỗi khi cập nhật suất chiếu!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi hệ thống: " + e.getMessage());
+        }
+        return "redirect:/suatchieu";
+    }
+    
+    @PostMapping("/suatchieu/delete")
+    public String deleteSuatChieu(@RequestParam String maSuatChieu, Model model) {
+        try {
+            if (xoaSuatChieu(maSuatChieu)) {
+                model.addAttribute("success", "Xóa suất chiếu thành công!");
+            } else {
+                model.addAttribute("error", "Lỗi khi xóa suất chiếu!");
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi hệ thống: " + e.getMessage());
+        }
+        return "redirect:/suatchieu";
+    }
+    
+    @GetMapping("/suatchieu/search")
+    public String searchSuatChieu(@RequestParam String keyword, @RequestParam String type, Model model) {
+        try {
+            List<SuatChieu> results = new ArrayList<>();
+            switch (type) {
+                case "phim":
+                    results = timSuatChieuTheoPhim(keyword);
+                    break;
+                case "phong":
+                    results = timSuatChieuTheoPhong(keyword);
+                    break;
+                default:
+                    SuatChieu sc = timSuatChieuTheoMa(keyword);
+                    if (sc != null) {
+                        results.add(sc);
+                    }
+                    break;
+            }
+            model.addAttribute("dsSC", results);
+            model.addAttribute("searchKeyword", keyword);
+            model.addAttribute("searchType", type);
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi khi tìm kiếm: " + e.getMessage());
+        }
+        return "suatchieu";
+    }
+    
+    @GetMapping("/suatchieu/today")
+    public String todaySuatChieuPage(Model model) {
+        try {
+            List<SuatChieu> allSuatChieu = suatChieuDB.getAllSuatChieu();
+            List<SuatChieu> todaySuatChieu = new ArrayList<>();
+            LocalDate today = LocalDate.now();
+            
+            for (SuatChieu sc : allSuatChieu) {
+                if (sc.getThoiGianBatDau().toLocalDate().equals(today)) {
+                    todaySuatChieu.add(sc);
+                }
+            }
+            
+            model.addAttribute("dsSC", todaySuatChieu);
+            model.addAttribute("title", "Suất chiếu hôm nay");
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi khi tải suất chiếu hôm nay: " + e.getMessage());
+        }
+        return "suatchieu";
+    }
+    
+    // Business Logic Methods
+    public boolean hienThiSuatChieuTrongNgay(List<SuatChieu> danhSachSuatChieu) {
         try {
             if (danhSachSuatChieu == null) {
                 throw new IllegalArgumentException("Danh sách suất chiếu không được null!");
@@ -46,8 +160,7 @@ public class SuatChieuController {
         }
     }
 
-    // Tạo suất chiếu mới
-    public static boolean taoSuatChieu(SuatChieu suatChieu) {
+    public boolean taoSuatChieu(SuatChieu suatChieu) {
         try {
             if (suatChieu == null) {
                 throw new IllegalArgumentException("Suất chiếu không được null!");
@@ -71,9 +184,7 @@ public class SuatChieuController {
                 throw new IllegalArgumentException("Thời gian bắt đầu phải trước thời gian kết thúc!");
             }
 
-            SuatChieu.Create(suatChieu);
-            System.out.println("Tạo suất chiếu thành công!");
-            return true;
+            return suatChieuDB.createSuatChieu(suatChieu);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -83,8 +194,7 @@ public class SuatChieuController {
         }
     }
 
-    // Cập nhật suất chiếu
-    public static boolean capNhatSuatChieu(String maSuatChieu, SuatChieu suatChieuMoi) {
+    public boolean capNhatSuatChieu(String maSuatChieu, SuatChieu suatChieuMoi) {
         try {
             if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
@@ -93,15 +203,13 @@ public class SuatChieuController {
                 throw new IllegalArgumentException("Thông tin suất chiếu mới không được null!");
             }
 
-            SuatChieu suatChieuCu = SuatChieu.getSuatChieuById(maSuatChieu);
+            SuatChieu suatChieuCu = suatChieuDB.getSuatChieuById(maSuatChieu);
             if (suatChieuCu == null) {
                 System.out.println("Không tìm thấy suất chiếu với mã: " + maSuatChieu);
                 return false;
             }
 
-            SuatChieu.Update(maSuatChieu, suatChieuMoi);
-            System.out.println("Cập nhật suất chiếu thành công!");
-            return true;
+            return suatChieuDB.updateSuatChieu(maSuatChieu, suatChieuMoi);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -111,22 +219,19 @@ public class SuatChieuController {
         }
     }
 
-    // Xóa suất chiếu
-    public static boolean xoaSuatChieu(String maSuatChieu) {
+    public boolean xoaSuatChieu(String maSuatChieu) {
         try {
             if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
             }
 
-            SuatChieu suatChieu = SuatChieu.getSuatChieuById(maSuatChieu);
+            SuatChieu suatChieu = suatChieuDB.getSuatChieuById(maSuatChieu);
             if (suatChieu == null) {
                 System.out.println("Không tìm thấy suất chiếu với mã: " + maSuatChieu);
                 return false;
             }
 
-            SuatChieu.Delete(maSuatChieu);
-            System.out.println("Xóa suất chiếu thành công!");
-            return true;
+            return suatChieuDB.deleteSuatChieu(maSuatChieu);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -136,15 +241,20 @@ public class SuatChieuController {
         }
     }
 
-    // Xem thông tin suất chiếu
-    public static boolean xemThongTinSuatChieu(String maSuatChieu) {
+    public boolean xemThongTinSuatChieu(String maSuatChieu) {
         try {
             if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
             }
 
-            SuatChieu.Read(maSuatChieu);
-            return true;
+            SuatChieu suatChieu = suatChieuDB.getSuatChieuById(maSuatChieu);
+            if (suatChieu != null) {
+                suatChieu.hienThiThongTin();
+                return true;
+            } else {
+                System.out.println("Không tìm thấy suất chiếu với mã: " + maSuatChieu);
+                return false;
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -154,10 +264,17 @@ public class SuatChieuController {
         }
     }
 
-    // Xem tất cả suất chiếu
-    public static boolean xemTatCaSuatChieu() {
+    public boolean xemTatCaSuatChieu() {
         try {
-            SuatChieu.Read();
+            List<SuatChieu> danhSachSuatChieu = suatChieuDB.getAllSuatChieu();
+            if (danhSachSuatChieu.isEmpty()) {
+                System.out.println("Danh sách suất chiếu trống.");
+            } else {
+                System.out.println("Tổng số suất chiếu: " + danhSachSuatChieu.size());
+                for (SuatChieu sc : danhSachSuatChieu) {
+                    sc.hienThiThongTin();
+                }
+            }
             return true;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
@@ -165,14 +282,13 @@ public class SuatChieuController {
         }
     }
 
-    // Tìm kiếm suất chiếu theo mã
-    public static SuatChieu timSuatChieuTheoMa(String maSuatChieu) {
+    public SuatChieu timSuatChieuTheoMa(String maSuatChieu) {
         try {
             if (maSuatChieu == null || maSuatChieu.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã suất chiếu không được để trống!");
             }
 
-            return SuatChieu.getSuatChieuById(maSuatChieu);
+            return suatChieuDB.getSuatChieuById(maSuatChieu);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return null;
@@ -182,14 +298,14 @@ public class SuatChieuController {
         }
     }
 
-    // Tìm kiếm suất chiếu theo phim
-    public static ArrayList<SuatChieu> timSuatChieuTheoPhim(String maPhim) {
+    public ArrayList<SuatChieu> timSuatChieuTheoPhim(String maPhim) {
         try {
             if (maPhim == null || maPhim.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã phim không được để trống!");
             }
 
-            return SuatChieu.getSuatChieuByPhim(maPhim);
+            List<SuatChieu> results = suatChieuDB.getSuatChieuByPhim(maPhim);
+            return new ArrayList<>(results);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return new ArrayList<>();
@@ -199,14 +315,14 @@ public class SuatChieuController {
         }
     }
 
-    // Tìm kiếm suất chiếu theo phòng
-    public static ArrayList<SuatChieu> timSuatChieuTheoPhong(String maPhong) {
+    public ArrayList<SuatChieu> timSuatChieuTheoPhong(String maPhong) {
         try {
             if (maPhong == null || maPhong.trim().isEmpty()) {
                 throw new IllegalArgumentException("Mã phòng không được để trống!");
             }
 
-            return SuatChieu.getSuatChieuByPhong(maPhong);
+            List<SuatChieu> results = suatChieuDB.getSuatChieuByPhong(maPhong);
+            return new ArrayList<>(results);
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return new ArrayList<>();
