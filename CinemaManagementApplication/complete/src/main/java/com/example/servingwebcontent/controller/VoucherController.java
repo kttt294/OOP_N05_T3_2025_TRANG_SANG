@@ -2,6 +2,7 @@ package com.example.servingwebcontent.controller;
 
 import com.example.servingwebcontent.model.Voucher;
 import com.example.servingwebcontent.database.voucherAiven;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,8 @@ import java.util.List;
 @Controller
 public class VoucherController {
 
-    private voucherAiven voucherDB = new voucherAiven();
+    @Autowired
+    private voucherAiven voucherDB;
 
     // Web Controller Methods
     @GetMapping("/voucher")
@@ -33,7 +35,7 @@ public class VoucherController {
     @PostMapping("/voucher/create")
     public String createVoucher(@ModelAttribute Voucher voucher, Model model) {
         try {
-            if (taoVoucher(voucher)) {
+            if (voucherDB.createVoucher(voucher)) {
                 model.addAttribute("message", "Tạo voucher thành công!");
             } else {
                 model.addAttribute("message", "Lỗi khi tạo voucher!");
@@ -47,7 +49,7 @@ public class VoucherController {
     @PostMapping("/voucher/update")
     public String updateVoucher(@RequestParam String maVoucher, @ModelAttribute Voucher voucher, Model model) {
         try {
-            if (capNhatVoucher(maVoucher, voucher)) {
+            if (voucherDB.updateVoucher(maVoucher, voucher)) {
                 model.addAttribute("message", "Cập nhật voucher thành công!");
             } else {
                 model.addAttribute("message", "Lỗi khi cập nhật voucher!");
@@ -61,7 +63,7 @@ public class VoucherController {
     @PostMapping("/voucher/delete")
     public String deleteVoucher(@RequestParam String maVoucher, Model model) {
         try {
-            if (xoaVoucher(maVoucher)) {
+            if (voucherDB.deleteVoucher(maVoucher)) {
                 model.addAttribute("message", "Xóa voucher thành công!");
             } else {
                 model.addAttribute("message", "Lỗi khi xóa voucher!");

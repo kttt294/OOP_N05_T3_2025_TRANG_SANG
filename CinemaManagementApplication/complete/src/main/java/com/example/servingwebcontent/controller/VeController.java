@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,8 @@ import com.example.servingwebcontent.database.veAiven;
 @Controller
 public class VeController {
 
-    private veAiven veDB = new veAiven();
+    @Autowired
+    private veAiven veDB;
     
     // Web Controller Methods
     @GetMapping("/ve")
@@ -37,7 +39,7 @@ public class VeController {
     @PostMapping("/ve/create")
     public String createVe(@ModelAttribute Ve ve, Model model) {
         try {
-            if (taoVe(ve)) {
+            if (veDB.createVe(ve)) {
                 model.addAttribute("success", "Tạo vé thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi tạo vé!");
@@ -51,7 +53,7 @@ public class VeController {
     @PostMapping("/ve/update")
     public String updateVe(@RequestParam String maVe, @ModelAttribute Ve ve, Model model) {
         try {
-            if (capNhatVe(maVe, ve)) {
+            if (veDB.updateVe(maVe, ve)) {
                 model.addAttribute("success", "Cập nhật vé thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi cập nhật vé!");
@@ -65,7 +67,7 @@ public class VeController {
     @PostMapping("/ve/delete")
     public String deleteVe(@RequestParam String maVe, Model model) {
         try {
-            if (xoaVe(maVe)) {
+            if (veDB.deleteVe(maVe)) {
                 model.addAttribute("success", "Xóa vé thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi xóa vé!");

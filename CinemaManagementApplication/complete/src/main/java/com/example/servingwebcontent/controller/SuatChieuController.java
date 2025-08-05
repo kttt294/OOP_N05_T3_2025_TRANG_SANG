@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,8 @@ import com.example.servingwebcontent.database.suatChieuAiven;
 @Controller
 public class SuatChieuController {
 
-    private suatChieuAiven suatChieuDB = new suatChieuAiven();
+    @Autowired
+    private suatChieuAiven suatChieuDB;
     
     // Web Controller Methods
     @GetMapping("/suatchieu")
@@ -38,7 +40,7 @@ public class SuatChieuController {
     @PostMapping("/suatchieu/create")
     public String createSuatChieu(@ModelAttribute SuatChieu suatChieu, Model model) {
         try {
-            if (taoSuatChieu(suatChieu)) {
+            if (suatChieuDB.createSuatChieu(suatChieu)) {
                 model.addAttribute("success", "Tạo suất chiếu thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi tạo suất chiếu!");
@@ -52,7 +54,7 @@ public class SuatChieuController {
     @PostMapping("/suatchieu/update")
     public String updateSuatChieu(@RequestParam String maSuatChieu, @ModelAttribute SuatChieu suatChieu, Model model) {
         try {
-            if (capNhatSuatChieu(maSuatChieu, suatChieu)) {
+            if (suatChieuDB.updateSuatChieu(maSuatChieu, suatChieu)) {
                 model.addAttribute("success", "Cập nhật suất chiếu thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi cập nhật suất chiếu!");
@@ -66,7 +68,7 @@ public class SuatChieuController {
     @PostMapping("/suatchieu/delete")
     public String deleteSuatChieu(@RequestParam String maSuatChieu, Model model) {
         try {
-            if (xoaSuatChieu(maSuatChieu)) {
+            if (suatChieuDB.deleteSuatChieu(maSuatChieu)) {
                 model.addAttribute("success", "Xóa suất chiếu thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi xóa suất chiếu!");

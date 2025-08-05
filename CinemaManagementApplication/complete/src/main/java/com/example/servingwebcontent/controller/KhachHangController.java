@@ -65,7 +65,7 @@ public class KhachHangController {
     @PostMapping("/khachhang/delete")
     public String deleteKhachHang(@RequestParam String CCCD, Model model) {
         try {
-            if (xoaKhachHang(CCCD)) {
+            if (khachHangDB.deleteKhachHang(CCCD)) {
                 model.addAttribute("success", "Xóa khách hàng thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi xóa khách hàng!");
@@ -82,13 +82,13 @@ public class KhachHangController {
             List<KhachHang> results = new ArrayList<>();
             switch (type) {
                 case "ten":
-                    results = timKhachHangTheoTen(keyword);
+                    results = khachHangDB.searchKhachHangByTen(keyword);
                     break;
                 case "gioitinh":
-                    results = timKhachHangTheoGioiTinh(keyword);
+                    results = khachHangDB.searchKhachHangByGioiTinh(keyword);
                     break;
                 default:
-                    KhachHang kh = timKhachHangTheoCCCD(keyword);
+                    KhachHang kh = khachHangDB.getKhachHangByCCCD(keyword);
                     if (kh != null) {
                         results.add(kh);
                     }

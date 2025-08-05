@@ -6,7 +6,9 @@ import java.sql.Statement;
 import com.example.servingwebcontent.model.Ve;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class veAiven {
   
     public List<Ve> getAllVe() {
