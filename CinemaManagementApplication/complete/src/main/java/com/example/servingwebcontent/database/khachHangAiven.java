@@ -3,6 +3,7 @@ package com.example.servingwebcontent.database;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import com.example.servingwebcontent.model.KhachHang;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +14,13 @@ public class khachHangAiven {
         Connection conn = null;
         List<KhachHang> danhSachKhachHang = new ArrayList<>();
         try {
-
             myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
-
-             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from khachhang");
+            
+            String sql = "SELECT * FROM khachhang ORDER BY ten";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet reset = pstmt.executeQuery();
+            
             System.out.println("Lấy tất cả dữ liệu khách hàng từ database: ");
             while (reset.next()) {
                 String CCCD = reset.getString("CCCD");
@@ -29,19 +29,26 @@ public class khachHangAiven {
                 String sdt = reset.getString("sdt");
                 String email = reset.getString("email");
                 String gioiTinh = reset.getString("gioiTinh");
+                String diaChi = reset.getString("diaChi");
+                String ngheNghiep = reset.getString("ngheNghiep");
+                String ngaySinh = reset.getString("ngaySinh");
+                String soVisa = reset.getString("soVisa");
                 
                 KhachHang khachHang = new KhachHang(CCCD, ten, tuoi, sdt, email, gioiTinh);
+                khachHang.setDiaChi(diaChi);
+                khachHang.setNgheNghiep(ngheNghiep);
+                khachHang.setNgaySinh(ngaySinh);
+                khachHang.setSoVisa(soVisa);
+                
                 danhSachKhachHang.add(khachHang);
                 System.out.println("CCCD: " + CCCD + " | Tên: " + ten + " | Tuổi: " + tuoi);
-
             }
 
             reset.close();
-            sta.close();
+            pstmt.close();
             conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi lấy dữ liệu khách hàng: " + e);
-
             e.printStackTrace();
         }
         return danhSachKhachHang;
@@ -51,14 +58,14 @@ public class khachHangAiven {
         Connection conn = null;
         KhachHang khachHang = null;
         try {
-
             myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
-
-             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from khachhang where CCCD = '" + CCCD + "'");
+            
+            String sql = "SELECT * FROM khachhang WHERE CCCD = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, CCCD);
+            ResultSet reset = pstmt.executeQuery();
+            
             System.out.println("Tìm khách hàng theo CCCD: " + CCCD);
             if (reset.next()) {
                 String ten = reset.getString("ten");
@@ -66,18 +73,25 @@ public class khachHangAiven {
                 String sdt = reset.getString("sdt");
                 String email = reset.getString("email");
                 String gioiTinh = reset.getString("gioiTinh");
+                String diaChi = reset.getString("diaChi");
+                String ngheNghiep = reset.getString("ngheNghiep");
+                String ngaySinh = reset.getString("ngaySinh");
+                String soVisa = reset.getString("soVisa");
                 
                 khachHang = new KhachHang(CCCD, ten, tuoi, sdt, email, gioiTinh);
+                khachHang.setDiaChi(diaChi);
+                khachHang.setNgheNghiep(ngheNghiep);
+                khachHang.setNgaySinh(ngaySinh);
+                khachHang.setSoVisa(soVisa);
+                
                 System.out.println("Tìm thấy khách hàng: " + ten);
-
             }
 
             reset.close();
-            sta.close();
+            pstmt.close();
             conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi tìm khách hàng: " + e);
-
             e.printStackTrace();
         }
         return khachHang;
@@ -87,14 +101,14 @@ public class khachHangAiven {
         Connection conn = null;
         List<KhachHang> danhSachKhachHang = new ArrayList<>();
         try {
-
             myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
-
-             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from khachhang where ten LIKE '%" + ten + "%'");
+            
+            String sql = "SELECT * FROM khachhang WHERE ten LIKE ? ORDER BY ten";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "%" + ten + "%");
+            ResultSet reset = pstmt.executeQuery();
+            
             System.out.println("Tìm kiếm khách hàng theo tên: " + ten);
             while (reset.next()) {
                 String CCCD = reset.getString("CCCD");
@@ -103,19 +117,26 @@ public class khachHangAiven {
                 String sdt = reset.getString("sdt");
                 String email = reset.getString("email");
                 String gioiTinh = reset.getString("gioiTinh");
+                String diaChi = reset.getString("diaChi");
+                String ngheNghiep = reset.getString("ngheNghiep");
+                String ngaySinh = reset.getString("ngaySinh");
+                String soVisa = reset.getString("soVisa");
                 
                 KhachHang khachHang = new KhachHang(CCCD, tenResult, tuoi, sdt, email, gioiTinh);
+                khachHang.setDiaChi(diaChi);
+                khachHang.setNgheNghiep(ngheNghiep);
+                khachHang.setNgaySinh(ngaySinh);
+                khachHang.setSoVisa(soVisa);
+                
                 danhSachKhachHang.add(khachHang);
                 System.out.println("Tìm thấy: " + CCCD + " - " + tenResult);
-
             }
 
             reset.close();
-            sta.close();
+            pstmt.close();
             conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi tìm kiếm khách hàng theo tên: " + e);
-
             e.printStackTrace();
         }
         return danhSachKhachHang;
@@ -127,16 +148,26 @@ public class khachHangAiven {
         try {
             myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
-            Statement sta = conn.createStatement();
             
-            String sql = "INSERT INTO khachhang (CCCD, ten, tuoi, sdt, email, gioiTinh) VALUES " +
-                        "('" + khachHang.getCCCD() + "', '" + khachHang.getTen() + "', " + khachHang.getTuoi() + 
-                        ", '" + khachHang.getSdt() + "', '" + khachHang.getEmail() + "', '" + khachHang.getGioiTinh() + "')";
+            String sql = "INSERT INTO khachhang (CCCD, ten, tuoi, sdt, email, gioiTinh, diaChi, ngheNghiep, ngaySinh, soVisa) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
-            int result = sta.executeUpdate(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, khachHang.getCCCD());
+            pstmt.setString(2, khachHang.getTen());
+            pstmt.setInt(3, khachHang.getTuoi());
+            pstmt.setString(4, khachHang.getSdt());
+            pstmt.setString(5, khachHang.getEmail());
+            pstmt.setString(6, khachHang.getGioiTinh());
+            pstmt.setString(7, khachHang.getDiaChi());
+            pstmt.setString(8, khachHang.getNgheNghiep());
+            pstmt.setString(9, khachHang.getNgaySinh());
+            pstmt.setString(10, khachHang.getSoVisa());
+            
+            int result = pstmt.executeUpdate();
             System.out.println("Tạo khách hàng thành công: " + result + " dòng được thêm");
             
-            sta.close();
+            pstmt.close();
             conn.close();
             return result > 0;
         } catch (Exception e) {
@@ -152,16 +183,26 @@ public class khachHangAiven {
         try {
             myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
-            Statement sta = conn.createStatement();
             
-            String sql = "UPDATE khachhang SET ten = '" + khachHang.getTen() + "', tuoi = " + khachHang.getTuoi() + 
-                        ", sdt = '" + khachHang.getSdt() + "', email = '" + khachHang.getEmail() + 
-                        "', gioiTinh = '" + khachHang.getGioiTinh() + "' WHERE CCCD = '" + CCCD + "'";
+            String sql = "UPDATE khachhang SET ten = ?, tuoi = ?, sdt = ?, email = ?, gioiTinh = ?, " +
+                        "diaChi = ?, ngheNghiep = ?, ngaySinh = ?, soVisa = ? WHERE CCCD = ?";
             
-            int result = sta.executeUpdate(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, khachHang.getTen());
+            pstmt.setInt(2, khachHang.getTuoi());
+            pstmt.setString(3, khachHang.getSdt());
+            pstmt.setString(4, khachHang.getEmail());
+            pstmt.setString(5, khachHang.getGioiTinh());
+            pstmt.setString(6, khachHang.getDiaChi());
+            pstmt.setString(7, khachHang.getNgheNghiep());
+            pstmt.setString(8, khachHang.getNgaySinh());
+            pstmt.setString(9, khachHang.getSoVisa());
+            pstmt.setString(10, CCCD);
+            
+            int result = pstmt.executeUpdate();
             System.out.println("Cập nhật khách hàng thành công: " + result + " dòng được cập nhật");
             
-            sta.close();
+            pstmt.close();
             conn.close();
             return result > 0;
         } catch (Exception e) {
@@ -177,14 +218,15 @@ public class khachHangAiven {
         try {
             myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
-            Statement sta = conn.createStatement();
             
-            String sql = "DELETE FROM khachhang WHERE CCCD = '" + CCCD + "'";
+            String sql = "DELETE FROM khachhang WHERE CCCD = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, CCCD);
             
-            int result = sta.executeUpdate(sql);
+            int result = pstmt.executeUpdate();
             System.out.println("Xóa khách hàng thành công: " + result + " dòng được xóa");
             
-            sta.close();
+            pstmt.close();
             conn.close();
             return result > 0;
         } catch (Exception e) {
@@ -192,5 +234,75 @@ public class khachHangAiven {
             e.printStackTrace();
             return false;
         }
+    }
+    
+    // Thêm method thống kê
+    public int getTotalKhachHang() {
+        Connection conn = null;
+        int total = 0;
+        try {
+            myDBConnection mydb = new myDBConnection();
+            conn = mydb.getOnlyConn();
+            
+            String sql = "SELECT COUNT(*) as total FROM khachhang";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet reset = pstmt.executeQuery();
+            
+            if (reset.next()) {
+                total = reset.getInt("total");
+            }
+            
+            reset.close();
+            pstmt.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("Lỗi đếm tổng khách hàng: " + e);
+            e.printStackTrace();
+        }
+        return total;
+    }
+    
+    // Thêm method tìm kiếm theo giới tính
+    public List<KhachHang> searchKhachHangByGioiTinh(String gioiTinh) {
+        Connection conn = null;
+        List<KhachHang> danhSachKhachHang = new ArrayList<>();
+        try {
+            myDBConnection mydb = new myDBConnection();
+            conn = mydb.getOnlyConn();
+            
+            String sql = "SELECT * FROM khachhang WHERE gioiTinh = ? ORDER BY ten";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, gioiTinh);
+            ResultSet reset = pstmt.executeQuery();
+            
+            while (reset.next()) {
+                String CCCD = reset.getString("CCCD");
+                String ten = reset.getString("ten");
+                int tuoi = reset.getInt("tuoi");
+                String sdt = reset.getString("sdt");
+                String email = reset.getString("email");
+                String gioiTinhResult = reset.getString("gioiTinh");
+                String diaChi = reset.getString("diaChi");
+                String ngheNghiep = reset.getString("ngheNghiep");
+                String ngaySinh = reset.getString("ngaySinh");
+                String soVisa = reset.getString("soVisa");
+                
+                KhachHang khachHang = new KhachHang(CCCD, ten, tuoi, sdt, email, gioiTinhResult);
+                khachHang.setDiaChi(diaChi);
+                khachHang.setNgheNghiep(ngheNghiep);
+                khachHang.setNgaySinh(ngaySinh);
+                khachHang.setSoVisa(soVisa);
+                
+                danhSachKhachHang.add(khachHang);
+            }
+            
+            reset.close();
+            pstmt.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println("Lỗi tìm kiếm theo giới tính: " + e);
+            e.printStackTrace();
+        }
+        return danhSachKhachHang;
     }
 } 

@@ -9,6 +9,10 @@ public class KhachHang {
     private String sdt;
     private String email;
     private String gioiTinh; // Nam, Nu, Khac
+    private String diaChi;
+    private String ngheNghiep;
+    private String ngaySinh;
+    private String soVisa;
     private ArrayList<Ve> lichSuDatVe;
 
     private static ArrayList<KhachHang> danhSachKhachHang = new ArrayList<>();
@@ -31,18 +35,37 @@ public class KhachHang {
         this.gioiTinh = gioiTinh;
     }
 
+    // Getters and Setters
     public String getCCCD() { return CCCD; }
     public void setCCCD(String CCCD) { this.CCCD = CCCD; }
+    
     public String getTen() { return ten; }
     public void setTen(String ten) { this.ten = ten; }
+    
     public int getTuoi() { return tuoi; }
     public void setTuoi(int tuoi) { this.tuoi = tuoi; }
+    
     public String getSdt() { return sdt; }
     public void setSdt(String sdt) { this.sdt = sdt; }
+    
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+    
     public String getGioiTinh() { return gioiTinh; }
     public void setGioiTinh(String gioiTinh) { this.gioiTinh = gioiTinh; }
+    
+    public String getDiaChi() { return diaChi; }
+    public void setDiaChi(String diaChi) { this.diaChi = diaChi; }
+    
+    public String getNgheNghiep() { return ngheNghiep; }
+    public void setNgheNghiep(String ngheNghiep) { this.ngheNghiep = ngheNghiep; }
+    
+    public String getNgaySinh() { return ngaySinh; }
+    public void setNgaySinh(String ngaySinh) { this.ngaySinh = ngaySinh; }
+    
+    public String getSoVisa() { return soVisa; }
+    public void setSoVisa(String soVisa) { this.soVisa = soVisa; }
+    
     public ArrayList<Ve> getLichSuDatVe() { return lichSuDatVe; }
     public void setLichSuDatVe(ArrayList<Ve> lichSuDatVe) { this.lichSuDatVe = lichSuDatVe; }
 
@@ -163,6 +186,10 @@ public class KhachHang {
         System.out.println("SĐT: " + sdt);
         System.out.println("Email: " + email);
         System.out.println("Giới tính: " + gioiTinh);
+        System.out.println("Địa chỉ: " + (diaChi != null ? diaChi : "Chưa cập nhật"));
+        System.out.println("Nghề nghiệp: " + (ngheNghiep != null ? ngheNghiep : "Chưa cập nhật"));
+        System.out.println("Ngày sinh: " + (ngaySinh != null ? ngaySinh : "Chưa cập nhật"));
+        System.out.println("Số Visa: " + (soVisa != null ? soVisa : "Chưa cập nhật"));
         System.out.println("Số vé đã đặt: " + (lichSuDatVe != null ? lichSuDatVe.size() : 0));
     }
 
