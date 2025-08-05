@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import com.example.servingwebcontent.model.KhachHang;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class khachHangAiven {
   
     public List<KhachHang> getAllKhachHang() {
