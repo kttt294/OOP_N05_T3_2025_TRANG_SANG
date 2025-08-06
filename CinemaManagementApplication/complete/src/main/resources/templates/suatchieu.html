@@ -45,9 +45,9 @@
                 <p class="text-muted">Quản lý lịch chiếu phim và thời gian biểu</p>
             </div>
             <div class="col-md-4 text-end">
-                <a href="/suatchieu/form" class="btn btn-primary">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addShowtimeModal">
                     <i class="fas fa-plus me-2"></i>Thêm Suất Chiếu
-                </a>
+                </button>
             </div>
         </div>
 
@@ -284,56 +284,178 @@
 
     <!-- Add Showtime Modal -->
     <div class="modal fade" id="addShowtimeModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fas fa-plus me-2"></i>Thêm Suất Chiếu Mới</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-clock me-2"></i>Thêm Suất Chiếu Mới
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <form th:action="@{/suatchieu/create}" method="post">
-                    <div class="modal-body">
-                        <div class="row">
+                <div class="modal-body p-4">
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Vui lòng điền đầy đủ thông tin suất chiếu. Các trường có dấu * là bắt buộc.
+                    </div>
+                    
+                    <form th:action="@{/suatchieu/create}" method="post" id="showtimeForm">
+                        <!-- Basic Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-info mb-3">
+                                    <i class="fas fa-info-circle me-2"></i>Thông Tin Cơ Bản
+                                </h5>
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="maSuatChieu" class="form-label">Mã suất chiếu *</label>
-                                    <input type="text" class="form-control" id="maSuatChieu" name="maSuatChieu" required>
+                                    <label for="maSuatChieu" class="form-label">
+                                        <i class="fas fa-hashtag me-1"></i>Mã suất chiếu <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="maSuatChieu" name="maSuatChieu" 
+                                           placeholder="Nhập mã suất chiếu" required>
+                                    <div class="form-text">Mã suất chiếu duy nhất</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="maPhim" class="form-label">Phim *</label>
+                                    <label for="maPhim" class="form-label">
+                                        <i class="fas fa-film me-1"></i>Chọn phim <span class="text-danger">*</span>
+                                    </label>
                                     <select class="form-select" id="maPhim" name="maPhim" required>
                                         <option value="">Chọn phim</option>
-                                        <!-- Movie options will be loaded dynamically -->
+                                        <option value="PH001">Avengers: Endgame - PH001</option>
+                                        <option value="PH002">Spider-Man: No Way Home - PH002</option>
+                                        <option value="PH003">Black Panther - PH003</option>
                                     </select>
+                                    <div class="form-text">Chọn phim để chiếu</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+
+                        <!-- Date and Time -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-info mb-3">
+                                    <i class="fas fa-calendar-alt me-2"></i>Ngày và Giờ Chiếu
+                                </h5>
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="maPhong" class="form-label">Phòng chiếu *</label>
-                                    <select class="form-select" id="maPhong" name="maPhong" required>
-                                        <option value="">Chọn phòng</option>
-                                        <!-- Room options will be loaded dynamically -->
-                                    </select>
+                                    <label for="ngayChieu" class="form-label">
+                                        <i class="fas fa-calendar me-1"></i>Ngày chiếu <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="date" class="form-control" id="ngayChieu" name="ngayChieu" required>
+                                    <div class="form-text">Chọn ngày chiếu phim</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="thoiGianChieu" class="form-label">Thời gian chiếu *</label>
-                                    <input type="datetime-local" class="form-control" id="thoiGianChieu" name="thoiGianChieu" required>
+                                    <label for="gioChieu" class="form-label">
+                                        <i class="fas fa-clock me-1"></i>Giờ chiếu <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="time" class="form-control" id="gioChieu" name="gioChieu" required>
+                                    <div class="form-text">Chọn giờ bắt đầu chiếu</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>Lưu
-                        </button>
-                    </div>
-                </form>
+
+                        <!-- Room and Price -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-info mb-3">
+                                    <i class="fas fa-building me-2"></i>Phòng Chiếu và Giá Vé
+                                </h5>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="maPhongChieu" class="form-label">
+                                        <i class="fas fa-door-open me-1"></i>Phòng chiếu <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" id="maPhongChieu" name="maPhongChieu" required>
+                                        <option value="">Chọn phòng chiếu</option>
+                                        <option value="PC001">Phòng 1 - 50 ghế</option>
+                                        <option value="PC002">Phòng 2 - 80 ghế</option>
+                                        <option value="PC003">Phòng VIP - 30 ghế</option>
+                                    </select>
+                                    <div class="form-text">Chọn phòng chiếu phù hợp</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="giaVe" class="form-label">
+                                        <i class="fas fa-money-bill-wave me-1"></i>Giá vé (VNĐ) <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" class="form-control" id="giaVe" name="giaVe" 
+                                           placeholder="Nhập giá vé" min="0" required>
+                                    <div class="form-text">Giá vé cho suất chiếu này</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status and Capacity -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-info mb-3">
+                                    <i class="fas fa-cog me-2"></i>Trạng Thái và Sức Chứa
+                                </h5>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="trangThai" class="form-label">
+                                        <i class="fas fa-info-circle me-1"></i>Trạng thái <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" id="trangThai" name="trangThai" required>
+                                        <option value="CHUAN_BI">Chuẩn bị</option>
+                                        <option value="DANG_CHIEU">Đang chiếu</option>
+                                        <option value="KET_THUC">Kết thúc</option>
+                                        <option value="HUY">Hủy</option>
+                                    </select>
+                                    <div class="form-text">Trạng thái hiện tại của suất chiếu</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="soGheTrong" class="form-label">
+                                        <i class="fas fa-chair me-1"></i>Số ghế trống <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" class="form-control" id="soGheTrong" name="soGheTrong" 
+                                           placeholder="Nhập số ghế trống" min="0" required>
+                                    <div class="form-text">Số ghế còn trống trong phòng</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-info mb-3">
+                                    <i class="fas fa-plus-circle me-2"></i>Thông Tin Bổ Sung
+                                </h5>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="ghiChu" class="form-label">
+                                        <i class="fas fa-sticky-note me-1"></i>Ghi chú
+                                    </label>
+                                    <textarea class="form-control" id="ghiChu" name="ghiChu" rows="3" 
+                                              placeholder="Nhập ghi chú về suất chiếu (nếu có)"></textarea>
+                                    <div class="form-text">Ghi chú bổ sung về suất chiếu</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Hủy
+                    </button>
+                    <button type="reset" class="btn btn-outline-secondary me-2" form="showtimeForm">
+                        <i class="fas fa-undo me-2"></i>Làm mới
+                    </button>
+                    <button type="submit" class="btn btn-info" form="showtimeForm">
+                        <i class="fas fa-save me-2"></i>Thêm Suất Chiếu
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -458,6 +580,91 @@
             
             window.open(url, '_blank');
         }
+
+        // Form validation for showtime modal
+        document.getElementById('showtimeForm').addEventListener('submit', function(e) {
+            const maSuatChieu = document.getElementById('maSuatChieu').value;
+            const maPhim = document.getElementById('maPhim').value;
+            const ngayChieu = document.getElementById('ngayChieu').value;
+            const gioChieu = document.getElementById('gioChieu').value;
+            const maPhongChieu = document.getElementById('maPhongChieu').value;
+            const giaVe = document.getElementById('giaVe').value;
+            const trangThai = document.getElementById('trangThai').value;
+            const soGheTrong = document.getElementById('soGheTrong').value;
+            
+            if (!maSuatChieu || !maPhim || !ngayChieu || !gioChieu || 
+                !maPhongChieu || !giaVe || !trangThai || !soGheTrong) {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+                e.preventDefault();
+                return;
+            }
+            
+            // Check if date is in the future
+            const selectedDate = new Date(ngayChieu);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (selectedDate < today) {
+                alert('Ngày chiếu phải từ hôm nay trở đi!');
+                e.preventDefault();
+                return;
+            }
+            
+            if (parseInt(giaVe) <= 0) {
+                alert('Giá vé phải lớn hơn 0!');
+                e.preventDefault();
+                return;
+            }
+            
+            if (parseInt(soGheTrong) < 0) {
+                alert('Số ghế trống không được âm!');
+                e.preventDefault();
+                return;
+            }
+        });
+
+        // Auto-generate showtime code
+        document.getElementById('maSuatChieu').addEventListener('focus', function() {
+            if (!this.value) {
+                const now = new Date();
+                const code = 'SC' + now.getFullYear() + 
+                           String(now.getMonth() + 1).padStart(2, '0') + 
+                           String(now.getDate()).padStart(2, '0') + 
+                           String(now.getHours()).padStart(2, '0') + 
+                           String(now.getMinutes()).padStart(2, '0');
+                this.value = code;
+            }
+        });
+
+        // Set minimum date to today
+        document.getElementById('ngayChieu').addEventListener('focus', function() {
+            const today = new Date().toISOString().split('T')[0];
+            this.min = today;
+        });
+
+        // Auto-fill current time
+        document.getElementById('gioChieu').addEventListener('focus', function() {
+            if (!this.value) {
+                const now = new Date();
+                const time = String(now.getHours()).padStart(2, '0') + ':' + 
+                           String(now.getMinutes()).padStart(2, '0');
+                this.value = time;
+            }
+        });
+
+        // Update seat count based on room selection
+        document.getElementById('maPhongChieu').addEventListener('change', function() {
+            const seatCounts = {
+                'PC001': 50,
+                'PC002': 80,
+                'PC003': 30
+            };
+            
+            const selectedRoom = this.value;
+            if (selectedRoom && seatCounts[selectedRoom]) {
+                document.getElementById('soGheTrong').value = seatCounts[selectedRoom];
+            }
+        });
     </script>
 </body>
 </html> 
