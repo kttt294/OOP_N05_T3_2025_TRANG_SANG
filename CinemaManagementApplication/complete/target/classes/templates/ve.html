@@ -45,9 +45,9 @@
                 <p class="text-muted">Quản lý đặt vé, hủy vé và thống kê doanh thu</p>
             </div>
             <div class="col-md-4 text-end">
-                <a href="/ve/form" class="btn btn-primary">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTicketModal">
                     <i class="fas fa-plus me-2"></i>Đặt Vé Mới
-                </a>
+                </button>
             </div>
         </div>
 
@@ -219,76 +219,141 @@
 
     <!-- Add Ticket Modal -->
     <div class="modal fade" id="addTicketModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fas fa-ticket-alt me-2"></i>Đặt Vé Mới</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-ticket-alt me-2"></i>Đặt Vé Mới
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <form th:action="@{/ve/create}" method="post">
-                    <div class="modal-body">
-                        <div class="row">
+                <div class="modal-body p-4">
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Vui lòng chọn thông tin để đặt vé. Các trường có dấu * là bắt buộc.
+                    </div>
+                    
+                    <form th:action="@{/ve/create}" method="post" id="ticketForm">
+                        <!-- Ticket Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-ticket-alt me-2"></i>Thông Tin Vé
+                                </h5>
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="maVe" class="form-label">Mã vé *</label>
-                                    <input type="text" class="form-control" id="maVe" name="maVe" required>
+                                    <label for="maVe" class="form-label">
+                                        <i class="fas fa-hashtag me-1"></i>Mã vé <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="maVe" name="maVe" 
+                                           placeholder="Nhập mã vé" required>
+                                    <div class="form-text">Mã vé duy nhất cho vé này</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="CCCD" class="form-label">CCCD Khách hàng *</label>
+                                    <label for="giaVe" class="form-label">
+                                        <i class="fas fa-money-bill-wave me-1"></i>Giá vé (VNĐ) <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" class="form-control" id="giaVe" name="giaVe" 
+                                           placeholder="Nhập giá vé" min="0" required>
+                                    <div class="form-text">Giá vé tính bằng VNĐ</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Selection -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-user me-2"></i>Chọn Khách Hàng
+                                </h5>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="CCCD" class="form-label">
+                                        <i class="fas fa-id-card me-1"></i>CCCD Khách hàng <span class="text-danger">*</span>
+                                    </label>
                                     <select class="form-select" id="CCCD" name="CCCD" required>
                                         <option value="">Chọn khách hàng</option>
-                                        <!-- Customer options will be loaded dynamically -->
+                                        <option value="123456789012">Nguyễn Văn A - 123456789012</option>
+                                        <option value="987654321098">Trần Thị B - 987654321098</option>
                                     </select>
+                                    <div class="form-text">Chọn khách hàng từ danh sách có sẵn</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+
+                        <!-- Showtime Selection -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-clock me-2"></i>Chọn Suất Chiếu
+                                </h5>
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="maSuatChieu" class="form-label">Suất chiếu *</label>
+                                    <label for="maSuatChieu" class="form-label">
+                                        <i class="fas fa-calendar me-1"></i>Suất chiếu <span class="text-danger">*</span>
+                                    </label>
                                     <select class="form-select" id="maSuatChieu" name="maSuatChieu" required>
                                         <option value="">Chọn suất chiếu</option>
-                                        <!-- Showtime options will be loaded dynamically -->
+                                        <option value="SC001">SC001 - Avengers: Endgame - 20:00 15/01/2025</option>
+                                        <option value="SC002">SC002 - Spider-Man - 22:00 15/01/2025</option>
                                     </select>
+                                    <div class="form-text">Chọn suất chiếu phù hợp</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="maGhe" class="form-label">Ghế *</label>
+                                    <label for="maGhe" class="form-label">
+                                        <i class="fas fa-chair me-1"></i>Ghế <span class="text-danger">*</span>
+                                    </label>
                                     <select class="form-select" id="maGhe" name="maGhe" required>
                                         <option value="">Chọn ghế</option>
-                                        <!-- Seat options will be loaded dynamically -->
+                                        <option value="A1">A1 - Hàng A, Ghế 1</option>
+                                        <option value="A2">A2 - Hàng A, Ghế 2</option>
+                                        <option value="B1">B1 - Hàng B, Ghế 1</option>
                                     </select>
+                                    <div class="form-text">Chọn ghế còn trống</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="giaVe" class="form-label">Giá vé (VNĐ) *</label>
-                                    <input type="number" class="form-control" id="giaVe" name="giaVe" min="0" required>
-                                </div>
+
+                        <!-- Payment Status -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-credit-card me-2"></i>Trạng Thái Thanh Toán
+                                </h5>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="trangThai" class="form-label">Trạng thái *</label>
+                                    <label for="trangThai" class="form-label">
+                                        <i class="fas fa-info-circle me-1"></i>Trạng thái <span class="text-danger">*</span>
+                                    </label>
                                     <select class="form-select" id="trangThai" name="trangThai" required>
                                         <option value="CHUA_THANH_TOAN">Chưa thanh toán</option>
                                         <option value="DA_THANH_TOAN">Đã thanh toán</option>
                                     </select>
+                                    <div class="form-text">Chọn trạng thái thanh toán</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>Đặt Vé
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Hủy
+                    </button>
+                    <button type="reset" class="btn btn-outline-secondary me-2" form="ticketForm">
+                        <i class="fas fa-undo me-2"></i>Làm mới
+                    </button>
+                    <button type="submit" class="btn btn-primary" form="ticketForm">
+                        <i class="fas fa-save me-2"></i>Đặt Vé
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -468,6 +533,42 @@
             
             window.open(url, '_blank');
         }
+
+        // Form validation for ticket modal
+        document.getElementById('ticketForm').addEventListener('submit', function(e) {
+            const maVe = document.getElementById('maVe').value;
+            const giaVe = document.getElementById('giaVe').value;
+            const CCCD = document.getElementById('CCCD').value;
+            const maSuatChieu = document.getElementById('maSuatChieu').value;
+            const maGhe = document.getElementById('maGhe').value;
+            
+            if (!maVe || !giaVe || !CCCD || !maSuatChieu || !maGhe) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                e.preventDefault();
+                return;
+            }
+            
+            if (parseInt(giaVe) <= 0) {
+                alert('Giá vé phải lớn hơn 0!');
+                e.preventDefault();
+                return;
+            }
+        });
+
+        // Auto-generate ticket code
+        document.getElementById('maVe').addEventListener('focus', function() {
+            if (!this.value) {
+                const now = new Date();
+                const code = 'VE' + now.getFullYear() + 
+                           String(now.getMonth() + 1).padStart(2, '0') + 
+                           String(now.getDate()).padStart(2, '0') + 
+                           String(now.getHours()).padStart(2, '0') + 
+                           String(now.getMinutes()).padStart(2, '0');
+                this.value = code;
+            }
+        });
     </script>
+</body>
+</html> 
 </body>
 </html> 

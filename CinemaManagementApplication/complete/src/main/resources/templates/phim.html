@@ -45,9 +45,9 @@
                 <p class="text-muted">Thêm, sửa, xóa và quản lý thông tin phim</p>
             </div>
             <div class="col-md-4 text-end">
-                <a href="/phim/form" class="btn btn-primary">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPhimModal">
                     <i class="fas fa-plus me-2"></i>Thêm Phim Mới
-                </a>
+                </button>
             </div>
         </div>
 
@@ -215,33 +215,62 @@
 
     <!-- Add Movie Modal -->
     <div class="modal fade" id="addPhimModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fas fa-plus me-2"></i>Thêm Phim Mới</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-video me-2"></i>Thêm Phim Mới
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <form th:action="@{/phim/create}" method="post" th:object="${phim}">
-                    <div class="modal-body">
-                        <div class="row">
+                <div class="modal-body p-4">
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Vui lòng điền đầy đủ thông tin phim. Các trường có dấu * là bắt buộc.
+                    </div>
+                    
+                    <form th:action="@{/phim/create}" method="post" id="movieForm" enctype="multipart/form-data">
+                        <!-- Basic Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-success mb-3">
+                                    <i class="fas fa-info-circle me-2"></i>Thông Tin Cơ Bản
+                                </h5>
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="maPhim" class="form-label">Mã Phim *</label>
-                                    <input type="text" class="form-control" id="maPhim" th:field="*{maPhim}" required>
+                                    <label for="maPhim" class="form-label">
+                                        <i class="fas fa-hashtag me-1"></i>Mã phim <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="maPhim" name="maPhim" 
+                                           placeholder="Nhập mã phim" required>
+                                    <div class="form-text">Mã phim duy nhất</div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="tenPhim" class="form-label">Tên Phim *</label>
-                                    <input type="text" class="form-control" id="tenPhim" th:field="*{tenPhim}" required>
+                                    <label for="tenPhim" class="form-label">
+                                        <i class="fas fa-film me-1"></i>Tên phim <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="tenPhim" name="tenPhim" 
+                                           placeholder="Nhập tên phim" required>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="theLoai" class="form-label">Thể Loại *</label>
-                                    <select class="form-select" id="theLoai" th:field="*{theLoai}" required>
+                                    <label for="theLoai" class="form-label">
+                                        <i class="fas fa-tags me-1"></i>Thể loại <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" id="theLoai" name="theLoai" required>
                                         <option value="">Chọn thể loại</option>
                                         <option value="Hành động">Hành động</option>
                                         <option value="Tình cảm">Tình cảm</option>
-                                        <option value="Hài">Hài</option>
+                                        <option value="Hài hước">Hài hước</option>
                                         <option value="Kinh dị">Kinh dị</option>
-                                        <option value="Viễn tưởng">Viễn tưởng</option>
+                                        <option value="Khoa học viễn tưởng">Khoa học viễn tưởng</option>
                                         <option value="Hoạt hình">Hoạt hình</option>
                                         <option value="Tài liệu">Tài liệu</option>
                                     </select>
@@ -249,12 +278,58 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="thoiLuong" class="form-label">Thời Lượng (phút) *</label>
-                                    <input type="number" class="form-control" id="thoiLuong" th:field="*{thoiLuong}" min="1" max="300" required>
+                                    <label for="daoDien" class="form-label">
+                                        <i class="fas fa-user-tie me-1"></i>Đạo diễn <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="daoDien" name="daoDien" 
+                                           placeholder="Nhập tên đạo diễn" required>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Details -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-success mb-3">
+                                    <i class="fas fa-list-alt me-2"></i>Chi Tiết Phim
+                                </h5>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="ngonNgu" class="form-label">Ngôn Ngữ *</label>
-                                    <select class="form-select" id="ngonNgu" th:field="*{ngonNgu}" required>
+                                    <label for="namSanXuat" class="form-label">
+                                        <i class="fas fa-calendar me-1"></i>Năm sản xuất <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" class="form-control" id="namSanXuat" name="namSanXuat" 
+                                           placeholder="Nhập năm sản xuất" min="1900" max="2030" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="thoiLuong" class="form-label">
+                                        <i class="fas fa-clock me-1"></i>Thời lượng (phút) <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" class="form-control" id="thoiLuong" name="thoiLuong" 
+                                           placeholder="Nhập thời lượng" min="1" max="300" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="quocGia" class="form-label">
+                                        <i class="fas fa-flag me-1"></i>Quốc gia <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="quocGia" name="quocGia" 
+                                           placeholder="Nhập quốc gia sản xuất" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="ngonNgu" class="form-label">
+                                        <i class="fas fa-language me-1"></i>Ngôn ngữ <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" id="ngonNgu" name="ngonNgu" required>
                                         <option value="">Chọn ngôn ngữ</option>
                                         <option value="Tiếng Việt">Tiếng Việt</option>
                                         <option value="Tiếng Anh">Tiếng Anh</option>
@@ -263,31 +338,80 @@
                                         <option value="Tiếng Trung">Tiếng Trung</option>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Description and Image -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-success mb-3">
+                                    <i class="fas fa-image me-2"></i>Mô Tả và Hình Ảnh
+                                </h5>
+                            </div>
+                            <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label for="gioiHanTuoi" class="form-label">Giới Hạn Tuổi *</label>
-                                    <select class="form-select" id="gioiHanTuoi" th:field="*{gioiHanTuoi}" required>
-                                        <option value="">Chọn giới hạn tuổi</option>
-                                        <option value="0">P (Mọi lứa tuổi)</option>
-                                        <option value="6">6+</option>
-                                        <option value="13">13+</option>
-                                        <option value="16">16+</option>
-                                        <option value="18">18+</option>
+                                    <label for="moTa" class="form-label">
+                                        <i class="fas fa-align-left me-1"></i>Mô tả
+                                    </label>
+                                    <textarea class="form-control" id="moTa" name="moTa" rows="4" 
+                                              placeholder="Nhập mô tả tóm tắt về phim"></textarea>
+                                    <div class="form-text">Mô tả ngắn gọn về nội dung phim</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="hinhAnh" class="form-label">
+                                        <i class="fas fa-image me-1"></i>Hình ảnh phim
+                                    </label>
+                                    <input type="file" class="form-control" id="hinhAnh" name="hinhAnh" 
+                                           accept="image/*">
+                                    <div class="form-text">Chọn file hình ảnh (JPG, PNG, GIF)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-success mb-3">
+                                    <i class="fas fa-money-bill-wave me-2"></i>Thông Tin Giá
+                                </h5>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="giaVe" class="form-label">
+                                        <i class="fas fa-ticket-alt me-1"></i>Giá vé (VNĐ) <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" class="form-control" id="giaVe" name="giaVe" 
+                                           placeholder="Nhập giá vé" min="0" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="trangThai" class="form-label">
+                                        <i class="fas fa-info-circle me-1"></i>Trạng thái <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" id="trangThai" name="trangThai" required>
+                                        <option value="DANG_CHIEU">Đang chiếu</option>
+                                        <option value="SAP_CHIEU">Sắp chiếu</option>
+                                        <option value="KET_THUC">Kết thúc</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="moTa" class="form-label">Mô Tả</label>
-                            <textarea class="form-control" id="moTa" th:field="*{moTa}" rows="3" placeholder="Nhập mô tả phim..."></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>Lưu Phim
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Hủy
+                    </button>
+                    <button type="reset" class="btn btn-outline-secondary me-2" form="movieForm">
+                        <i class="fas fa-undo me-2"></i>Làm mới
+                    </button>
+                    <button type="submit" class="btn btn-success" form="movieForm">
+                        <i class="fas fa-save me-2"></i>Thêm Phim
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -369,6 +493,77 @@
             $('#deletePhimForm').append('<input type="hidden" name="maPhim" value="' + maPhim + '">');
             $('#deletePhimModal').modal('show');
         }
+
+        // Form validation for movie modal
+        document.getElementById('movieForm').addEventListener('submit', function(e) {
+            const maPhim = document.getElementById('maPhim').value;
+            const tenPhim = document.getElementById('tenPhim').value;
+            const theLoai = document.getElementById('theLoai').value;
+            const daoDien = document.getElementById('daoDien').value;
+            const namSanXuat = document.getElementById('namSanXuat').value;
+            const thoiLuong = document.getElementById('thoiLuong').value;
+            const quocGia = document.getElementById('quocGia').value;
+            const ngonNgu = document.getElementById('ngonNgu').value;
+            const giaVe = document.getElementById('giaVe').value;
+            const trangThai = document.getElementById('trangThai').value;
+            
+            if (!maPhim || !tenPhim || !theLoai || !daoDien || !namSanXuat || 
+                !thoiLuong || !quocGia || !ngonNgu || !giaVe || !trangThai) {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+                e.preventDefault();
+                return;
+            }
+            
+            if (parseInt(namSanXuat) < 1900 || parseInt(namSanXuat) > 2030) {
+                alert('Năm sản xuất phải từ 1900 đến 2030!');
+                e.preventDefault();
+                return;
+            }
+            
+            if (parseInt(thoiLuong) < 1 || parseInt(thoiLuong) > 300) {
+                alert('Thời lượng phải từ 1 đến 300 phút!');
+                e.preventDefault();
+                return;
+            }
+            
+            if (parseInt(giaVe) <= 0) {
+                alert('Giá vé phải lớn hơn 0!');
+                e.preventDefault();
+                return;
+            }
+        });
+
+        // Auto-generate movie code
+        document.getElementById('maPhim').addEventListener('focus', function() {
+            if (!this.value) {
+                const now = new Date();
+                const code = 'PH' + now.getFullYear() + 
+                           String(now.getMonth() + 1).padStart(2, '0') + 
+                           String(now.getDate()).padStart(2, '0') + 
+                           String(now.getHours()).padStart(2, '0') + 
+                           String(now.getMinutes()).padStart(2, '0');
+                this.value = code;
+            }
+        });
+
+        // Image preview
+        document.getElementById('hinhAnh').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) { // 5MB
+                    alert('File hình ảnh quá lớn! Vui lòng chọn file nhỏ hơn 5MB.');
+                    this.value = '';
+                    return;
+                }
+                
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Chỉ chấp nhận file hình ảnh (JPG, PNG, GIF)!');
+                    this.value = '';
+                    return;
+                }
+            }
+        });
     </script>
 </body>
 </html> 

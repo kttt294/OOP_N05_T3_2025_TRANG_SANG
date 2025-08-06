@@ -45,9 +45,9 @@
                 <p class="text-muted">Quản lý thông tin khách hàng và lịch sử đặt vé</p>
             </div>
             <div class="col-md-4 text-end">
-                <a href="/khachhang/form" class="btn btn-primary">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
                     <i class="fas fa-plus me-2"></i>Thêm Khách Hàng
-                </a>
+                </button>
             </div>
         </div>
 
@@ -214,68 +214,169 @@
 
     <!-- Add Customer Modal -->
     <div class="modal fade" id="addCustomerModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fas fa-user-plus me-2"></i>Thêm Khách Hàng Mới</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-user-plus me-2"></i>Thêm Khách Hàng Mới
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <form th:action="@{/khachhang/create}" method="post">
-                    <div class="modal-body">
-                        <div class="row">
+                <div class="modal-body p-4">
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Vui lòng điền đầy đủ thông tin khách hàng. Các trường có dấu * là bắt buộc.
+                    </div>
+                    
+                    <form th:action="@{/khachhang/create}" method="post" id="customerForm">
+                        <!-- Personal Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-user me-2"></i>Thông Tin Cá Nhân
+                                </h5>
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="cccd" class="form-label">CCCD *</label>
-                                    <input type="text" class="form-control" id="cccd" name="CCCD" required>
+                                    <label for="CCCD" class="form-label">
+                                        <i class="fas fa-id-card me-1"></i>CCCD <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="CCCD" name="CCCD" 
+                                           placeholder="Nhập CCCD (12 số)" maxlength="12" required>
+                                    <div class="form-text">CCCD phải có đúng 12 số</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="ten" class="form-label">Họ tên *</label>
-                                    <input type="text" class="form-control" id="ten" name="ten" required>
+                                    <label for="hoTen" class="form-label">
+                                        <i class="fas fa-user me-1"></i>Họ và tên <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="hoTen" name="hoTen" 
+                                           placeholder="Nhập họ và tên" required>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+
+                        <!-- Contact Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-phone me-2"></i>Thông Tin Liên Lạc
+                                </h5>
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="tuoi" class="form-label">Tuổi *</label>
-                                    <input type="number" class="form-control" id="tuoi" name="tuoi" min="1" max="120" required>
+                                    <label for="soDienThoai" class="form-label">
+                                        <i class="fas fa-phone me-1"></i>Số điện thoại <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="tel" class="form-control" id="soDienThoai" name="soDienThoai" 
+                                           placeholder="Nhập số điện thoại" required>
+                                    <div class="form-text">Ví dụ: 0123456789</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="sdt" class="form-label">Số điện thoại *</label>
-                                    <input type="tel" class="form-control" id="sdt" name="sdt" required>
+                                    <label for="email" class="form-label">
+                                        <i class="fas fa-envelope me-1"></i>Email
+                                    </label>
+                                    <input type="email" class="form-control" id="email" name="email" 
+                                           placeholder="Nhập email">
+                                    <div class="form-text">Ví dụ: example@email.com</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+
+                        <!-- Address Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Thông Tin Địa Chỉ
+                                </h5>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="diaChi" class="form-label">
+                                        <i class="fas fa-home me-1"></i>Địa chỉ <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea class="form-control" id="diaChi" name="diaChi" rows="3" 
+                                              placeholder="Nhập địa chỉ chi tiết" required></textarea>
+                                    <div class="form-text">Nhập địa chỉ đầy đủ: số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-info-circle me-2"></i>Thông Tin Bổ Sung
+                                </h5>
+                            </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email *</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
+                                    <label for="ngaySinh" class="form-label">
+                                        <i class="fas fa-birthday-cake me-1"></i>Ngày sinh
+                                    </label>
+                                    <input type="date" class="form-control" id="ngaySinh" name="ngaySinh">
+                                    <div class="form-text">Chọn ngày sinh (không bắt buộc)</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="gioiTinh" class="form-label">Giới tính *</label>
-                                    <select class="form-select" id="gioiTinh" name="gioiTinh" required>
+                                    <label for="gioiTinh" class="form-label">
+                                        <i class="fas fa-venus-mars me-1"></i>Giới tính
+                                    </label>
+                                    <select class="form-select" id="gioiTinh" name="gioiTinh">
                                         <option value="">Chọn giới tính</option>
                                         <option value="Nam">Nam</option>
                                         <option value="Nữ">Nữ</option>
+                                        <option value="Khác">Khác</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>Lưu
-                        </button>
-                    </div>
-                </form>
+
+                        <!-- Account Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-user-shield me-2"></i>Thông Tin Tài Khoản
+                                </h5>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="tenDangNhap" class="form-label">
+                                        <i class="fas fa-user me-1"></i>Tên đăng nhập <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="tenDangNhap" name="tenDangNhap" 
+                                           placeholder="Nhập tên đăng nhập" required>
+                                    <div class="form-text">Tên đăng nhập duy nhất</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="matKhau" class="form-label">
+                                        <i class="fas fa-lock me-1"></i>Mật khẩu <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="password" class="form-control" id="matKhau" name="matKhau" 
+                                           placeholder="Nhập mật khẩu" required>
+                                    <div class="form-text">Mật khẩu tối thiểu 6 ký tự</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Hủy
+                    </button>
+                    <button type="reset" class="btn btn-outline-secondary me-2" form="customerForm">
+                        <i class="fas fa-undo me-2"></i>Làm mới
+                    </button>
+                    <button type="submit" class="btn btn-primary" form="customerForm">
+                        <i class="fas fa-save me-2"></i>Thêm Khách Hàng
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -361,6 +462,84 @@
                 form.submit();
             }
         }
+
+        // Form validation for customer modal
+        document.getElementById('customerForm').addEventListener('submit', function(e) {
+            const CCCD = document.getElementById('CCCD').value;
+            const hoTen = document.getElementById('hoTen').value;
+            const soDienThoai = document.getElementById('soDienThoai').value;
+            const diaChi = document.getElementById('diaChi').value;
+            const tenDangNhap = document.getElementById('tenDangNhap').value;
+            const matKhau = document.getElementById('matKhau').value;
+            
+            if (!CCCD || !hoTen || !soDienThoai || !diaChi || !tenDangNhap || !matKhau) {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+                e.preventDefault();
+                return;
+            }
+            
+            // Validate CCCD (12 digits)
+            if (!/^\d{12}$/.test(CCCD)) {
+                alert('CCCD phải có đúng 12 số!');
+                e.preventDefault();
+                return;
+            }
+            
+            // Validate phone number (10-11 digits)
+            if (!/^\d{10,11}$/.test(soDienThoai)) {
+                alert('Số điện thoại phải có 10-11 số!');
+                e.preventDefault();
+                return;
+            }
+            
+            // Validate password (minimum 6 characters)
+            if (matKhau.length < 6) {
+                alert('Mật khẩu phải có ít nhất 6 ký tự!');
+                e.preventDefault();
+                return;
+            }
+            
+            // Validate email format if provided
+            const email = document.getElementById('email').value;
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Email không đúng định dạng!');
+                e.preventDefault();
+                return;
+            }
+        });
+
+        // Auto-format CCCD input
+        document.getElementById('CCCD').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').substring(0, 12);
+        });
+
+        // Auto-format phone number input
+        document.getElementById('soDienThoai').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').substring(0, 11);
+        });
+
+        // Auto-generate username from name
+        document.getElementById('hoTen').addEventListener('blur', function() {
+            const tenDangNhap = document.getElementById('tenDangNhap');
+            if (!tenDangNhap.value && this.value) {
+                const username = this.value.toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9]/g, '')
+                    .substring(0, 20);
+                tenDangNhap.value = username;
+            }
+        });
+
+        // Show/hide password
+        document.getElementById('matKhau').addEventListener('focus', function() {
+            this.type = 'text';
+        });
+        
+        document.getElementById('matKhau').addEventListener('blur', function() {
+            this.type = 'password';
+        });
     </script>
 </body>
 </html>
+
