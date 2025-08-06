@@ -2,7 +2,6 @@ package com.example.servingwebcontent.database;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import com.example.servingwebcontent.model.Phim;
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class phimAiven {
         }
         return danhSachPhim;
     }
-    
+
     public Phim getPhimById(String maPhim) {
         Connection conn = null;
         Phim phim = null;
@@ -82,8 +81,8 @@ public class phimAiven {
         }
         return phim;
     }
-    
-    // Thêm method tạo phim mới
+
+    // thêm method tạo phim mới
     public boolean createPhim(Phim phim) {
         Connection conn = null;
         try {

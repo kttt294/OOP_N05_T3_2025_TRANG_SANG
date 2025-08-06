@@ -12,11 +12,19 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
+    <style>
+      .card-body .btn {
+        width: 100%;
+      }
+      .card-title {
+        min-height: 3rem;
+      }
+    </style>
   </head>
   <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
+      <div class="container-xl">
         <a class="navbar-brand" href="/">
           <i class="fas fa-film me-2"></i>Cinema Management
         </a>
@@ -30,38 +38,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/phim">Phim</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/khachhang">Khách hàng</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/ve">Vé</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/suatchieu">Suất chiếu</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/phongchieu">Phòng chiếu</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/ghe">Ghế</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/voucher">Voucher</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/doan">Đồ ăn</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/danhgia">Đánh giá</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/db-status">
-                <i class="fas fa-database me-1"></i>DB Status
-              </a>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="/phim">Phim</a></li>
+            <li class="nav-item"><a class="nav-link" href="/khachhang">Khách hàng</a></li>
+            <li class="nav-item"><a class="nav-link" href="/ve">Vé</a></li>
+            <li class="nav-item"><a class="nav-link" href="/suatchieu">Suất chiếu</a></li>
+            <li class="nav-item"><a class="nav-link" href="/phongchieu">Phòng chiếu</a></li>
+            <li class="nav-item"><a class="nav-link" href="/ghe">Ghế</a></li>
+            <li class="nav-item"><a class="nav-link" href="/voucher">Voucher</a></li>
+            <li class="nav-item"><a class="nav-link" href="/doan">Đồ ăn</a></li>
+            <li class="nav-item"><a class="nav-link" href="/danhgia">Đánh giá</a></li>
+            <li class="nav-item"><a class="nav-link" href="/db-status"><i class="fas fa-database me-1"></i>DB Status</a></li>
           </ul>
         </div>
       </div>
@@ -69,25 +55,14 @@
 
     <!-- Hero Section -->
     <div class="bg-primary text-white py-5">
-      <div class="container">
+      <div class="container-xl">
         <div class="row align-items-center">
           <div class="col-lg-8">
-            <h1 class="display-4 fw-bold">
-              <i class="fas fa-film me-3"></i>Cinema Management System
-            </h1>
-            <p class="lead">
-              Hệ thống quản lý rạp phim hiện đại với giao diện Bootstrap
-              responsive
-            </p>
-            <p class="mb-4">
-              Quản lý phim, khách hàng, vé, suất chiếu và nhiều tính năng khác
-            </p>
-            <a href="/khachhang" class="btn btn-light btn-lg me-3">
-              <i class="fas fa-users me-2"></i>Quản lý Khách hàng
-            </a>
-            <a href="/phim" class="btn btn-outline-light btn-lg">
-              <i class="fas fa-video me-2"></i>Quản lý Phim
-            </a>
+            <h1 class="display-4 fw-bold"><i class="fas fa-film me-3"></i>Cinema Management System</h1>
+            <p class="lead">Hệ thống quản lý rạp phim hiện đại với giao diện Bootstrap responsive</p>
+            <p class="mb-4">Quản lý phim, khách hàng, vé, suất chiếu và nhiều tính năng khác</p>
+            <a href="/khachhang" class="btn btn-light btn-lg me-3"><i class="fas fa-users me-2"></i>Quản lý Khách hàng</a>
+            <a href="/phim" class="btn btn-outline-light btn-lg"><i class="fas fa-video me-2"></i>Quản lý Phim</a>
           </div>
           <div class="col-lg-4 text-center">
             <i class="fas fa-film fa-8x opacity-75"></i>
@@ -96,147 +71,86 @@
       </div>
     </div>
 
-    <!-- PHẦN 1: TÍNH NĂNG CHÍNH -->
-    <section class="py-5 bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="text-center mb-5">
-              <i class="fas fa-star me-2"></i>Tính Năng Chính
-            </h2>
-            <p class="text-center text-muted mb-5">
-              Các tính năng quản lý chính của hệ thống rạp phim
-            </p>
+    <!-- Tính Năng Chính -->
+    <section class="py-5 bg-white">
+      <div class="container-xl">
+        <div class="bg-secondary bg-opacity-10 p-5 rounded">
+          <div class="text-center mb-5">
+            <h2><i class="fas fa-star me-2"></i>Tính Năng Chính</h2>
+            <p class="text-muted">Các tính năng quản lý chính của hệ thống rạp phim</p>
           </div>
-        </div>
-
-        <div class="row g-4">
-          <!-- Customer Management -->
-          <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-              <div class="card-body text-center">
-                <div
-                  class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                  style="width: 60px; height: 60px"
-                >
-                  <i class="fas fa-users fa-2x"></i>
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <!-- 6 tính năng -->
+            <div class="col">
+              <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                  <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px">
+                    <i class="fas fa-users fa-2x"></i>
+                  </div>
+                  <h5 class="card-title">Quản lý Khách hàng</h5>
+                  <p class="card-text">Thêm, sửa, xóa và tìm kiếm thông tin khách hàng.</p>
+                  <a href="/khachhang" class="btn btn-primary"><i class="fas fa-arrow-right me-2"></i>Xem chi tiết</a>
                 </div>
-                <h5 class="card-title">Quản lý Khách hàng</h5>
-                <p class="card-text">
-                  Thêm, sửa, xóa và tìm kiếm thông tin khách hàng với giao diện
-                  Bootstrap đẹp mắt.
-                </p>
-                <a href="/khachhang" class="btn btn-primary">
-                  <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
-                </a>
               </div>
             </div>
-          </div>
-
-          <!-- Movie Management -->
-          <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-              <div class="card-body text-center">
-                <div
-                  class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                  style="width: 60px; height: 60px"
-                >
-                  <i class="fas fa-video fa-2x"></i>
+            <div class="col">
+              <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                  <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px">
+                    <i class="fas fa-video fa-2x"></i>
+                  </div>
+                  <h5 class="card-title">Quản lý Phim</h5>
+                  <p class="card-text">Quản lý danh sách phim với thông tin chi tiết và hình ảnh.</p>
+                  <a href="/phim" class="btn btn-success"><i class="fas fa-arrow-right me-2"></i>Xem chi tiết</a>
                 </div>
-                <h5 class="card-title">Quản lý Phim</h5>
-                <p class="card-text">
-                  Quản lý danh sách phim với thông tin chi tiết và hình ảnh minh
-                  họa.
-                </p>
-                <a href="/phim" class="btn btn-success">
-                  <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
-                </a>
               </div>
             </div>
-          </div>
-
-          <!-- Ticket Management -->
-          <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-              <div class="card-body text-center">
-                <div
-                  class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                  style="width: 60px; height: 60px"
-                >
-                  <i class="fas fa-ticket-alt fa-2x"></i>
+            <div class="col">
+              <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                  <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px">
+                    <i class="fas fa-ticket-alt fa-2x"></i>
+                  </div>
+                  <h5 class="card-title">Quản lý Vé</h5>
+                  <p class="card-text">Đặt vé, thanh toán và quản lý trạng thái vé.</p>
+                  <a href="/ve" class="btn btn-warning"><i class="fas fa-arrow-right me-2"></i>Xem chi tiết</a>
                 </div>
-                <h5 class="card-title">Quản lý Vé</h5>
-                <p class="card-text">
-                  Đặt vé, thanh toán và quản lý trạng thái vé với giao diện hiện
-                  đại.
-                </p>
-                <a href="/ve" class="btn btn-warning">
-                  <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
-                </a>
               </div>
             </div>
-          </div>
-
-          <!-- Seat Management -->
-          <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-              <div class="card-body text-center">
-                <div
-                  class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                  style="width: 60px; height: 60px"
-                >
-                  <i class="fas fa-chair fa-2x"></i>
+            <div class="col">
+              <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                  <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px">
+                    <i class="fas fa-chair fa-2x"></i>
+                  </div>
+                  <h5 class="card-title">Quản lý Ghế</h5>
+                  <p class="card-text">Quản lý vị trí ghế trong phòng chiếu và trạng thái đặt chỗ.</p>
+                  <a href="/ghe" class="btn btn-dark"><i class="fas fa-arrow-right me-2"></i>Xem chi tiết</a>
                 </div>
-                <h5 class="card-title">Quản lý Ghế</h5>
-                <p class="card-text">
-                  Quản lý vị trí ghế trong từng phòng chiếu và trạng thái đặt
-                  chỗ.
-                </p>
-                <a href="/ghe" class="btn btn-dark">
-                  <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
-                </a>
               </div>
             </div>
-          </div>
-
-          <!-- Voucher Management -->
-          <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-              <div class="card-body text-center">
-                <div
-                  class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                  style="width: 60px; height: 60px"
-                >
-                  <i class="fas fa-gift fa-2x"></i>
+            <div class="col">
+              <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                  <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px">
+                    <i class="fas fa-gift fa-2x"></i>
+                  </div>
+                  <h5 class="card-title">Quản lý Voucher</h5>
+                  <p class="card-text">Tạo và quản lý mã giảm giá, khuyến mãi cho khách hàng.</p>
+                  <a href="/voucher" class="btn btn-secondary"><i class="fas fa-arrow-right me-2"></i>Xem chi tiết</a>
                 </div>
-                <h5 class="card-title">Quản lý Voucher</h5>
-                <p class="card-text">
-                  Tạo và quản lý mã giảm giá, khuyến mãi cho khách hàng.
-                </p>
-                <a href="/voucher" class="btn btn-secondary">
-                  <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
-                </a>
               </div>
             </div>
-          </div>
-
-          <!-- Review Management -->
-          <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-              <div class="card-body text-center">
-                <div
-                  class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                  style="width: 60px; height: 60px"
-                >
-                  <i class="fas fa-star fa-2x"></i>
+            <div class="col">
+              <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                  <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px">
+                    <i class="fas fa-star fa-2x"></i>
+                  </div>
+                  <h5 class="card-title">Quản lý Đánh giá</h5>
+                  <p class="card-text">Xem và quản lý đánh giá từ khách hàng về dịch vụ.</p>
+                  <a href="/danhgia" class="btn btn-info"><i class="fas fa-arrow-right me-2"></i>Xem chi tiết</a>
                 </div>
-                <h5 class="card-title">Quản lý Đánh giá</h5>
-                <p class="card-text">
-                  Xem và quản lý đánh giá, phản hồi từ khách hàng về dịch vụ.
-                </p>
-                <a href="/danhgia" class="btn btn-info">
-                  <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
-                </a>
               </div>
             </div>
           </div>
@@ -244,117 +158,68 @@
       </div>
     </section>
 
-    <!-- PHẦN 2 & 3: THỐNG KÊ HỆ THỐNG VÀ TRẠNG THÁI DATABASE -->
+    <!-- Thống kê & Database -->
     <section class="py-5 bg-white">
-      <div class="container">
-        <div class="row">
-          <!-- PHẦN 2: THỐNG KÊ HỆ THỐNG -->
-          <div class="col-md-8">
-            <h2 class="text-center mb-4">
-              <i class="fas fa-chart-bar me-2"></i>Thống Kê Hệ Thống
-            </h2>
-            <p class="text-center text-muted mb-4">
-              Thống kê dữ liệu hiện tại của hệ thống
-            </p>
-
-            <div class="row text-center">
-              <div class="col-md-6">
-                <div class="border rounded p-3 bg-light shadow-sm mb-3">
-                  <i class="fas fa-users fa-2x text-primary mb-2"></i>
-                  <h5 class="text-primary">Khách hàng</h5>
-                  <p
-                    class="h4 text-primary"
-                    th:text="${totalCustomers != null ? totalCustomers + '+' : '0+'}"
-                  >
-                    0+
-                  </p>
-                  <small class="text-muted"
-                    >Tổng số khách hàng đã đăng ký</small
-                  >
+      <div class="container-xl">
+        <div class="row g-4">
+          <div class="col-md-6 d-flex">
+            <div class="bg-danger bg-opacity-10 p-4 rounded w-100 h-100">
+              <h2 class="text-center mb-4"><i class="fas fa-chart-bar me-2"></i>Thống Kê Hệ Thống</h2>
+              <div class="row text-center">
+                <div class="col-6">
+                  <div class="border rounded p-3 bg-white shadow-sm mb-3">
+                    <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                    <h5>Khách hàng</h5>
+                    <p th:text="${totalCustomers}">0+</p>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="border rounded p-3 bg-light shadow-sm mb-3">
-                  <i class="fas fa-video fa-2x text-success mb-2"></i>
-                  <h5 class="text-success">Phim</h5>
-                  <p
-                    class="h4 text-success"
-                    th:text="${totalMovies != null ? totalMovies + '+' : '0+'}"
-                  >
-                    0+
-                  </p>
-                  <small class="text-muted">Tổng số phim trong hệ thống</small>
+                <div class="col-6">
+                  <div class="border rounded p-3 bg-white shadow-sm mb-3">
+                    <i class="fas fa-video fa-2x text-success mb-2"></i>
+                    <h5>Phim</h5>
+                    <p th:text="${totalMovies}">0+</p>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="border rounded p-3 bg-light shadow-sm mb-3">
-                  <i class="fas fa-ticket-alt fa-2x text-warning mb-2"></i>
-                  <h5 class="text-warning">Vé đã bán</h5>
-                  <p
-                    class="h4 text-warning"
-                    th:text="${totalTickets != null ? totalTickets + '+' : '0+'}"
-                  >
-                    0+
-                  </p>
-                  <small class="text-muted">Tổng số vé đã được bán</small>
+                <div class="col-6">
+                  <div class="border rounded p-3 bg-white shadow-sm mb-3">
+                    <i class="fas fa-ticket-alt fa-2x text-warning mb-2"></i>
+                    <h5>Vé đã bán</h5>
+                    <p th:text="${totalTickets}">0+</p>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="border rounded p-3 bg-light shadow-sm mb-3">
-                  <i class="fas fa-clock fa-2x text-info mb-2"></i>
-                  <h5 class="text-info">Suất chiếu</h5>
-                  <p
-                    class="h4 text-info"
-                    th:text="${totalShowtimes != null ? totalShowtimes + '+' : '0+'}"
-                  >
-                    0+
-                  </p>
-                  <small class="text-muted"
-                    >Tổng số suất chiếu đã lên lịch</small
-                  >
+                <div class="col-6">
+                  <div class="border rounded p-3 bg-white shadow-sm mb-3">
+                    <i class="fas fa-clock fa-2x text-info mb-2"></i>
+                    <h5>Suất chiếu</h5>
+                    <p th:text="${totalShowtimes}">0+</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- PHẦN 3: TRẠNG THÁI DATABASE -->
-          <div class="col-md-4">
-            <h2 class="text-center mb-4">
-              <i class="fas fa-database me-2"></i>Trạng Thái Database
-            </h2>
-            <p class="text-center text-muted mb-4">
-              Thông tin kết nối và trạng thái cơ sở dữ liệu
-            </p>
-
-            <div class="card bg-light text-dark shadow-sm">
-              <div class="card-body text-center">
-                <div class="mb-3">
-                  <i class="fas fa-database fa-3x text-primary mb-2"></i>
+          <div class="col-md-6 d-flex">
+            <div class="bg-info bg-opacity-10 p-4 rounded w-100 h-100">
+              <h2 class="text-center mb-4"><i class="fas fa-database me-2"></i>Trạng Thái Database</h2>
+              <div class="card bg-white text-dark shadow-sm">
+                <div class="card-body text-center">
+                  <i class="fas fa-database fa-3x text-primary mb-3"></i>
                   <h5 class="text-primary">MySQL Database</h5>
-                  <p class="text-muted mb-0">
-                    Hệ thống sử dụng MySQL database để lưu trữ dữ liệu
-                  </p>
-                </div>
-
-                <div class="row text-center">
-                  <div class="col-md-6">
-                    <div class="border rounded p-2 bg-white mb-2">
-                      <i
-                        class="fas fa-check-circle fa-1x text-success mb-1"
-                      ></i>
-                      <h6 class="text-success mb-0">Kết nối</h6>
+                  <div class="row mt-3">
+                    <div class="col-6">
+                      <div class="border rounded bg-light p-2 mb-2">
+                        <i class="fas fa-check-circle text-success"></i>
+                        <p class="mb-0">Kết nối</p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="border rounded bg-light p-2 mb-2">
+                        <i class="fas fa-shield-alt text-info"></i>
+                        <p class="mb-0">Bảo mật</p>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="border rounded p-2 bg-white mb-2">
-                      <i class="fas fa-shield-alt fa-1x text-info mb-1"></i>
-                      <h6 class="text-info mb-0">Bảo mật</h6>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mt-3">
-                  <a href="/db-status" class="btn btn-primary">
+                  <a href="/db-status" class="btn btn-primary mt-3">
                     <i class="fas fa-chart-line me-2"></i>Xem Chi Tiết Database
                   </a>
                 </div>
@@ -367,17 +232,14 @@
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-4">
-      <div class="container">
+      <div class="container-xl">
         <div class="row">
           <div class="col-md-6">
             <h5><i class="fas fa-film me-2"></i>Cinema Management System</h5>
             <p class="mb-0">Hệ thống quản lý rạp phim hiện đại với Bootstrap</p>
           </div>
           <div class="col-md-6 text-md-end">
-            <p class="mb-0">
-              <i class="fas fa-code me-2"></i>Developed with ❤️ using Spring
-              Boot & Bootstrap
-            </p>
+            <p class="mb-0"><i class="fas fa-code me-2"></i>Developed with ❤️ using Spring Boot & Bootstrap</p>
           </div>
         </div>
       </div>
