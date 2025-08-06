@@ -280,28 +280,28 @@
                     <div class="border rounded p-3 bg-white">
                         <i class="fas fa-users fa-3x text-primary mb-3"></i>
                         <h4 class="text-primary">Khách hàng</h4>
-                        <p class="h2 text-primary" th:text="${totalCustomers != null ? totalCustomers + '+' : '0+'}">100+</p>
+                        <p class="h2 text-primary" th:text="${totalCustomers != null ? totalCustomers + '+' : '0+'}">0+</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="border rounded p-3 bg-white">
                         <i class="fas fa-video fa-3x text-success mb-3"></i>
                         <h4 class="text-success">Phim</h4>
-                        <p class="h2 text-success" th:text="${totalMovies != null ? totalMovies + '+' : '0+'}">50+</p>
+                        <p class="h2 text-success" th:text="${totalMovies != null ? totalMovies + '+' : '0+'}">0+</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="border rounded p-3 bg-white">
                         <i class="fas fa-ticket-alt fa-3x text-warning mb-3"></i>
                         <h4 class="text-warning">Vé đã bán</h4>
-                        <p class="h2 text-warning">1000+</p>
+                        <p class="h2 text-warning" th:text="${totalTickets != null ? totalTickets + '+' : '0+'}">0+</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="border rounded p-3 bg-white">
                         <i class="fas fa-clock fa-3x text-info mb-3"></i>
                         <h4 class="text-info">Suất chiếu</h4>
-                        <p class="h2 text-info">200+</p>
+                        <p class="h2 text-info" th:text="${totalShowtimes != null ? totalShowtimes + '+' : '0+'}">0+</p>
                     </div>
                 </div>
             </div>

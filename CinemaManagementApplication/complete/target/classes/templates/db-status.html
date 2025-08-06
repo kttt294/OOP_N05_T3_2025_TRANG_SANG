@@ -85,7 +85,7 @@
 
                 <!-- Database Statistics -->
                 <div th:if="${isConnected}" class="row mb-4">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="card bg-primary text-white">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
@@ -100,31 +100,46 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="card bg-success text-white">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <h6 class="card-title">Database Type</h6>
-                                        <h5>MySQL</h5>
+                                        <h6 class="card-title">Total Movies</h6>
+                                        <h3 th:text="${totalMovies}">0</h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <i class="fas fa-database fa-2x"></i>
+                                        <i class="fas fa-film fa-2x"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6 class="card-title">Total Tickets</h6>
+                                        <h3 th:text="${totalTickets}">0</h3>
+                                    </div>
+                                    <div class="align-self-center">
+                                        <i class="fas fa-ticket-alt fa-2x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="card bg-info text-white">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <h6 class="card-title">Status</h6>
-                                        <h5>Active</h5>
+                                        <h6 class="card-title">Total Showtimes</h6>
+                                        <h3 th:text="${totalShowtimes}">0</h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <i class="fas fa-check-circle fa-2x"></i>
+                                        <i class="fas fa-clock fa-2x"></i>
                                     </div>
                                 </div>
                             </div>
