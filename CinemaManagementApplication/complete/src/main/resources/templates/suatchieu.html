@@ -185,11 +185,11 @@
                         <div class="row mb-2">
                             <div class="col-6">
                                 <small class="text-muted">Thời gian:</small>
-                                <span th:text="${#temporals.format(suatChieu.thoiGianChieu, 'HH:mm')}">14:00</span>
+                                <span th:text="${suatChieu.thoiGianBatDau != null ? #temporals.format(suatChieu.thoiGianBatDau, 'HH:mm') : 'N/A'}">14:00</span>
                             </div>
                             <div class="col-6">
                                 <small class="text-muted">Ngày:</small>
-                                <span th:text="${#temporals.format(suatChieu.thoiGianChieu, 'dd/MM/yyyy')}">01/01/2025</span>
+                                <span th:text="${suatChieu.thoiGianBatDau != null ? #temporals.format(suatChieu.thoiGianBatDau, 'dd/MM/yyyy') : 'N/A'}">01/01/2025</span>
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -253,8 +253,8 @@
                                 <td th:text="${suatChieu.maSuatChieu}">SC001</td>
                                 <td th:text="${suatChieu.maPhim}">PHIM001</td>
                                 <td th:text="${suatChieu.maPhong}">PHONG01</td>
-                                <td th:text="${#temporals.format(suatChieu.thoiGianChieu, 'HH:mm')}">14:00</td>
-                                <td th:text="${#temporals.format(suatChieu.thoiGianChieu, 'dd/MM/yyyy')}">01/01/2025</td>
+                                <td th:text="${suatChieu.thoiGianBatDau != null ? #temporals.format(suatChieu.thoiGianBatDau, 'HH:mm') : 'N/A'}">14:00</td>
+                                <td th:text="${suatChieu.thoiGianBatDau != null ? #temporals.format(suatChieu.thoiGianBatDau, 'dd/MM/yyyy') : 'N/A'}">01/01/2025</td>
                                 <td>
                                     <span class="badge bg-success" id="availableSeatsTable">50</span>
                                 </td>
