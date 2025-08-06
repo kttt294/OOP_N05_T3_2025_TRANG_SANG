@@ -6,16 +6,19 @@ import java.sql.PreparedStatement;
 import com.example.servingwebcontent.model.Phim;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class phimAiven {
+    
+    @Autowired
+    private myDBConnection mydb;
   
     public List<Phim> getAllPhim() {
         Connection conn = null;
         List<Phim> danhSachPhim = new ArrayList<>();
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "SELECT * FROM phim ORDER BY tenPhim";
@@ -51,7 +54,6 @@ public class phimAiven {
         Connection conn = null;
         Phim phim = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "SELECT * FROM phim WHERE maPhim = ?";
@@ -86,7 +88,6 @@ public class phimAiven {
     public boolean createPhim(Phim phim) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "INSERT INTO phim (maPhim, tenPhim, theLoai, thoiLuong, ngonNgu, gioiHanTuoi, moTa) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -116,7 +117,6 @@ public class phimAiven {
     public boolean updatePhim(String maPhim, Phim phim) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "UPDATE phim SET tenPhim = ?, theLoai = ?, thoiLuong = ?, ngonNgu = ?, gioiHanTuoi = ?, moTa = ? WHERE maPhim = ?";
@@ -146,7 +146,6 @@ public class phimAiven {
     public boolean deletePhim(String maPhim) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "DELETE FROM phim WHERE maPhim = ?";
@@ -171,7 +170,6 @@ public class phimAiven {
         Connection conn = null;
         List<Phim> danhSachPhim = new ArrayList<>();
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "SELECT * FROM phim WHERE tenPhim LIKE ? ORDER BY tenPhim";
@@ -207,7 +205,6 @@ public class phimAiven {
         Connection conn = null;
         List<Phim> danhSachPhim = new ArrayList<>();
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "SELECT * FROM phim WHERE theLoai LIKE ? ORDER BY tenPhim";

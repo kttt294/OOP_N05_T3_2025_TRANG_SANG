@@ -8,18 +8,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class suatChieuAiven {
+    
+    @Autowired
+    private myDBConnection mydb;
   
     public List<SuatChieu> getAllSuatChieu() {
         Connection conn = null;
         List<SuatChieu> danhSachSuatChieu = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -70,9 +71,6 @@ public class suatChieuAiven {
         Connection conn = null;
         SuatChieu suatChieu = null;
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -121,9 +119,6 @@ public class suatChieuAiven {
         Connection conn = null;
         List<SuatChieu> danhSachSuatChieu = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -173,9 +168,6 @@ public class suatChieuAiven {
         Connection conn = null;
         List<SuatChieu> danhSachSuatChieu = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -225,7 +217,6 @@ public class suatChieuAiven {
     public boolean createSuatChieu(SuatChieu suatChieu) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             
@@ -253,7 +244,6 @@ public class suatChieuAiven {
     public boolean updateSuatChieu(String maSuatChieu, SuatChieu suatChieuMoi) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             
@@ -281,7 +271,6 @@ public class suatChieuAiven {
     public boolean deleteSuatChieu(String maSuatChieu) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             

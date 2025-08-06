@@ -8,18 +8,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class danhGiaAiven {
+    
+    @Autowired
+    private myDBConnection mydb;
   
     public List<DanhGia> getAllDanhGia() {
         Connection conn = null;
         List<DanhGia> danhSachDanhGia = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -60,9 +61,6 @@ public class danhGiaAiven {
         Connection conn = null;
         DanhGia danhGia = null;
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -101,9 +99,6 @@ public class danhGiaAiven {
         Connection conn = null;
         List<DanhGia> danhSachDanhGia = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -143,9 +138,6 @@ public class danhGiaAiven {
         Connection conn = null;
         List<DanhGia> danhSachDanhGia = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -185,9 +177,6 @@ public class danhGiaAiven {
         Connection conn = null;
         List<DanhGia> danhSachDanhGia = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -227,7 +216,6 @@ public class danhGiaAiven {
     public boolean createDanhGia(DanhGia danhGia) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             
@@ -256,7 +244,6 @@ public class danhGiaAiven {
     public boolean updateDanhGia(String maDanhGia, DanhGia danhGia) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             
@@ -285,7 +272,6 @@ public class danhGiaAiven {
     public boolean deleteDanhGia(String maDanhGia) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             

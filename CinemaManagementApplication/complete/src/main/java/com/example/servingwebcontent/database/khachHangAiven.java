@@ -7,16 +7,19 @@ import java.sql.PreparedStatement;
 import com.example.servingwebcontent.model.KhachHang;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class khachHangAiven {
+    
+    @Autowired
+    private myDBConnection mydb;
   
     public List<KhachHang> getAllKhachHang() {
         Connection conn = null;
         List<KhachHang> danhSachKhachHang = new ArrayList<>();
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "SELECT * FROM khachhang ORDER BY ten";
@@ -60,7 +63,6 @@ public class khachHangAiven {
         Connection conn = null;
         KhachHang khachHang = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "SELECT * FROM khachhang WHERE CCCD = ?";
@@ -103,7 +105,6 @@ public class khachHangAiven {
         Connection conn = null;
         List<KhachHang> danhSachKhachHang = new ArrayList<>();
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "SELECT * FROM khachhang WHERE ten LIKE ? ORDER BY ten";
@@ -148,7 +149,6 @@ public class khachHangAiven {
     public boolean createKhachHang(KhachHang khachHang) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "INSERT INTO khachhang (CCCD, ten, tuoi, sdt, email, gioiTinh, diaChi, ngheNghiep, ngaySinh, soVisa) " +
@@ -183,7 +183,6 @@ public class khachHangAiven {
     public boolean updateKhachHang(String CCCD, KhachHang khachHang) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "UPDATE khachhang SET ten = ?, tuoi = ?, sdt = ?, email = ?, gioiTinh = ?, " +
@@ -218,7 +217,6 @@ public class khachHangAiven {
     public boolean deleteKhachHang(String CCCD) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "DELETE FROM khachhang WHERE CCCD = ?";
@@ -243,7 +241,6 @@ public class khachHangAiven {
         Connection conn = null;
         int total = 0;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "SELECT COUNT(*) as total FROM khachhang";
@@ -269,7 +266,6 @@ public class khachHangAiven {
         Connection conn = null;
         List<KhachHang> danhSachKhachHang = new ArrayList<>();
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             String sql = "SELECT * FROM khachhang WHERE gioiTinh = ? ORDER BY ten";

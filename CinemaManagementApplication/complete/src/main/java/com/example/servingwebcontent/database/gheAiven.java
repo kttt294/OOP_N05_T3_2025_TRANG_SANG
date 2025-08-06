@@ -6,18 +6,19 @@ import java.sql.Statement;
 import com.example.servingwebcontent.model.Ghe;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class gheAiven {
+    
+    @Autowired
+    private myDBConnection mydb;
   
     public List<Ghe> getAllGhe() {
         Connection conn = null;
         List<Ghe> danhSachGhe = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -67,9 +68,6 @@ public class gheAiven {
         Connection conn = null;
         Ghe ghe = null;
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -117,9 +115,6 @@ public class gheAiven {
         Connection conn = null;
         List<Ghe> danhSachGhe = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -168,9 +163,6 @@ public class gheAiven {
         Connection conn = null;
         List<Ghe> danhSachGhe = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -205,7 +197,6 @@ public class gheAiven {
     public boolean createGhe(Ghe ghe) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             Statement sta = conn.createStatement();
@@ -230,7 +221,6 @@ public class gheAiven {
     public boolean updateGhe(String maGhe, Ghe gheMoi) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             Statement sta = conn.createStatement();
@@ -257,7 +247,6 @@ public class gheAiven {
     public boolean deleteGhe(String maGhe) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             Statement sta = conn.createStatement();

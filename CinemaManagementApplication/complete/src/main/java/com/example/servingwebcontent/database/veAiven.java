@@ -6,18 +6,19 @@ import java.sql.Statement;
 import com.example.servingwebcontent.model.Ve;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class veAiven {
+    
+    @Autowired
+    private myDBConnection mydb;
   
     public List<Ve> getAllVe() {
         Connection conn = null;
         List<Ve> danhSachVe = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -68,9 +69,6 @@ public class veAiven {
         Connection conn = null;
         Ve ve = null;
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -119,9 +117,6 @@ public class veAiven {
         Connection conn = null;
         List<Ve> danhSachVe = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -171,9 +166,6 @@ public class veAiven {
         Connection conn = null;
         List<Ve> danhSachVe = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -210,7 +202,6 @@ public class veAiven {
     public boolean createVe(Ve ve) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             
@@ -235,7 +226,6 @@ public class veAiven {
     public boolean updateVe(String maVe, Ve veMoi) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             
@@ -260,7 +250,6 @@ public class veAiven {
     public boolean deleteVe(String maVe) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             

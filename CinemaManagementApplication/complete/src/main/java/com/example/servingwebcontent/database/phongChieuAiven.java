@@ -6,18 +6,19 @@ import java.sql.Statement;
 import com.example.servingwebcontent.model.PhongChieu;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class phongChieuAiven {
+    
+    @Autowired
+    private myDBConnection mydb;
   
     public List<PhongChieu> getAllPhongChieu() {
         Connection conn = null;
         List<PhongChieu> danhSachPhong = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -51,9 +52,6 @@ public class phongChieuAiven {
         Connection conn = null;
         PhongChieu phongChieu = null;
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -85,9 +83,6 @@ public class phongChieuAiven {
         Connection conn = null;
         List<PhongChieu> danhSachPhong = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -121,7 +116,6 @@ public class phongChieuAiven {
     public boolean createPhongChieu(PhongChieu phongChieu) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             
@@ -146,7 +140,6 @@ public class phongChieuAiven {
     public boolean updatePhongChieu(String maPhong, PhongChieu phongChieu) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             
@@ -171,7 +164,6 @@ public class phongChieuAiven {
     public boolean deletePhongChieu(String maPhong) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             

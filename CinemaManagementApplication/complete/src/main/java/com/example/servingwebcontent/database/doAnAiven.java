@@ -6,18 +6,19 @@ import java.sql.Statement;
 import com.example.servingwebcontent.model.DoAn;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class doAnAiven {
+    
+    @Autowired
+    private myDBConnection mydb;
   
     public List<DoAn> getAllDoAn() {
         Connection conn = null;
         List<DoAn> danhSachDoAn = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -51,9 +52,6 @@ public class doAnAiven {
         Connection conn = null;
         DoAn doAn = null;
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -85,9 +83,6 @@ public class doAnAiven {
         Connection conn = null;
         List<DoAn> danhSachDoAn = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -121,9 +116,6 @@ public class doAnAiven {
         Connection conn = null;
         List<DoAn> danhSachDoAn = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -157,7 +149,6 @@ public class doAnAiven {
     public boolean createDoAn(DoAn doAn) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             
@@ -182,7 +173,6 @@ public class doAnAiven {
     public boolean updateDoAn(String maDoAn, DoAn doAn) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             
@@ -206,7 +196,6 @@ public class doAnAiven {
     public boolean deleteDoAn(String maDoAn) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             Statement sta = conn.createStatement();
             

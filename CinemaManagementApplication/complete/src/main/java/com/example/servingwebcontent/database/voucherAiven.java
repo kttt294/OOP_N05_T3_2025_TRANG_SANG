@@ -8,18 +8,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class voucherAiven {
+    
+    @Autowired
+    private myDBConnection mydb;
   
     public List<Voucher> getAllVoucher() {
         Connection conn = null;
         List<Voucher> danhSachVoucher = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -66,9 +67,6 @@ public class voucherAiven {
         Connection conn = null;
         Voucher voucher = null;
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -113,9 +111,6 @@ public class voucherAiven {
         Connection conn = null;
         List<Voucher> danhSachVoucher = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -161,9 +156,6 @@ public class voucherAiven {
         Connection conn = null;
         List<Voucher> danhSachVoucher = new ArrayList<>();
         try {
-
-            myDBConnection mydb = new myDBConnection();
-
             conn = mydb.getOnlyConn();
 
              
@@ -209,7 +201,6 @@ public class voucherAiven {
     public boolean createVoucher(Voucher voucher) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             Statement sta = conn.createStatement();
@@ -240,7 +231,6 @@ public class voucherAiven {
     public boolean updateVoucher(String maVoucher, Voucher voucherMoi) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             Statement sta = conn.createStatement();
@@ -273,7 +263,6 @@ public class voucherAiven {
     public boolean deleteVoucher(String maVoucher) {
         Connection conn = null;
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             Statement sta = conn.createStatement();
@@ -296,7 +285,6 @@ public class voucherAiven {
         Connection conn = null;
         List<Voucher> danhSachVoucher = new ArrayList<>();
         try {
-            myDBConnection mydb = new myDBConnection();
             conn = mydb.getOnlyConn();
             
             Statement sta = conn.createStatement();
