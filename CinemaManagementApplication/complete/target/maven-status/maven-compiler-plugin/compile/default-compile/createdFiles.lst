@@ -1,7 +1,9 @@
 com\example\servingwebcontent\database\suatChieuAiven.class
 com\example\servingwebcontent\model\Phim.class
+com\example\servingwebcontent\database\khachHangAiven.class
 com\example\servingwebcontent\model\Voucher.class
 com\example\servingwebcontent\database\phimAiven.class
+com\example\servingwebcontent\controller\TestController.class
 com\example\servingwebcontent\GreetingController.class
 com\example\servingwebcontent\model\DanhGia.class
 com\example\servingwebcontent\model\KhachHang.class
@@ -12,6 +14,7 @@ com\example\servingwebcontent\model\PhongChieu.class
 com\example\servingwebcontent\controller\DoAnController.class
 com\example\servingwebcontent\database\phongChieuAiven.class
 com\example\servingwebcontent\controller\PhimController.class
+com\example\servingwebcontent\controller\KhachHangController.class
 com\example\servingwebcontent\controller\GheController.class
 com\example\servingwebcontent\view\QLyTaiKhoanViewController$TaiKhoan.class
 com\example\servingwebcontent\model\Ghe$TrangThaiGhe.class
