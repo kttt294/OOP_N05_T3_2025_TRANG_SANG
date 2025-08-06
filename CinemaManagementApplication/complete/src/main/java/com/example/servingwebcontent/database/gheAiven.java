@@ -6,7 +6,9 @@ import java.sql.Statement;
 import com.example.servingwebcontent.model.Ghe;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class gheAiven {
   
     public List<Ghe> getAllGhe() {

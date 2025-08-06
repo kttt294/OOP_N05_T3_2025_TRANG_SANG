@@ -6,7 +6,9 @@ import java.sql.Statement;
 import com.example.servingwebcontent.model.PhongChieu;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class phongChieuAiven {
   
     public List<PhongChieu> getAllPhongChieu() {
