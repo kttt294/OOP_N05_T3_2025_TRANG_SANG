@@ -244,94 +244,89 @@
       </div>
     </section>
 
-    <!-- PHẦN 2: THỐNG KÊ HỆ THỐNG -->
+    <!-- PHẦN 2 & 3: THỐNG KÊ HỆ THỐNG VÀ TRẠNG THÁI DATABASE -->
     <section class="py-5 bg-white">
       <div class="container">
         <div class="row">
-          <div class="col-12">
-            <h2 class="text-center mb-5">
+          <!-- PHẦN 2: THỐNG KÊ HỆ THỐNG -->
+          <div class="col-md-8">
+            <h2 class="text-center mb-4">
               <i class="fas fa-chart-bar me-2"></i>Thống Kê Hệ Thống
             </h2>
-            <p class="text-center text-muted mb-5">
+            <p class="text-center text-muted mb-4">
               Thống kê dữ liệu hiện tại của hệ thống
             </p>
-          </div>
-        </div>
 
-        <div class="row text-center">
-          <div class="col-md-3">
-            <div class="border rounded p-3 bg-light shadow-sm">
-              <i class="fas fa-users fa-2x text-primary mb-2"></i>
-              <h5 class="text-primary">Khách hàng</h5>
-              <p
-                class="h4 text-primary"
-                th:text="${totalCustomers != null ? totalCustomers + '+' : '0+'}"
-              >
-                0+
-              </p>
-              <small class="text-muted">Tổng số khách hàng đã đăng ký</small>
+            <div class="row text-center">
+              <div class="col-md-6">
+                <div class="border rounded p-3 bg-light shadow-sm mb-3">
+                  <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                  <h5 class="text-primary">Khách hàng</h5>
+                  <p
+                    class="h4 text-primary"
+                    th:text="${totalCustomers != null ? totalCustomers + '+' : '0+'}"
+                  >
+                    0+
+                  </p>
+                  <small class="text-muted"
+                    >Tổng số khách hàng đã đăng ký</small
+                  >
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3 bg-light shadow-sm mb-3">
+                  <i class="fas fa-video fa-2x text-success mb-2"></i>
+                  <h5 class="text-success">Phim</h5>
+                  <p
+                    class="h4 text-success"
+                    th:text="${totalMovies != null ? totalMovies + '+' : '0+'}"
+                  >
+                    0+
+                  </p>
+                  <small class="text-muted">Tổng số phim trong hệ thống</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3 bg-light shadow-sm mb-3">
+                  <i class="fas fa-ticket-alt fa-2x text-warning mb-2"></i>
+                  <h5 class="text-warning">Vé đã bán</h5>
+                  <p
+                    class="h4 text-warning"
+                    th:text="${totalTickets != null ? totalTickets + '+' : '0+'}"
+                  >
+                    0+
+                  </p>
+                  <small class="text-muted">Tổng số vé đã được bán</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3 bg-light shadow-sm mb-3">
+                  <i class="fas fa-clock fa-2x text-info mb-2"></i>
+                  <h5 class="text-info">Suất chiếu</h5>
+                  <p
+                    class="h4 text-info"
+                    th:text="${totalShowtimes != null ? totalShowtimes + '+' : '0+'}"
+                  >
+                    0+
+                  </p>
+                  <small class="text-muted"
+                    >Tổng số suất chiếu đã lên lịch</small
+                  >
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col-md-3">
-            <div class="border rounded p-3 bg-light shadow-sm">
-              <i class="fas fa-video fa-2x text-success mb-2"></i>
-              <h5 class="text-success">Phim</h5>
-              <p
-                class="h4 text-success"
-                th:text="${totalMovies != null ? totalMovies + '+' : '0+'}"
-              >
-                0+
-              </p>
-              <small class="text-muted">Tổng số phim trong hệ thống</small>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="border rounded p-3 bg-light shadow-sm">
-              <i class="fas fa-ticket-alt fa-2x text-warning mb-2"></i>
-              <h5 class="text-warning">Vé đã bán</h5>
-              <p
-                class="h4 text-warning"
-                th:text="${totalTickets != null ? totalTickets + '+' : '0+'}"
-              >
-                0+
-              </p>
-              <small class="text-muted">Tổng số vé đã được bán</small>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="border rounded p-3 bg-light shadow-sm">
-              <i class="fas fa-clock fa-2x text-info mb-2"></i>
-              <h5 class="text-info">Suất chiếu</h5>
-              <p
-                class="h4 text-info"
-                th:text="${totalShowtimes != null ? totalShowtimes + '+' : '0+'}"
-              >
-                0+
-              </p>
-              <small class="text-muted">Tổng số suất chiếu đã lên lịch</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- PHẦN 3: TRẠNG THÁI DATABASE -->
-    <section class="py-5 bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="text-center mb-5">
+          <!-- PHẦN 3: TRẠNG THÁI DATABASE -->
+          <div class="col-md-4">
+            <h2 class="text-center mb-4">
               <i class="fas fa-database me-2"></i>Trạng Thái Database
             </h2>
-            <p class="text-center text-muted mb-5">
+            <p class="text-center text-muted mb-4">
               Thông tin kết nối và trạng thái cơ sở dữ liệu
             </p>
-          </div>
-        </div>
 
-        <div class="row justify-content-center">
-          <div class="col-md-6">
-            <div class="card bg-white text-dark shadow-sm">
+            <div class="card bg-light text-dark shadow-sm">
               <div class="card-body text-center">
                 <div class="mb-3">
                   <i class="fas fa-database fa-3x text-primary mb-2"></i>
@@ -343,7 +338,7 @@
 
                 <div class="row text-center">
                   <div class="col-md-6">
-                    <div class="border rounded p-2 bg-light mb-2">
+                    <div class="border rounded p-2 bg-white mb-2">
                       <i
                         class="fas fa-check-circle fa-1x text-success mb-1"
                       ></i>
@@ -351,7 +346,7 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="border rounded p-2 bg-light mb-2">
+                    <div class="border rounded p-2 bg-white mb-2">
                       <i class="fas fa-shield-alt fa-1x text-info mb-1"></i>
                       <h6 class="text-info mb-0">Bảo mật</h6>
                     </div>
