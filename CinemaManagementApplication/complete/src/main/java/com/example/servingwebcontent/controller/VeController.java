@@ -36,6 +36,12 @@ public class VeController {
         }
     }
     
+    @GetMapping("/ve/form")
+    public String veFormPage(Model model) {
+        model.addAttribute("ve", new Ve());
+        return "form-ve";
+    }
+    
     @PostMapping("/ve/create")
     public String createVe(@ModelAttribute Ve ve, Model model) {
         try {

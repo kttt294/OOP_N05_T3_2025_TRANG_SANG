@@ -34,6 +34,12 @@ public class KhachHangController {
         }
     }
     
+    @GetMapping("/khachhang/form")
+    public String khachHangFormPage(Model model) {
+        model.addAttribute("khachHang", new KhachHang());
+        return "form-khachhang";
+    }
+    
     @PostMapping("/khachhang/create")
     public String createKhachHang(@ModelAttribute KhachHang khachHang, Model model) {
         try {
