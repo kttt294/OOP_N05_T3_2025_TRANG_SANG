@@ -220,27 +220,6 @@
             </div>
           </div>
 
-          <!-- Food Management -->
-          <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-              <div class="card-body text-center">
-                <div
-                  class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-                  style="width: 60px; height: 60px"
-                >
-                  <i class="fas fa-utensils fa-2x"></i>
-                </div>
-                <h5 class="card-title">Quản lý Đồ ăn</h5>
-                <p class="card-text">
-                  Quản lý menu đồ ăn, thức uống và dịch vụ tại rạp phim.
-                </p>
-                <a href="/doan" class="btn btn-warning">
-                  <i class="fas fa-arrow-right me-2"></i>Xem chi tiết
-                </a>
-              </div>
-            </div>
-          </div>
-
           <!-- Review Management -->
           <div class="col-md-6 col-lg-4">
             <div class="card h-100 shadow-sm">
@@ -281,11 +260,11 @@
 
         <div class="row text-center">
           <div class="col-md-3">
-            <div class="border rounded p-4 bg-light shadow-sm">
-              <i class="fas fa-users fa-3x text-primary mb-3"></i>
-              <h4 class="text-primary">Khách hàng</h4>
+            <div class="border rounded p-3 bg-light shadow-sm">
+              <i class="fas fa-users fa-2x text-primary mb-2"></i>
+              <h5 class="text-primary">Khách hàng</h5>
               <p
-                class="h2 text-primary"
+                class="h4 text-primary"
                 th:text="${totalCustomers != null ? totalCustomers + '+' : '0+'}"
               >
                 0+
@@ -294,11 +273,11 @@
             </div>
           </div>
           <div class="col-md-3">
-            <div class="border rounded p-4 bg-light shadow-sm">
-              <i class="fas fa-video fa-3x text-success mb-3"></i>
-              <h4 class="text-success">Phim</h4>
+            <div class="border rounded p-3 bg-light shadow-sm">
+              <i class="fas fa-video fa-2x text-success mb-2"></i>
+              <h5 class="text-success">Phim</h5>
               <p
-                class="h2 text-success"
+                class="h4 text-success"
                 th:text="${totalMovies != null ? totalMovies + '+' : '0+'}"
               >
                 0+
@@ -307,11 +286,11 @@
             </div>
           </div>
           <div class="col-md-3">
-            <div class="border rounded p-4 bg-light shadow-sm">
-              <i class="fas fa-ticket-alt fa-3x text-warning mb-3"></i>
-              <h4 class="text-warning">Vé đã bán</h4>
+            <div class="border rounded p-3 bg-light shadow-sm">
+              <i class="fas fa-ticket-alt fa-2x text-warning mb-2"></i>
+              <h5 class="text-warning">Vé đã bán</h5>
               <p
-                class="h2 text-warning"
+                class="h4 text-warning"
                 th:text="${totalTickets != null ? totalTickets + '+' : '0+'}"
               >
                 0+
@@ -320,11 +299,11 @@
             </div>
           </div>
           <div class="col-md-3">
-            <div class="border rounded p-4 bg-light shadow-sm">
-              <i class="fas fa-clock fa-3x text-info mb-3"></i>
-              <h4 class="text-info">Suất chiếu</h4>
+            <div class="border rounded p-3 bg-light shadow-sm">
+              <i class="fas fa-clock fa-2x text-info mb-2"></i>
+              <h5 class="text-info">Suất chiếu</h5>
               <p
-                class="h2 text-info"
+                class="h4 text-info"
                 th:text="${totalShowtimes != null ? totalShowtimes + '+' : '0+'}"
               >
                 0+
@@ -337,50 +316,50 @@
     </section>
 
     <!-- PHẦN 3: TRẠNG THÁI DATABASE -->
-    <section class="py-5 bg-dark text-white">
+    <section class="py-5 bg-light">
       <div class="container">
         <div class="row">
           <div class="col-12">
             <h2 class="text-center mb-5">
               <i class="fas fa-database me-2"></i>Trạng Thái Database
             </h2>
-            <p class="text-center text-light mb-5">
+            <p class="text-center text-muted mb-5">
               Thông tin kết nối và trạng thái cơ sở dữ liệu
             </p>
           </div>
         </div>
 
         <div class="row justify-content-center">
-          <div class="col-md-8">
-            <div class="card bg-light text-dark">
+          <div class="col-md-6">
+            <div class="card bg-white text-dark shadow-sm">
               <div class="card-body text-center">
-                <div class="mb-4">
-                  <i class="fas fa-database fa-4x text-primary mb-3"></i>
-                  <h4 class="text-primary">MySQL Database</h4>
-                  <p class="text-muted">
+                <div class="mb-3">
+                  <i class="fas fa-database fa-3x text-primary mb-2"></i>
+                  <h5 class="text-primary">MySQL Database</h5>
+                  <p class="text-muted mb-0">
                     Hệ thống sử dụng MySQL database để lưu trữ dữ liệu
                   </p>
                 </div>
 
                 <div class="row text-center">
                   <div class="col-md-6">
-                    <div class="border rounded p-3 bg-white mb-3">
-                      <i class="fas fa-server fa-2x text-success mb-2"></i>
-                      <h6 class="text-success">Kết nối Database</h6>
-                      <p class="mb-0 text-success fw-bold">Hoạt động</p>
+                    <div class="border rounded p-2 bg-light mb-2">
+                      <i
+                        class="fas fa-check-circle fa-1x text-success mb-1"
+                      ></i>
+                      <h6 class="text-success mb-0">Kết nối</h6>
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="border rounded p-3 bg-white mb-3">
-                      <i class="fas fa-shield-alt fa-2x text-info mb-2"></i>
-                      <h6 class="text-info">Bảo mật</h6>
-                      <p class="mb-0 text-info fw-bold">Được bảo vệ</p>
+                    <div class="border rounded p-2 bg-light mb-2">
+                      <i class="fas fa-shield-alt fa-1x text-info mb-1"></i>
+                      <h6 class="text-info mb-0">Bảo mật</h6>
                     </div>
                   </div>
                 </div>
 
-                <div class="mt-4">
-                  <a href="/db-status" class="btn btn-primary btn-lg">
+                <div class="mt-3">
+                  <a href="/db-status" class="btn btn-primary">
                     <i class="fas fa-chart-line me-2"></i>Xem Chi Tiết Database
                   </a>
                 </div>
