@@ -28,6 +28,12 @@ public class GheController {
         }
         return "ghe";
     }
+    
+    @GetMapping("/ghe/form")
+    public String gheFormPage(Model model) {
+        model.addAttribute("ghe", new Ghe());
+        return "form-ghe";
+    }
 
     @PostMapping("/ghe/create")
     public String createGhe(@ModelAttribute Ghe ghe, Model model) {

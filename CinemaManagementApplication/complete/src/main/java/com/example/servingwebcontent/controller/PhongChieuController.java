@@ -30,6 +30,12 @@ public class PhongChieuController{
         }
     }
     
+    @GetMapping("/phongchieu/form")
+    public String phongChieuFormPage(Model model) {
+        model.addAttribute("phongChieu", new PhongChieu());
+        return "form-phongchieu";
+    }
+    
     @PostMapping("/phongchieu/create")
     public String createPhongChieu(@ModelAttribute PhongChieu phongChieu, Model model) {
         try {

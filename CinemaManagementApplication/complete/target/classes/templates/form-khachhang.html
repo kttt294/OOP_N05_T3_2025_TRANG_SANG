@@ -18,18 +18,21 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/phim">Phim</a>
+                        <a class="nav-link" href="/"><i class="fas fa-home me-1"></i>Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/khachhang">Khách hàng</a>
+                        <a class="nav-link" href="/khachhang"><i class="fas fa-users me-1"></i>Khách hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ve">Vé</a>
+                        <a class="nav-link" href="/phim"><i class="fas fa-video me-1"></i>Phim</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/suatchieu">Suất chiếu</a>
+                        <a class="nav-link" href="/ve"><i class="fas fa-ticket-alt me-1"></i>Vé</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/suatchieu"><i class="fas fa-calendar-alt me-1"></i>Suất chiếu</a>
                     </li>
                 </ul>
             </div>
@@ -39,7 +42,6 @@
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <!-- Header -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
                         <h4 class="mb-0">
@@ -53,8 +55,7 @@
                         </p>
                     </div>
                 </div>
-
-                <!-- Form -->
+                
                 <div class="card shadow">
                     <div class="card-body p-4">
                         <form th:action="@{/khachhang/create}" method="post" id="customerForm">
@@ -71,43 +72,17 @@
                                             <i class="fas fa-id-card me-1"></i>CCCD <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" class="form-control" id="CCCD" name="CCCD" 
-                                               placeholder="Nhập số CCCD" required 
-                                               pattern="[0-9]{12}" title="CCCD phải có 12 chữ số">
-                                        <div class="form-text">CCCD phải có đúng 12 chữ số</div>
+                                               placeholder="Nhập CCCD (12 số)" maxlength="12" required>
+                                        <div class="form-text">CCCD phải có đúng 12 số</div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="ten" class="form-label">
+                                        <label for="hoTen" class="form-label">
                                             <i class="fas fa-user me-1"></i>Họ và tên <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" id="ten" name="ten" 
+                                        <input type="text" class="form-control" id="hoTen" name="hoTen" 
                                                placeholder="Nhập họ và tên" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="tuoi" class="form-label">
-                                            <i class="fas fa-birthday-cake me-1"></i>Tuổi <span class="text-danger">*</span>
-                                        </label>
-                                        <input type="number" class="form-control" id="tuoi" name="tuoi" 
-                                               placeholder="Nhập tuổi" min="1" max="120" required>
-                                        <div class="form-text">Tuổi từ 1 đến 120</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="gioiTinh" class="form-label">
-                                            <i class="fas fa-venus-mars me-1"></i>Giới tính <span class="text-danger">*</span>
-                                        </label>
-                                        <select class="form-select" id="gioiTinh" name="gioiTinh" required>
-                                            <option value="">Chọn giới tính</option>
-                                            <option value="Nam">Nam</option>
-                                            <option value="Nữ">Nữ</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -116,28 +91,106 @@
                             <div class="row mb-4">
                                 <div class="col-12">
                                     <h5 class="text-primary mb-3">
-                                        <i class="fas fa-address-book me-2"></i>Thông Tin Liên Lạc
+                                        <i class="fas fa-phone me-2"></i>Thông Tin Liên Lạc
                                     </h5>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="sdt" class="form-label">
+                                        <label for="soDienThoai" class="form-label">
                                             <i class="fas fa-phone me-1"></i>Số điện thoại <span class="text-danger">*</span>
                                         </label>
-                                        <input type="tel" class="form-control" id="sdt" name="sdt" 
-                                               placeholder="Nhập số điện thoại" required 
-                                               pattern="[0-9]{10,11}" title="Số điện thoại phải có 10-11 chữ số">
-                                        <div class="form-text">Số điện thoại phải có 10-11 chữ số</div>
+                                        <input type="tel" class="form-control" id="soDienThoai" name="soDienThoai" 
+                                               placeholder="Nhập số điện thoại" required>
+                                        <div class="form-text">Ví dụ: 0123456789</div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">
-                                            <i class="fas fa-envelope me-1"></i>Email <span class="text-danger">*</span>
+                                            <i class="fas fa-envelope me-1"></i>Email
                                         </label>
                                         <input type="email" class="form-control" id="email" name="email" 
-                                               placeholder="Nhập địa chỉ email" required>
+                                               placeholder="Nhập email">
                                         <div class="form-text">Ví dụ: example@email.com</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Address Information -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-map-marker-alt me-2"></i>Thông Tin Địa Chỉ
+                                    </h5>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="diaChi" class="form-label">
+                                            <i class="fas fa-home me-1"></i>Địa chỉ <span class="text-danger">*</span>
+                                        </label>
+                                        <textarea class="form-control" id="diaChi" name="diaChi" rows="3" 
+                                                  placeholder="Nhập địa chỉ chi tiết" required></textarea>
+                                        <div class="form-text">Nhập địa chỉ đầy đủ: số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Information -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-info-circle me-2"></i>Thông Tin Bổ Sung
+                                    </h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="ngaySinh" class="form-label">
+                                            <i class="fas fa-birthday-cake me-1"></i>Ngày sinh
+                                        </label>
+                                        <input type="date" class="form-control" id="ngaySinh" name="ngaySinh">
+                                        <div class="form-text">Chọn ngày sinh (không bắt buộc)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="gioiTinh" class="form-label">
+                                            <i class="fas fa-venus-mars me-1"></i>Giới tính
+                                        </label>
+                                        <select class="form-select" id="gioiTinh" name="gioiTinh">
+                                            <option value="">Chọn giới tính</option>
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Khác">Khác</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Account Information -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h5 class="text-primary mb-3">
+                                        <i class="fas fa-user-shield me-2"></i>Thông Tin Tài Khoản
+                                    </h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="tenDangNhap" class="form-label">
+                                            <i class="fas fa-user me-1"></i>Tên đăng nhập <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" id="tenDangNhap" name="tenDangNhap" 
+                                               placeholder="Nhập tên đăng nhập" required>
+                                        <div class="form-text">Tên đăng nhập duy nhất</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="matKhau" class="form-label">
+                                            <i class="fas fa-lock me-1"></i>Mật khẩu <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="password" class="form-control" id="matKhau" name="matKhau" 
+                                               placeholder="Nhập mật khẩu" required>
+                                        <div class="form-text">Mật khẩu tối thiểu 6 ký tự</div>
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +208,7 @@
                                                 <i class="fas fa-undo me-2"></i>Làm mới
                                             </button>
                                             <button type="submit" class="btn btn-primary">
-                                                <i class="fas fa-save me-2"></i>Lưu Khách Hàng
+                                                <i class="fas fa-save me-2"></i>Thêm Khách Hàng
                                             </button>
                                         </div>
                                     </div>
@@ -166,7 +219,7 @@
                 </div>
 
                 <!-- Help Section -->
-                <div class="card mt-4">
+                <div class="card shadow-sm mt-4">
                     <div class="card-header bg-info text-white">
                         <h6 class="mb-0">
                             <i class="fas fa-question-circle me-2"></i>Hướng Dẫn
@@ -175,20 +228,22 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <h6><i class="fas fa-check-circle text-success me-2"></i>Lưu ý khi nhập:</h6>
-                                <ul class="small text-muted">
-                                    <li>CCCD phải có đúng 12 chữ số</li>
-                                    <li>Số điện thoại phải có 10-11 chữ số</li>
-                                    <li>Email phải đúng định dạng</li>
-                                    <li>Tuổi phải từ 1 đến 120</li>
+                                <h6 class="text-info">Thông tin bắt buộc:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>CCCD (12 số)</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Họ và tên</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Số điện thoại</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Địa chỉ</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Tên đăng nhập</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Mật khẩu</li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
-                                <h6><i class="fas fa-info-circle text-info me-2"></i>Thông tin bổ sung:</h6>
-                                <ul class="small text-muted">
-                                    <li>Thông tin sẽ được lưu vào hệ thống</li>
-                                    <li>Có thể chỉnh sửa sau khi tạo</li>
-                                    <li>Hỗ trợ tìm kiếm và lọc dữ liệu</li>
+                                <h6 class="text-info">Thông tin tùy chọn:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-info text-primary me-2"></i>Email</li>
+                                    <li><i class="fas fa-info text-primary me-2"></i>Ngày sinh</li>
+                                    <li><i class="fas fa-info text-primary me-2"></i>Giới tính</li>
                                 </ul>
                             </div>
                         </div>
@@ -202,27 +257,43 @@
     <script>
         // Form validation
         document.getElementById('customerForm').addEventListener('submit', function(e) {
-            const cccd = document.getElementById('CCCD').value;
-            const sdt = document.getElementById('sdt').value;
+            const CCCD = document.getElementById('CCCD').value;
+            const hoTen = document.getElementById('hoTen').value;
+            const soDienThoai = document.getElementById('soDienThoai').value;
+            const diaChi = document.getElementById('diaChi').value;
+            const tenDangNhap = document.getElementById('tenDangNhap').value;
+            const matKhau = document.getElementById('matKhau').value;
+            
+            if (!CCCD || !hoTen || !soDienThoai || !diaChi || !tenDangNhap || !matKhau) {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+                e.preventDefault();
+                return;
+            }
+            
+            // Validate CCCD (12 digits)
+            if (!/^\d{12}$/.test(CCCD)) {
+                alert('CCCD phải có đúng 12 số!');
+                e.preventDefault();
+                return;
+            }
+            
+            // Validate phone number (10-11 digits)
+            if (!/^\d{10,11}$/.test(soDienThoai)) {
+                alert('Số điện thoại phải có 10-11 số!');
+                e.preventDefault();
+                return;
+            }
+            
+            // Validate password (minimum 6 characters)
+            if (matKhau.length < 6) {
+                alert('Mật khẩu phải có ít nhất 6 ký tự!');
+                e.preventDefault();
+                return;
+            }
+            
+            // Validate email format if provided
             const email = document.getElementById('email').value;
-            
-            // Validate CCCD
-            if (!/^[0-9]{12}$/.test(cccd)) {
-                alert('CCCD phải có đúng 12 chữ số!');
-                e.preventDefault();
-                return;
-            }
-            
-            // Validate phone number
-            if (!/^[0-9]{10,11}$/.test(sdt)) {
-                alert('Số điện thoại phải có 10-11 chữ số!');
-                e.preventDefault();
-                return;
-            }
-            
-            // Validate email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 alert('Email không đúng định dạng!');
                 e.preventDefault();
                 return;
@@ -231,12 +302,34 @@
 
         // Auto-format CCCD input
         document.getElementById('CCCD').addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^0-9]/g, '');
+            this.value = this.value.replace(/\D/g, '').substring(0, 12);
         });
 
         // Auto-format phone number input
-        document.getElementById('sdt').addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^0-9]/g, '');
+        document.getElementById('soDienThoai').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').substring(0, 11);
+        });
+
+        // Auto-generate username from name
+        document.getElementById('hoTen').addEventListener('blur', function() {
+            const tenDangNhap = document.getElementById('tenDangNhap');
+            if (!tenDangNhap.value && this.value) {
+                const username = this.value.toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9]/g, '')
+                    .substring(0, 20);
+                tenDangNhap.value = username;
+            }
+        });
+
+        // Show/hide password
+        document.getElementById('matKhau').addEventListener('focus', function() {
+            this.type = 'text';
+        });
+        
+        document.getElementById('matKhau').addEventListener('blur', function() {
+            this.type = 'password';
         });
     </script>
 </body>
