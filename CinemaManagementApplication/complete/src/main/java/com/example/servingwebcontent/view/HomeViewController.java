@@ -9,4 +9,4 @@ public class HomeViewController {
     public String home() {
         return "index";
     }
-} 
+}
