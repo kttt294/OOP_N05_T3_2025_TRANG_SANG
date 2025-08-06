@@ -2,6 +2,7 @@ package com.example.servingwebcontent.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +13,10 @@ import com.example.servingwebcontent.model.PhongChieu;
 import com.example.servingwebcontent.database.phongChieuAiven;
 
 @Controller
-public class PhongChieuController{
+public class PhongChieuController {
     
-    private phongChieuAiven phongChieuDB = new phongChieuAiven();
+    @Autowired
+    private phongChieuAiven phongChieuDB;
     
     // Web Controller Methods
     @GetMapping("/phongchieu")
