@@ -32,6 +32,12 @@ public class PhimController {
         }
     }
     
+    @GetMapping("/phim/form")
+    public String phimFormPage(Model model) {
+        model.addAttribute("phim", new Phim());
+        return "form-phim";
+    }
+    
     @PostMapping("/phim/create")
     public String createPhim(@ModelAttribute Phim phim, Model model) {
         try {

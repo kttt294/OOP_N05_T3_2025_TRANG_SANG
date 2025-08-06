@@ -37,6 +37,12 @@ public class SuatChieuController {
         }
     }
     
+    @GetMapping("/suatchieu/form")
+    public String suatChieuFormPage(Model model) {
+        model.addAttribute("suatChieu", new SuatChieu());
+        return "form-suatchieu";
+    }
+    
     @PostMapping("/suatchieu/create")
     public String createSuatChieu(@ModelAttribute SuatChieu suatChieu, Model model) {
         try {
