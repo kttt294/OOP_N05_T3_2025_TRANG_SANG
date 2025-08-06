@@ -354,13 +354,11 @@
 
         function deleteCustomer(cccd) {
             if (confirm('Bạn có chắc chắn muốn xóa khách hàng này?')) {
-                $.post('/khachhang/delete', {cccd: cccd}, function(response) {
-                    if (response.success) {
-                        location.reload();
-                    } else {
-                        alert('Có lỗi xảy ra khi xóa khách hàng');
-                    }
-                });
+                // Tạo form ẩn để submit
+                var form = $('<form method="post" action="/khachhang/delete"></form>');
+                form.append('<input type="hidden" name="CCCD" value="' + cccd + '">');
+                $('body').append(form);
+                form.submit();
             }
         }
     </script>

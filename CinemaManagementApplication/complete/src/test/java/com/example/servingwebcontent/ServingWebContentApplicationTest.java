@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(controllers = GreetingController.class)
+@WebMvcTest(controllers = com.example.servingwebcontent.view.HomeViewController.class)
 public class ServingWebContentApplicationTest {
 
 	@Autowired
@@ -34,21 +34,23 @@ public class ServingWebContentApplicationTest {
 
 	@Test
 	public void homePage() throws Exception {
-		// N.B. jsoup can be useful for asserting HTML content
-		mockMvc.perform(get("/index.html"))
-				.andExpect(content().string(containsString("Get your greeting")));
+		// Test trang chủ
+		mockMvc.perform(get("/"))
+				.andExpect(content().string(containsString("Cinema Management System")));
 	}
 
 	@Test
-	public void greeting() throws Exception {
-		mockMvc.perform(get("/greeting"))
-				.andExpect(content().string(containsString("Hello, World!")));
+	public void testHomePageExists() throws Exception {
+		// Test trang chủ tồn tại
+		mockMvc.perform(get("/"))
+				.andExpect(content().string(containsString("Cinema Management")));
 	}
 
 	@Test
-	public void greetingWithUser() throws Exception {
-		mockMvc.perform(get("/greeting").param("name", "Greg"))
-				.andExpect(content().string(containsString("Hello, Greg!")));
+	public void testHomePageContent() throws Exception {
+		// Test nội dung trang chủ
+		mockMvc.perform(get("/"))
+				.andExpect(content().string(containsString("Quản lý Khách hàng")));
 	}
 
 }
