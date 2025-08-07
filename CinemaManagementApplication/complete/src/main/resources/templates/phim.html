@@ -278,11 +278,11 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="daoDien" class="form-label">
-                                        <i class="fas fa-user-tie me-1"></i>Đạo diễn <span class="text-danger">*</span>
+                                    <label for="thoiLuong" class="form-label">
+                                        <i class="fas fa-clock me-1"></i>Thời lượng (phút) <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" class="form-control" id="daoDien" name="daoDien" 
-                                           placeholder="Nhập tên đạo diễn" required>
+                                    <input type="number" class="form-control" id="thoiLuong" name="thoiLuong" 
+                                           placeholder="Nhập thời lượng" min="1" max="300" required>
                                 </div>
                             </div>
                         </div>
@@ -293,36 +293,6 @@
                                 <h5 class="text-success mb-3">
                                     <i class="fas fa-list-alt me-2"></i>Chi Tiết Phim
                                 </h5>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="namSanXuat" class="form-label">
-                                        <i class="fas fa-calendar me-1"></i>Năm sản xuất <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="number" class="form-control" id="namSanXuat" name="namSanXuat" 
-                                           placeholder="Nhập năm sản xuất" min="1900" max="2030" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="thoiLuong" class="form-label">
-                                        <i class="fas fa-clock me-1"></i>Thời lượng (phút) <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="number" class="form-control" id="thoiLuong" name="thoiLuong" 
-                                           placeholder="Nhập thời lượng" min="1" max="300" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="quocGia" class="form-label">
-                                        <i class="fas fa-flag me-1"></i>Quốc gia <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" class="form-control" id="quocGia" name="quocGia" 
-                                           placeholder="Nhập quốc gia sản xuất" required>
-                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -339,66 +309,49 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="gioiHanTuoi" class="form-label">
+                                        <i class="fas fa-user-shield me-1"></i>Giới hạn tuổi <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" class="form-control" id="gioiHanTuoi" name="gioiHanTuoi" 
+                                           placeholder="Nhập giới hạn tuổi" min="0" max="21" required>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Description and Image -->
                         <div class="row mb-4">
-                            <div class="col-12">
-                                <h5 class="text-success mb-3">
-                                    <i class="fas fa-image me-2"></i>Mô Tả và Hình Ảnh
-                                </h5>
-                            </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="moTa" class="form-label">
                                         <i class="fas fa-align-left me-1"></i>Mô tả
                                     </label>
-                                    <textarea class="form-control" id="moTa" name="moTa" rows="4" 
-                                              placeholder="Nhập mô tả tóm tắt về phim"></textarea>
-                                    <div class="form-text">Mô tả ngắn gọn về nội dung phim</div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label for="hinhAnh" class="form-label">
-                                        <i class="fas fa-image me-1"></i>Hình ảnh phim
-                                    </label>
-                                    <input type="file" class="form-control" id="hinhAnh" name="hinhAnh" 
-                                           accept="image/*">
-                                    <div class="form-text">Chọn file hình ảnh (JPG, PNG, GIF)</div>
+                                    <textarea class="form-control" id="moTa" name="moTa" rows="3" 
+                                              placeholder="Nhập mô tả phim (không bắt buộc)"></textarea>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pricing -->
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <h5 class="text-success mb-3">
-                                    <i class="fas fa-money-bill-wave me-2"></i>Thông Tin Giá
-                                </h5>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="giaVe" class="form-label">
-                                        <i class="fas fa-ticket-alt me-1"></i>Giá vé (VNĐ) <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="number" class="form-control" id="giaVe" name="giaVe" 
-                                           placeholder="Nhập giá vé" min="0" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="trangThai" class="form-label">
-                                        <i class="fas fa-info-circle me-1"></i>Trạng thái <span class="text-danger">*</span>
-                                    </label>
-                                    <select class="form-select" id="trangThai" name="trangThai" required>
-                                        <option value="DANG_CHIEU">Đang chiếu</option>
-                                        <option value="SAP_CHIEU">Sắp chiếu</option>
-                                        <option value="KET_THUC">Kết thúc</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                                                 <!-- Image Upload -->
+                         <div class="row mb-4">
+                             <div class="col-12">
+                                 <h5 class="text-success mb-3">
+                                     <i class="fas fa-image me-2"></i>Hình Ảnh Phim
+                                 </h5>
+                             </div>
+                             <div class="col-md-12">
+                                 <div class="mb-3">
+                                     <label for="hinhAnh" class="form-label">
+                                         <i class="fas fa-image me-1"></i>Hình ảnh phim
+                                     </label>
+                                     <input type="file" class="form-control" id="hinhAnh" name="hinhAnh" 
+                                            accept="image/*">
+                                     <div class="form-text">Chọn file hình ảnh (JPG, PNG, GIF)</div>
+                                 </div>
+                             </div>
+                         </div>
+
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -499,23 +452,12 @@
             const maPhim = document.getElementById('maPhim').value;
             const tenPhim = document.getElementById('tenPhim').value;
             const theLoai = document.getElementById('theLoai').value;
-            const daoDien = document.getElementById('daoDien').value;
-            const namSanXuat = document.getElementById('namSanXuat').value;
             const thoiLuong = document.getElementById('thoiLuong').value;
-            const quocGia = document.getElementById('quocGia').value;
             const ngonNgu = document.getElementById('ngonNgu').value;
-            const giaVe = document.getElementById('giaVe').value;
-            const trangThai = document.getElementById('trangThai').value;
+            const gioiHanTuoi = document.getElementById('gioiHanTuoi').value;
             
-            if (!maPhim || !tenPhim || !theLoai || !daoDien || !namSanXuat || 
-                !thoiLuong || !quocGia || !ngonNgu || !giaVe || !trangThai) {
+            if (!maPhim || !tenPhim || !theLoai || !thoiLuong || !ngonNgu || !gioiHanTuoi) {
                 alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
-                e.preventDefault();
-                return;
-            }
-            
-            if (parseInt(namSanXuat) < 1900 || parseInt(namSanXuat) > 2030) {
-                alert('Năm sản xuất phải từ 1900 đến 2030!');
                 e.preventDefault();
                 return;
             }
@@ -526,8 +468,8 @@
                 return;
             }
             
-            if (parseInt(giaVe) <= 0) {
-                alert('Giá vé phải lớn hơn 0!');
+            if (parseInt(gioiHanTuoi) < 0 || parseInt(gioiHanTuoi) > 21) {
+                alert('Giới hạn tuổi phải từ 0 đến 21!');
                 e.preventDefault();
                 return;
             }

@@ -57,7 +57,7 @@
                 <!-- Form -->
                 <div class="card shadow">
                     <div class="card-body p-4">
-                        <form th:action="@{/phim/create}" method="post" id="movieForm" enctype="multipart/form-data">
+                        <form th:action="@{/phim/create}" method="post" id="movieForm" enctype="multipart/form-data" th:object="${phim}">
                             <!-- Basic Information -->
                             <div class="row mb-4">
                                 <div class="col-12">
@@ -71,7 +71,7 @@
                                             <i class="fas fa-hashtag me-1"></i>Mã phim <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" class="form-control" id="maPhim" name="maPhim" 
-                                               placeholder="Nhập mã phim" required>
+                                               th:field="*{maPhim}" placeholder="Nhập mã phim" required>
                                         <div class="form-text">Mã phim duy nhất</div>
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                                             <i class="fas fa-film me-1"></i>Tên phim <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" class="form-control" id="tenPhim" name="tenPhim" 
-                                               placeholder="Nhập tên phim" required>
+                                               th:field="*{tenPhim}" placeholder="Nhập tên phim" required>
                                     </div>
                                 </div>
                             </div>

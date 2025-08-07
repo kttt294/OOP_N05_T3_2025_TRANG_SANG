@@ -38,6 +38,23 @@ public class PhimController {
         return "form-phim";
     }
     
+    @GetMapping("/phim/edit")
+    public String editPhimPage(@RequestParam String maPhim, Model model) {
+        try {
+            Phim phim = phimDB.getPhimById(maPhim);
+            if (phim != null) {
+                model.addAttribute("phim", phim);
+                return "form-phim";
+            } else {
+                model.addAttribute("error", "Không tìm thấy phim với mã: " + maPhim);
+                return "redirect:/phim";
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi khi tải thông tin phim: " + e.getMessage());
+            return "redirect:/phim";
+        }
+    }
+    
     @PostMapping("/phim/create")
     public String createPhim(@ModelAttribute Phim phim, Model model) {
         try {
