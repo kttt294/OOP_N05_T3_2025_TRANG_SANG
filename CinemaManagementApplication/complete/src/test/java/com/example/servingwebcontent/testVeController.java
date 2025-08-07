@@ -1,13 +1,13 @@
 package com.example.servingwebcontent;
 
-import com.example.servingwebcontent.controller.VeController;
+import com.example.servingwebcontent.controller.DatVe;
 import com.example.servingwebcontent.model.Ve;
 
 import java.util.ArrayList;
 
 public class testVeController {
 
-    private static VeController controller = new VeController();
+    private static DatVe controller = new DatVe();
 
     public static void test() {
         testTaoVe();
