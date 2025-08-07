@@ -57,6 +57,16 @@ public class PhimController {
     
     @PostMapping("/phim/create")
     public String createPhim(@ModelAttribute Phim phim, Model model) {
+        System.out.println("=== CREATE PHIM REQUEST ===");
+        System.out.println("MaPhim: " + phim.getMaPhim());
+        System.out.println("TenPhim: " + phim.getTenPhim());
+        System.out.println("TheLoai: " + phim.getTheLoai());
+        System.out.println("ThoiLuong: " + phim.getThoiLuong());
+        System.out.println("NgonNgu: " + phim.getNgonNgu());
+        System.out.println("GioiHanTuoi: " + phim.getGioiHanTuoi());
+        System.out.println("MoTa: " + phim.getMoTa());
+        System.out.println("===========================");
+        
         try {
             if (phimDB.createPhim(phim)) {
                 model.addAttribute("success", "Tạo phim thành công!");
