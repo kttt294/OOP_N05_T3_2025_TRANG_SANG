@@ -22,6 +22,9 @@ public class khachHangAiven {
         try {
             conn = mydb.getOnlyConn();
             
+            // Tạo bảng nếu chưa tồn tại
+            createTableIfNotExists(conn);
+            
             String sql = "SELECT * FROM khachhang ORDER BY ten";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet reset = pstmt.executeQuery();
@@ -57,6 +60,32 @@ public class khachHangAiven {
             e.printStackTrace();
         }
         return danhSachKhachHang;
+    }
+    
+    private void createTableIfNotExists(Connection conn) {
+        try {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS khachhang (" +
+                "CCCD VARCHAR(20) PRIMARY KEY," +
+                "ten VARCHAR(255) NOT NULL," +
+                "tuoi INT," +
+                "sdt VARCHAR(15)," +
+                "email VARCHAR(255)," +
+                "gioiTinh VARCHAR(10)," +
+                "diaChi TEXT," +
+                "ngheNghiep VARCHAR(100)," +
+                "ngaySinh VARCHAR(20)," +
+                "soVisa VARCHAR(20)" +
+                ")";
+            
+            PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
+            pstmt.executeUpdate();
+            pstmt.close();
+            
+            System.out.println("Bảng khachhang đã được tạo hoặc đã tồn tại");
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo bảng khachhang: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     public KhachHang getKhachHangByCCCD(String CCCD) {

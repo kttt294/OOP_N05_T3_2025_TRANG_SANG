@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import java.sql.PreparedStatement;
 
 @Component
 public class doAnAiven {
@@ -20,10 +21,14 @@ public class doAnAiven {
         List<DoAn> danhSachDoAn = new ArrayList<>();
         try {
             conn = mydb.getOnlyConn();
-
-             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from doan");
+            
+            // Tạo bảng nếu chưa tồn tại
+            createTableIfNotExists(conn);
+            
+            String sql = "SELECT * FROM doan ORDER BY tenDoAn";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet reset = pstmt.executeQuery();
+            
             System.out.println("Lấy tất cả dữ liệu đồ ăn từ database: ");
             while (reset.next()) {
                 String maDoAn = reset.getString("maDoAn");
@@ -34,18 +39,36 @@ public class doAnAiven {
                 DoAn doAn = new DoAn(maDoAn, tenDoAn, gia, soLuongCon);
                 danhSachDoAn.add(doAn);
                 System.out.println("Mã đồ ăn: " + maDoAn + " | Tên: " + tenDoAn + " | Giá: " + gia + " | Số lượng: " + soLuongCon);
-
             }
 
             reset.close();
-            sta.close();
+            pstmt.close();
             conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi lấy dữ liệu đồ ăn: " + e);
-
             e.printStackTrace();
         }
         return danhSachDoAn;
+    }
+    
+    private void createTableIfNotExists(Connection conn) {
+        try {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS doan (" +
+                "maDoAn VARCHAR(50) PRIMARY KEY," +
+                "tenDoAn VARCHAR(255) NOT NULL," +
+                "gia INT," +
+                "soLuongCon INT" +
+                ")";
+            
+            PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
+            pstmt.executeUpdate();
+            pstmt.close();
+            
+            System.out.println("Bảng doan đã được tạo hoặc đã tồn tại");
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo bảng doan: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     public DoAn getDoAnById(String maDoAn) {

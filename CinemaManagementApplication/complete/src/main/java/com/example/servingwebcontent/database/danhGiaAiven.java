@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import java.sql.PreparedStatement;
 
 @Component
 public class danhGiaAiven {
@@ -23,6 +24,8 @@ public class danhGiaAiven {
         try {
             conn = mydb.getOnlyConn();
 
+            // Tạo bảng nếu chưa tồn tại
+            createTableIfNotExists(conn);
              
             Statement sta = conn.createStatement();
             ResultSet reset = sta.executeQuery("select * from danhgia");
@@ -55,6 +58,30 @@ public class danhGiaAiven {
             e.printStackTrace();
         }
         return danhSachDanhGia;
+    }
+    
+    private void createTableIfNotExists(Connection conn) {
+        try {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS danhgia (" +
+                "maDanhGia VARCHAR(50) PRIMARY KEY," +
+                "CCCD VARCHAR(20)," +
+                "maPhim VARCHAR(50)," +
+                "soSao INT," +
+                "noiDung TEXT," +
+                "thoiGian DATETIME," +
+                "FOREIGN KEY (CCCD) REFERENCES khachhang(CCCD)," +
+                "FOREIGN KEY (maPhim) REFERENCES phim(maPhim)" +
+                ")";
+            
+            PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
+            pstmt.executeUpdate();
+            pstmt.close();
+            
+            System.out.println("Bảng danhgia đã được tạo hoặc đã tồn tại");
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo bảng danhgia: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     public DanhGia getDanhGiaById(String maDanhGia) {

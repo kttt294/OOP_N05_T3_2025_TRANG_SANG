@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import java.sql.PreparedStatement;
 
 @Component
 public class gheAiven {
@@ -20,17 +21,20 @@ public class gheAiven {
         List<Ghe> danhSachGhe = new ArrayList<>();
         try {
             conn = mydb.getOnlyConn();
-
-             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from ghe");
+            
+            // Tạo bảng nếu chưa tồn tại
+            createTableIfNotExists(conn);
+            
+            String sql = "SELECT * FROM ghe ORDER BY maGhe";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet reset = pstmt.executeQuery();
+            
             System.out.println("Lấy tất cả dữ liệu ghế từ database: ");
             while (reset.next()) {
                 String maGhe = reset.getString("maGhe");
+                String maPhong = reset.getString("maPhong");
                 int hang = reset.getInt("hang");
                 int cot = reset.getInt("cot");
-                String maPhong = reset.getString("maPhong");
-                String maSuatChieu = reset.getString("maSuatChieu");
                 String trangThaiStr = reset.getString("trangThai");
                 
                 Ghe.TrangThaiGhe trangThai = Ghe.TrangThaiGhe.TRONG;
@@ -47,21 +51,42 @@ public class gheAiven {
                     }
                 }
                 
-                Ghe ghe = new Ghe(maGhe, hang, cot, maPhong, maSuatChieu, trangThai);
+                Ghe ghe = new Ghe(maGhe, hang, cot, maPhong);
+                ghe.setTrangThai(trangThai);
                 danhSachGhe.add(ghe);
                 System.out.println("Mã ghế: " + maGhe + " | Hàng: " + hang + " | Cột: " + cot + " | Trạng thái: " + trangThai);
-
             }
 
             reset.close();
-            sta.close();
+            pstmt.close();
             conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi lấy dữ liệu ghế: " + e);
-
             e.printStackTrace();
         }
         return danhSachGhe;
+    }
+    
+    private void createTableIfNotExists(Connection conn) {
+        try {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS ghe (" +
+                "maGhe VARCHAR(50) PRIMARY KEY," +
+                "maPhong VARCHAR(50)," +
+                "hang INT," +
+                "cot INT," +
+                "trangThai VARCHAR(20) DEFAULT 'TRONG'," +
+                "FOREIGN KEY (maPhong) REFERENCES phongchieu(maPhong)" +
+                ")";
+            
+            PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
+            pstmt.executeUpdate();
+            pstmt.close();
+            
+            System.out.println("Bảng ghe đã được tạo hoặc đã tồn tại");
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo bảng ghe: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     public Ghe getGheById(String maGhe) {

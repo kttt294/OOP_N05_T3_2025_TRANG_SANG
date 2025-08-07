@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import java.sql.PreparedStatement;
 
 @Component
 public class suatChieuAiven {
@@ -23,6 +24,8 @@ public class suatChieuAiven {
         try {
             conn = mydb.getOnlyConn();
 
+            // Tạo bảng nếu chưa tồn tại
+            createTableIfNotExists(conn);
              
             Statement sta = conn.createStatement();
             ResultSet reset = sta.executeQuery("select * from suatchieu");
@@ -65,6 +68,29 @@ public class suatChieuAiven {
             e.printStackTrace();
         }
         return danhSachSuatChieu;
+    }
+    
+    private void createTableIfNotExists(Connection conn) {
+        try {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS suatchieu (" +
+                "maSuatChieu VARCHAR(50) PRIMARY KEY," +
+                "maPhim VARCHAR(50)," +
+                "maPhong VARCHAR(50)," +
+                "thoiGianBatDau DATETIME," +
+                "thoiGianKetThuc DATETIME," +
+                "FOREIGN KEY (maPhim) REFERENCES phim(maPhim)," +
+                "FOREIGN KEY (maPhong) REFERENCES phongchieu(maPhong)" +
+                ")";
+            
+            PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
+            pstmt.executeUpdate();
+            pstmt.close();
+            
+            System.out.println("Bảng suatchieu đã được tạo hoặc đã tồn tại");
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo bảng suatchieu: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     public SuatChieu getSuatChieuById(String maSuatChieu) {

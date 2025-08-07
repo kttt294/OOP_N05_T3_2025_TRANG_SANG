@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import java.sql.PreparedStatement;
 
 @Component
 public class voucherAiven {
@@ -23,6 +24,8 @@ public class voucherAiven {
         try {
             conn = mydb.getOnlyConn();
 
+            // Tạo bảng nếu chưa tồn tại
+            createTableIfNotExists(conn);
              
             Statement sta = conn.createStatement();
             ResultSet reset = sta.executeQuery("select * from voucher");
@@ -61,6 +64,29 @@ public class voucherAiven {
             e.printStackTrace();
         }
         return danhSachVoucher;
+    }
+    
+    private void createTableIfNotExists(Connection conn) {
+        try {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS voucher (" +
+                "maVoucher VARCHAR(50) PRIMARY KEY," +
+                "moTa TEXT," +
+                "phanTramGiamGia FLOAT," +
+                "ngayBatDau DATETIME," +
+                "ngayKetThuc DATETIME," +
+                "soLuongConLai VARCHAR(20)," +
+                "trangThai VARCHAR(20)" +
+                ")";
+            
+            PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
+            pstmt.executeUpdate();
+            pstmt.close();
+            
+            System.out.println("Bảng voucher đã được tạo hoặc đã tồn tại");
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo bảng voucher: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     public Voucher getVoucherById(String maVoucher) {

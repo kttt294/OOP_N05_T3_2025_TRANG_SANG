@@ -21,6 +21,9 @@ public class phimAiven {
         try {
             conn = mydb.getOnlyConn();
             
+            // Tạo bảng nếu chưa tồn tại
+            createTableIfNotExists(conn);
+            
             String sql = "SELECT * FROM phim ORDER BY tenPhim";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet reset = pstmt.executeQuery();
@@ -48,6 +51,29 @@ public class phimAiven {
             e.printStackTrace();
         }
         return danhSachPhim;
+    }
+    
+    private void createTableIfNotExists(Connection conn) {
+        try {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS phim (" +
+                "maPhim VARCHAR(50) PRIMARY KEY," +
+                "tenPhim VARCHAR(255) NOT NULL," +
+                "theLoai VARCHAR(100)," +
+                "thoiLuong INT," +
+                "ngonNgu VARCHAR(100)," +
+                "gioiHanTuoi INT," +
+                "moTa TEXT" +
+                ")";
+            
+            PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
+            pstmt.executeUpdate();
+            pstmt.close();
+            
+            System.out.println("Bảng phim đã được tạo hoặc đã tồn tại");
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo bảng phim: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public Phim getPhimById(String maPhim) {

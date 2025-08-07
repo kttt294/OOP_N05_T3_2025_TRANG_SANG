@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import java.sql.PreparedStatement;
 
 @Component
 public class phongChieuAiven {
@@ -21,6 +22,8 @@ public class phongChieuAiven {
         try {
             conn = mydb.getOnlyConn();
 
+            // Tạo bảng nếu chưa tồn tại
+            createTableIfNotExists(conn);
              
             Statement sta = conn.createStatement();
             ResultSet reset = sta.executeQuery("select * from phongchieu");
@@ -46,6 +49,26 @@ public class phongChieuAiven {
             e.printStackTrace();
         }
         return danhSachPhong;
+    }
+    
+    private void createTableIfNotExists(Connection conn) {
+        try {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS phongchieu (" +
+                "maPhong VARCHAR(50) PRIMARY KEY," +
+                "tenPhong VARCHAR(255) NOT NULL," +
+                "soHangGhe INT," +
+                "soCotGhe INT" +
+                ")";
+            
+            PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
+            pstmt.executeUpdate();
+            pstmt.close();
+            
+            System.out.println("Bảng phongchieu đã được tạo hoặc đã tồn tại");
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo bảng phongchieu: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     public PhongChieu getPhongChieuById(String maPhong) {
