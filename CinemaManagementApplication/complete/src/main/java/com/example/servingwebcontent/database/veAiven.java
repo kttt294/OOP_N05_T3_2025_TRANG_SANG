@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import java.sql.PreparedStatement;
 
 @Component
 public class veAiven {
@@ -21,6 +22,8 @@ public class veAiven {
         try {
             conn = mydb.getOnlyConn();
 
+            // Tạo bảng nếu chưa tồn tại
+            createTableIfNotExists(conn);
              
             Statement sta = conn.createStatement();
             ResultSet reset = sta.executeQuery("select * from ve");
@@ -63,6 +66,31 @@ public class veAiven {
             e.printStackTrace();
         }
         return danhSachVe;
+    }
+    
+    private void createTableIfNotExists(Connection conn) {
+        try {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS ve (" +
+                "maVe VARCHAR(50) PRIMARY KEY," +
+                "CCCD VARCHAR(20)," +
+                "maSuatChieu VARCHAR(50)," +
+                "maGhe VARCHAR(50)," +
+                "giaVe INT," +
+                "trangThai VARCHAR(20) DEFAULT 'CHUA_THANH_TOAN'," +
+                "FOREIGN KEY (CCCD) REFERENCES khachhang(CCCD)," +
+                "FOREIGN KEY (maSuatChieu) REFERENCES suatchieu(maSuatChieu)," +
+                "FOREIGN KEY (maGhe) REFERENCES ghe(maGhe)" +
+                ")";
+            
+            PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
+            pstmt.executeUpdate();
+            pstmt.close();
+            
+            System.out.println("Bảng ve đã được tạo hoặc đã tồn tại");
+        } catch (Exception e) {
+            System.out.println("Lỗi tạo bảng ve: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     public Ve getVeById(String maVe) {
