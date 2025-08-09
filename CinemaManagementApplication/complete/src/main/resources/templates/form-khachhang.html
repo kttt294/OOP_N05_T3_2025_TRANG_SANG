@@ -121,8 +121,8 @@
                       <input
                         type="text"
                         class="form-control"
-                        id="hoTen"
-                        name="hoTen"
+                        id="ten"
+                        name="ten"
                         placeholder="Nhập họ và tên"
                         required
                       />
@@ -146,8 +146,8 @@
                       <input
                         type="tel"
                         class="form-control"
-                        id="soDienThoai"
-                        name="soDienThoai"
+                        id="sdt"
+                        name="sdt"
                         placeholder="Nhập số điện thoại"
                         required
                       />
@@ -367,54 +367,56 @@
       document
         .getElementById("customerForm")
         .addEventListener("submit", function (e) {
-          const CCCD = document.getElementById("CCCD").value;
-          const hoTen = document.getElementById("hoTen").value;
-          const soDienThoai = document.getElementById("soDienThoai").value;
-          const diaChi = document.getElementById("diaChi").value;
-          const tenDangNhap = document.getElementById("tenDangNhap").value;
+          const CCCD = document.getElementById("CCCD").value.trim();
+          const ten = document.getElementById("ten").value.trim();
+          const sdt = document.getElementById("sdt").value.trim();
+          const diaChi = document.getElementById("diaChi").value.trim();
+          const tenDangNhap = document
+            .getElementById("tenDangNhap")
+            .value.trim();
           const matKhau = document.getElementById("matKhau").value;
 
-          if (
-            !CCCD ||
-            !hoTen ||
-            !soDienThoai ||
-            !diaChi ||
-            !tenDangNhap ||
-            !matKhau
-          ) {
+          // Check required fields
+          if (!CCCD || !ten || !sdt || !diaChi || !tenDangNhap || !matKhau) {
             alert("Vui lòng điền đầy đủ thông tin bắt buộc!");
             e.preventDefault();
-            return;
+            return false;
           }
 
           // Validate CCCD (12 digits)
           if (!/^\d{12}$/.test(CCCD)) {
             alert("CCCD phải có đúng 12 số!");
             e.preventDefault();
-            return;
+            return false;
           }
 
           // Validate phone number (10-11 digits)
-          if (!/^\d{10,11}$/.test(soDienThoai)) {
+          if (!/^\d{10,11}$/.test(sdt)) {
             alert("Số điện thoại phải có 10-11 số!");
             e.preventDefault();
-            return;
+            return false;
           }
 
           // Validate password (minimum 6 characters)
           if (matKhau.length < 6) {
             alert("Mật khẩu phải có ít nhất 6 ký tự!");
             e.preventDefault();
-            return;
+            return false;
           }
 
           // Validate email format if provided
-          const email = document.getElementById("email").value;
+          const email = document.getElementById("email").value.trim();
           if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             alert("Email không đúng định dạng!");
             e.preventDefault();
-            return;
+            return false;
           }
+
+          // If validation passes, allow form submission
+          console.log(
+            "Form validation passed, submitting to /khachhang/create"
+          );
+          return true;
         });
 
       // Auto-format CCCD input
@@ -423,14 +425,12 @@
       });
 
       // Auto-format phone number input
-      document
-        .getElementById("soDienThoai")
-        .addEventListener("input", function (e) {
-          this.value = this.value.replace(/\D/g, "").substring(0, 11);
-        });
+      document.getElementById("sdt").addEventListener("input", function (e) {
+        this.value = this.value.replace(/\D/g, "").substring(0, 11);
+      });
 
       // Auto-generate username from name
-      document.getElementById("hoTen").addEventListener("blur", function () {
+      document.getElementById("ten").addEventListener("blur", function () {
         const tenDangNhap = document.getElementById("tenDangNhap");
         if (!tenDangNhap.value && this.value) {
           const username = this.value

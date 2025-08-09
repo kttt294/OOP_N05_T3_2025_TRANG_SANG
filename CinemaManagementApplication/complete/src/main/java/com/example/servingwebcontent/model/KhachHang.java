@@ -13,6 +13,8 @@ public class KhachHang {
     private String ngheNghiep;
     private String ngaySinh;
     private String soVisa;
+    private String tenDangNhap;
+    private String matKhau;
     private ArrayList<Ve> lichSuDatVe;
 
     private static ArrayList<KhachHang> danhSachKhachHang = new ArrayList<>();
@@ -65,6 +67,12 @@ public class KhachHang {
     
     public String getSoVisa() { return soVisa; }
     public void setSoVisa(String soVisa) { this.soVisa = soVisa; }
+    
+    public String getTenDangNhap() { return tenDangNhap; }
+    public void setTenDangNhap(String tenDangNhap) { this.tenDangNhap = tenDangNhap; }
+    
+    public String getMatKhau() { return matKhau; }
+    public void setMatKhau(String matKhau) { this.matKhau = matKhau; }
     
     public ArrayList<Ve> getLichSuDatVe() { return lichSuDatVe; }
     public void setLichSuDatVe(ArrayList<Ve> lichSuDatVe) { this.lichSuDatVe = lichSuDatVe; }

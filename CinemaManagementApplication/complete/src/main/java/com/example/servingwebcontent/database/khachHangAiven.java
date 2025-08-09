@@ -41,12 +41,16 @@ public class khachHangAiven {
                 String ngheNghiep = reset.getString("ngheNghiep");
                 String ngaySinh = reset.getString("ngaySinh");
                 String soVisa = reset.getString("soVisa");
+                String tenDangNhap = reset.getString("tenDangNhap");
+                String matKhau = reset.getString("matKhau");
                 
                 KhachHang khachHang = new KhachHang(CCCD, ten, tuoi, sdt, email, gioiTinh);
                 khachHang.setDiaChi(diaChi);
                 khachHang.setNgheNghiep(ngheNghiep);
                 khachHang.setNgaySinh(ngaySinh);
                 khachHang.setSoVisa(soVisa);
+                khachHang.setTenDangNhap(tenDangNhap);
+                khachHang.setMatKhau(matKhau);
                 
                 danhSachKhachHang.add(khachHang);
                 System.out.println("CCCD: " + CCCD + " | Tên: " + ten + " | Tuổi: " + tuoi);
@@ -74,7 +78,9 @@ public class khachHangAiven {
                 "diaChi TEXT," +
                 "ngheNghiep VARCHAR(100)," +
                 "ngaySinh VARCHAR(20)," +
-                "soVisa VARCHAR(20)" +
+                "soVisa VARCHAR(20)," +
+                "tenDangNhap VARCHAR(50)," +
+                "matKhau VARCHAR(255)" +
                 ")";
             
             PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
@@ -180,8 +186,8 @@ public class khachHangAiven {
         try {
             conn = mydb.getOnlyConn();
             
-            String sql = "INSERT INTO khachhang (CCCD, ten, tuoi, sdt, email, gioiTinh, diaChi, ngheNghiep, ngaySinh, soVisa) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO khachhang (CCCD, ten, tuoi, sdt, email, gioiTinh, diaChi, ngheNghiep, ngaySinh, soVisa, tenDangNhap, matKhau) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, khachHang.getCCCD());
@@ -194,6 +200,8 @@ public class khachHangAiven {
             pstmt.setString(8, khachHang.getNgheNghiep());
             pstmt.setString(9, khachHang.getNgaySinh());
             pstmt.setString(10, khachHang.getSoVisa());
+            pstmt.setString(11, khachHang.getTenDangNhap());
+            pstmt.setString(12, khachHang.getMatKhau());
             
             int result = pstmt.executeUpdate();
             System.out.println("Tạo khách hàng thành công: " + result + " dòng được thêm");
