@@ -289,4 +289,23 @@ public class gheAiven {
             return false;
         }
     }
+    
+    public boolean updateGheTrangThai(String maGhe, Ghe.TrangThaiGhe trangThaiMoi) {
+        Connection conn = null;
+        try {
+            conn = mydb.getOnlyConn();
+            Statement sta = conn.createStatement();
+            String sql = "UPDATE ghe SET trangThai = '" + trangThaiMoi.toString() + 
+                "' WHERE maGhe = '" + maGhe + "'";
+            int result = sta.executeUpdate(sql);
+            System.out.println("Cập nhật trạng thái ghế thành công: " + maGhe + " -> " + trangThaiMoi);
+            sta.close();
+            conn.close();
+            return result > 0;
+        } catch (Exception e) {
+            System.out.println("Lỗi cập nhật trạng thái ghế: " + e);
+            e.printStackTrace();
+            return false;
+        }
+    }
 } 

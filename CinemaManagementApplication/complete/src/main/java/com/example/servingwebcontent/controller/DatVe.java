@@ -15,12 +15,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.example.servingwebcontent.model.Ve;
 import com.example.servingwebcontent.util.DateTimeUtils;
 import com.example.servingwebcontent.database.veAiven;
+import com.example.servingwebcontent.database.gheAiven;
+import com.example.servingwebcontent.model.Ghe;
 
 @Controller
 public class DatVe {
-
+    
     @Autowired
     private veAiven veDB;
+    
+    @Autowired
+    private gheAiven gheDB;
     
     // Web Controller Methods
     @GetMapping("/ve")
@@ -45,7 +50,7 @@ public class DatVe {
     @PostMapping("/ve/create")
     public String createVe(@ModelAttribute Ve ve, Model model) {
         try {
-            if (veDB.createVe(ve)) {
+            if (taoVe(ve)) {
                 model.addAttribute("success", "Tạo vé thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi tạo vé!");
@@ -59,7 +64,7 @@ public class DatVe {
     @PostMapping("/ve/update")
     public String updateVe(@RequestParam String maVe, @ModelAttribute Ve ve, Model model) {
         try {
-            if (veDB.updateVe(maVe, ve)) {
+            if (capNhatVe(maVe, ve)) {
                 model.addAttribute("success", "Cập nhật vé thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi cập nhật vé!");
@@ -73,7 +78,7 @@ public class DatVe {
     @PostMapping("/ve/delete")
     public String deleteVe(@RequestParam String maVe, Model model) {
         try {
-            if (veDB.deleteVe(maVe)) {
+            if (xoaVe(maVe)) {
                 model.addAttribute("success", "Xóa vé thành công!");
             } else {
                 model.addAttribute("error", "Lỗi khi xóa vé!");
@@ -155,7 +160,20 @@ public class DatVe {
                 throw new IllegalArgumentException("Giá vé phải lớn hơn 0!");
             }
 
-            return veDB.createVe(ve);
+            // Tạo vé trước
+            boolean taoVeThanhCong = veDB.createVe(ve);
+            
+            // Nếu tạo vé thành công, cập nhật trạng thái ghế từ TRONG sang DA_DAT
+            if (taoVeThanhCong) {
+                boolean capNhatGheThanhCong = gheDB.updateGheTrangThai(ve.getMaGhe(), Ghe.TrangThaiGhe.DA_DAT);
+                if (capNhatGheThanhCong) {
+                    System.out.println("Đã cập nhật trạng thái ghế " + ve.getMaGhe() + " từ TRONG sang DA_DAT");
+                } else {
+                    System.out.println("Lỗi khi cập nhật trạng thái ghế " + ve.getMaGhe());
+                }
+            }
+            
+            return taoVeThanhCong;
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -177,7 +195,15 @@ public class DatVe {
                 return false;
             }
 
-            return veDB.updateVe(maVe, veMoi);
+            boolean capNhatVeThanhCong = veDB.updateVe(maVe, veMoi);
+            
+            // Nếu cập nhật vé thành công và có thay đổi trạng thái thanh toán
+            if (capNhatVeThanhCong && veCu.getTrangThai() == Ve.TrangThaiVe.CHUA_THANH_TOAN && 
+                veMoi.getTrangThai() == Ve.TrangThaiVe.DA_THANH_TOAN) {
+                System.out.println("Vé " + maVe + " đã được thanh toán, ghế " + veCu.getMaGhe() + " vẫn ở trạng thái DA_DAT");
+            }
+            
+            return capNhatVeThanhCong;
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -199,7 +225,20 @@ public class DatVe {
                 return false;
             }
 
-            return veDB.deleteVe(maVe);
+            // Xóa vé trước
+            boolean xoaVeThanhCong = veDB.deleteVe(maVe);
+            
+            // Nếu xóa vé thành công và ghế đang ở trạng thái DA_DAT, cập nhật về TRONG
+            if (xoaVeThanhCong) {
+                boolean capNhatGheThanhCong = gheDB.updateGheTrangThai(ve.getMaGhe(), Ghe.TrangThaiGhe.TRONG);
+                if (capNhatGheThanhCong) {
+                    System.out.println("Đã cập nhật trạng thái ghế " + ve.getMaGhe() + " từ DA_DAT về TRONG sau khi xóa vé");
+                } else {
+                    System.out.println("Lỗi khi cập nhật trạng thái ghế " + ve.getMaGhe() + " sau khi xóa vé");
+                }
+            }
+            
+            return xoaVeThanhCong;
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi dữ liệu đầu vào: " + e.getMessage());
             return false;
@@ -265,7 +304,17 @@ public class DatVe {
             }
 
             ve.setTrangThai(Ve.TrangThaiVe.DA_HUY);
-            return veDB.updateVe(maVe, ve);
+            boolean capNhatVeThanhCong = veDB.updateVe(maVe, ve);
+            if (capNhatVeThanhCong) {
+                // Cập nhật trạng thái ghế từ DA_DAT về TRONG khi hủy vé
+                boolean capNhatGheThanhCong = gheDB.updateGheTrangThai(ve.getMaGhe(), Ghe.TrangThaiGhe.TRONG);
+                if (capNhatGheThanhCong) {
+                    System.out.println("Đã cập nhật trạng thái ghế " + ve.getMaGhe() + " từ DA_DAT về TRONG");
+                } else {
+                    System.out.println("Lỗi khi cập nhật trạng thái ghế " + ve.getMaGhe());
+                }
+            }
+            return capNhatVeThanhCong;
         } catch (Exception e) {
             System.out.println("Lỗi hệ thống: " + e.getMessage());
             return false;
