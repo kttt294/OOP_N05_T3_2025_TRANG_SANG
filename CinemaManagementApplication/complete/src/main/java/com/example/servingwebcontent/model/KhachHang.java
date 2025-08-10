@@ -10,11 +10,7 @@ public class KhachHang {
     private String email;
     private String gioiTinh; // Nam, Nu, Khac
     private String diaChi;
-    private String ngheNghiep;
     private String ngaySinh;
-    private String soVisa;
-    private String tenDangNhap;
-    private String matKhau;
     private ArrayList<Ve> lichSuDatVe;
 
     private static ArrayList<KhachHang> danhSachKhachHang = new ArrayList<>();
@@ -58,21 +54,9 @@ public class KhachHang {
     
     public String getDiaChi() { return diaChi; }
     public void setDiaChi(String diaChi) { this.diaChi = diaChi; }
-    
-    public String getNgheNghiep() { return ngheNghiep; }
-    public void setNgheNghiep(String ngheNghiep) { this.ngheNghiep = ngheNghiep; }
-    
+
     public String getNgaySinh() { return ngaySinh; }
     public void setNgaySinh(String ngaySinh) { this.ngaySinh = ngaySinh; }
-    
-    public String getSoVisa() { return soVisa; }
-    public void setSoVisa(String soVisa) { this.soVisa = soVisa; }
-    
-    public String getTenDangNhap() { return tenDangNhap; }
-    public void setTenDangNhap(String tenDangNhap) { this.tenDangNhap = tenDangNhap; }
-    
-    public String getMatKhau() { return matKhau; }
-    public void setMatKhau(String matKhau) { this.matKhau = matKhau; }
     
     public ArrayList<Ve> getLichSuDatVe() { return lichSuDatVe; }
     public void setLichSuDatVe(ArrayList<Ve> lichSuDatVe) { this.lichSuDatVe = lichSuDatVe; }
@@ -195,9 +179,6 @@ public class KhachHang {
         System.out.println("Email: " + email);
         System.out.println("Giới tính: " + gioiTinh);
         System.out.println("Địa chỉ: " + (diaChi != null ? diaChi : "Chưa cập nhật"));
-        System.out.println("Nghề nghiệp: " + (ngheNghiep != null ? ngheNghiep : "Chưa cập nhật"));
-        System.out.println("Ngày sinh: " + (ngaySinh != null ? ngaySinh : "Chưa cập nhật"));
-        System.out.println("Số Visa: " + (soVisa != null ? soVisa : "Chưa cập nhật"));
         System.out.println("Số vé đã đặt: " + (lichSuDatVe != null ? lichSuDatVe.size() : 0));
     }
 

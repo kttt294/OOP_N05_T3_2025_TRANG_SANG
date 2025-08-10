@@ -2,14 +2,14 @@ package com.example.servingwebcontent.model;
 import java.util.ArrayList;
 
 public class Phim {
-    public String maPhim;
-    public String tenPhim;
+    private String maPhim;
+    private String tenPhim;
     private String theLoai;
     private int thoiLuong; // đơn vị: phút
     private String ngonNgu;
     private int gioiHanTuoi;
     private String moTa = "";
-
+    
     public Phim() {}
 
     public Phim(String maPhim, String tenPhim, String theLoai, int thoiLuong, String ngonNgu, int gioiHanTuoi, String moTa) {
