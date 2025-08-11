@@ -7,8 +7,6 @@ public class PhongChieu {
     private int soHangGhe;
     private int soCotGhe;
 
-    private static ArrayList<PhongChieu> danhSachPhong = new ArrayList<>();
-
     public PhongChieu(){}
 
     public PhongChieu(String maPhong, String tenPhong) {
@@ -57,6 +55,8 @@ public class PhongChieu {
         return soCotGhe;
     }
 
+    private static ArrayList<PhongChieu> danhSachPhong = new ArrayList<>();
+    
     // CRUD static
     public static void Create(PhongChieu phong) {
         if (phong == null || phong.getMaPhong() == null || phong.getMaPhong().trim().isEmpty()) {

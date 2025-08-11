@@ -35,7 +35,7 @@ public class HoaDonController {
     @GetMapping("/hoadon/create")
     public String hienThiFormTaoHoaDon(Model model) {
         model.addAttribute("hoaDon", new HoaDon());
-        model.addAttribute("phuongThucThanhToan", HoaDon.PhuongThucThanhToan.values());
+        model.addAttribute("phuongThuc", HoaDon.phuongThuc.values());
         return "form-hoadon";
     }
     
@@ -45,7 +45,7 @@ public class HoaDonController {
             // Validation dữ liệu đầu vào
             if (!kiemTraDuLieuHoaDon(hoaDon)) {
                 model.addAttribute("error", "Dữ liệu không hợp lệ");
-                model.addAttribute("phuongThucThanhToan", HoaDon.PhuongThucThanhToan.values());
+                model.addAttribute("phuongThuc", HoaDon.phuongThuc.values());
                 return "form-hoadon";
             }
             
@@ -61,13 +61,13 @@ public class HoaDonController {
                 return "redirect:/hoadon";
             } else {
                 model.addAttribute("error", "Lỗi khi tạo hóa đơn");
-                model.addAttribute("phuongThucThanhToan", HoaDon.PhuongThucThanhToan.values());
+                model.addAttribute("phuongThuc", HoaDon.phuongThuc.values());
                 return "form-hoadon";
             }
         } catch (Exception e) {
             System.out.println("Lỗi tạo hóa đơn: " + e.getMessage());
             model.addAttribute("error", "Lỗi hệ thống: " + e.getMessage());
-            model.addAttribute("phuongThucThanhToan", HoaDon.PhuongThucThanhToan.values());
+            model.addAttribute("phuongThuc", HoaDon.phuongThuc.values());
             return "form-hoadon";
         }
     }
@@ -78,7 +78,7 @@ public class HoaDonController {
             HoaDon hoaDon = hoaDonDB.getHoaDonById(maHoaDon);
             if (hoaDon != null) {
                 model.addAttribute("hoaDon", hoaDon);
-                model.addAttribute("phuongThucThanhToan", HoaDon.PhuongThucThanhToan.values());
+                model.addAttribute("phuongThuc", HoaDon.phuongThuc.values());
                 return "form-hoadon";
             } else {
                 model.addAttribute("error", "Không tìm thấy hóa đơn");
@@ -97,7 +97,7 @@ public class HoaDonController {
             // Validation dữ liệu đầu vào
             if (!kiemTraDuLieuHoaDon(hoaDon)) {
                 model.addAttribute("error", "Dữ liệu không hợp lệ");
-                model.addAttribute("phuongThucThanhToan", HoaDon.PhuongThucThanhToan.values());
+                model.addAttribute("phuongThuc", HoaDon.phuongThuc.values());
                 return "form-hoadon";
             }
             
@@ -108,13 +108,13 @@ public class HoaDonController {
                 return "redirect:/hoadon";
             } else {
                 model.addAttribute("error", "Lỗi khi cập nhật hóa đơn");
-                model.addAttribute("phuongThucThanhToan", HoaDon.PhuongThucThanhToan.values());
+                model.addAttribute("phuongThuc", HoaDon.phuongThuc.values());
                 return "form-hoadon";
             }
         } catch (Exception e) {
             System.out.println("Lỗi cập nhật hóa đơn: " + e.getMessage());
             model.addAttribute("error", "Lỗi hệ thống: " + e.getMessage());
-            model.addAttribute("phuongThucThanhToan", HoaDon.PhuongThucThanhToan.values());
+            model.addAttribute("phuongThuc", HoaDon.phuongThuc.values());
             return "form-hoadon";
         }
     }
@@ -173,9 +173,9 @@ public class HoaDonController {
             int tongDoanhThu = 0;
             
             for (HoaDon hoaDon : tatCaHoaDon) {
-                if (hoaDon.getPhuongThucThanhToan() == HoaDon.PhuongThucThanhToan.TIEN_MAT) {
+                if (hoaDon.getphuongThuc() == HoaDon.phuongThuc.TIEN_MAT) {
                     tienMat++;
-                } else if (hoaDon.getPhuongThucThanhToan() == HoaDon.PhuongThucThanhToan.CHUYEN_KHOAN) {
+                } else if (hoaDon.getphuongThuc() == HoaDon.phuongThuc.CHUYEN_KHOAN) {
                     chuyenKhoan++;
                 }
                 tongDoanhThu += hoaDon.getTongTien();
@@ -230,7 +230,7 @@ public class HoaDonController {
         }
         
         // Kiểm tra phương thức thanh toán
-        if (hoaDon.getPhuongThucThanhToan() == null) {
+        if (hoaDon.getphuongThuc() == null) {
             System.out.println("Lỗi: Phương thức thanh toán không được để trống");
             return false;
         }
@@ -287,9 +287,9 @@ public class HoaDonController {
             int tongDoanhThu = 0;
             
             for (HoaDon hoaDon : tatCaHoaDon) {
-                if (hoaDon.getPhuongThucThanhToan() == HoaDon.PhuongThucThanhToan.TIEN_MAT) {
+                if (hoaDon.getphuongThuc() == HoaDon.phuongThuc.TIEN_MAT) {
                     tienMat++;
-                } else if (hoaDon.getPhuongThucThanhToan() == HoaDon.PhuongThucThanhToan.CHUYEN_KHOAN) {
+                } else if (hoaDon.getphuongThuc() == HoaDon.phuongThuc.CHUYEN_KHOAN) {
                     chuyenKhoan++;
                 }
                 tongDoanhThu += hoaDon.getTongTien();

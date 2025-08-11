@@ -2,12 +2,11 @@ package com.example.servingwebcontent.model;
 import java.util.ArrayList;
 
 public class DoAn {
+    
     private String maDoAn;
     private String tenDoAn;
     private int gia; // tính bằng Việt Nam Đồng
     private int soLuongCon;
-
-    private static ArrayList<DoAn> danhSachDoAn = new ArrayList<>();
 
     public DoAn() {}
 
@@ -41,6 +40,8 @@ public class DoAn {
         this.soLuongCon = soLuong;
     }
 
+    private static ArrayList<DoAn> danhSachDoAn = new ArrayList<>();
+
     // CRUD
     public static boolean Create(DoAn doAn) {
         if (doAn == null) return false;
@@ -72,6 +73,7 @@ public class DoAn {
             System.out.println("Không tìm thấy đồ ăn với mã: " + maDoAn);
         }
     }
+
     public static boolean Update(DoAn doAn) {
         if (doAn == null) return false;
         int idx = getDoAnIndexByMa(doAn.getMaDoAn());
@@ -79,12 +81,14 @@ public class DoAn {
         danhSachDoAn.set(idx, doAn);
         return true;
     }
+
     public static boolean Delete(String maDoAn) {
         int idx = getDoAnIndexByMa(maDoAn);
         if (idx == -1) return false;
         danhSachDoAn.remove(idx);
         return true;
     }
+
     // Nếu muốn xem thông tin Đồ Ăn thông cụ thể thông qua maDoAn
     public static DoAn getDoAnByMa(String maDoAn) {
         for (DoAn da : danhSachDoAn) {

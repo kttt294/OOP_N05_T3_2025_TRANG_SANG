@@ -13,8 +13,6 @@ public class Ghe {
     private String maSuatChieu;
     private TrangThaiGhe trangThai;
 
-    private static ArrayList<Ghe> danhSachGhe = new ArrayList<>();
-
     public Ghe() {}
 
     public Ghe(String maGhe, int hang, int cot, String maPhong) {
@@ -78,6 +76,8 @@ public class Ghe {
         this.trangThai = TrangThaiGhe.TRONG;
     }
 
+    private static ArrayList<Ghe> danhSachGhe = new ArrayList<>();
+
     // CRUD
     public static void Create(Ghe ghe) {
         if (ghe == null || ghe.getMaGhe() == null || ghe.getMaGhe().trim().isEmpty()) {
@@ -92,6 +92,10 @@ public class Ghe {
         System.out.println("Đã thêm ghế thành công.");
     }
 
+    public static ArrayList<Ghe> Read() {
+        return new ArrayList<>(danhSachGhe);
+    }
+
     public static void Read(String maGhe) {
         Ghe ghe = getGheByMaGhe(maGhe);
         if (ghe != null) {
@@ -99,10 +103,6 @@ public class Ghe {
         } else {
             System.out.println("Không tìm thấy ghế với mã: " + maGhe);
         }
-    }
-
-    public static ArrayList<Ghe> Read() {
-        return new ArrayList<>(danhSachGhe);
     }
 
     public static void Update(String maGhe, Ghe gheMoi) {

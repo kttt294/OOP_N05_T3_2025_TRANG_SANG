@@ -109,7 +109,7 @@ public class VoucherController {
             if (voucher.getPhanTramGiamGia() <= 0) {
                 throw new IllegalArgumentException("Phần trăm giảm giá phải lớn hơn 0!");
             }
-            if (voucher.getSoLuongConLai() == null || voucher.getSoLuongConLai().trim().isEmpty()) {
+            if (voucher.getSoLuongConLai() == 0) {
                 throw new IllegalArgumentException("Số lượng còn lại không được để trống!");
             }
 
@@ -236,7 +236,7 @@ public class VoucherController {
             LocalDateTime now = LocalDateTime.now();
             if (now.isBefore(v.getNgayBatDau()) || now.isAfter(v.getNgayKetThuc())) return false;
 
-            int sl = Integer.parseInt(v.getSoLuongConLai());
+            int sl = v.getSoLuongConLai();
             if (sl <= 0) return false;
 
             return "HoatDong".equalsIgnoreCase(v.getTrangThai());
@@ -251,9 +251,9 @@ public class VoucherController {
             Voucher v = voucherDB.getVoucherById(maVoucher);
             if (v == null || !kiemTraVoucherHopLe(maVoucher)) return false;
 
-            int sl = Integer.parseInt(v.getSoLuongConLai());
+            int sl = v.getSoLuongConLai();
             sl--;
-            v.setSoLuongConLai(String.valueOf(sl));
+            v.setSoLuongConLai(sl);
             if (sl <= 0) v.setTrangThai("HetHang");
 
             return voucherDB.updateVoucher(maVoucher, v);

@@ -26,7 +26,7 @@ public class testVoucherController {
     public static void testTaoVoucher() {
         System.out.println("=== TEST: TẠO VOUCHER ===");
         Voucher v = new Voucher("VC001", "Giảm 10%", 10, LocalDateTime.now().minusDays(1),
-                LocalDateTime.now().plusDays(10), "10", "HoatDong");
+                LocalDateTime.now().plusDays(10), 10, "HoatDong");
         assert controller.taoVoucher(v) : "Tạo voucher thất bại";
         System.out.println("✓ Tạo voucher OK\n");
     }
@@ -34,7 +34,7 @@ public class testVoucherController {
     public static void testCapNhatVoucher() {
         System.out.println("=== TEST: CẬP NHẬT VOUCHER ===");
         Voucher vMoi = new Voucher("VC001", "Giảm 15%", 15, LocalDateTime.now().minusDays(1),
-                LocalDateTime.now().plusDays(5), "5", "HoatDong");
+                LocalDateTime.now().plusDays(5), 5, "HoatDong");
         assert controller.capNhatVoucher("VC001", vMoi) : "Cập nhật voucher thất bại";
         System.out.println("✓ Cập nhật voucher OK\n");
     }

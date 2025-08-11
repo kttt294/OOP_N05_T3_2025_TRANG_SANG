@@ -37,11 +37,9 @@ public class khachHangAiven {
                 String sdt = reset.getString("sdt");
                 String email = reset.getString("email");
                 String gioiTinh = reset.getString("gioiTinh");
-                String diaChi = reset.getString("diaChi");
                 
                 KhachHang khachHang = new KhachHang(CCCD, ten, tuoi, sdt, email, gioiTinh);
-                khachHang.setDiaChi(diaChi);
-                
+
                 danhSachKhachHang.add(khachHang);
                 System.out.println("CCCD: " + CCCD + " | Tên: " + ten + " | Tuổi: " + tuoi);
             }
@@ -102,12 +100,7 @@ public class khachHangAiven {
                 String sdt = reset.getString("sdt");
                 String email = reset.getString("email");
                 String gioiTinh = reset.getString("gioiTinh");
-                String diaChi = reset.getString("diaChi");
-                String ngaySinh = reset.getString("ngaySinh");
-                
                 khachHang = new KhachHang(CCCD, ten, tuoi, sdt, email, gioiTinh);
-                khachHang.setDiaChi(diaChi);
-                khachHang.setNgaySinh(ngaySinh);
                 
                 System.out.println("Tìm thấy khách hàng: " + ten);
             }
@@ -141,11 +134,7 @@ public class khachHangAiven {
                 String sdt = reset.getString("sdt");
                 String email = reset.getString("email");
                 String gioiTinh = reset.getString("gioiTinh");
-                String diaChi = reset.getString("diaChi");
-
-                
                 KhachHang khachHang = new KhachHang(CCCD, tenResult, tuoi, sdt, email, gioiTinh);
-                khachHang.setDiaChi(diaChi);
 
                 danhSachKhachHang.add(khachHang);
                 System.out.println("Tìm thấy: " + CCCD + " - " + tenResult);
@@ -177,8 +166,6 @@ public class khachHangAiven {
             pstmt.setString(4, khachHang.getSdt());
             pstmt.setString(5, khachHang.getEmail());
             pstmt.setString(6, khachHang.getGioiTinh());
-            pstmt.setString(7, khachHang.getDiaChi());
-            pstmt.setString(9, khachHang.getNgaySinh());
             
             int result = pstmt.executeUpdate();
             System.out.println("Tạo khách hàng thành công: " + result + " dòng được thêm");
@@ -208,8 +195,6 @@ public class khachHangAiven {
             pstmt.setString(3, khachHang.getSdt());
             pstmt.setString(4, khachHang.getEmail());
             pstmt.setString(5, khachHang.getGioiTinh());
-            pstmt.setString(6, khachHang.getDiaChi());
-            pstmt.setString(8, khachHang.getNgaySinh());
             pstmt.setString(10, CCCD);
             
             int result = pstmt.executeUpdate();
@@ -291,14 +276,8 @@ public class khachHangAiven {
                 int tuoi = reset.getInt("tuoi");
                 String sdt = reset.getString("sdt");
                 String email = reset.getString("email");
-                String gioiTinhResult = reset.getString("gioiTinh");
-                String diaChi = reset.getString("diaChi");
-                String ngaySinh = reset.getString("ngaySinh");
-                
-                KhachHang khachHang = new KhachHang(CCCD, ten, tuoi, sdt, email, gioiTinhResult);
-                khachHang.setDiaChi(diaChi);
-                khachHang.setNgaySinh(ngaySinh);
-                
+                String gioiTinhResult = reset.getString("gioiTinh");                
+                KhachHang khachHang = new KhachHang(CCCD, ten, tuoi, sdt, email, gioiTinhResult);               
                 danhSachKhachHang.add(khachHang);
             }
             

@@ -7,25 +7,23 @@ import java.util.ArrayList;
 
 public class HoaDon {
 
-    public enum PhuongThucThanhToan { TIEN_MAT, CHUYEN_KHOAN }
+    public enum phuongThuc { TIEN_MAT, CHUYEN_KHOAN }
 
     private String maHoaDon;
     private DoAn doAn;
     private int tongTien;
     private LocalDateTime thoiGianThanhToan;
-    private PhuongThucThanhToan phuongThucThanhToan;
+    private phuongThuc phuongThuc;
     private String CCCD;
-
-    private static ArrayList<HoaDon> danhSachHoaDon = new ArrayList<>();
 
     public HoaDon() {}
 
-    public HoaDon(String maHoaDon, DoAn doAn, int tongTien, LocalDateTime thoiGianThanhToan, PhuongThucThanhToan phuongThucThanhToan, String CCCD) {
+    public HoaDon(String maHoaDon, DoAn doAn, int tongTien, LocalDateTime thoiGianThanhToan, phuongThuc phuongThuc, String CCCD) {
         setMaHoaDon(maHoaDon);
         setDoAn(doAn);
         setTongTien(tongTien);
         setThoiGianThanhToan(thoiGianThanhToan);
-        setPhuongThucThanhToan(phuongThucThanhToan);
+        setphuongThuc(phuongThuc);
         setCCCD(CCCD);
     }
 
@@ -46,13 +44,15 @@ public class HoaDon {
         this.thoiGianThanhToan = thoiGianThanhToan;
     }
 
-    public PhuongThucThanhToan getPhuongThucThanhToan() { return phuongThucThanhToan; }
-    public void setPhuongThucThanhToan(PhuongThucThanhToan phuongThucThanhToan) {
-        this.phuongThucThanhToan = phuongThucThanhToan;
+    public phuongThuc getphuongThuc() { return phuongThuc; }
+    public void setphuongThuc(phuongThuc pt) {
+        this.phuongThuc = pt;
     }
 
     public String getCCCD() { return CCCD; }
     public void setCCCD(String CCCD) { this.CCCD = CCCD; }
+
+    private static ArrayList<HoaDon> danhSachHoaDon = new ArrayList<>();
 
     // === CRUD ===
     public static void Create(HoaDon hoaDon) {
@@ -136,7 +136,7 @@ public class HoaDon {
         }
         System.out.println("Tổng tiền: " + tongTien + " VNĐ");
         System.out.println("Thời gian thanh toán: " + DateTimeUtils.formatVietDateTime(thoiGianThanhToan));
-        System.out.println("Phương thức thanh toán: " + phuongThucThanhToan);
+        System.out.println("Phương thức thanh toán: " + phuongThuc);
         System.out.println("=========================");
     }
 }

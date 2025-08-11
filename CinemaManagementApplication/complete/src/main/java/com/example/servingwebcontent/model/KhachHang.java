@@ -9,8 +9,6 @@ public class KhachHang {
     private String sdt;
     private String email;
     private String gioiTinh; // Nam, Nu, Khac
-    private String diaChi;
-    private String ngaySinh;
     private ArrayList<Ve> lichSuDatVe;
 
     private static ArrayList<KhachHang> danhSachKhachHang = new ArrayList<>();
@@ -51,12 +49,6 @@ public class KhachHang {
     
     public String getGioiTinh() { return gioiTinh; }
     public void setGioiTinh(String gioiTinh) { this.gioiTinh = gioiTinh; }
-    
-    public String getDiaChi() { return diaChi; }
-    public void setDiaChi(String diaChi) { this.diaChi = diaChi; }
-
-    public String getNgaySinh() { return ngaySinh; }
-    public void setNgaySinh(String ngaySinh) { this.ngaySinh = ngaySinh; }
     
     public ArrayList<Ve> getLichSuDatVe() { return lichSuDatVe; }
     public void setLichSuDatVe(ArrayList<Ve> lichSuDatVe) { this.lichSuDatVe = lichSuDatVe; }
@@ -178,7 +170,6 @@ public class KhachHang {
         System.out.println("SĐT: " + sdt);
         System.out.println("Email: " + email);
         System.out.println("Giới tính: " + gioiTinh);
-        System.out.println("Địa chỉ: " + (diaChi != null ? diaChi : "Chưa cập nhật"));
         System.out.println("Số vé đã đặt: " + (lichSuDatVe != null ? lichSuDatVe.size() : 0));
     }
 

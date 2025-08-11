@@ -12,8 +12,6 @@ public class DanhGia {
     private String noiDung;
     private LocalDateTime thoiGian;
 
-    private static ArrayList<DanhGia> danhSachDanhGia = new ArrayList<>();
-
     public DanhGia() {}
 
     public DanhGia(String maDanhGia, String CCCD, String maPhim, int soSao, String noiDung, LocalDateTime thoiGian) {
@@ -60,6 +58,8 @@ public class DanhGia {
     public void setThoiGian(LocalDateTime thoiGian) {
         this.thoiGian = thoiGian;
     }
+
+    private static ArrayList<DanhGia> danhSachDanhGia = new ArrayList<>();
 
     // === CRUD ===
 
@@ -152,6 +152,16 @@ public class DanhGia {
         return result;
     }
 
+    public static ArrayList<DanhGia> getDanhGiaByCCCD(String CCCD) {
+        ArrayList<DanhGia> ketQua = new ArrayList<>();
+        for (DanhGia dg : danhSachDanhGia) {
+            if (dg.getCCCD().equalsIgnoreCase(CCCD)) {
+                ketQua.add(dg);
+            }
+        }
+        return ketQua;
+    }
+
     public static double tinhDiemTrungBinhPhim(String maPhim) {
         ArrayList<DanhGia> danhGiaPhim = getDanhGiaByMaPhim(maPhim);
         if (danhGiaPhim.isEmpty()) return 0.0;
@@ -161,16 +171,6 @@ public class DanhGia {
             tongDiem += dg.getSoSao();
         }
         return tongDiem / danhGiaPhim.size();
-    }
-
-    public static ArrayList<DanhGia> getDanhGiaByCCCD(String CCCD) {
-        ArrayList<DanhGia> ketQua = new ArrayList<>();
-        for (DanhGia dg : danhSachDanhGia) {
-            if (dg.getCCCD().equalsIgnoreCase(CCCD)) {
-                ketQua.add(dg);
-            }
-        }
-        return ketQua;
     }
 
     public static void thongKeDanhGia() {

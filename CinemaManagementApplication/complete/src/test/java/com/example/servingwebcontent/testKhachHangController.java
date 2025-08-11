@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class testKhachHangController {
 
     private static KhachHangController controller = new KhachHangController();
-
+    
     public static void testTaoKhachHang() {
         System.out.println("=== TEST: TẠO KHÁCH HÀNG ===");
         KhachHang kh = new KhachHang("123456789", "Nguyen Van A", 25, "0123456789", "a@gmail.com", "Nam");

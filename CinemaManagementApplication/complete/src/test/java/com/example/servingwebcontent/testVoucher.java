@@ -24,12 +24,12 @@ public class testVoucher {
         assert v1.getPhanTramGiamGia() == 0;
         assert v1.getNgayBatDau() == null;
         assert v1.getNgayKetThuc() == null;
-        assert v1.getSoLuongConLai() == null;
+        assert v1.getSoLuongConLai() == 0;
         assert v1.getTrangThai() == null;
         System.out.println("✓ Constructor rỗng OK");
 
         LocalDateTime now = LocalDateTime.now();
-        Voucher v2 = new Voucher("VC001", "Giảm giá 20%", 20, now, now.plusDays(5), "10", "Còn hiệu lực");
+        Voucher v2 = new Voucher("VC001", "Giảm giá 20%", 20, now, now.plusDays(5), 10, "Còn hiệu lực");
         assert "VC001".equals(v2.getMaVoucher());
         assert "Giảm giá 20%".equals(v2.getMoTa());
         assert v2.getPhanTramGiamGia() == 20;
@@ -52,7 +52,7 @@ public class testVoucher {
         v.setPhanTramGiamGia(15);
         v.setNgayBatDau(ngayBD);
         v.setNgayKetThuc(ngayKT);
-        v.setSoLuongConLai("20");
+        v.setSoLuongConLai(20);
         v.setTrangThai("Chưa sử dụng");
 
         assert "VC002".equals(v.getMaVoucher());
@@ -70,14 +70,14 @@ public class testVoucher {
         System.out.println("=== TEST CRUD ===");
 
         LocalDateTime now = LocalDateTime.now();
-        Voucher v = new Voucher("VC003", "Giảm 10%", 10, now, now.plusDays(3), "5", "Còn hiệu lực");
+        Voucher v = new Voucher("VC003", "Giảm 10%", 10, now, now.plusDays(3), 5, "Còn hiệu lực");
         Voucher.Create(v);
 
         ArrayList<Voucher> list = Voucher.Read();
         assert list.stream().anyMatch(x -> "VC003".equals(x.getMaVoucher()));
         System.out.println("✓ Create & Read OK");
 
-        Voucher vMoi = new Voucher("DUMMY", "Update mô tả", 25, now.plusDays(1), now.plusDays(6), "3", "Hết hạn");
+        Voucher vMoi = new Voucher("DUMMY", "Update mô tả", 25, now.plusDays(1), now.plusDays(6), 3, "Hết hạn");
         Voucher.Update("VC003", vMoi);
         Voucher updated = Voucher.getVoucherById("VC003");
 
@@ -94,7 +94,7 @@ public class testVoucher {
     public static void testGetVoucherById() {
         System.out.println("=== TEST GET VOUCHER BY ID ===");
         LocalDateTime now = LocalDateTime.now();
-        Voucher v = new Voucher("VC004", "Voucher Tết", 30, now, now.plusDays(7), "15", "Còn hiệu lực");
+        Voucher v = new Voucher("VC004", "Voucher Tết", 30, now, now.plusDays(7), 15, "Còn hiệu lực");
         Voucher.Create(v);
 
         Voucher found = Voucher.getVoucherById("VC004");
@@ -106,7 +106,7 @@ public class testVoucher {
     public static void testGetVoucherIndexById() {
         System.out.println("=== TEST GET VOUCHER INDEX BY ID ===");
         LocalDateTime now = LocalDateTime.now();
-        Voucher v = new Voucher("VC005", "Test index", 5, now, now.plusDays(2), "2", "Còn");
+        Voucher v = new Voucher("VC005", "Test index", 5, now, now.plusDays(2), 2, "Còn");
         Voucher.Create(v);
 
         int index = getVoucherIndexById("VC005");
@@ -118,7 +118,7 @@ public class testVoucher {
     public static void testHienThiThongTin() {
         System.out.println("=== TEST HIỂN THỊ THÔNG TIN ===");
         LocalDateTime now = LocalDateTime.now();
-        Voucher v = new Voucher("VC006", "Thông tin mẫu", 12, now, now.plusDays(1), "1", "Còn");
+        Voucher v = new Voucher("VC006", "Thông tin mẫu", 12, now, now.plusDays(1), 1, "Còn");
         v.hienThiThongTin();
         System.out.println("✓ hienThiThongTin OK");
     }

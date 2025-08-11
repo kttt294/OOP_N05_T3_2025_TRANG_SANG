@@ -141,8 +141,8 @@ public class testKhachHang {
         KhachHang.Create(kh);
 
         // Tạo hóa đơn cho khách hàng
-        HoaDon.Read().add(new HoaDon("HD001", new DoAn("DA001", "Bắp", 30000, 10), 30000, LocalDateTime.now(), HoaDon.PhuongThucThanhToan.TIEN_MAT, "K006"));
-        HoaDon.Read().add(new HoaDon("HD002", new DoAn("DA002", "Nước", 20000, 5), 20000, LocalDateTime.now(), HoaDon.PhuongThucThanhToan.CHUYEN_KHOAN, "K006"));
+        HoaDon.Read().add(new HoaDon("HD001", new DoAn("DA001", "Bắp", 30000, 10), 30000, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "K006"));
+        HoaDon.Read().add(new HoaDon("HD002", new DoAn("DA002", "Nước", 20000, 5), 20000, LocalDateTime.now(), HoaDon.phuongThuc.CHUYEN_KHOAN, "K006"));
 
         double tong = kh.tinhTongTienKhachHang();
         assert tong == 50000;

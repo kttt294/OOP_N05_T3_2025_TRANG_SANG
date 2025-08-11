@@ -5,19 +5,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Voucher {
+
     private String maVoucher;
     private String moTa;
     private float phanTramGiamGia;
     private LocalDateTime ngayBatDau;
     private LocalDateTime ngayKetThuc;
-    private String soLuongConLai;
+    private int soLuongConLai;
     private String trangThai;
-
-    private static ArrayList<Voucher> danhSachVoucher = new ArrayList<>();
 
     public Voucher() {}
 
-    public Voucher(String maVoucher, String moTa, float phanTramGiamGia, LocalDateTime ngayBatDau, LocalDateTime ngayKetThuc, String soLuongConLai, String trangThai) {
+    public Voucher(String maVoucher, String moTa, float phanTramGiamGia, LocalDateTime ngayBatDau, LocalDateTime ngayKetThuc, int soLuongConLai, String trangThai) {
         this.maVoucher = maVoucher;
         this.moTa = moTa;
         setPhanTramGiamGia(phanTramGiamGia);
@@ -68,11 +67,11 @@ public class Voucher {
         this.ngayKetThuc = ngayKetThuc;
     }
 
-    public String getSoLuongConLai() {
+    public int getSoLuongConLai() {
         return soLuongConLai;
     }
 
-    public void setSoLuongConLai(String soLuongConLai) {
+    public void setSoLuongConLai(int soLuongConLai) {
         this.soLuongConLai = soLuongConLai;
     }
 
@@ -84,12 +83,13 @@ public class Voucher {
         this.trangThai = trangThai;
     }
 
+    private static ArrayList<Voucher> danhSachVoucher = new ArrayList<>();
+    
     public static void Create(Voucher voucher) {
         if (voucher.getMaVoucher() == null || voucher.getMaVoucher().trim().isEmpty() ||
             voucher.getMoTa() == null || voucher.getMoTa().trim().isEmpty() ||
             voucher.getNgayBatDau() == null || voucher.getNgayKetThuc() == null ||
-            voucher.getSoLuongConLai() == null || voucher.getSoLuongConLai().trim().isEmpty() ||
-            voucher.getTrangThai() == null || voucher.getTrangThai().trim().isEmpty()) {
+            voucher.getSoLuongConLai() == 0 || voucher.getTrangThai() == null || voucher.getTrangThai().trim().isEmpty()) {
             System.out.println("Lỗi: Thông tin voucher không được để trống.");
             return;
         }
@@ -127,8 +127,7 @@ public class Voucher {
         if (voucher.getMaVoucher() == null || voucher.getMaVoucher().trim().isEmpty() ||
             voucher.getMoTa() == null || voucher.getMoTa().trim().isEmpty() ||
             voucher.getNgayBatDau() == null || voucher.getNgayKetThuc() == null ||
-            voucher.getSoLuongConLai() == null || voucher.getSoLuongConLai().trim().isEmpty() ||
-            voucher.getTrangThai() == null || voucher.getTrangThai().trim().isEmpty()) {
+            voucher.getSoLuongConLai() == 0 || voucher.getTrangThai() == null || voucher.getTrangThai().trim().isEmpty()) {
             System.out.println("Lỗi: Thông tin voucher không được để trống.");
             return;
         }

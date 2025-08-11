@@ -13,8 +13,6 @@ public class Ve {
     private int giaVe;
     private TrangThaiVe trangThai;
 
-    private static ArrayList<Ve> danhSachVe = new ArrayList<>();
-
     public Ve() {}
 
     public Ve(String maVe, String CCCD, String maSuatChieu, String maGhe, int giaVe) {
@@ -48,6 +46,9 @@ public class Ve {
     public void setTrangThai(TrangThaiVe trangThai) { this.trangThai = trangThai; }
 
     public static ArrayList<Ve> getDanhSachVe() { return danhSachVe; }
+
+    private static ArrayList<Ve> danhSachVe = new ArrayList<>();
+
     // === CRUD ===
     public static void Create(Ve ve) {
         if (ve.getMaVe() == null || ve.getMaVe().trim().isEmpty()) {
