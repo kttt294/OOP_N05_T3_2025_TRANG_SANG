@@ -8,15 +8,15 @@ import java.util.List;
 
 public class HoaDon {
 
-    public enum phuongThuc { TIEN_MAT, CHUYEN_KHOAN }
+    public enum PhuongThuc { TIEN_MAT, CHUYEN_KHOAN }
 
     private String maHoaDon;
     private List<Ve> danhSachVe; // Danh sách vé
-    private List<Voucher> danhSachVoucher; // Danh sách voucher
     private List<DoAn> danhSachDoAn; // Thay đổi từ doAn thành danhSachDoAn
+    private List<Voucher> danhSachVoucher; // Danh sách voucher
     private int tongTien;
     private LocalDateTime thoiGianThanhToan;
-    private phuongThuc phuongThuc;
+    private PhuongThuc phuongThuc;
     private String CCCD;
 
     public HoaDon() {
@@ -25,24 +25,22 @@ public class HoaDon {
         this.danhSachDoAn = new ArrayList<>();
     }
 
-    public HoaDon(String maHoaDon, List<Ve> danhSachVe, List<Voucher> danhSachVoucher, List<DoAn> danhSachDoAn, int tongTien, LocalDateTime thoiGianThanhToan, phuongThuc phuongThuc, String CCCD) {
+    public HoaDon(String maHoaDon, List<Ve> danhSachVe, List<Voucher> danhSachVoucher, List<DoAn> danhSachDoAn, int tongTien, LocalDateTime thoiGianThanhToan, PhuongThuc phuongThuc, String CCCD) {
         setMaHoaDon(maHoaDon);
         setDanhSachVe(danhSachVe);
         setDanhSachVoucher(danhSachVoucher);
         setDanhSachDoAn(danhSachDoAn);
         setTongTien(tongTien);
         setThoiGianThanhToan(thoiGianThanhToan);
-        setphuongThuc(phuongThuc);
+        setPhuongThuc(phuongThuc);
         setCCCD(CCCD);
     }
 
-    // Constructor với vé và voucher
-    public HoaDon(String maHoaDon, List<Ve> danhSachVe, List<DoAn> danhSachDoAn, int tongTien, LocalDateTime thoiGianThanhToan, phuongThuc phuongThuc, String CCCD) {
+    public HoaDon(String maHoaDon, List<Ve> danhSachVe, List<DoAn> danhSachDoAn, int tongTien, LocalDateTime thoiGianThanhToan, PhuongThuc phuongThuc, String CCCD) {
         this(maHoaDon, danhSachVe, new ArrayList<>(), danhSachDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
     }
 
-    // Constructor cũ để tương thích ngược
-    public HoaDon(String maHoaDon, DoAn doAn, int tongTien, LocalDateTime thoiGianThanhToan, phuongThuc phuongThuc, String CCCD) {
+    public HoaDon(String maHoaDon, DoAn doAn, int tongTien, LocalDateTime thoiGianThanhToan, PhuongThuc phuongThuc, String CCCD) {
         this.maHoaDon = maHoaDon;
         this.danhSachVe = new ArrayList<>();
         this.danhSachVoucher = new ArrayList<>();
@@ -64,17 +62,16 @@ public class HoaDon {
         this.danhSachVe = danhSachVe != null ? danhSachVe : new ArrayList<>(); 
     }
 
-    public List<Voucher> getDanhSachVoucher() { return danhSachVoucher; }
-    public void setDanhSachVoucher(List<Voucher> danhSachVoucher) { 
-        this.danhSachVoucher = danhSachVoucher != null ? danhSachVoucher : new ArrayList<>(); 
-    }
-
     public List<DoAn> getDanhSachDoAn() { return danhSachDoAn; }
     public void setDanhSachDoAn(List<DoAn> danhSachDoAn) { 
         this.danhSachDoAn = danhSachDoAn != null ? danhSachDoAn : new ArrayList<>(); 
     }
 
-    // Thêm phương thức để thêm vé vào hóa đơn
+    public List<Voucher> getDanhSachVoucher() { return danhSachVoucher; }
+    public void setDanhSachVoucher(List<Voucher> danhSachVoucher) { 
+        this.danhSachVoucher = danhSachVoucher != null ? danhSachVoucher : new ArrayList<>(); 
+    }
+
     public void themVe(Ve ve) {
         if (ve != null && !this.danhSachVe.contains(ve)) {
             this.danhSachVe.add(ve);
@@ -83,7 +80,6 @@ public class HoaDon {
         }
     }
 
-    // Thêm phương thức để xóa vé khỏi hóa đơn
     public void xoaVe(Ve ve) {
         if (ve != null && this.danhSachVe.remove(ve)) {
             // Cập nhật tổng tiền
@@ -91,13 +87,11 @@ public class HoaDon {
         }
     }
 
-    // Thêm phương thức để xóa vé theo mã vé
     public void xoaVeTheoMa(String maVe) {
         this.danhSachVe.removeIf(ve -> ve.getMaVe().equals(maVe));
         tinhTongTien();
     }
 
-    // Thêm phương thức để thêm voucher vào hóa đơn
     public void themVoucher(Voucher voucher) {
         if (voucher != null && !this.danhSachVoucher.contains(voucher)) {
             this.danhSachVoucher.add(voucher);
@@ -106,7 +100,6 @@ public class HoaDon {
         }
     }
 
-    // Thêm phương thức để xóa voucher khỏi hóa đơn
     public void xoaVoucher(Voucher voucher) {
         if (voucher != null && this.danhSachVoucher.remove(voucher)) {
             // Cập nhật tổng tiền
@@ -114,13 +107,11 @@ public class HoaDon {
         }
     }
 
-    // Thêm phương thức để xóa voucher theo mã voucher
     public void xoaVoucherTheoMa(String maVoucher) {
         this.danhSachVoucher.removeIf(voucher -> voucher.getMaVoucher().equals(maVoucher));
         tinhTongTien();
     }
 
-    // Thêm phương thức để thêm đồ ăn vào hóa đơn
     public void themDoAn(DoAn doAn) {
         if (doAn != null && !this.danhSachDoAn.contains(doAn)) {
             this.danhSachDoAn.add(doAn);
@@ -129,7 +120,6 @@ public class HoaDon {
         }
     }
 
-    // Thêm phương thức để xóa đồ ăn khỏi hóa đơn
     public void xoaDoAn(DoAn doAn) {
         if (doAn != null && this.danhSachDoAn.remove(doAn)) {
             // Cập nhật tổng tiền
@@ -137,13 +127,11 @@ public class HoaDon {
         }
     }
 
-    // Thêm phương thức để xóa đồ ăn theo mã đồ ăn
     public void xoaDoAnTheoMa(String maDoAn) {
         this.danhSachDoAn.removeIf(doAn -> doAn.getMaDoAn().equals(maDoAn));
         tinhTongTien();
     }
 
-    // Phương thức tính tổng tiền tự động (có tính cả voucher)
     public void tinhTongTien() {
         int tienVe = this.danhSachVe.stream().mapToInt(Ve::getGiaVe).sum();
         int tienDoAn = this.danhSachDoAn.stream().mapToInt(DoAn::getGia).sum();
@@ -162,12 +150,10 @@ public class HoaDon {
         this.tongTien = Math.max(0, tongTienTruocGiamGia - tienGiamGia);
     }
 
-    // Giữ lại getter cũ để tương thích ngược
     public DoAn getDoAn() { 
         return this.danhSachDoAn.isEmpty() ? null : this.danhSachDoAn.get(0); 
     }
     
-    // Giữ lại setter cũ để tương thích ngược
     public void setDoAn(DoAn doAn) { 
         this.danhSachDoAn.clear();
         if (doAn != null) {
@@ -187,8 +173,8 @@ public class HoaDon {
         this.thoiGianThanhToan = thoiGianThanhToan;
     }
 
-    public phuongThuc getphuongThuc() { return phuongThuc; }
-    public void setphuongThuc(phuongThuc pt) {
+    public PhuongThuc getPhuongThuc() { return phuongThuc; }
+    public void setPhuongThuc(PhuongThuc pt) {
         this.phuongThuc = pt;
     }
 

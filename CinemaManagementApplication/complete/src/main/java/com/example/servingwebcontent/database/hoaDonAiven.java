@@ -36,7 +36,7 @@ public class hoaDonAiven {
                 String maDoAn = reset.getString("maDoAn");
                 int tongTien = reset.getInt("tongTien");
                 String thoiGianThanhToanStr = reset.getString("thoiGianThanhToan");
-                String phuongThucStr = reset.getString("phuongThuc");
+                String PhuongThucStr = reset.getString("PhuongThuc");
                 String CCCD = reset.getString("CCCD");
                 
                 // Parse thời gian thanh toán
@@ -50,9 +50,9 @@ public class hoaDonAiven {
                 }
                 
                 // Parse phương thức thanh toán
-                HoaDon.phuongThuc phuongThuc = HoaDon.phuongThuc.TIEN_MAT;
-                if (phuongThucStr != null && phuongThucStr.equals("CHUYEN_KHOAN")) {
-                    phuongThuc = HoaDon.phuongThuc.CHUYEN_KHOAN;
+                HoaDon.PhuongThuc PhuongThuc = HoaDon.PhuongThuc.TIEN_MAT;
+                if (PhuongThucStr != null && PhuongThucStr.equals("CHUYEN_KHOAN")) {
+                    PhuongThuc = HoaDon.PhuongThuc.CHUYEN_KHOAN;
                 }
                 
                 // Tạo đối tượng DoAn (có thể null nếu không có đồ ăn)
@@ -68,7 +68,7 @@ public class hoaDonAiven {
                 // Lấy danh sách vé cho hóa đơn này
                 List<Ve> danhSachVe = getVeByHoaDon(conn, maHoaDon);
                 
-                HoaDon hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
+                HoaDon hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, PhuongThuc, CCCD);
                 danhSachHoaDon.add(hoaDon);
                 System.out.println("Mã HD: " + maHoaDon + " | CCCD: " + CCCD + " | Tổng tiền: " + tongTien + " | Số vé: " + danhSachVe.size());
             }
@@ -110,7 +110,7 @@ public class hoaDonAiven {
                 "maDoAn VARCHAR(20)," +
                 "tongTien INT NOT NULL," +
                 "thoiGianThanhToan DATETIME," +
-                "phuongThuc VARCHAR(20)," +
+                "PhuongThuc VARCHAR(20)," +
                 "CCCD VARCHAR(20)," +
                 "FOREIGN KEY (CCCD) REFERENCES khachhang(CCCD)" +
                 ")";
@@ -157,7 +157,7 @@ public class hoaDonAiven {
                 String maDoAn = reset.getString("maDoAn");
                 int tongTien = reset.getInt("tongTien");
                 String thoiGianThanhToanStr = reset.getString("thoiGianThanhToan");
-                String phuongThucStr = reset.getString("phuongThuc");
+                String PhuongThucStr = reset.getString("PhuongThuc");
                 String CCCD = reset.getString("CCCD");
                 
                 // Parse thời gian thanh toán
@@ -171,9 +171,9 @@ public class hoaDonAiven {
                 }
                 
                 // Parse phương thức thanh toán
-                HoaDon.phuongThuc phuongThuc = HoaDon.phuongThuc.TIEN_MAT;
-                if (phuongThucStr != null && phuongThucStr.equals("CHUYEN_KHOAN")) {
-                    phuongThuc = HoaDon.phuongThuc.CHUYEN_KHOAN;
+                HoaDon.PhuongThuc PhuongThuc = HoaDon.PhuongThuc.TIEN_MAT;
+                if (PhuongThucStr != null && PhuongThucStr.equals("CHUYEN_KHOAN")) {
+                    PhuongThuc = HoaDon.PhuongThuc.CHUYEN_KHOAN;
                 }
                 
                 // Tạo đối tượng DoAn
@@ -187,7 +187,7 @@ public class hoaDonAiven {
                 // Lấy danh sách vé cho hóa đơn này
                 List<Ve> danhSachVe = getVeByHoaDon(conn, maHoaDon);
                 
-                hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
+                hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, PhuongThuc, CCCD);
             }
 
             reset.close();
@@ -216,7 +216,7 @@ public class hoaDonAiven {
                 String maDoAn = reset.getString("maDoAn");
                 int tongTien = reset.getInt("tongTien");
                 String thoiGianThanhToanStr = reset.getString("thoiGianThanhToan");
-                String phuongThucStr = reset.getString("phuongThuc");
+                String PhuongThucStr = reset.getString("PhuongThuc");
                 
                 // Parse thời gian thanh toán
                 LocalDateTime thoiGianThanhToan = null;
@@ -229,9 +229,9 @@ public class hoaDonAiven {
                 }
                 
                 // Parse phương thức thanh toán
-                HoaDon.phuongThuc phuongThuc = HoaDon.phuongThuc.TIEN_MAT;
-                if (phuongThucStr != null && phuongThucStr.equals("CHUYEN_KHOAN")) {
-                    phuongThuc = HoaDon.phuongThuc.CHUYEN_KHOAN;
+                HoaDon.PhuongThuc PhuongThuc = HoaDon.PhuongThuc.TIEN_MAT;
+                if (PhuongThucStr != null && PhuongThucStr.equals("CHUYEN_KHOAN")) {
+                    PhuongThuc = HoaDon.PhuongThuc.CHUYEN_KHOAN;
                 }
                 
                 // Tạo đối tượng DoAn
@@ -245,7 +245,7 @@ public class hoaDonAiven {
                 // Lấy danh sách vé cho hóa đơn này
                 List<Ve> danhSachVe = getVeByHoaDon(conn, maHoaDon);
                 
-                HoaDon hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
+                HoaDon hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, PhuongThuc, CCCD);
                 danhSachHoaDon.add(hoaDon);
             }
 
@@ -266,13 +266,13 @@ public class hoaDonAiven {
             conn.setAutoCommit(false); // Bắt đầu transaction
             
             // 1. Tạo hóa đơn
-            String sql = "INSERT INTO hoadon (maHoaDon, maDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO hoadon (maHoaDon, maDoAn, tongTien, thoiGianThanhToan, PhuongThuc, CCCD) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, hoaDon.getMaHoaDon());
             pstmt.setString(2, hoaDon.getDoAn() != null ? hoaDon.getDoAn().getMaDoAn() : null);
             pstmt.setInt(3, hoaDon.getTongTien());
             pstmt.setString(4, hoaDon.getThoiGianThanhToan() != null ? hoaDon.getThoiGianThanhToan().toString() : null);
-            pstmt.setString(5, hoaDon.getphuongThuc().toString());
+            pstmt.setString(5, hoaDon.getPhuongThuc().toString());
             pstmt.setString(6, hoaDon.getCCCD());
             
             int result = pstmt.executeUpdate();
@@ -330,12 +330,12 @@ public class hoaDonAiven {
         try {
             conn = mydb.getOnlyConn();
             
-            String sql = "UPDATE hoadon SET maDoAn = ?, tongTien = ?, thoiGianThanhToan = ?, phuongThuc = ?, CCCD = ? WHERE maHoaDon = ?";
+            String sql = "UPDATE hoadon SET maDoAn = ?, tongTien = ?, thoiGianThanhToan = ?, PhuongThuc = ?, CCCD = ? WHERE maHoaDon = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, hoaDon.getDoAn() != null ? hoaDon.getDoAn().getMaDoAn() : null);
             pstmt.setInt(2, hoaDon.getTongTien());
             pstmt.setString(3, hoaDon.getThoiGianThanhToan() != null ? hoaDon.getThoiGianThanhToan().toString() : null);
-            pstmt.setString(4, hoaDon.getphuongThuc().toString());
+            pstmt.setString(4, hoaDon.getPhuongThuc().toString());
             pstmt.setString(5, hoaDon.getCCCD());
             pstmt.setString(6, maHoaDon);
             
@@ -425,7 +425,7 @@ public class hoaDonAiven {
                 String maDoAn = reset.getString("maDoAn");
                 int tongTien = reset.getInt("tongTien");
                 String thoiGianThanhToanStr = reset.getString("thoiGianThanhToan");
-                String phuongThucStr = reset.getString("phuongThuc");
+                String PhuongThucStr = reset.getString("PhuongThuc");
                 String CCCD = reset.getString("CCCD");
                 
                 // Parse thời gian thanh toán
@@ -439,9 +439,9 @@ public class hoaDonAiven {
                 }
                 
                 // Parse phương thức thanh toán
-                HoaDon.phuongThuc phuongThuc = HoaDon.phuongThuc.TIEN_MAT;
-                if (phuongThucStr != null && phuongThucStr.equals("CHUYEN_KHOAN")) {
-                    phuongThuc = HoaDon.phuongThuc.CHUYEN_KHOAN;
+                HoaDon.PhuongThuc PhuongThuc = HoaDon.PhuongThuc.TIEN_MAT;
+                if (PhuongThucStr != null && PhuongThucStr.equals("CHUYEN_KHOAN")) {
+                    PhuongThuc = HoaDon.PhuongThuc.CHUYEN_KHOAN;
                 }
                 
                 // Tạo đối tượng DoAn
@@ -455,7 +455,7 @@ public class hoaDonAiven {
                 // Lấy danh sách vé cho hóa đơn này
                 List<Ve> danhSachVe = getVeByHoaDon(conn, maHoaDon);
                 
-                HoaDon hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
+                HoaDon hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, PhuongThuc, CCCD);
                 danhSachHoaDon.add(hoaDon);
             }
 

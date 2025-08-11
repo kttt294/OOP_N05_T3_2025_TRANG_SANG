@@ -37,8 +37,8 @@ public class testHoaDonController {
         // Test hiển thị danh sách hóa đơn
         try {
             // Tạo một số hóa đơn test thông qua controller
-            HoaDon hoaDon1 = new HoaDon("HD_TEST1", new ArrayList<>(), new ArrayList<>(), 100000, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "111111111");
-            HoaDon hoaDon2 = new HoaDon("HD_TEST2", new ArrayList<>(), new ArrayList<>(), 150000, LocalDateTime.now(), HoaDon.phuongThuc.CHUYEN_KHOAN, "222222222");
+            HoaDon hoaDon1 = new HoaDon("HD_TEST1", new ArrayList<>(), new ArrayList<>(), 100000, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "111111111");
+            HoaDon hoaDon2 = new HoaDon("HD_TEST2", new ArrayList<>(), new ArrayList<>(), 150000, LocalDateTime.now(), HoaDon.PhuongThuc.CHUYEN_KHOAN, "222222222");
             
             // Sử dụng controller để tạo hóa đơn
             assert controller.taoHoaDon(hoaDon1);
@@ -69,7 +69,7 @@ public class testHoaDonController {
             hoaDonMoi.setMaHoaDon("HD_FORM_TEST");
             hoaDonMoi.setCCCD("333333333");
             hoaDonMoi.setThoiGianThanhToan(LocalDateTime.now());
-            hoaDonMoi.setphuongThuc(HoaDon.phuongThuc.TIEN_MAT);
+            hoaDonMoi.setPhuongThuc(HoaDon.PhuongThuc.TIEN_MAT);
             
             // Kiểm tra form có thể tạo hóa đơn thông qua controller
             assert controller.taoHoaDon(hoaDonMoi);
@@ -78,12 +78,12 @@ public class testHoaDonController {
             assert hoaDonMoi.getMaHoaDon() != null;
             assert hoaDonMoi.getCCCD() != null;
             assert hoaDonMoi.getThoiGianThanhToan() != null;
-            assert hoaDonMoi.getphuongThuc() != null;
+            assert hoaDonMoi.getPhuongThuc() != null;
             
             System.out.println("✓ Hiển thị form tạo hóa đơn OK");
             System.out.println("✓ Mã hóa đơn: " + hoaDonMoi.getMaHoaDon());
             System.out.println("✓ CCCD: " + hoaDonMoi.getCCCD());
-            System.out.println("✓ Phương thức: " + hoaDonMoi.getphuongThuc());
+            System.out.println("✓ Phương thức: " + hoaDonMoi.getPhuongThuc());
             
             // Dọn dẹp test data
             assert controller.xoaHoaDon("HD_FORM_TEST");
@@ -102,7 +102,7 @@ public class testHoaDonController {
         hoaDon.setMaHoaDon("HD001");
         hoaDon.setCCCD("123456789");
         hoaDon.setThoiGianThanhToan(LocalDateTime.now());
-        hoaDon.setphuongThuc(HoaDon.phuongThuc.TIEN_MAT);
+        hoaDon.setPhuongThuc(HoaDon.PhuongThuc.TIEN_MAT);
         
         // Thêm vé
         List<Ve> danhSachVe = new ArrayList<>();
@@ -133,17 +133,17 @@ public class testHoaDonController {
         // Test hiển thị form sửa hóa đơn
         try {
             // Tạo hóa đơn để sửa thông qua controller
-            HoaDon hoaDonSua = new HoaDon("HD_EDIT_TEST", new ArrayList<>(), new ArrayList<>(), 200000, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "444444444");
+            HoaDon hoaDonSua = new HoaDon("HD_EDIT_TEST", new ArrayList<>(), new ArrayList<>(), 200000, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "444444444");
             assert controller.taoHoaDon(hoaDonSua);
             
             // Kiểm tra hóa đơn có thể sửa thông qua controller
-            HoaDon hoaDonMoi = new HoaDon("HD_EDIT_TEST", new ArrayList<>(), new ArrayList<>(), 250000, LocalDateTime.now(), HoaDon.phuongThuc.CHUYEN_KHOAN, "444444444");
+            HoaDon hoaDonMoi = new HoaDon("HD_EDIT_TEST", new ArrayList<>(), new ArrayList<>(), 250000, LocalDateTime.now(), HoaDon.PhuongThuc.CHUYEN_KHOAN, "444444444");
             assert controller.capNhatHoaDon("HD_EDIT_TEST", hoaDonMoi);
             
             System.out.println("✓ Hiển thị form sửa hóa đơn OK");
             System.out.println("✓ Hóa đơn cần sửa: " + hoaDonMoi.getMaHoaDon());
             System.out.println("✓ Tổng tiền mới: " + hoaDonMoi.getTongTien() + " VNĐ");
-            System.out.println("✓ Phương thức mới: " + hoaDonMoi.getphuongThuc());
+            System.out.println("✓ Phương thức mới: " + hoaDonMoi.getPhuongThuc());
             
             // Dọn dẹp test data
             assert controller.xoaHoaDon("HD_EDIT_TEST");
@@ -158,10 +158,10 @@ public class testHoaDonController {
         System.out.println("=== TEST capNhatHoaDon (POST) ===");
         
         // Tạo hóa đơn để cập nhật
-        HoaDon hoaDonCu = new HoaDon("HD002", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "987654321");
+        HoaDon hoaDonCu = new HoaDon("HD002", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "987654321");
         
         // Cập nhật hóa đơn
-        HoaDon hoaDonMoi = new HoaDon("HD002", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.phuongThuc.CHUYEN_KHOAN, "987654321");
+        HoaDon hoaDonMoi = new HoaDon("HD002", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.PhuongThuc.CHUYEN_KHOAN, "987654321");
         hoaDonMoi.setTongTien(200000);
         
         // Thêm vé mới
@@ -178,7 +178,7 @@ public class testHoaDonController {
         // Test cập nhật
         assert controller.capNhatHoaDon("HD002", hoaDonMoi);
         System.out.println("✓ Cập nhật hóa đơn OK");
-        System.out.println("✓ Phương thức thanh toán: " + hoaDonMoi.getphuongThuc());
+        System.out.println("✓ Phương thức thanh toán: " + hoaDonMoi.getPhuongThuc());
         System.out.println("✓ Số vé sau cập nhật: " + hoaDonMoi.getDanhSachVe().size());
         System.out.println("✓ Số đồ ăn sau cập nhật: " + hoaDonMoi.getDanhSachDoAn().size());
         System.out.println("✓ Tổng tiền sau cập nhật: " + hoaDonMoi.getTongTien() + " VNĐ");
@@ -188,7 +188,7 @@ public class testHoaDonController {
         System.out.println("=== TEST xoaHoaDon (POST) ===");
         
         // Tạo hóa đơn để xóa
-        HoaDon hoaDonXoa = new HoaDon("HD003", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "111222333");
+        HoaDon hoaDonXoa = new HoaDon("HD003", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "111222333");
         
         // Test xóa hóa đơn
         assert controller.xoaHoaDon("HD003");
@@ -201,7 +201,7 @@ public class testHoaDonController {
         // Test tìm kiếm hóa đơn
         try {
             // Tạo hóa đơn để tìm kiếm thông qua controller
-            HoaDon hoaDonSearch = new HoaDon("HD_SEARCH_TEST", new ArrayList<>(), new ArrayList<>(), 250000, LocalDateTime.now(), HoaDon.phuongThuc.CHUYEN_KHOAN, "555555555");
+            HoaDon hoaDonSearch = new HoaDon("HD_SEARCH_TEST", new ArrayList<>(), new ArrayList<>(), 250000, LocalDateTime.now(), HoaDon.PhuongThuc.CHUYEN_KHOAN, "555555555");
             assert controller.taoHoaDon(hoaDonSearch);
             
             // Test tìm kiếm theo CCCD thông qua controller
@@ -235,9 +235,9 @@ public class testHoaDonController {
         // Test hiển thị thống kê hóa đơn
         try {
             // Tạo một số hóa đơn để thống kê thông qua controller
-            HoaDon hoaDon1 = new HoaDon("HD_STAT1", new ArrayList<>(), new ArrayList<>(), 100000, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "666666666");
-            HoaDon hoaDon2 = new HoaDon("HD_STAT2", new ArrayList<>(), new ArrayList<>(), 150000, LocalDateTime.now(), HoaDon.phuongThuc.CHUYEN_KHOAN, "777777777");
-            HoaDon hoaDon3 = new HoaDon("HD_STAT3", new ArrayList<>(), new ArrayList<>(), 200000, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "888888888");
+            HoaDon hoaDon1 = new HoaDon("HD_STAT1", new ArrayList<>(), new ArrayList<>(), 100000, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "666666666");
+            HoaDon hoaDon2 = new HoaDon("HD_STAT2", new ArrayList<>(), new ArrayList<>(), 150000, LocalDateTime.now(), HoaDon.PhuongThuc.CHUYEN_KHOAN, "777777777");
+            HoaDon hoaDon3 = new HoaDon("HD_STAT3", new ArrayList<>(), new ArrayList<>(), 200000, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "888888888");
             
             assert controller.taoHoaDon(hoaDon1);
             assert controller.taoHoaDon(hoaDon2);
@@ -268,7 +268,7 @@ public class testHoaDonController {
         hoaDon.setMaHoaDon("HD004");
         hoaDon.setCCCD("444555666");
         hoaDon.setThoiGianThanhToan(LocalDateTime.now());
-        hoaDon.setphuongThuc(HoaDon.phuongThuc.TIEN_MAT);
+        hoaDon.setPhuongThuc(HoaDon.PhuongThuc.TIEN_MAT);
         
         // Thêm vé
         hoaDon.themVe(new Ve("VE004", "444555666", "SC003", "C1", 70000));
@@ -284,10 +284,10 @@ public class testHoaDonController {
         System.out.println("=== TEST capNhatHoaDon (method) ===");
         
         // Tạo hóa đơn để cập nhật
-        HoaDon hoaDonCu = new HoaDon("HD005", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "777888999");
+        HoaDon hoaDonCu = new HoaDon("HD005", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "777888999");
         
         // Cập nhật hóa đơn
-        HoaDon hoaDonMoi = new HoaDon("HD005", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.phuongThuc.CHUYEN_KHOAN, "777888999");
+        HoaDon hoaDonMoi = new HoaDon("HD005", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.PhuongThuc.CHUYEN_KHOAN, "777888999");
         hoaDonMoi.setTongTien(300000);
         
         // Test cập nhật
@@ -316,8 +316,8 @@ public class testHoaDonController {
         System.out.println("=== TEST timHoaDonTheoCCCD ===");
         
         // Tạo một số hóa đơn để test
-        HoaDon hoaDon1 = new HoaDon("HD006", new ArrayList<>(), new ArrayList<>(), 100000, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "123123123");
-        HoaDon hoaDon2 = new HoaDon("HD007", new ArrayList<>(), new ArrayList<>(), 150000, LocalDateTime.now(), HoaDon.phuongThuc.CHUYEN_KHOAN, "123123123");
+        HoaDon hoaDon1 = new HoaDon("HD006", new ArrayList<>(), new ArrayList<>(), 100000, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "123123123");
+        HoaDon hoaDon2 = new HoaDon("HD007", new ArrayList<>(), new ArrayList<>(), 150000, LocalDateTime.now(), HoaDon.PhuongThuc.CHUYEN_KHOAN, "123123123");
         
         // Test tìm hóa đơn theo CCCD
         List<HoaDon> ketQua = controller.timHoaDonTheoCCCD("123123123");
@@ -349,7 +349,7 @@ public class testHoaDonController {
         hoaDonHopLe.setMaHoaDon("HD008");
         hoaDonHopLe.setCCCD("999888777");
         hoaDonHopLe.setThoiGianThanhToan(LocalDateTime.now());
-        hoaDonHopLe.setphuongThuc(HoaDon.phuongThuc.TIEN_MAT);
+        hoaDonHopLe.setPhuongThuc(HoaDon.PhuongThuc.TIEN_MAT);
         hoaDonHopLe.setTongTien(50000);
         
         // Test hóa đơn không hợp lệ (thiếu thông tin)

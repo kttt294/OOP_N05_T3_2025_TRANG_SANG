@@ -37,7 +37,7 @@ public class testHoaDon {
         danhSachDoAn.add(doAn);
         
         LocalDateTime now = LocalDateTime.now();
-        HoaDon hoaDon2 = new HoaDon("HD001", danhSachVe, danhSachDoAn, 0, now, HoaDon.phuongThuc.TIEN_MAT, "123456789");
+        HoaDon hoaDon2 = new HoaDon("HD001", danhSachVe, danhSachDoAn, 0, now, HoaDon.PhuongThuc.TIEN_MAT, "123456789");
         
         assert "HD001".equals(hoaDon2.getMaHoaDon());
         assert "123456789".equals(hoaDon2.getCCCD());
@@ -48,7 +48,7 @@ public class testHoaDon {
         System.out.println("✓ Constructor với tham số đầy đủ OK");
 
         // Test constructor cũ (tương thích ngược)
-        HoaDon hoaDon3 = new HoaDon("HD002", doAn, 30000, now, HoaDon.phuongThuc.CHUYEN_KHOAN, "987654321");
+        HoaDon hoaDon3 = new HoaDon("HD002", doAn, 30000, now, HoaDon.PhuongThuc.CHUYEN_KHOAN, "987654321");
         assert "HD002".equals(hoaDon3.getMaHoaDon());
         assert hoaDon3.getDanhSachDoAn().size() == 1;
         assert hoaDon3.getDanhSachDoAn().get(0).getMaDoAn().equals("DA001");
@@ -62,13 +62,13 @@ public class testHoaDon {
         hoaDon.setMaHoaDon("HD003");
         hoaDon.setCCCD("111222333");
         hoaDon.setThoiGianThanhToan(LocalDateTime.now());
-        hoaDon.setphuongThuc(HoaDon.phuongThuc.CHUYEN_KHOAN);
+        hoaDon.setPhuongThuc(HoaDon.PhuongThuc.CHUYEN_KHOAN);
         hoaDon.setTongTien(100000);
 
         assert "HD003".equals(hoaDon.getMaHoaDon());
         assert "111222333".equals(hoaDon.getCCCD());
         assert hoaDon.getThoiGianThanhToan() != null;
-        assert hoaDon.getphuongThuc() == HoaDon.phuongThuc.CHUYEN_KHOAN;
+        assert hoaDon.getPhuongThuc() == HoaDon.PhuongThuc.CHUYEN_KHOAN;
         assert hoaDon.getTongTien() == 100000;
         System.out.println("✓ Getters & Setters cơ bản OK");
 
@@ -106,20 +106,20 @@ public class testHoaDon {
         System.out.println("=== TEST CRUD ===");
         
         // Test Create
-        HoaDon hoaDon = new HoaDon("HD004", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "444555666");
+        HoaDon hoaDon = new HoaDon("HD004", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "444555666");
         HoaDon.Create(hoaDon);
         ArrayList<HoaDon> list = HoaDon.Read();
         assert list.stream().anyMatch(h -> "HD004".equals(h.getMaHoaDon()));
         System.out.println("✓ Create OK");
 
         // Test Update
-        HoaDon hoaDonMoi = new HoaDon("HD004", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.phuongThuc.CHUYEN_KHOAN, "444555666");
+        HoaDon hoaDonMoi = new HoaDon("HD004", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.PhuongThuc.CHUYEN_KHOAN, "444555666");
         hoaDonMoi.setTongTien(200000);
         HoaDon.Update("HD004", hoaDonMoi);
         HoaDon updated = HoaDon.getHoaDonById("HD004");
         assert updated != null;
         assert updated.getTongTien() == 200000;
-        assert updated.getphuongThuc() == HoaDon.phuongThuc.CHUYEN_KHOAN;
+        assert updated.getPhuongThuc() == HoaDon.PhuongThuc.CHUYEN_KHOAN;
         System.out.println("✓ Update OK");
 
         // Test Delete
@@ -130,7 +130,7 @@ public class testHoaDon {
 
     public static void testGetHoaDonById() {
         System.out.println("=== TEST GET HOA DON BY ID ===");
-        HoaDon hoaDon = new HoaDon("HD005", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "777888999");
+        HoaDon hoaDon = new HoaDon("HD005", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "777888999");
         HoaDon.Create(hoaDon);
         HoaDon found = HoaDon.getHoaDonById("HD005");
         assert found != null;
@@ -287,7 +287,7 @@ public class testHoaDon {
 
     public static void testHienThiThongTin() {
         System.out.println("=== TEST HIỂN THỊ THÔNG TIN ===");
-        HoaDon hoaDon = new HoaDon("HD006", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.phuongThuc.TIEN_MAT, "999888777");
+        HoaDon hoaDon = new HoaDon("HD006", new ArrayList<>(), new ArrayList<>(), 0, LocalDateTime.now(), HoaDon.PhuongThuc.TIEN_MAT, "999888777");
         
         // Thêm vé
         hoaDon.themVe(new Ve("VE008", "999888777", "SC006", "F1", 90000));
