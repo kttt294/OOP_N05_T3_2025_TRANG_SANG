@@ -19,16 +19,14 @@ public class voucherAiven {
     private myDBConnection mydb;
   
     public List<Voucher> getAllVoucher() {
-        Connection conn = null;
         List<Voucher> danhSachVoucher = new ArrayList<>();
-        try {
-            conn = mydb.getOnlyConn();
-
+        try (Connection conn = mydb.getOnlyConn();
+             Statement sta = conn.createStatement();
+             ResultSet reset = sta.executeQuery("select * from voucher")) {
+            
             // Tạo bảng nếu chưa tồn tại
             createTableIfNotExists(conn);
              
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from voucher");
             System.out.println("Lấy tất cả dữ liệu voucher từ database: ");
             while (reset.next()) {
                 String maVoucher = reset.getString("maVoucher");
@@ -36,7 +34,7 @@ public class voucherAiven {
                 float phanTramGiamGia = reset.getFloat("phanTramGiamGia");
                 String ngayBatDauStr = reset.getString("ngayBatDau");
                 String ngayKetThucStr = reset.getString("ngayKetThuc");
-                String soLuongConLai = reset.getString("soLuongConLai");
+                int soLuongConLai = reset.getInt("soLuongConLai");
                 String trangThai = reset.getString("trangThai");
                 
                 LocalDateTime ngayBatDau = null;
@@ -52,36 +50,27 @@ public class voucherAiven {
                 Voucher voucher = new Voucher(maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai);
                 danhSachVoucher.add(voucher);
                 System.out.println("Mã voucher: " + maVoucher + " | Mô tả: " + moTa + " | Giảm giá: " + phanTramGiamGia + "%");
-
             }
-
-            reset.close();
-            sta.close();
-            conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi lấy dữ liệu voucher: " + e);
-
             e.printStackTrace();
         }
         return danhSachVoucher;
     }
     
     private void createTableIfNotExists(Connection conn) {
-        try {
-            String createTableSQL = "CREATE TABLE IF NOT EXISTS voucher (" +
+        try (PreparedStatement pstmt = conn.prepareStatement(
+                "CREATE TABLE IF NOT EXISTS voucher (" +
                 "maVoucher VARCHAR(50) PRIMARY KEY," +
                 "moTa TEXT," +
                 "phanTramGiamGia FLOAT," +
                 "ngayBatDau DATETIME," +
                 "ngayKetThuc DATETIME," +
-                "soLuongConLai VARCHAR(20)," +
+                "soLuongConLai INT," +
                 "trangThai VARCHAR(20)" +
-                ")";
+                ")")) {
             
-            PreparedStatement pstmt = conn.prepareStatement(createTableSQL);
             pstmt.executeUpdate();
-            pstmt.close();
-            
             System.out.println("Bảng voucher đã được tạo hoặc đã tồn tại");
         } catch (Exception e) {
             System.out.println("Lỗi tạo bảng voucher: " + e.getMessage());
@@ -90,162 +79,149 @@ public class voucherAiven {
     }
     
     public Voucher getVoucherById(String maVoucher) {
-        Connection conn = null;
         Voucher voucher = null;
-        try {
-            conn = mydb.getOnlyConn();
-
-             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from voucher where maVoucher = '" + maVoucher + "'");
+        try (Connection conn = mydb.getOnlyConn();
+             PreparedStatement pstmt = conn.prepareStatement("select * from voucher where maVoucher = ?")) {
+            
+            pstmt.setString(1, maVoucher);
             System.out.println("Tìm voucher theo mã: " + maVoucher);
-            if (reset.next()) {
-                String moTa = reset.getString("moTa");
-                float phanTramGiamGia = reset.getFloat("phanTramGiamGia");
-                String ngayBatDauStr = reset.getString("ngayBatDau");
-                String ngayKetThucStr = reset.getString("ngayKetThuc");
-                String soLuongConLai = reset.getString("soLuongConLai");
-                String trangThai = reset.getString("trangThai");
-                
-                LocalDateTime ngayBatDau = null;
-                LocalDateTime ngayKetThuc = null;
-                
-                if (ngayBatDauStr != null) {
-                    ngayBatDau = LocalDateTime.parse(ngayBatDauStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            
+            try (ResultSet reset = pstmt.executeQuery()) {
+                if (reset.next()) {
+                    String moTa = reset.getString("moTa");
+                    float phanTramGiamGia = reset.getFloat("phanTramGiamGia");
+                    String ngayBatDauStr = reset.getString("ngayBatDau");
+                    String ngayKetThucStr = reset.getString("ngayKetThuc");
+                    int soLuongConLai = reset.getInt("soLuongConLai");
+                    String trangThai = reset.getString("trangThai");
+                    
+                    LocalDateTime ngayBatDau = null;
+                    LocalDateTime ngayKetThuc = null;
+                    
+                    if (ngayBatDauStr != null) {
+                        ngayBatDau = LocalDateTime.parse(ngayBatDauStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    }
+                    if (ngayKetThucStr != null) {
+                        ngayKetThuc = LocalDateTime.parse(ngayKetThucStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    }
+                    
+                    voucher = new Voucher(maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai);
+                    System.out.println("Tìm thấy voucher: " + maVoucher);
                 }
-                if (ngayKetThucStr != null) {
-                    ngayKetThuc = LocalDateTime.parse(ngayKetThucStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                }
-                
-                voucher = new Voucher(maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai);
-                System.out.println("Tìm thấy voucher: " + maVoucher);
-
             }
-
-            reset.close();
-            sta.close();
-            conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi tìm voucher: " + e);
-
             e.printStackTrace();
         }
         return voucher;
     }
     
     public List<Voucher> getVoucherByTrangThai(String trangThai) {
-        Connection conn = null;
         List<Voucher> danhSachVoucher = new ArrayList<>();
-        try {
-            conn = mydb.getOnlyConn();
-
-             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from voucher where trangThai = '" + trangThai + "'");
+        try (Connection conn = mydb.getOnlyConn();
+             PreparedStatement pstmt = conn.prepareStatement("select * from voucher where trangThai = ?")) {
+            
+            pstmt.setString(1, trangThai);
             System.out.println("Tìm voucher theo trạng thái: " + trangThai);
-            while (reset.next()) {
-                String maVoucher = reset.getString("maVoucher");
-                String moTa = reset.getString("moTa");
-                float phanTramGiamGia = reset.getFloat("phanTramGiamGia");
-                String ngayBatDauStr = reset.getString("ngayBatDau");
-                String ngayKetThucStr = reset.getString("ngayKetThuc");
-                String soLuongConLai = reset.getString("soLuongConLai");
-                
-                LocalDateTime ngayBatDau = null;
-                LocalDateTime ngayKetThuc = null;
-                
-                if (ngayBatDauStr != null) {
-                    ngayBatDau = LocalDateTime.parse(ngayBatDauStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            
+            try (ResultSet reset = pstmt.executeQuery()) {
+                while (reset.next()) {
+                    String maVoucher = reset.getString("maVoucher");
+                    String moTa = reset.getString("moTa");
+                    float phanTramGiamGia = reset.getFloat("phanTramGiamGia");
+                    String ngayBatDauStr = reset.getString("ngayBatDau");
+                    String ngayKetThucStr = reset.getString("ngayKetThuc");
+                    int soLuongConLai = reset.getInt("soLuongConLai");
+                    
+                    LocalDateTime ngayBatDau = null;
+                    LocalDateTime ngayKetThuc = null;
+                    
+                    if (ngayBatDauStr != null) {
+                        ngayBatDau = LocalDateTime.parse(ngayBatDauStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    }
+                    if (ngayKetThucStr != null) {
+                        ngayKetThuc = LocalDateTime.parse(ngayKetThucStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    }
+                    
+                    Voucher voucher = new Voucher(maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai);
+                    danhSachVoucher.add(voucher);
+                    System.out.println("Tìm thấy: " + maVoucher + " - " + moTa);
                 }
-                if (ngayKetThucStr != null) {
-                    ngayKetThuc = LocalDateTime.parse(ngayKetThucStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                }
-                
-                Voucher voucher = new Voucher(maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai);
-                danhSachVoucher.add(voucher);
-                System.out.println("Tìm thấy: " + maVoucher + " - " + moTa);
-
             }
-
-            reset.close();
-            sta.close();
-            conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi tìm voucher theo trạng thái: " + e);
-
             e.printStackTrace();
         }
         return danhSachVoucher;
     }
     
     public List<Voucher> getVoucherByPhanTramGiamGia(float phanTramMin, float phanTramMax) {
-        Connection conn = null;
         List<Voucher> danhSachVoucher = new ArrayList<>();
-        try {
-            conn = mydb.getOnlyConn();
-
-             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("select * from voucher where phanTramGiamGia >= " + phanTramMin + " and phanTramGiamGia <= " + phanTramMax);
+        try (Connection conn = mydb.getOnlyConn();
+             PreparedStatement pstmt = conn.prepareStatement("select * from voucher where phanTramGiamGia >= ? and phanTramGiamGia <= ?")) {
+            
+            pstmt.setFloat(1, phanTramMin);
+            pstmt.setFloat(2, phanTramMax);
             System.out.println("Tìm voucher theo phần trăm giảm giá: " + phanTramMin + "% - " + phanTramMax + "%");
-            while (reset.next()) {
-                String maVoucher = reset.getString("maVoucher");
-                String moTa = reset.getString("moTa");
-                float phanTramGiamGia = reset.getFloat("phanTramGiamGia");
-                String ngayBatDauStr = reset.getString("ngayBatDau");
-                String ngayKetThucStr = reset.getString("ngayKetThuc");
-                String soLuongConLai = reset.getString("soLuongConLai");
-                String trangThai = reset.getString("trangThai");
-                
-                LocalDateTime ngayBatDau = null;
-                LocalDateTime ngayKetThuc = null;
-                
-                if (ngayBatDauStr != null) {
-                    ngayBatDau = LocalDateTime.parse(ngayBatDauStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            
+            try (ResultSet reset = pstmt.executeQuery()) {
+                while (reset.next()) {
+                    String maVoucher = reset.getString("maVoucher");
+                    String moTa = reset.getString("moTa");
+                    float phanTramGiamGia = reset.getFloat("phanTramGiamGia");
+                    String ngayBatDauStr = reset.getString("ngayBatDau");
+                    String ngayKetThucStr = reset.getString("ngayKetThuc");
+                    int soLuongConLai = reset.getInt("soLuongConLai");
+                    String trangThai = reset.getString("trangThai");
+                    
+                    LocalDateTime ngayBatDau = null;
+                    LocalDateTime ngayKetThuc = null;
+                    
+                    if (ngayBatDauStr != null) {
+                        ngayBatDau = LocalDateTime.parse(ngayBatDauStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    }
+                    if (ngayKetThucStr != null) {
+                        ngayKetThuc = LocalDateTime.parse(ngayKetThucStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    }
+                    
+                    Voucher voucher = new Voucher(maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai);
+                    danhSachVoucher.add(voucher);
+                    System.out.println("Tìm thấy: " + maVoucher + " - Giảm giá: " + phanTramGiamGia + "%");
                 }
-                if (ngayKetThucStr != null) {
-                    ngayKetThuc = LocalDateTime.parse(ngayKetThucStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                }
-                
-                Voucher voucher = new Voucher(maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai);
-                danhSachVoucher.add(voucher);
-                System.out.println("Tìm thấy: " + maVoucher + " - Giảm giá: " + phanTramGiamGia + "%");
-
             }
-
-            reset.close();
-            sta.close();
-            conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi tìm voucher theo phần trăm giảm giá: " + e);
-
             e.printStackTrace();
         }
         return danhSachVoucher;
     }
     
     public boolean createVoucher(Voucher voucher) {
-        Connection conn = null;
-        try {
-            conn = mydb.getOnlyConn();
+        try (Connection conn = mydb.getOnlyConn();
+             PreparedStatement pstmt = conn.prepareStatement(
+                "INSERT INTO voucher (maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
             
-            Statement sta = conn.createStatement();
-            String ngayBatDauStr = voucher.getNgayBatDau() != null ? 
-                voucher.getNgayBatDau().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null;
-            String ngayKetThucStr = voucher.getNgayKetThuc() != null ? 
-                voucher.getNgayKetThuc().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null;
+            pstmt.setString(1, voucher.getMaVoucher());
+            pstmt.setString(2, voucher.getMoTa());
+            pstmt.setFloat(3, voucher.getPhanTramGiamGia());
             
-            String sql = "INSERT INTO voucher (maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai) VALUES ('" +
-                voucher.getMaVoucher() + "', '" + voucher.getMoTa() + "', " + voucher.getPhanTramGiamGia() + 
-                ", " + (ngayBatDauStr != null ? "'" + ngayBatDauStr + "'" : "NULL") + 
-                ", " + (ngayKetThucStr != null ? "'" + ngayKetThucStr + "'" : "NULL") + 
-                ", '" + voucher.getSoLuongConLai() + "', '" + voucher.getTrangThai() + "')";
+            if (voucher.getNgayBatDau() != null) {
+                pstmt.setString(4, voucher.getNgayBatDau().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            } else {
+                pstmt.setNull(4, java.sql.Types.VARCHAR);
+            }
             
-            int result = sta.executeUpdate(sql);
+            if (voucher.getNgayKetThuc() != null) {
+                pstmt.setString(5, voucher.getNgayKetThuc().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            } else {
+                pstmt.setNull(5, java.sql.Types.VARCHAR);
+            }
+            
+            pstmt.setInt(6, voucher.getSoLuongConLai());
+            pstmt.setString(7, voucher.getTrangThai());
+            
+            int result = pstmt.executeUpdate();
             System.out.println("Tạo voucher thành công: " + voucher.getMaVoucher());
-            
-            sta.close();
-            conn.close();
             return result > 0;
         } catch (Exception e) {
             System.out.println("Lỗi tạo voucher: " + e);
@@ -255,29 +231,31 @@ public class voucherAiven {
     }
     
     public boolean updateVoucher(String maVoucher, Voucher voucherMoi) {
-        Connection conn = null;
-        try {
-            conn = mydb.getOnlyConn();
+        try (Connection conn = mydb.getOnlyConn();
+             PreparedStatement pstmt = conn.prepareStatement(
+                "UPDATE voucher SET moTa = ?, phanTramGiamGia = ?, ngayBatDau = ?, ngayKetThuc = ?, soLuongConLai = ?, trangThai = ? WHERE maVoucher = ?")) {
             
-            Statement sta = conn.createStatement();
-            String ngayBatDauStr = voucherMoi.getNgayBatDau() != null ? 
-                voucherMoi.getNgayBatDau().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null;
-            String ngayKetThucStr = voucherMoi.getNgayKetThuc() != null ? 
-                voucherMoi.getNgayKetThuc().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null;
+            pstmt.setString(1, voucherMoi.getMoTa());
+            pstmt.setFloat(2, voucherMoi.getPhanTramGiamGia());
             
-            String sql = "UPDATE voucher SET moTa = '" + voucherMoi.getMoTa() + 
-                "', phanTramGiamGia = " + voucherMoi.getPhanTramGiamGia() + 
-                ", ngayBatDau = " + (ngayBatDauStr != null ? "'" + ngayBatDauStr + "'" : "NULL") + 
-                ", ngayKetThuc = " + (ngayKetThucStr != null ? "'" + ngayKetThucStr + "'" : "NULL") + 
-                ", soLuongConLai = '" + voucherMoi.getSoLuongConLai() + 
-                "', trangThai = '" + voucherMoi.getTrangThai() + 
-                "' WHERE maVoucher = '" + maVoucher + "'";
+            if (voucherMoi.getNgayBatDau() != null) {
+                pstmt.setString(3, voucherMoi.getNgayBatDau().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            } else {
+                pstmt.setNull(3, java.sql.Types.VARCHAR);
+            }
             
-            int result = sta.executeUpdate(sql);
+            if (voucherMoi.getNgayKetThuc() != null) {
+                pstmt.setString(4, voucherMoi.getNgayKetThuc().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            } else {
+                pstmt.setNull(4, java.sql.Types.VARCHAR);
+            }
+            
+            pstmt.setInt(5, voucherMoi.getSoLuongConLai());
+            pstmt.setString(6, voucherMoi.getTrangThai());
+            pstmt.setString(7, maVoucher);
+            
+            int result = pstmt.executeUpdate();
             System.out.println("Cập nhật voucher thành công: " + maVoucher);
-            
-            sta.close();
-            conn.close();
             return result > 0;
         } catch (Exception e) {
             System.out.println("Lỗi cập nhật voucher: " + e);
@@ -287,18 +265,12 @@ public class voucherAiven {
     }
     
     public boolean deleteVoucher(String maVoucher) {
-        Connection conn = null;
-        try {
-            conn = mydb.getOnlyConn();
+        try (Connection conn = mydb.getOnlyConn();
+             PreparedStatement pstmt = conn.prepareStatement("DELETE FROM voucher WHERE maVoucher = ?")) {
             
-            Statement sta = conn.createStatement();
-            String sql = "DELETE FROM voucher WHERE maVoucher = '" + maVoucher + "'";
-            
-            int result = sta.executeUpdate(sql);
+            pstmt.setString(1, maVoucher);
+            int result = pstmt.executeUpdate();
             System.out.println("Xóa voucher thành công: " + maVoucher);
-            
-            sta.close();
-            conn.close();
             return result > 0;
         } catch (Exception e) {
             System.out.println("Lỗi xóa voucher: " + e);
@@ -308,42 +280,38 @@ public class voucherAiven {
     }
     
     public List<Voucher> searchVoucherByMoTa(String keyword) {
-        Connection conn = null;
         List<Voucher> danhSachVoucher = new ArrayList<>();
-        try {
-            conn = mydb.getOnlyConn();
+        try (Connection conn = mydb.getOnlyConn();
+             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM voucher WHERE moTa LIKE ?")) {
             
-            Statement sta = conn.createStatement();
-            ResultSet reset = sta.executeQuery("SELECT * FROM voucher WHERE moTa LIKE '%" + keyword + "%'");
+            pstmt.setString(1, "%" + keyword + "%");
             System.out.println("Tìm voucher theo mô tả: " + keyword);
             
-            while (reset.next()) {
-                String maVoucher = reset.getString("maVoucher");
-                String moTa = reset.getString("moTa");
-                float phanTramGiamGia = reset.getFloat("phanTramGiamGia");
-                String ngayBatDauStr = reset.getString("ngayBatDau");
-                String ngayKetThucStr = reset.getString("ngayKetThuc");
-                String soLuongConLai = reset.getString("soLuongConLai");
-                String trangThai = reset.getString("trangThai");
-                
-                LocalDateTime ngayBatDau = null;
-                LocalDateTime ngayKetThuc = null;
-                
-                if (ngayBatDauStr != null) {
-                    ngayBatDau = LocalDateTime.parse(ngayBatDauStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            try (ResultSet reset = pstmt.executeQuery()) {
+                while (reset.next()) {
+                    String maVoucher = reset.getString("maVoucher");
+                    String moTa = reset.getString("moTa");
+                    float phanTramGiamGia = reset.getFloat("phanTramGiamGia");
+                    String ngayBatDauStr = reset.getString("ngayBatDau");
+                    String ngayKetThucStr = reset.getString("ngayKetThuc");
+                    int soLuongConLai = reset.getInt("soLuongConLai");
+                    String trangThai = reset.getString("trangThai");
+                    
+                    LocalDateTime ngayBatDau = null;
+                    LocalDateTime ngayKetThuc = null;
+                    
+                    if (ngayBatDauStr != null) {
+                        ngayBatDau = LocalDateTime.parse(ngayBatDauStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    }
+                    if (ngayKetThucStr != null) {
+                        ngayKetThuc = LocalDateTime.parse(ngayKetThucStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    }
+                    
+                    Voucher voucher = new Voucher(maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai);
+                    danhSachVoucher.add(voucher);
+                    System.out.println("Tìm thấy: " + maVoucher + " - " + moTa);
                 }
-                if (ngayKetThucStr != null) {
-                    ngayKetThuc = LocalDateTime.parse(ngayKetThucStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                }
-                
-                Voucher voucher = new Voucher(maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai);
-                danhSachVoucher.add(voucher);
-                System.out.println("Tìm thấy: " + maVoucher + " - " + moTa);
             }
-            
-            reset.close();
-            sta.close();
-            conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi tìm voucher theo mô tả: " + e);
             e.printStackTrace();

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +33,16 @@ public class VoucherController {
         return "voucher";
     }
 
+    @GetMapping("/voucher/form")
+    public String hienThiFormTaoVoucher(Model model) {
+        model.addAttribute("voucher", new Voucher());
+        return "form-voucher";
+    }
+
     @PostMapping("/voucher/create")
     public String createVoucher(@ModelAttribute Voucher voucher, Model model) {
         try {
-            if (voucherDB.createVoucher(voucher)) {
+            if (taoVoucher(voucher)) {
                 model.addAttribute("message", "Tạo voucher thành công!");
             } else {
                 model.addAttribute("message", "Lỗi khi tạo voucher!");
@@ -95,6 +102,40 @@ public class VoucherController {
             model.addAttribute("message", "Lỗi khi thống kê: " + e.getMessage());
         }
         return "voucher";
+    }
+
+    @GetMapping("/voucher/view/{maVoucher}")
+    public String viewVoucher(@PathVariable String maVoucher, Model model) {
+        try {
+            Voucher voucher = voucherDB.getVoucherById(maVoucher);
+            if (voucher != null) {
+                model.addAttribute("voucher", voucher);
+                return "voucher-detail";
+            } else {
+                model.addAttribute("message", "Không tìm thấy voucher!");
+                return "redirect:/voucher";
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+            return "redirect:/voucher";
+        }
+    }
+
+    @GetMapping("/voucher/edit/{maVoucher}")
+    public String editVoucherPage(@PathVariable String maVoucher, Model model) {
+        try {
+            Voucher voucher = voucherDB.getVoucherById(maVoucher);
+            if (voucher != null) {
+                model.addAttribute("voucher", voucher);
+                return "redirect:/voucher";
+            } else {
+                model.addAttribute("message", "Không tìm thấy voucher!");
+                return "redirect:/voucher";
+            }
+        } catch (Exception e) {
+            model.addAttribute("message", "Lỗi: " + e.getMessage());
+            return "redirect:/voucher";
+        }
     }
 
     // Business Logic Methods

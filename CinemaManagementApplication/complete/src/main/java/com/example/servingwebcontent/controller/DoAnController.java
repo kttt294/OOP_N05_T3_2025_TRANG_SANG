@@ -29,6 +29,12 @@ public class DoAnController {
         return "doan";
     }
 
+    @GetMapping("/doan/form")
+    public String hienThiFormTaoDoAn(Model model) {
+        model.addAttribute("doAn", new DoAn());
+        return "form-doan";
+    }
+
     @PostMapping("/doan/create")
     public String createDoAn(@ModelAttribute DoAn doAn, Model model) {
         try {

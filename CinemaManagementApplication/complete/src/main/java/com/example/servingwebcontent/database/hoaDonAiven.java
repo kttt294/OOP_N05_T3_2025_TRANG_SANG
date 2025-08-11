@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import com.example.servingwebcontent.model.HoaDon;
 import com.example.servingwebcontent.model.DoAn;
+import com.example.servingwebcontent.model.Ve;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,13 @@ public class hoaDonAiven {
     private myDBConnection mydb;
     
     public List<HoaDon> getAllHoaDon() {
-        Connection conn = null;
         List<HoaDon> danhSachHoaDon = new ArrayList<>();
-        try {
-            conn = mydb.getOnlyConn();
+        try (Connection conn = mydb.getOnlyConn();
+             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM hoadon ORDER BY thoiGianThanhToan DESC")) {
             
             // Tạo bảng nếu chưa tồn tại
             createTableIfNotExists(conn);
             
-            String sql = "SELECT * FROM hoadon ORDER BY thoiGianThanhToan DESC";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet reset = pstmt.executeQuery();
             
             System.out.println("Lấy tất cả dữ liệu hóa đơn từ database: ");
@@ -58,22 +56,22 @@ public class hoaDonAiven {
                 }
                 
                 // Tạo đối tượng DoAn (có thể null nếu không có đồ ăn)
-                DoAn doAn = null;
+                List<DoAn> danhSachDoAn = new ArrayList<>();
                 if (maDoAn != null && !maDoAn.trim().isEmpty()) {
                     // Cần tạo DoAnAiven để lấy thông tin đồ ăn
                     // Tạm thời tạo DoAn với thông tin cơ bản
-                    doAn = new DoAn();
+                    DoAn doAn = new DoAn();
                     doAn.setMaDoAn(maDoAn);
+                    danhSachDoAn.add(doAn);
                 }
                 
-                HoaDon hoaDon = new HoaDon(maHoaDon, doAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
+                // Lấy danh sách vé cho hóa đơn này
+                List<Ve> danhSachVe = getVeByHoaDon(conn, maHoaDon);
+                
+                HoaDon hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
                 danhSachHoaDon.add(hoaDon);
-                System.out.println("Mã HD: " + maHoaDon + " | CCCD: " + CCCD + " | Tổng tiền: " + tongTien);
+                System.out.println("Mã HD: " + maHoaDon + " | CCCD: " + CCCD + " | Tổng tiền: " + tongTien + " | Số vé: " + danhSachVe.size());
             }
-
-            reset.close();
-            pstmt.close();
-            conn.close();
         } catch (Exception e) {
             System.out.println("Lỗi lấy dữ liệu hóa đơn: " + e);
             e.printStackTrace();
@@ -81,8 +79,32 @@ public class hoaDonAiven {
         return danhSachHoaDon;
     }
     
+    // Phương thức lấy vé theo mã hóa đơn
+    private List<Ve> getVeByHoaDon(Connection conn, String maHoaDon) {
+        List<Ve> danhSachVe = new ArrayList<>();
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ve WHERE maHoaDon = ?")) {
+            pstmt.setString(1, maHoaDon);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                String maVe = rs.getString("maVe");
+                String CCCD = rs.getString("CCCD");
+                String maSuatChieu = rs.getString("maSuatChieu");
+                String maGhe = rs.getString("maGhe");
+                int giaVe = rs.getInt("giaVe");
+                
+                Ve ve = new Ve(maVe, CCCD, maSuatChieu, maGhe, giaVe);
+                danhSachVe.add(ve);
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi lấy vé cho hóa đơn " + maHoaDon + ": " + e.getMessage());
+        }
+        return danhSachVe;
+    }
+    
     private void createTableIfNotExists(Connection conn) {
         try {
+            // Cập nhật bảng hoadon để hỗ trợ vé
             String createTableSQL = "CREATE TABLE IF NOT EXISTS hoadon (" +
                 "maHoaDon VARCHAR(20) PRIMARY KEY," +
                 "maDoAn VARCHAR(20)," +
@@ -97,10 +119,26 @@ public class hoaDonAiven {
             pstmt.executeUpdate();
             pstmt.close();
             
-            System.out.println("Bảng hoadon đã được tạo hoặc đã tồn tại");
+            // Tạo bảng ve nếu chưa tồn tại
+            String createVeTableSQL = "CREATE TABLE IF NOT EXISTS ve (" +
+                "maVe VARCHAR(20) PRIMARY KEY," +
+                "CCCD VARCHAR(20)," +
+                "maSuatChieu VARCHAR(20)," +
+                "maGhe VARCHAR(20)," +
+                "giaVe INT NOT NULL," +
+                "trangThai VARCHAR(20) DEFAULT 'CHUA_THANH_TOAN'," +
+                "maHoaDon VARCHAR(20)," +
+                "FOREIGN KEY (CCCD) REFERENCES khachhang(CCCD)," +
+                "FOREIGN KEY (maHoaDon) REFERENCES hoadon(maHoaDon)" +
+                ")";
+            
+            PreparedStatement pstmtVe = conn.prepareStatement(createVeTableSQL);
+            pstmtVe.executeUpdate();
+            pstmtVe.close();
+            
+            System.out.println("Bảng hoadon và ve đã được tạo hoặc đã tồn tại");
         } catch (Exception e) {
-            System.out.println("Lỗi tạo bảng hoadon: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Lỗi tạo bảng: " + e.getMessage());
         }
     }
     
@@ -139,13 +177,17 @@ public class hoaDonAiven {
                 }
                 
                 // Tạo đối tượng DoAn
-                DoAn doAn = null;
+                List<DoAn> danhSachDoAn = new ArrayList<>();
                 if (maDoAn != null && !maDoAn.trim().isEmpty()) {
-                    doAn = new DoAn();
+                    DoAn doAn = new DoAn();
                     doAn.setMaDoAn(maDoAn);
+                    danhSachDoAn.add(doAn);
                 }
                 
-                hoaDon = new HoaDon(maHoaDon, doAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
+                // Lấy danh sách vé cho hóa đơn này
+                List<Ve> danhSachVe = getVeByHoaDon(conn, maHoaDon);
+                
+                hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
             }
 
             reset.close();
@@ -193,13 +235,17 @@ public class hoaDonAiven {
                 }
                 
                 // Tạo đối tượng DoAn
-                DoAn doAn = null;
+                List<DoAn> danhSachDoAn = new ArrayList<>();
                 if (maDoAn != null && !maDoAn.trim().isEmpty()) {
-                    doAn = new DoAn();
+                    DoAn doAn = new DoAn();
                     doAn.setMaDoAn(maDoAn);
+                    danhSachDoAn.add(doAn);
                 }
                 
-                HoaDon hoaDon = new HoaDon(maHoaDon, doAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
+                // Lấy danh sách vé cho hóa đơn này
+                List<Ve> danhSachVe = getVeByHoaDon(conn, maHoaDon);
+                
+                HoaDon hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
                 danhSachHoaDon.add(hoaDon);
             }
 
@@ -217,7 +263,9 @@ public class hoaDonAiven {
         Connection conn = null;
         try {
             conn = mydb.getOnlyConn();
+            conn.setAutoCommit(false); // Bắt đầu transaction
             
+            // 1. Tạo hóa đơn
             String sql = "INSERT INTO hoadon (maHoaDon, maDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, hoaDon.getMaHoaDon());
@@ -229,16 +277,48 @@ public class hoaDonAiven {
             
             int result = pstmt.executeUpdate();
             pstmt.close();
-            conn.close();
             
-            if (result > 0) {
-                System.out.println("Tạo hóa đơn thành công: " + hoaDon.getMaHoaDon());
-                return true;
-            } else {
-                System.out.println("Lỗi khi tạo hóa đơn");
+            if (result <= 0) {
+                conn.rollback();
                 return false;
             }
+            
+            // 2. Lưu vé nếu có
+            if (hoaDon.getDanhSachVe() != null && !hoaDon.getDanhSachVe().isEmpty()) {
+                String veSql = "INSERT INTO ve (maVe, CCCD, maSuatChieu, maGhe, giaVe, trangThai, maHoaDon) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement vePstmt = conn.prepareStatement(veSql);
+                
+                for (Ve ve : hoaDon.getDanhSachVe()) {
+                    vePstmt.setString(1, ve.getMaVe());
+                    vePstmt.setString(2, ve.getCCCD());
+                    vePstmt.setString(3, ve.getMaSuatChieu());
+                    vePstmt.setString(4, ve.getMaGhe());
+                    vePstmt.setInt(5, ve.getGiaVe());
+                    vePstmt.setString(6, ve.getTrangThai().toString());
+                    vePstmt.setString(7, hoaDon.getMaHoaDon());
+                    
+                    int veResult = vePstmt.executeUpdate();
+                    if (veResult <= 0) {
+                        conn.rollback();
+                        vePstmt.close();
+                        return false;
+                    }
+                }
+                vePstmt.close();
+            }
+            
+            conn.commit(); // Commit transaction
+            conn.close();
+            
+            System.out.println("Tạo hóa đơn thành công: " + hoaDon.getMaHoaDon());
+            return true;
+            
         } catch (Exception e) {
+            try {
+                if (conn != null) conn.rollback();
+            } catch (Exception rollbackEx) {
+                System.out.println("Lỗi rollback: " + rollbackEx.getMessage());
+            }
             System.out.println("Lỗi tạo hóa đơn: " + e);
             e.printStackTrace();
             return false;
@@ -365,13 +445,17 @@ public class hoaDonAiven {
                 }
                 
                 // Tạo đối tượng DoAn
-                DoAn doAn = null;
+                List<DoAn> danhSachDoAn = new ArrayList<>();
                 if (maDoAn != null && !maDoAn.trim().isEmpty()) {
-                    doAn = new DoAn();
+                    DoAn doAn = new DoAn();
                     doAn.setMaDoAn(maDoAn);
+                    danhSachDoAn.add(doAn);
                 }
                 
-                HoaDon hoaDon = new HoaDon(maHoaDon, doAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
+                // Lấy danh sách vé cho hóa đơn này
+                List<Ve> danhSachVe = getVeByHoaDon(conn, maHoaDon);
+                
+                HoaDon hoaDon = new HoaDon(maHoaDon, danhSachVe, danhSachDoAn, tongTien, thoiGianThanhToan, phuongThuc, CCCD);
                 danhSachHoaDon.add(hoaDon);
             }
 

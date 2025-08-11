@@ -29,6 +29,12 @@ public class DanhGiaController{
         return "danhgia";
     }
 
+    @GetMapping("/danhgia/form")
+    public String hienThiFormTaoDanhGia(Model model) {
+        model.addAttribute("danhGia", new DanhGia());
+        return "form-danhgia";
+    }
+
     @PostMapping("/danhgia/create")
     public String createDanhGia(@ModelAttribute DanhGia danhGia, Model model) {
         try {

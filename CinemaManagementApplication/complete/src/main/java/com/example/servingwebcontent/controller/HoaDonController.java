@@ -2,12 +2,15 @@ package com.example.servingwebcontent.controller;
 
 import com.example.servingwebcontent.database.hoaDonAiven;
 import com.example.servingwebcontent.model.HoaDon;
+import com.example.servingwebcontent.model.Ve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
+import com.example.servingwebcontent.model.DoAn;
 
 @Controller
 public class HoaDonController {
@@ -36,12 +39,58 @@ public class HoaDonController {
     public String hienThiFormTaoHoaDon(Model model) {
         model.addAttribute("hoaDon", new HoaDon());
         model.addAttribute("phuongThuc", HoaDon.phuongThuc.values());
+        // Thêm danh sách vé trống để form có thể thêm vé
+        model.addAttribute("danhSachVe", new ArrayList<Ve>());
         return "form-hoadon";
     }
     
     @PostMapping("/hoadon/create")
-    public String taoHoaDon(@ModelAttribute HoaDon hoaDon, Model model) {
+    public String taoHoaDon(@ModelAttribute HoaDon hoaDon, 
+                           @RequestParam(value = "maVe", required = false) List<String> maVeList,
+                           @RequestParam(value = "CCCD", required = false) List<String> CCCDList,
+                           @RequestParam(value = "maSuatChieu", required = false) List<String> maSuatChieuList,
+                           @RequestParam(value = "maGhe", required = false) List<String> maGheList,
+                           @RequestParam(value = "giaVe", required = false) List<Integer> giaVeList,
+                           @RequestParam(value = "maDoAn", required = false) List<String> maDoAnList,
+                           @RequestParam(value = "tenDoAn", required = false) List<String> tenDoAnList,
+                           @RequestParam(value = "giaDoAn", required = false) List<Integer> giaDoAnList,
+                           Model model) {
         try {
+            // Xử lý danh sách vé từ form
+            if (maVeList != null && !maVeList.isEmpty()) {
+                List<Ve> danhSachVe = new ArrayList<>();
+                for (int i = 0; i < maVeList.size(); i++) {
+                    if (maVeList.get(i) != null && !maVeList.get(i).trim().isEmpty()) {
+                        Ve ve = new Ve(maVeList.get(i), 
+                                     CCCDList != null && i < CCCDList.size() ? CCCDList.get(i) : hoaDon.getCCCD(),
+                                     maSuatChieuList != null && i < maSuatChieuList.size() ? maSuatChieuList.get(i) : "",
+                                     maGheList != null && i < maGheList.size() ? maGheList.get(i) : "",
+                                     giaVeList != null && i < giaVeList.size() ? giaVeList.get(i) : 0);
+                        danhSachVe.add(ve);
+                    }
+                }
+                hoaDon.setDanhSachVe(danhSachVe);
+            }
+            
+            // Xử lý danh sách đồ ăn từ form
+            if (maDoAnList != null && !maDoAnList.isEmpty()) {
+                List<DoAn> danhSachDoAn = new ArrayList<>();
+                for (int i = 0; i < maDoAnList.size(); i++) {
+                    if (maDoAnList.get(i) != null && !maDoAnList.get(i).trim().isEmpty()) {
+                        DoAn doAn = new DoAn();
+                        doAn.setMaDoAn(maDoAnList.get(i));
+                        if (tenDoAnList != null && i < tenDoAnList.size() && tenDoAnList.get(i) != null) {
+                            doAn.setTenDoAn(tenDoAnList.get(i));
+                        }
+                        if (giaDoAnList != null && i < giaDoAnList.size() && giaDoAnList.get(i) != null) {
+                            doAn.setGia(giaDoAnList.get(i));
+                        }
+                        danhSachDoAn.add(doAn);
+                    }
+                }
+                hoaDon.setDanhSachDoAn(danhSachDoAn);
+            }
+            
             // Validation dữ liệu đầu vào
             if (!kiemTraDuLieuHoaDon(hoaDon)) {
                 model.addAttribute("error", "Dữ liệu không hợp lệ");
@@ -52,6 +101,11 @@ public class HoaDonController {
             // Tự động set thời gian thanh toán nếu chưa có
             if (hoaDon.getThoiGianThanhToan() == null) {
                 hoaDon.setThoiGianThanhToan(LocalDateTime.now());
+            }
+            
+            // Tự động tính tổng tiền nếu chưa có
+            if (hoaDon.getTongTien() <= 0) {
+                hoaDon.tinhTongTien();
             }
             
             // Tạo hóa đơn
