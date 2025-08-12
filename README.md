@@ -13,15 +13,20 @@
 - SuatChieu (maSuatCHieu, maPhim, maPhong, thoiGianBatDau, thoiGianKetThuc, danhSachGheTrong)
 - Voucher (maVoucher, moTa, phanTramGiamGia, ngayBatDau, ngayKetThuc, soLuongConLai, trangThai)
 - DanhGia (maDanhGia, CCCD, maPhim, soSao, noiDung, thoiGian)
-- HoaDon (maHoaDon, doAn, tongTien, thoiGianThanhToan, phuongThucThanhToan, CCCD)
+- HoaDon (maHoaDon, danhSachVe, danhSachDoAn, danhSachVoucher, tongTien, thoiGianThanhToan, phuongThuc, CCCD)
 
 Thành viên:
 1. Kiều Thị Thu Trang, MSV: 24100093 (kttt294)
 2. Trần Minh Sang, MSV : 24100012 (sangzesy)
 3. Nguyễn Lệ Thu (nglthu1979)
 
+# UML
 
-**PHIM**
+**Class Diagram của project**
+
+<img src = "image/classDiagram.png>
+
+**UML CỦA ĐỐI TƯỢNG PHIM**
 
 **Sơ đồ chức năng**
 
@@ -46,8 +51,7 @@ Delete
 <img src = "image/deletePhim.jpg">
 
 
-
-**KHÁCH HÀNG**
+**UML CỦA ĐỐI TƯỢNG KHÁCH HÀNG**
 
 **Sơ đồ chức năng**
 
@@ -70,6 +74,50 @@ Read
 Delete
 
 <img src = "image/deleteKhachHang.png">
+
+
+**DANH SÁCH CÁC ACTIVITY DIAGRAM**
+
+Activity Diagram quản lý đặt vé
+
+<img src = "image/activityDiagramDatVe.png">
+
+Activity Diagram quản lý phim
+
+<img src = "image/activityDiagramPhim.png">
+
+Activity Diagram quản lý khách hàng
+
+<img src = "image/activityDiagramKhachHang.png">
+
+Activity Diagram quản lý phòng chiếu
+
+<img src = "image/activityDiagramPhongChieu.png">
+
+Activity Diagram quản lý suất chiếu
+
+<img src = "image/activityDiagramSuatChieu.png">
+
+Activity Diagram quản lý ghế
+
+<img src = "image/activityDiagramGhe.png">
+
+Activity Diagram quản lý đồ ăn
+
+<img src = "image/activityDiagramDoAn.png">
+
+Activity Diagram quản lý hóa đơn
+
+<img src = "image/activityDiagramHoaDon.png">
+
+Activity Diagram quản lý đánh giá
+
+<img src = "image/activityDiagramDanhGia.png">
+
+Activity Diagram quản lý voucher
+
+<img src = "image/activityDiagramVoucher.png">
+
 
               PRACTICE 02 (Week 2)
 Câu 1: Tiêu đề của bài tập lớn cuối kỳ: Ứng dụng uản lý rạp chiếu phim (CinemaManager)
