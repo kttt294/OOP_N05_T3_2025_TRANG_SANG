@@ -24,7 +24,7 @@ Thành viên:
 
 **Class Diagram của project**
 
-<img src = "image/classDiagram.png>
+<img src = "image/classDiagram.png">
 
 **UML CỦA ĐỐI TƯỢNG PHIM**
 
