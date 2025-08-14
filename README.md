@@ -20,6 +20,8 @@ Thành viên:
 2. Trần Minh Sang, MSV : 24100012 (sangzesy)
 3. Nguyễn Lệ Thu (nglthu1979)
 
+# Link youtube Demo ứng dụng: https://youtu.be/W7S2DqOPjI0?si=CooEr-qN0Zy9UM1x
+
 # UML
 
 **Class Diagram của project**
